@@ -20,8 +20,8 @@ ext {
     calligraphyVersion='2.2.0'
     butterKnifeVersion = "8.5.1"
     supportVersion = "25.1.0"
-    rxJavaVersion = '1.1.8'
-    rxAndroidVersion = '1.2.1'
+    rxJavaVersion = '2.0.2'
+    rxAndroidVersion = '2.0.1'
     rxRelayVersion='2.0.0'
     javaxAnnotationVersion = '1.0'
     javaxInjectVersion = '1'
@@ -68,8 +68,8 @@ ext {
             butterKnife        : "com.jakewharton:butterknife:${butterKnifeVersion}",
             butterKnifeCompiler: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
             recyclerView       : "com.android.support:recyclerview-v7:${supportVersion}",
-            RxJava             : "io.reactivex:rxjava:${rxJavaVersion}",
-            RxAndroid          : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            RxJava             :  "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+            RxAndroid          : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             javaxAnnotation    : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
             ottoEventBus       : "com.squareup:otto:${ottoEventBusVersion}",
             circleIndicator    : "me.relex:circleindicator:${circleIndicatorVersion}",

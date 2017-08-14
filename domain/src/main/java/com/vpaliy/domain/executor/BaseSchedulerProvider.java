@@ -2,7 +2,8 @@ package com.vpaliy.domain.executor;
 
 
 import android.support.annotation.NonNull;
-import rx.Scheduler;
+
+import io.reactivex.Scheduler;
 
 public interface BaseSchedulerProvider {
     @NonNull
