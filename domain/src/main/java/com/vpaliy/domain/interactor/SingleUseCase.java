@@ -16,10 +16,10 @@ public abstract class SingleUseCase<T,Params>{
         this.disposables=new CompositeDisposable();
     }
 
-    public abstract Single<T> buildUseCaseObservable(Params params);
+    public abstract Single<T> buildUseCase(Params params);
 
     public void execute(DisposableSingleObserver<T> singleObserver, Params params){
-        Single<T> single=buildUseCaseObservable(params)
+        Single<T> single= buildUseCase(params)
                     .subscribeOn(schedulerProvider.io())
                     .observeOn(schedulerProvider.ui());
         disposables.add(single.subscribeWith(singleObserver));
