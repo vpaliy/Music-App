@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
+
+def config=rootProject.ext.configuration;
+def libs=rootProject.ext.dependencies;
+def testLibs=rootProject.ext.testDependencies;
+
+android {
+    compileSdkVersion config.compileSdkVersion
+    buildToolsVersion config.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion config.minSdkVersion
+        targetSdkVersion config.targetSdkVersion
+        versionCode config.versionCode
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+
+dependencies {
+
+    compile libs.supportAppCompat
+    compile libs.RxJava
+    compile libs.RxAndroid
+    compile libs.Dagger2
+    annotationProcessor libs.Dagger2Compiler
+    provided libs.javaxAnnotation
+
+    /* Testing Libraries */
+    testCompile testLibs.mockito
+    testCompile testLibs.jUnit
+
+
+}

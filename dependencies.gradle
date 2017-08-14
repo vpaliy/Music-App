@@ -1,0 +1,107 @@
+ext {
+
+    /* Android Configuration */
+    configuration =
+            [
+                    package                  : "com.vpaliy.melophile",
+                    buildToolsVersion        : "25.0.3",
+                    compileSdkVersion        : 25,
+                    minSdkVersion            : 16,
+                    targetSdkVersion         : 25,
+                    versionCode              : 1,
+                    versionName              : "1.0",
+                    testInstrumentationRunner: "android.support.test.runner.AndroidJUnitRunner"
+
+            ]
+
+    /* Library versions */
+    daggerVersion = '2.9'
+    chipsLoverVersion='v1.2'
+    calligraphyVersion='2.2.0'
+    butterKnifeVersion = "8.5.1"
+    supportVersion = "25.1.0"
+    rxJavaVersion = '1.1.8'
+    rxAndroidVersion = '1.2.1'
+    rxRelayVersion='2.0.0'
+    javaxAnnotationVersion = '1.0'
+    javaxInjectVersion = '1'
+    gsonVersion = '2.3'
+    okHttpVersion = '2.5.0'
+    androidAnnotationsVersion = '21.0.3'
+    arrowVersion = '1.0.0'
+    SQLBriteVersion = "1.1.1"
+    ottoEventBusVersion = "1.3.8"
+    circleIndicatorVersion = "1.2.2"
+    glideVersion = "3.7.0"
+    textDrawableVersion="1.0.1"
+    circleImageVersion="2.1.0"
+    retrofitVersion="2.2.0"
+    retrofitConverterVersion="2.1.0"
+    retrofitAdapterVersion="2.1.0"
+    picassoVersion="2.5.2"
+    guavaVersion="14.0"
+    materialIconLibVersion="1.1.3"
+    multiDexVersion="1.0.1"
+    constraintLayoutVersion="1.0.2"
+
+
+    /* Testing versions */
+    robolectricVersion = '3.1.1'
+    jUnitVersion = '4.12'
+    assertJVersion = '1.7.1'
+    mockitoVersion = '2.8.47'
+    dexmakerVersion = '1.0'
+    espressoVersion = '2.0'
+    testingSupportLibVersion = '0.1'
+
+    /* Other stuff */
+    leakCanaryVersion = '1.4'
+
+    /** Main dependencies **/
+    dependencies = [
+            chipsLover         : "com.github.vpaliyX:ChipsLover:${chipsLoverVersion}",
+            glide              : "com.github.bumptech.glide:glide:${glideVersion}",
+            supportAppCompat   : "com.android.support:appcompat-v7:${supportVersion}",
+            supportDesign      : "com.android.support:design:${supportVersion}",
+            Dagger2Compiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            Dagger2            : "com.google.dagger:dagger:${daggerVersion}",
+            butterKnife        : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            butterKnifeCompiler: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
+            recyclerView       : "com.android.support:recyclerview-v7:${supportVersion}",
+            RxJava             : "io.reactivex:rxjava:${rxJavaVersion}",
+            RxAndroid          : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation    : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            ottoEventBus       : "com.squareup:otto:${ottoEventBusVersion}",
+            circleIndicator    : "me.relex:circleindicator:${circleIndicatorVersion}",
+            textDrawable       : "com.amulyakhare:com.amulyakhare.textdrawable:${textDrawableVersion}",
+            circleImage        : "de.hdodenhof:circleimageview:${circleImageVersion}",
+            palette            : "com.android.support:palette-v7:${supportVersion}",
+            cardView           : "com.android.support:cardview-v7:${supportVersion}",
+            gson               : "com.google.code.gson:gson:${gsonVersion}",
+            okHttp             : "com.squareup.okhttp:okhttp:${okHttpVersion}",
+            retrofit           : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofitConverter  : "com.squareup.retrofit2:converter-gson:${retrofitConverterVersion}",
+            retrofitAdapter    : "com.squareup.retrofit2:adapter-rxjava:${retrofitAdapterVersion}",
+            picasso            : "com.squareup.picasso:picasso:${picassoVersion}",
+            guava              : "com.google.guava:guava:${guavaVersion}",
+            leakCanary         :"com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
+            expandableTextView : "at.blogc:expandabletextview:1.0.3",
+            rxRelay            : "com.jakewharton.rxrelay2:rxrelay:${rxRelayVersion}",
+            preferenceCompat7  : "com.android.support:preference-v7:${supportVersion}",
+            preferenceCompat14 : "com.android.support:preference-v14:${supportVersion}",
+            materialIconLib    : "net.steamcrafted:materialiconlib:${materialIconLibVersion}",
+            multiDex           : "com.android.support:multidex:${multiDexVersion}",
+            constraintLayout   : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
+            calligraphy         :  "uk.co.chrisjenx:calligraphy:${calligraphyVersion}"
+
+
+    ]
+
+    testDependencies = [
+            jUnit :             "junit:junit:${jUnitVersion}",
+            robolectric:        "org.robolectric:robolectric:${robolectricVersion}",
+            mockito:            "org.mockito:mockito-core:${mockitoVersion}",
+            espresso:           "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            testingSupportLib:  "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
+    ]
+}

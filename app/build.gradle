@@ -1,30 +1,64 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+def config=rootProject.ext.configuration;
+def libs=rootProject.ext.dependencies;
+def testLibs=rootProject.ext.testDependencies;
+
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion config.compileSdkVersion
+    buildToolsVersion config.buildToolsVersion
+
     defaultConfig {
-        applicationId "com.vpaliy.melophile"
-        minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        applicationId config.applicationId
+        minSdkVersion config.minSdkVersion
+        targetSdkVersion config.targetSdkVersion
+        versionCode config.versionCode
+        versionName config.versionName
+        testInstrumentationRunner config.testInstrumentationRunner
+        vectorDrawables.useSupportLibrary true
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
+    compile 'com.aurelhubert:ahbottomnavigation:2.0.6'
+    compile 'com.roughike:bottom-bar:2.3.1'
+    compile ('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
+        transitive = true;
+    }
+    compile libs.chipsLover
+    compile libs.constraintLayout
+    compile libs.preferenceCompat7
+    compile libs.cardView
+    compile libs.leakCanary
+    compile libs.recyclerView
+    compile libs.supportDesign
+    compile libs.supportAppCompat
+    compile libs.circleImage
+    compile libs.butterKnife
+    compile libs.Dagger2
+    compile libs.circleIndicator
+    compile libs.glide
+    compile libs.RxJava
+    compile libs.RxAndroid
+    compile libs.palette
+    compile libs.rxRelay
+    annotationProcessor libs.Dagger2Compiler
+    annotationProcessor libs.butterKnifeCompiler
+    provided libs.javaxAnnotation
+
+    /* Testing Libraries */
+    testCompile testLibs.mockito
+    testCompile testLibs.espresso
+    testCompile testLibs.jUnit
 }
