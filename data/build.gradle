@@ -29,7 +29,7 @@ android {
 dependencies {
     compile project(":domain")
     compile libs.supportAppCompat
-
+    compile libs.soundcloud
     compile libs.RxJava
     compile libs.guava
     compile libs.retrofit

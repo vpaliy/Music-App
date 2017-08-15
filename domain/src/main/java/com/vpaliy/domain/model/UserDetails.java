@@ -3,6 +3,7 @@ package com.vpaliy.domain.model;
 import java.util.List;
 
 public class UserDetails {
+
     private User user;
     private List<Track> tracks;
     private List<Playlist> playlists;
