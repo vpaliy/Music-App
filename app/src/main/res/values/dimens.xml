@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_margin">10dp</dimen>
+    <dimen name="item_width">150dp</dimen>
+    <dimen name="item_card_width">0dp</dimen>
+    <dimen name="item_padding">8dp</dimen>
+    <dimen name="view_all_margin">24dp</dimen>
+
+    <dimen name="navigation_bar_margin">0dp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="spacing_medium">8dp</dimen>
+    <dimen name="spacing_large">16dp</dimen>
+    <dimen name="spacing_big">24dp</dimen>
+    <dimen name="spacing_huge">32dp</dimen>
+    <dimen name="spacing_media_details">8dp</dimen>
+    <dimen name="details_action_padding">16dp</dimen>
+
+    <!-- Image -->
+    <dimen name="poster_height">200dp</dimen>
+    <dimen name="poster_width">140dp</dimen>
+    <dimen name="related_media_height">180dp</dimen>
+    <dimen name="related_media_width">130dp</dimen>
+    <dimen name="actor_photo_height">150dp</dimen>
+    <dimen name="actor_photo_width">150dp</dimen>
+    <dimen name="details_poster_width">120dp</dimen>
+    <dimen name="details_poster_height">180dp</dimen>
+    <dimen name="details_backdrop_height">300dp</dimen>
+
+    <!-- Z-axis elevations -->
+    <dimen name="z_app_bar">4dp</dimen>
+    <dimen name="z_card">2dp</dimen>
+    <dimen name="z_fab">6dp</dimen>
+    <dimen name="touch_raise">6dp</dimen>
+    <dimen name="touched_app_bar">8dp</dimen>
+    <dimen name="z_fab_over_touchable_app_bar">9dp</dimen>
+
+    <dimen name="nested_scroll_margin_top">-140dp</dimen>
+    <dimen name="body_sheet_width">500dp</dimen>
+    <dimen name="details_sheet_height">100dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="shot_collapsed_app_bar_height">200dp</dimen>
+    <dimen name="drag_dismiss_distance">112dp</dimen>
+
+</resources>

@@ -53,7 +53,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         disposables.clear();
     }
 
-    //just in case if the onPause() hasn't been called
     @CallSuper @Override
     protected void onStop(){
         super.onStop();

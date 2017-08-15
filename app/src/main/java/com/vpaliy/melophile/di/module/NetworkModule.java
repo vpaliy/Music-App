@@ -1,7 +1,6 @@
 package com.vpaliy.melophile.di.module;
 
 import android.content.Context;
-
 import com.vpaliy.melophile.di.Config;
 import com.vpaliy.soundcloud.SoundCloud;
 import com.vpaliy.soundcloud.SoundCloudService;
