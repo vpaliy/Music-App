@@ -14,4 +14,9 @@ public class MapperUtils {
         if(strings==null) return null;
         return  strings.toString().replaceAll("[\\[.\\].\\s+]", "");
     }
+
+    public static int convertToInt(String number){
+        if(number==null) return 0;
+        return Integer.parseInt(number);
+    }
 }
