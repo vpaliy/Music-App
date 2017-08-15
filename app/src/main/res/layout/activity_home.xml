@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
-        app:layout_behavior=".ui.view.ScrollBehavior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
@@ -19,14 +18,15 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <com.popularmovies.vpaliy.popularmoviesapp.ui.view.MediaPager
+    <fragment
         android:id="@+id/media_pager"
+        android:name="com.vpaliy.melophile.ui.playlists.PlaylistsFragment"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_marginBottom="@dimen/spacing_big"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.roughike.bottombar.BottomBar
+    <!--<com.roughike.bottombar.BottomBar
         android:id="@+id/bottom_navigation"
         app:bb_activeTabColor="@color/colorWhite"
         app:bb_titleTextAppearance="@style/Widget.Label"
@@ -37,5 +37,5 @@
         android:fitsSystemWindows="false"
         app:bb_behavior="shy|underNavbar"
         android:layout_gravity="bottom"
-        app:bb_tabXmlResource="@xml/media_bottom_navigation"/>
+        app:bb_tabXmlResource="@xml/media_bottom_navigation"/>  -->
 </android.support.design.widget.CoordinatorLayout>

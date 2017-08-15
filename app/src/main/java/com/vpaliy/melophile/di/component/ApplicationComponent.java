@@ -2,11 +2,15 @@ package com.vpaliy.melophile.di.component;
 
 import android.content.Context;
 import com.vpaliy.data.source.Source;
+import com.vpaliy.domain.executor.BaseSchedulerProvider;
+import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.repository.Repository;
 import com.vpaliy.melophile.di.module.ApplicationModule;
 import com.vpaliy.melophile.di.module.DataModule;
+import com.vpaliy.melophile.di.module.InteractorModule;
 import com.vpaliy.melophile.di.module.MapperModule;
 import com.vpaliy.melophile.di.module.NetworkModule;
+import com.vpaliy.melophile.ui.base.BaseActivity;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import com.vpaliy.soundcloud.SoundCloudService;
 import javax.inject.Singleton;
@@ -17,11 +21,16 @@ import dagger.Component;
         DataModule.class,
         MapperModule.class,
         NetworkModule.class,
+        InteractorModule.class,
         ApplicationModule.class})
 public interface ApplicationComponent {
+    void inject(BaseActivity activity);
     Context context();
     Source remote();
     Repository repository();
+    BaseSchedulerProvider scheduler();
     SoundCloudService soundCloud();
     RxBus rxBus();
+    //use cases
+    GetPlaylists playlistsInteractor();
 }

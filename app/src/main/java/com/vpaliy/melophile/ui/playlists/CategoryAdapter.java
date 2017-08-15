@@ -49,7 +49,7 @@ public class CategoryAdapter extends BaseAdapter<CategoryAdapter.CategoryWrapper
 
     @Override
     public void onBindViewHolder(GenericViewHolder holder, int position) {
-
+        holder.onBindData();
     }
 
     @Override

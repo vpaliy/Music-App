@@ -15,8 +15,9 @@ public class PlaylistsContract {
         void showEmptyMessage();
     }
 
-    interface Presenter extends BasePresenter<View> {
+    public interface Presenter extends BasePresenter<View> {
         void attachView(@NonNull View view);
         void stop();
+        void start();
     }
 }

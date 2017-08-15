@@ -1,11 +1,10 @@
 package com.vpaliy.melophile.di.module;
 
 import android.content.Context;
-
+import com.vpaliy.domain.executor.BaseSchedulerProvider;
+import com.vpaliy.domain.executor.SchedulerProvider;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
-
 import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -27,4 +26,8 @@ public class ApplicationModule {
         return new RxBus();
     }
 
+    @Singleton @Provides
+    BaseSchedulerProvider schedulerProvider(){
+        return new SchedulerProvider();
+    }
 }

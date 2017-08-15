@@ -1,5 +1,7 @@
 package com.vpaliy.data.source.remote;
 
+import android.util.Log;
+
 import com.vpaliy.data.model.UserDetailsEntity;
 import com.vpaliy.data.source.Source;
 import com.vpaliy.soundcloud.SoundCloudService;
@@ -38,10 +40,19 @@ public class RemoteSource implements Source{
                     if(second!=null){
                         first.addAll(second);
                     }
+                    Log.d(RemoteSource.class.getSimpleName(),Integer.toString(first.size()));
                     return first;
                 });
             }
-            return start;
+            return start.map(list->{
+                List<PlaylistEntity> result=new LinkedList<>();
+                for(PlaylistEntity entity:list){
+                    if(entity.artwork_url!=null){
+                        result.add(entity);
+                    }
+                }
+                return result;
+            });
         }
         return Single.error(new IllegalArgumentException("categories are null"));
     }
