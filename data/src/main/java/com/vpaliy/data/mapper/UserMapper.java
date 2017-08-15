@@ -4,7 +4,14 @@ package com.vpaliy.data.mapper;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.soundcloud.model.UserEntity;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class UserMapper extends Mapper<User,UserEntity> {
+
+    @Inject
+    public UserMapper(){}
 
     @Override
     public User map(UserEntity userEntity) {

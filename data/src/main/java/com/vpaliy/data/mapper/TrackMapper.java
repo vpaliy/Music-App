@@ -6,10 +6,15 @@ import com.vpaliy.domain.model.User;
 import com.vpaliy.soundcloud.model.MiniUserEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class TrackMapper extends Mapper<Track,TrackEntity> {
 
     private Mapper<User,MiniUserEntity> userMapper;
 
+    @Inject
     public TrackMapper(Mapper<User,MiniUserEntity> userMapper){
         this.userMapper=userMapper;
     }

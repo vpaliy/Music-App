@@ -11,6 +11,10 @@ import com.vpaliy.soundcloud.model.TrackEntity;
 import com.vpaliy.soundcloud.model.UserEntity;
 import com.vpaliy.soundcloud.model.WebProfileEntity;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class UserDetailsMapper extends Mapper<UserDetails,UserDetailsEntity> {
 
     private Mapper<Track,TrackEntity> trackMapper;
@@ -18,6 +22,7 @@ public class UserDetailsMapper extends Mapper<UserDetails,UserDetailsEntity> {
     private Mapper<User,UserEntity> userMapper;
     private Mapper<WebProfile,WebProfileEntity> webMapper;
 
+    @Inject
     public UserDetailsMapper(Mapper<Track,TrackEntity> trackMapper,
                              Mapper<Playlist,PlaylistEntity> playlistMapper,
                              Mapper<User,UserEntity> userMapper,

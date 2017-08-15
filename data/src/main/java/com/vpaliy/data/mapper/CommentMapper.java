@@ -5,11 +5,15 @@ import com.vpaliy.domain.model.Comment;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.soundcloud.model.CommentEntity;
 import com.vpaliy.soundcloud.model.MiniUserEntity;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class CommentMapper extends Mapper<Comment,CommentEntity>{
 
     private Mapper<User,MiniUserEntity> miniUserMapper;
 
+    @Inject
     public CommentMapper(Mapper<User,MiniUserEntity> mapper){
         this.miniUserMapper=mapper;
     }

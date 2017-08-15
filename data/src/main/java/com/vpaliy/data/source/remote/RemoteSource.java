@@ -10,12 +10,17 @@ import com.vpaliy.soundcloud.model.WebProfileEntity;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Single;
 
+@Singleton
 public class RemoteSource implements Source{
 
     private SoundCloudService service;
 
+    @Inject
     public RemoteSource(SoundCloudService service){
         this.service=service;
     }

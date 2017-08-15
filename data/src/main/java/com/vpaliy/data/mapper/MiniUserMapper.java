@@ -3,7 +3,14 @@ package com.vpaliy.data.mapper;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.soundcloud.model.MiniUserEntity;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class MiniUserMapper extends Mapper<User,MiniUserEntity> {
+
+    @Inject
+    public MiniUserMapper(){}
 
     @Override
     public User map(MiniUserEntity miniUserEntity) {

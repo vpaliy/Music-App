@@ -7,11 +7,16 @@ import com.vpaliy.soundcloud.model.MiniUserEntity;
 import com.vpaliy.soundcloud.model.PlaylistEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class PlaylistMapper extends Mapper<Playlist,PlaylistEntity>{
 
     private Mapper<Track,TrackEntity> trackMapper;
     private Mapper<User,MiniUserEntity> userMapper;
 
+    @Inject
     public PlaylistMapper(Mapper<Track,TrackEntity> trackMapper,
                           Mapper<User,MiniUserEntity> userMapper){
         this.trackMapper=trackMapper;
