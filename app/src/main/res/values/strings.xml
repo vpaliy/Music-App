@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Melophile</string>
+
+    <string name="more_label">View All</string>
+    <string name="layout_manager" translatable="false">StaggeredGridLayoutManager</string>
+    <string name="text_layout_manager" translatable="false">LinearLayoutManager</string>
+    <string name="home_layout_manager" translatable="false">LinearLayoutManager</string>
 </resources>

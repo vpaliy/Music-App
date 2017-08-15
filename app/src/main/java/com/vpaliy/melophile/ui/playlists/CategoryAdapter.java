@@ -1,24 +1,19 @@
 package com.vpaliy.melophile.ui.playlists;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
-
-import java.util.List;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.BindView;
+import android.support.annotation.NonNull;
 
+@SuppressWarnings("WeakerAccess")
 public class CategoryAdapter extends BaseAdapter<CategoryAdapter.CategoryWrapper>{
-
-    private List<CategoryWrapper> categories;
 
     public CategoryAdapter(@NonNull Context context, @NonNull RxBus rxBus){
         super(context,rxBus);
@@ -27,12 +22,9 @@ public class CategoryAdapter extends BaseAdapter<CategoryAdapter.CategoryWrapper
     class TypeViewHolder extends GenericViewHolder
             implements View.OnClickListener{
 
-        RecyclerView list;
-
-        @BindView(R.id.title)
-        TextView title;
-
-        TextView more;
+        @BindView(R.id.playlists) RecyclerView list;
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.more) TextView more;
 
         TypeViewHolder(View itemView){
             super(itemView);
@@ -48,6 +40,10 @@ public class CategoryAdapter extends BaseAdapter<CategoryAdapter.CategoryWrapper
 
         @Override
         public void onBindData(){
+            CategoryWrapper wrapper=at(getAdapterPosition());
+            list.setAdapter(wrapper.adapter);
+            title.setText(wrapper.text);
+            more.setTextColor(wrapper.color);
         }
     }
 

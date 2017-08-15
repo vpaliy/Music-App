@@ -18,8 +18,8 @@
     <dimen name="details_action_padding">16dp</dimen>
 
     <!-- Image -->
-    <dimen name="poster_height">200dp</dimen>
-    <dimen name="poster_width">140dp</dimen>
+    <dimen name="album_height">140dp</dimen>
+    <dimen name="album_width">140dp</dimen>
     <dimen name="related_media_height">180dp</dimen>
     <dimen name="related_media_width">130dp</dimen>
     <dimen name="actor_photo_height">150dp</dimen>
