@@ -3,6 +3,7 @@ package com.vpaliy.data.mapper;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 public class MapperUtils {
 
     public static List<String> splitString(String string){
