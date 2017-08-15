@@ -7,7 +7,6 @@ import com.vpaliy.soundcloud.model.PlaylistEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
 import com.vpaliy.soundcloud.model.UserEntity;
 import com.vpaliy.soundcloud.model.WebProfileEntity;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
