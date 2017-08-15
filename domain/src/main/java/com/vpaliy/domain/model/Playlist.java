@@ -11,7 +11,7 @@ public class Playlist {
     private User user;
     private String description;
     private String trackCount;
-    private String genre;
+    private List<String> genres;
     private String releaseDate;
     private List<String> tags;
     private String duration;
@@ -64,10 +64,6 @@ public class Playlist {
         this.duration = duration;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
@@ -88,8 +84,12 @@ public class Playlist {
         this.tracks = tracks;
     }
 
-    public String getGenre() {
-        return genre;
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
+
+    public List<String> getGenres() {
+        return genres;
     }
 
     public String getReleaseDate() {
