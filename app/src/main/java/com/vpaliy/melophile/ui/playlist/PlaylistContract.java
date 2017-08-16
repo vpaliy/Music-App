@@ -3,6 +3,7 @@ package com.vpaliy.melophile.ui.playlist;
 import android.support.annotation.NonNull;
 
 import com.vpaliy.domain.model.Track;
+import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.ui.base.BasePresenter;
 import com.vpaliy.melophile.ui.base.BaseView;
 
@@ -14,6 +15,7 @@ public interface PlaylistContract {
         void attachPresenter(@NonNull Presenter presenter);
         void showPlaylistArt(String artUrl);
         void showTracks(List<Track> tracks);
+        void showUser(User user);
         void showErrorMessage();
         void showEmptyMessage();
     }

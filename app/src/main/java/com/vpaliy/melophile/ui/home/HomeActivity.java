@@ -37,7 +37,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setBottomNavigation(){
-        final int duration=300;//getResources().getInteger(R.integer.page_fade_duration);
+        final int duration=getResources().getInteger(R.integer.page_fading_duration);
         bottomNavigation.setOnTabSelectListener((tabId ->
                 homePager.animate()
                         .alpha(0)

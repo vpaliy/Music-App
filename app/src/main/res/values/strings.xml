@@ -6,7 +6,19 @@
     <string name="text_layout_manager" translatable="false">LinearLayoutManager</string>
     <string name="home_layout_manager" translatable="false">LinearLayoutManager</string>
 
-
+    <string name="share_action">Share</string>
     <string name="background_trans_name" translatable="false">background_trans</string>
     <string name="playlist_art_trans_name" translatable="false">playlist_art_trans</string>
+    <string name="playlist_title_trans_name" translatable="false">playlist_title_trans</string>
+
+
+
+    <array name="temp">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+        <item>Five</item>
+        <item>Six</item>
+    </array>
 </resources>

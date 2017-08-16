@@ -44,6 +44,8 @@
         android:scrollbarStyle="insideOverlay"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
+    <include layout="@layout/layout_playlist"/>
+
     <com.vpaliy.melophile.ui.view.ParallaxRatioImageView
         android:id="@+id/playlist_art"
         android:scaleType="centerCrop"
