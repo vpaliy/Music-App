@@ -1,7 +1,5 @@
 package com.vpaliy.data.source.remote;
 
-import android.util.Log;
-
 import com.vpaliy.data.model.UserDetailsEntity;
 import com.vpaliy.data.source.Source;
 import com.vpaliy.soundcloud.SoundCloudService;
@@ -35,12 +33,12 @@ public class RemoteSource implements Source{
                 start=Single.zip(start,service.searchPlaylists(PlaylistEntity
                         .Filter.start()
                         .byName(category)
+                        .limit(100)
                         .createOptions())
                         .onErrorResumeNext(Single.just(new ArrayList<>())),(first,second)->{
                     if(second!=null){
                         first.addAll(second);
                     }
-                    Log.d(RemoteSource.class.getSimpleName(),Integer.toString(first.size()));
                     return first;
                 });
             }

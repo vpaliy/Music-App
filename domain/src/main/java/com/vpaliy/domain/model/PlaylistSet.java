@@ -19,6 +19,13 @@ public class PlaylistSet {
         this.theme = theme;
     }
 
+    public String getThemeString(){
+        if(theme!=null){
+            return theme.getTheme();
+        }
+        return null;
+    }
+
     public List<Playlist> getPlaylists() {
         return playlists;
     }

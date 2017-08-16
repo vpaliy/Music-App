@@ -6,13 +6,8 @@ import com.vpaliy.domain.model.PlaylistSet;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import io.reactivex.observers.DisposableSingleObserver;
-
 import static com.vpaliy.melophile.ui.playlists.PlaylistsContract.View;
 
 @ViewScope
@@ -34,18 +29,21 @@ public class PlaylistsPresenter implements PlaylistsContract.Presenter{
                 MelophileTheme.create("Chilling","chills","party","friends"),
                 MelophileTheme.create("Working out","working out","sweet","moment"));
         for(MelophileTheme theme:themes){
-            playlistsUseCase.execute(new DisposableSingleObserver<PlaylistSet>() {
-                @Override
-                public void onSuccess(PlaylistSet value) {
-                    view.showPlaylists(value.getTheme().getTheme(),value.getPlaylists());
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    e.printStackTrace();
-                }
-            },theme);
+            playlistsUseCase.execute(this::catchData,this::catchError,theme);
         }
+    }
+
+    private void catchData(PlaylistSet set){
+        if(set!=null){
+            view.showPlaylists(set);
+            return;
+        }
+        view.showEmptyMessage();
+    }
+
+    private void catchError(Throwable ex){
+        ex.printStackTrace();
+        view.showErrorMessage();
     }
 
     @Override

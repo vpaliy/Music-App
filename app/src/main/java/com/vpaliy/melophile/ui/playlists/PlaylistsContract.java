@@ -1,6 +1,7 @@
 package com.vpaliy.melophile.ui.playlists;
 
 import com.vpaliy.domain.model.Playlist;
+import com.vpaliy.domain.model.PlaylistSet;
 import com.vpaliy.melophile.ui.base.BasePresenter;
 import com.vpaliy.melophile.ui.base.BaseView;
 import java.util.List;
@@ -10,7 +11,7 @@ public class PlaylistsContract {
 
     interface View extends BaseView<Presenter> {
         void attachPresenter(@NonNull Presenter presenter);
-        void showPlaylists(@NonNull String category, @NonNull List<Playlist> playlists);
+        void showPlaylists(@NonNull PlaylistSet playlistSet);
         void showErrorMessage();
         void showEmptyMessage();
     }

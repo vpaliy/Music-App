@@ -1,16 +1,13 @@
 package com.vpaliy.melophile.ui.playlists;
 
-import com.vpaliy.domain.model.Playlist;
+import com.vpaliy.domain.model.PlaylistSet;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
-import java.util.List;
 import android.os.Bundle;
-import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,11 +57,10 @@ public class PlaylistsFragment extends BaseFragment
     }
 
     @Override
-    public void showPlaylists(@NonNull String category, @NonNull List<Playlist> playlists) {
-        Log.d(TAG,Integer.toString(playlists.size()));
+    public void showPlaylists(@NonNull PlaylistSet playlistSet) {
         PlaylistAdapter playlistAdapter=new PlaylistAdapter(getContext(),rxBus);
-        playlistAdapter.setData(playlists);
-        adapter.addItem(CategoryAdapter.CategoryWrapper.wrap(category,playlistAdapter,1));
+        playlistAdapter.setData(playlistSet.getPlaylists());
+        adapter.addItem(CategoryAdapter.CategoryWrapper.wrap(playlistSet.getThemeString(),playlistAdapter,1));
     }
 
     @Inject @Override
