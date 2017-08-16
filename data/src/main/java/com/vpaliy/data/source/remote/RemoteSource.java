@@ -46,6 +46,7 @@ public class RemoteSource implements Source{
                 List<PlaylistEntity> result=new LinkedList<>();
                 for(PlaylistEntity entity:list){
                     if(entity.artwork_url!=null){
+                        entity.artwork_url=entity.artwork_url.replace("large","t500x500");
                         result.add(entity);
                     }
                 }
@@ -62,7 +63,7 @@ public class RemoteSource implements Source{
             for(String category:categories){
                 start=Single.zip(start,service.searchTracks(TrackEntity
                         .Filter.start()
-                        .byName(category)
+                        .byTags(category)
                         .createOptions())
                         .onErrorResumeNext(Single.just(new ArrayList<>())),(first,second)->{
                     if(second!=null){
@@ -71,7 +72,16 @@ public class RemoteSource implements Source{
                     return first;
                 });
             }
-            return start;
+            return start.map(list->{
+                List<TrackEntity> result=new LinkedList<>();
+                for(TrackEntity entity:list){
+                    if(entity.artwork_url!=null){
+                        entity.artwork_url=entity.artwork_url.replace("large","t500x500");
+                        result.add(entity);
+                    }
+                }
+                return result;
+            });
         }
         return Single.error(new IllegalArgumentException("categories are null"));
     }

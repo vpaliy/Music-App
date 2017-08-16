@@ -17,6 +17,8 @@ import butterknife.BindView;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import javax.inject.Inject;
+
 import static com.vpaliy.melophile.ui.tracks.TracksContract.Presenter;
 
 public class TracksFragment extends BaseFragment
@@ -48,12 +50,12 @@ public class TracksFragment extends BaseFragment
 
     @Override
     public void showErrorMessage() {
-
+        //TODO add an error message
     }
 
     @Override
     public void showEmptyMessage() {
-
+        //TODO add empty message
     }
 
     @Override
@@ -63,6 +65,7 @@ public class TracksFragment extends BaseFragment
         adapter.addItem(CategoryAdapter.CategoryWrapper.wrap(trackSet.getThemeString(),tracksAdapter,0));
     }
 
+    @Inject
     @Override
     public void attachPresenter(@NonNull Presenter presenter) {
         this.presenter=presenter;

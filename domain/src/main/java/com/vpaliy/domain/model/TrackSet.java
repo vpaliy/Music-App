@@ -6,6 +6,13 @@ public class TrackSet {
     private MelophileTheme theme;
     private List<Track> tracks;
 
+    public TrackSet(){}
+
+    public TrackSet(MelophileTheme theme, List<Track> tracks){
+        this.theme=theme;
+        this.tracks=tracks;
+    }
+
     public MelophileTheme getTheme() {
         return theme;
     }
