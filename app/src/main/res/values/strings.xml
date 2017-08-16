@@ -5,4 +5,8 @@
     <string name="layout_manager" translatable="false">StaggeredGridLayoutManager</string>
     <string name="text_layout_manager" translatable="false">LinearLayoutManager</string>
     <string name="home_layout_manager" translatable="false">LinearLayoutManager</string>
+
+
+    <string name="background_trans_name" translatable="false">background_trans</string>
+    <string name="playlist_art_trans_name" translatable="false">playlist_art_trans</string>
 </resources>

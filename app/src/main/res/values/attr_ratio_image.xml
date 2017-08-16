@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ParallaxRatioImageView">
+        <attr name="image_ratio" format="float"/>
+        <attr name="scrimAlpha" format="float"/>
+        <attr name="maxScrimAlpha" format="float"/>
+        <attr name="parallaxFactor" format="float"/>
+        <attr name="scrimColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="Pinnable">
+        <attr name="state_pinned" format="boolean"/>
+    </declare-styleable>
+
+</resources>

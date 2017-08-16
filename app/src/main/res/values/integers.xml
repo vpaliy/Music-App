@@ -1,0 +1,9 @@
+<resources>
+    <integer name="page_fading_duration">300</integer>
+    <integer name="span_count">1</integer>
+    <integer name="message_duration">300</integer>
+    <integer name="rapid_animation">120</integer>
+    <integer name="fab_expand_duration">360</integer>
+    <integer name="comment_expand_collapse_duration">120</integer>
+    <integer name="transition_duration">200</integer>
+</resources>
