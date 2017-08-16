@@ -1,0 +1,20 @@
+<tabs>
+    <tab
+        id="@+id/playlists"
+        icon="@drawable/ic_music_lib"
+        barColorWhenSelected="#ff6f00"
+        badgeHidesWhenActive="true"
+        title="Movies" />
+    <tab
+        id="@+id/tracks"
+        icon="@drawable/ic_album"
+        barColorWhenSelected="#4db6f1"
+        badgeHidesWhenActive="true"
+        title="TV" />
+    <tab
+        id="@+id/personal"
+        icon="@drawable/ic_time"
+        barColorWhenSelected="#00695c"
+        badgeHidesWhenActive="true"
+        title="Personal" />
+</tabs>
