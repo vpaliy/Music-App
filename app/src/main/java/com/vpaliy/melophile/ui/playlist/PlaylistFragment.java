@@ -12,6 +12,8 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
+import com.vpaliy.melophile.ui.utils.Constants;
+
 import java.util.List;
 
 import android.support.annotation.NonNull;
@@ -24,8 +26,13 @@ public class PlaylistFragment extends BaseFragment
         implements PlaylistContract.View{
 
     private Presenter presenter;
-
     private String id;
+
+    public static PlaylistFragment newInstance(Bundle args){
+        PlaylistFragment fragment=new PlaylistFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void initializeDependencies() {
@@ -46,10 +53,15 @@ public class PlaylistFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        extractId(savedInstanceState);
         if(view!=null){
-
             presenter.start(id);
         }
+    }
+
+    private void extractId(Bundle bundle){
+        if(bundle==null) bundle=getArguments();
+        id=bundle.getString(Constants.EXTRA_ID);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.vpaliy.melophile.di.module;
 import android.content.Context;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.executor.SchedulerProvider;
+import com.vpaliy.melophile.ui.base.Navigator;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import javax.inject.Singleton;
 import dagger.Module;
@@ -29,5 +30,10 @@ public class ApplicationModule {
     @Singleton @Provides
     BaseSchedulerProvider schedulerProvider(){
         return new SchedulerProvider();
+    }
+
+    @Singleton @Provides
+    Navigator navigator(){
+        return new Navigator();
     }
 }

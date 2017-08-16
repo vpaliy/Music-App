@@ -4,12 +4,16 @@ import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.repository.Repository;
 
-import io.reactivex.Single;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+import io.reactivex.Single;
+@Singleton
 public class GetTrack extends SingleUseCase<Track,String> {
 
     private Repository repository;
 
+    @Inject
     public GetTrack(BaseSchedulerProvider schedulerProvider,
                     Repository repository){
         super(schedulerProvider);

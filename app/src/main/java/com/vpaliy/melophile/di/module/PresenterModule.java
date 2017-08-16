@@ -1,7 +1,10 @@
 package com.vpaliy.melophile.di.module;
 
+import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.interactor.GetTracks;
+import com.vpaliy.melophile.ui.playlist.PlaylistContract;
+import com.vpaliy.melophile.ui.playlist.PlaylistPresenter;
 import com.vpaliy.melophile.ui.playlists.PlaylistsContract;
 import com.vpaliy.melophile.ui.playlists.PlaylistsPresenter;
 import com.vpaliy.melophile.di.scope.ViewScope;
@@ -21,5 +24,10 @@ public class PresenterModule {
     @ViewScope @Provides
     TracksContract.Presenter tracks(GetTracks getTracks){
         return new TracksPresenter(getTracks);
+    }
+
+    @ViewScope @Provides
+    PlaylistContract.Presenter playlist(GetPlaylist getPlaylist){
+        return new PlaylistPresenter(getPlaylist);
     }
 }

@@ -16,6 +16,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Inject
     protected RxBus eventBus;
 
+    @Inject
+    protected Navigator navigator;
+
     /**
      * Handle the user events
      */
