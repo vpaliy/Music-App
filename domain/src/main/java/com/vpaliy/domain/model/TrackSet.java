@@ -18,6 +18,13 @@ public class TrackSet {
         this.theme = theme;
     }
 
+    public String getThemeString(){
+        if(theme!=null){
+            return theme.getTheme();
+        }
+        return null;
+    }
+
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
     }

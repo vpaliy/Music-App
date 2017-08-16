@@ -4,6 +4,7 @@ import android.content.Context;
 import com.vpaliy.data.source.Source;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.interactor.GetPlaylists;
+import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.repository.Repository;
 import com.vpaliy.melophile.di.module.ApplicationModule;
 import com.vpaliy.melophile.di.module.DataModule;
@@ -33,4 +34,5 @@ public interface ApplicationComponent {
     RxBus rxBus();
     //use cases
     GetPlaylists playlistsInteractor();
+    GetTracks tracksInteractor();
 }

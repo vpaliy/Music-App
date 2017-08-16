@@ -40,10 +40,8 @@ public class PlaylistAdapter extends BaseAdapter<Playlist>{
         public void onBindData(){
             Playlist playlist=at(getAdapterPosition());
             playlistTitle.setText(playlist.getTitle());
-            String url=playlist.getArtUrl();
-            if(url!=null) url=url.replace("large","t500x500");
             Glide.with(itemView.getContext())
-                    .load(url)
+                    .load(playlist.getArtUrl())
                     .priority(Priority.IMMEDIATE)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     //.placeholder(R.drawable.placeholder)

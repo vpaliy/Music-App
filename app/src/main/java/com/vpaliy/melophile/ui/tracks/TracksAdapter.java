@@ -1,5 +1,63 @@
 package com.vpaliy.melophile.ui.tracks;
 
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
 
-public class TracksAdapter {
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.vpaliy.domain.model.Track;
+import com.vpaliy.melophile.R;
+import com.vpaliy.melophile.ui.base.BaseAdapter;
+import com.vpaliy.melophile.ui.base.bus.RxBus;
+import android.widget.ImageView;
+import android.widget.TextView;
+import butterknife.ButterKnife;
+import android.support.annotation.NonNull;
+import butterknife.BindView;
+
+public class TracksAdapter extends BaseAdapter<Track> {
+
+    public TracksAdapter(@NonNull Context context, @NonNull RxBus rxBus){
+        super(context,rxBus);
+    }
+
+    public class TrackViewHolder extends BaseAdapter<Track>.GenericViewHolder{
+
+        @BindView(R.id.track_art)
+        ImageView artImage;
+
+        @BindView(R.id.track_title)
+        TextView trackTitle;
+
+        public TrackViewHolder(View itemView){
+            super(itemView);
+            ButterKnife.bind(this,itemView);
+        }
+
+        @Override
+        public void onBindData() {
+            Track track=at(getAdapterPosition());
+            trackTitle.setText(track.getTitle());
+            Glide.with(itemView.getContext())
+                    .load(track.getArtworkUrl())
+                    .priority(Priority.IMMEDIATE)
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    //.placeholder(R.drawable.placeholder)
+                    // .animate(R.anim.fade_in)
+                    .into(artImage);
+        }
+    }
+
+    @Override
+    public TrackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View root=inflater.inflate(R.layout.adapter_track,parent,false);
+        return new TrackViewHolder(root);
+    }
+
+    @Override
+    public void onBindViewHolder(GenericViewHolder holder, int position) {
+        holder.onBindData();
+    }
 }
