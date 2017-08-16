@@ -17,7 +17,6 @@
             android:layout_height="?attr/actionBarSize"/>
     </android.support.design.widget.AppBarLayout>
 
-
     <com.vpaliy.melophile.ui.view.HomePager
         android:id="@+id/pager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
