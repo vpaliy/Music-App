@@ -1,6 +1,9 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vpaliy.melophile.ui.view.TranslatableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
+    android:minHeight="@dimen/shot_collapsed_app_bar_height"
     android:background="@color/colorAccent"
     android:layout_width="match_parent"
     android:layout_height="200dp">
@@ -36,7 +39,7 @@
 
 
     <TextView
-        android:id="@+id/likes"
+        android:id="@+id/tracks_number"
         android:drawableTop="@drawable/ic_heart"
         android:drawablePadding="@dimen/spacing_medium"
         android:layout_width="wrap_content"
@@ -55,11 +58,11 @@
         android:drawableTop="@drawable/ic_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/likes"
-        app:layout_constraintLeft_toRightOf="@+id/likes"
-        app:layout_constraintBottom_toBottomOf="@+id/likes"
+        app:layout_constraintTop_toTopOf="@+id/tracks_number"
+        app:layout_constraintLeft_toRightOf="@+id/tracks_number"
+        app:layout_constraintBottom_toBottomOf="@+id/tracks_number"
         app:layout_constraintRight_toRightOf="parent" />
 
 
 
-</android.support.constraint.ConstraintLayout>
+</com.vpaliy.melophile.ui.view.TranslatableLayout>

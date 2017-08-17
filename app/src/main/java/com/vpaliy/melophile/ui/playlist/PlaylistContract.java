@@ -15,6 +15,9 @@ public interface PlaylistContract {
         void attachPresenter(@NonNull Presenter presenter);
         void showPlaylistArt(String artUrl);
         void showTracks(List<Track> tracks);
+        void showTitle(String title);
+        void showLikes(String likes);
+        void showTrackNumber(String trackNumber);
         void showUser(User user);
         void showErrorMessage();
         void showEmptyMessage();

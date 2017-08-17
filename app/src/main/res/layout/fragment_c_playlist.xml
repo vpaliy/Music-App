@@ -1,0 +1,109 @@
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        tools:background="@color/colorRevealLight"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        android:id="@+id/art_background" />
+
+    <ImageView
+        android:id="@+id/playlist_art"
+        tools:src="@drawable/evolve"
+        android:layout_width="@dimen/album_width"
+        android:layout_height="@dimen/album_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/art_background"
+        app:layout_constraintBottom_toBottomOf="@+id/art_background"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <TextView
+        tools:text="I Love San Francisco"
+        android:textSize="30sp"
+        style="@style/Widget.BigTitle"
+        android:textColor="@color/white_50"
+        android:id="@+id/playlist_title"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/spacing_big"
+        app:layout_constraintTop_toBottomOf="@+id/art_background" />
+
+
+    <TextView
+        android:id="@+id/tracks_number"
+        android:drawableTop="@drawable/ic_playlist_heart"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="138 Likes"
+        app:layout_constraintLeft_toLeftOf="@+id/track_number"
+        app:layout_constraintRight_toLeftOf="@+id/share"
+        app:layout_constraintTop_toTopOf="@+id/track_number"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/track_number"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/track_number"
+        android:drawableTop="@drawable/ic_playlist_album"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="138 tracks"
+        android:layout_marginTop="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tracks_number"
+        app:layout_constraintTop_toBottomOf="@+id/playlist_title" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        android:id="@+id/love"
+        app:srcCompat="@drawable/ic_playlist_heart"
+        android:layout_marginRight="@dimen/spacing_big"
+        android:layout_marginEnd="@dimen/spacing_big"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/art_background"
+        app:layout_constraintBottom_toBottomOf="@+id/art_background"
+        />
+
+    <TextView
+        android:id="@+id/share"
+        android:text="@string/share_action"
+        android:drawableTop="@drawable/ic_playlist_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/spacing_medium"
+        app:layout_constraintTop_toTopOf="@+id/tracks_number"
+        app:layout_constraintLeft_toRightOf="@+id/tracks_number"
+        app:layout_constraintBottom_toBottomOf="@+id/tracks_number"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tracks"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:listitem="@layout/layout_blank"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

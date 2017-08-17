@@ -6,7 +6,6 @@ import com.vpaliy.melophile.ui.base.BaseView;
 import android.support.annotation.NonNull;
 
 public interface PlaylistsContract {
-
     interface View extends BaseView<Presenter> {
         void attachPresenter(@NonNull Presenter presenter);
         void showPlaylists(@NonNull PlaylistSet playlistSet);

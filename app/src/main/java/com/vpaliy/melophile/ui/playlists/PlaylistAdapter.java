@@ -1,6 +1,7 @@
 package com.vpaliy.melophile.ui.playlists;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,6 +13,9 @@ import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
+import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
+import com.vpaliy.melophile.ui.utils.Constants;
+
 import butterknife.ButterKnife;
 import android.support.annotation.NonNull;
 import butterknife.BindView;
@@ -34,6 +38,13 @@ public class PlaylistAdapter extends BaseAdapter<Playlist>{
         PlaylistViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this,itemView);
+            itemView.setOnClickListener(v->{
+                Playlist playlist=at(getAdapterPosition());
+                Bundle data=new Bundle();
+                data.putString(Constants.EXTRA_DATA,playlist.getArtUrl());
+                data.putString(Constants.EXTRA_ID,playlist.getId());
+                rxBus.send(ExposeEvent.exposePlaylist(data,null));
+            });
         }
 
         @Override

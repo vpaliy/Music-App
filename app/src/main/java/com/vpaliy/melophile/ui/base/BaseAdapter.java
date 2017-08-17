@@ -1,12 +1,14 @@
 package com.vpaliy.melophile.ui.base;
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 import android.support.annotation.NonNull;
+import android.view.ViewGroup;
 
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 
@@ -57,6 +59,10 @@ public abstract class BaseAdapter<T> extends
 
     public void unlock() {
         lock = false;
+    }
+
+    protected View inflate(@LayoutRes int id, ViewGroup container){
+        return inflater.inflate(id,container,false);
     }
 
     public void lock() {

@@ -7,6 +7,7 @@ import com.roughike.bottombar.BottomBar;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseActivity;
+import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.utils.PresentationUtils;
 import com.vpaliy.melophile.ui.view.HomePager;
 import butterknife.ButterKnife;
@@ -66,7 +67,9 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void handleEvent(@NonNull Object event) {
-
+        if(event instanceof ExposeEvent){
+            navigator.navigate(this,(ExposeEvent)(event));
+        }
     }
 
     private void setHomePager(){

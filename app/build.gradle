@@ -18,6 +18,7 @@ android {
         versionName config.versionName
         testInstrumentationRunner config.testInstrumentationRunner
         vectorDrawables.useSupportLibrary true
+        multiDexEnabled true
     }
 
     compileOptions {
@@ -34,6 +35,7 @@ dependencies {
     compile project (":domain")
     compile project (":data")
     compile 'com.aurelhubert:ahbottomnavigation:2.0.6'
+    compile 'jp.wasabeef:blurry:2.1.1'
     compile 'com.roughike:bottom-bar:2.3.1'
     compile ('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
         transitive = true;

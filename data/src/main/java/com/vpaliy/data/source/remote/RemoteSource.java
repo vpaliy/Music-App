@@ -110,7 +110,13 @@ public class RemoteSource implements Source{
     @Override
     public Single<PlaylistEntity> getPlaylistBy(String id) {
         if(id!=null){
-            return service.fetchPlaylist(id);
+            return service.fetchPlaylist(id)
+                    .map(playlistEntity ->{
+                        if(playlistEntity.artwork_url!=null){
+                            playlistEntity.artwork_url=playlistEntity.artwork_url.replace("large","t500x500");
+                        }
+                        return playlistEntity;
+                    });
         }
         return Single.error(new IllegalArgumentException("id is null"));
     }

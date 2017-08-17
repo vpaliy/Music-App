@@ -1,0 +1,38 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        tools:src="@drawable/evolve"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="@dimen/spacing_medium"
+        android:layout_marginStart="@dimen/spacing_medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:id="@+id/track_art" />
+
+    <TextView
+        android:id="@+id/artist"
+        tools:text="Artist"
+        style="@style/Widget.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/track_art"
+        android:layout_marginTop="@dimen/spacing_medium"
+        app:layout_constraintLeft_toRightOf="@+id/track_art"
+        android:layout_marginLeft="@dimen/spacing_medium"
+        android:layout_marginStart="@dimen/spacing_medium" />
+
+    <TextView
+        android:id="@+id/track_title"
+        tools:text="Whatever It Takes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/artist"
+        android:layout_marginTop="@dimen/spacing_medium"
+        app:layout_constraintTop_toBottomOf="@+id/artist" />
+</android.support.constraint.ConstraintLayout>

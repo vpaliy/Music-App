@@ -22,6 +22,8 @@
     <color name="red_color">#ff5722</color>
     <color name="white_50">#fafafa</color>
 
+    <color name="color_playlist_details">@color/blue_grey_700</color>
+
     <!-- common colours -->
     <color name="text_primary_dark">#de000000</color> <!-- 87% -->
     <color name="text_secondary_dark">#8a000000</color> <!-- 54% -->

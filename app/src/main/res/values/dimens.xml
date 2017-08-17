@@ -40,7 +40,7 @@
     <dimen name="body_sheet_width">500dp</dimen>
     <dimen name="details_sheet_height">100dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
-    <dimen name="shot_collapsed_app_bar_height">200dp</dimen>
+    <dimen name="shot_collapsed_app_bar_height">82dp</dimen>
     <dimen name="drag_dismiss_distance">112dp</dimen>
 
 </resources>
