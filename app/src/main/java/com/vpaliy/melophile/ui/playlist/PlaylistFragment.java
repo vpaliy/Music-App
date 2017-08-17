@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,6 +70,12 @@ public class PlaylistFragment extends BaseFragment
     @BindView(R.id.back)
     protected ImageView back;
 
+    @BindView(R.id.author)
+    protected TextView user;
+
+    @BindView(R.id.user_avatar)
+    protected ImageView userAvatar;
+
     private PlaylistTrackAdapter adapter;
 
     private boolean loaded;
@@ -102,6 +110,7 @@ public class PlaylistFragment extends BaseFragment
         if(view!=null){
             adapter=new PlaylistTrackAdapter(getContext(),rxBus);
             tracks.setAdapter(adapter);
+            tracks.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
             presenter.start(id);
         }
     }
@@ -109,6 +118,7 @@ public class PlaylistFragment extends BaseFragment
     private void extractId(Bundle bundle){
         if(bundle==null) bundle=getArguments();
         id=bundle.getString(Constants.EXTRA_ID);
+        Log.d(PlaylistFragment.class.getSimpleName(),"ID:"+id);
         showPlaylistArt(bundle.getString(Constants.EXTRA_DATA));
     }
 
@@ -174,13 +184,13 @@ public class PlaylistFragment extends BaseFragment
         if(swatch==null) swatch=palette.getDominantSwatch();
         //apply if not null
         if(swatch!=null){
-            parent.setBackgroundColor(swatch.getRgb());
-            playlistTitle.setTextColor(swatch.getTitleTextColor());
-            trackNumber.setTextColor(swatch.getTitleTextColor());
-            shareButton.setTextColor(swatch.getTitleTextColor());
-            PresentationUtils.setDrawableColor(back,swatch.getTitleTextColor());
-            PresentationUtils.setDrawableColor(trackNumber,swatch.getTitleTextColor());
-            PresentationUtils.setDrawableColor(shareButton,swatch.getTitleTextColor());
+           // parent.setBackgroundColor(swatch.getRgb());
+            //playlistTitle.setTextColor(swatch.getTitleTextColor());
+            //trackNumber.setTextColor(swatch.getTitleTextColor());
+            //shareButton.setTextColor(swatch.getTitleTextColor());
+            //PresentationUtils.setDrawableColor(back,swatch.getTitleTextColor());
+            //PresentationUtils.setDrawableColor(trackNumber,swatch.getTitleTextColor());
+            //PresentationUtils.setDrawableColor(shareButton,swatch.getTitleTextColor());
         }
     }
 
@@ -191,7 +201,12 @@ public class PlaylistFragment extends BaseFragment
 
     @Override
     public void showUser(User user) {
-
+        Glide.with(getContext())
+                .load(user.getAvatarUrl())
+                .asBitmap()
+                .priority(Priority.IMMEDIATE)
+                .into(userAvatar);
+        this.user.setText(user.getNickName());
     }
 
     @OnClick(R.id.back)

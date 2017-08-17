@@ -3,6 +3,7 @@ package com.vpaliy.melophile.ui.playlist;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ServiceWorkerClient;
@@ -62,6 +63,7 @@ public class PlaylistTrackAdapter extends BaseAdapter<Track> {
         @Override
         public void onBindData() {
             Track track=at(current());
+            Log.d(PlaylistTrackAdapter.class.getSimpleName(),"Artist:"+track.getArtist());
             artist.setText(track.getArtist());
             trackTitle.setText(track.getTitle());
 

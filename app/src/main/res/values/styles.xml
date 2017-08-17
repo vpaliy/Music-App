@@ -63,4 +63,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="Widget.CommentAuthor" >
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">14sp</item>
+
+    </style>
 </resources>

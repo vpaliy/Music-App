@@ -75,4 +75,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
+
+    <style name="Widget.CommentAuthor" parent="@android:style/TextAppearance.Material.Caption">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFeatureSettings">smcp, onum</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
 </resources>

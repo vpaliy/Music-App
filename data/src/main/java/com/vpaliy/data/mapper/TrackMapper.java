@@ -31,8 +31,10 @@ public class TrackMapper extends Mapper<Track,TrackEntity> {
         track.setTags(MapperUtils.splitString(trackEntity.tags_list));
         track.setReleaseDate(trackEntity.release);
         track.setTitle(trackEntity.title);
-        //TODO fix this
-       // track.setArtist(trackEntity.ar);
+        MiniUserEntity userEntity=trackEntity.user;
+        if(userEntity!=null) {
+            track.setArtist(userEntity.username);
+        }
         return track;
     }
 
