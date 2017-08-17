@@ -1,0 +1,17 @@
+<transitionSet
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:interpolator="@android:interpolator/fast_out_slow_in"
+    android:transitionOrdering="together">
+
+    <changeBounds android:duration="300">
+        <pathMotion
+            class="com.vpaliy.melophile.ui.transition.ArcMotion"
+            android:maximumAngle="50" />
+    </changeBounds>
+    <transition
+        class="com.vpaliy.melophile.ui.transition.LiftOff"
+        android:duration="400"
+        app:initialElevation="@dimen/touch_raise" />
+
+</transitionSet>

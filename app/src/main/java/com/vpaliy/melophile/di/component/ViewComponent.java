@@ -7,6 +7,7 @@ import com.vpaliy.melophile.ui.playlist.PlaylistFragment;
 import com.vpaliy.melophile.ui.playlists.PlaylistsFragment;
 import com.vpaliy.melophile.ui.track.TrackFragment;
 import com.vpaliy.melophile.ui.tracks.TracksFragment;
+import com.vpaliy.melophile.ui.user.PersonFragment;
 
 import dagger.Component;
 
@@ -19,4 +20,5 @@ public interface ViewComponent {
     void inject(PersonalFragment fragment);
     void inject(PlaylistFragment fragment);
     void inject(TrackFragment fragment);
+    void inject(PersonFragment fragment);
 }

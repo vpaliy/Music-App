@@ -7,6 +7,7 @@ import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.interactor.GetTrack;
 import com.vpaliy.domain.interactor.GetTracks;
+import com.vpaliy.domain.interactor.GetUserDetails;
 import com.vpaliy.domain.playback.Playback;
 import com.vpaliy.domain.repository.Repository;
 import com.vpaliy.melophile.di.module.ApplicationModule;
@@ -45,6 +46,7 @@ public interface ApplicationComponent {
     GetTracks tracksInteractor();
     GetPlaylist playlistInteractor();
     GetTrack trackInteractor();
+    GetUserDetails userDetailsInteractor();
 
     //playback
     PlaybackManager playbackManager();

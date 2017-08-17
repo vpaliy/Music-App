@@ -246,4 +246,9 @@ public class PlaylistFragment extends BaseFragment
             presenter.stop();
         }
     }
+
+    @OnClick(R.id.user_avatar)
+    public void userClick(){
+
+    }
 }

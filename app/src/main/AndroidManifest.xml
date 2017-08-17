@@ -26,6 +26,9 @@
 
         <activity android:name=".ui.track.TrackActivity"
             android:theme="@style/MelophileTheme.Track"/>
+
+        <activity android:name=".ui.user.PersonActivity"
+            android:theme="@style/MelophileTheme.User"/>
     </application>
 
 </manifest>
