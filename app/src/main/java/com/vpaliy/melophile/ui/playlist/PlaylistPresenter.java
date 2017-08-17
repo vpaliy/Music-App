@@ -6,6 +6,7 @@ import com.vpaliy.melophile.di.scope.ViewScope;
 
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import static com.vpaliy.melophile.ui.playlist.PlaylistContract.View;
 

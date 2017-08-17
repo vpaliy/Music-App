@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.support.annotation.FloatRange;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Property;
 
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.utils.PresentationUtils;
@@ -27,6 +28,19 @@ public class ParallaxRatioImageView extends AppCompatImageView {
     private float parallaxFactor = -0.5f;
     private boolean isPinned = false;
     private boolean immediatePin = false;
+
+    public static final Property<ParallaxRatioImageView, Integer> OFFSET =
+            PresentationUtils.createIntProperty(new PresentationUtils.IntProp<ParallaxRatioImageView>("offset") {
+                @Override
+                public void set(ParallaxRatioImageView parallaxRatioImageView, int offset) {
+                    parallaxRatioImageView.setOffset(offset);
+                }
+
+                @Override
+                public int get(ParallaxRatioImageView parallaxRatioImageView) {
+                    return parallaxRatioImageView.getOffset();
+                }
+            });
 
     public ParallaxRatioImageView(Context context){
         this(context,null,0);

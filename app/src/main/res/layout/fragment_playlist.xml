@@ -36,7 +36,6 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tracks"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -62,16 +61,15 @@
         app:parallaxFactor="-0.5" />
 
     <include
-        android:visibility="gone"
         layout="@layout/layout_playlist"/>
 
     <com.vpaliy.melophile.ui.view.FabToggle
         android:id="@+id/love"
         app:fabSize="normal"
-        android:alpha="0"
         app:srcCompat="@drawable/ic_empty_heart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="0"
         android:layout_gravity="end"
         android:layout_marginRight="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium" />

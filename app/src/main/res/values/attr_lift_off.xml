@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="LiftOff">
+        <attr name="initialElevation" format="dimension" />
+        <attr name="finalElevation" format="dimension" />
+    </declare-styleable>
+</resources>

@@ -2,6 +2,7 @@ package com.vpaliy.melophile.ui.playlist;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -140,6 +141,9 @@ public class PlaylistFragment extends BaseFragment
                             playlistArt.setImageBitmap(resource);
                             parent.setStaticOffset(playlistArt.getHeight());
                             parent.setOffset(playlistArt.getHeight());
+                            love.setStaticOffset(playlistArt.getHeight()-love.getHeight()/2);
+                            love.setOffset(playlistArt.getOffset()-love.getHeight()/2);
+                            love.setMinOffset(ViewCompat.getMinimumHeight(playlistArt)-love.getHeight()/2);
                             View blank = adapter.getBlank();
                             ViewGroup.LayoutParams params = blank.getLayoutParams();
                             params.height = parent.getTop()+parent.getHeight()+playlistArt.getHeight();
@@ -204,4 +208,13 @@ public class PlaylistFragment extends BaseFragment
             love.setOffset(love.getStaticOffset()+scrollY);
         }
     };
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(PlaylistFragment.class.getSimpleName(),"onStop");
+        if(presenter!=null){
+            presenter.stop();
+        }
+    }
 }
