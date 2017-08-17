@@ -20,20 +20,15 @@ import static com.vpaliy.melophile.ui.playlists.PlaylistsContract.Presenter;
 public class PlaylistsFragment extends BaseFragment
         implements PlaylistsContract.View{
 
-    private static final String TAG=PlaylistsFragment.class.getSimpleName();
-
     private Presenter presenter;
     private CategoryAdapter adapter;
 
     @BindView(R.id.categories)
     protected RecyclerView categories;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root=inflater.inflate(R.layout.fragment_music,container,false);
-        bind(root);
-        return root;
+    protected int layoutId() {
+        return R.layout.fragment_music;
     }
 
     @Override

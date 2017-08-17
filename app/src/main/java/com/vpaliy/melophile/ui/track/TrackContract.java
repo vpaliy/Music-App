@@ -1,4 +1,5 @@
 package com.vpaliy.melophile.ui.track;
 
-public class TrackContract {
+public interface TrackContract {
+
 }

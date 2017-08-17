@@ -1,12 +1,16 @@
 package com.vpaliy.melophile.ui.base;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import android.support.annotation.Nullable;
+import android.view.ViewGroup;
+
 import javax.inject.Inject;
 
 public abstract class BaseFragment extends Fragment {
@@ -33,6 +37,18 @@ public abstract class BaseFragment extends Fragment {
         if(unbinder!=null){
             unbinder.unbind();
         }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(layoutId(),container,false);
+        bind(view);
+        return view;
+    }
+
+    @LayoutRes protected int layoutId(){
+        return -1;
     }
 
     public abstract void initializeDependencies();

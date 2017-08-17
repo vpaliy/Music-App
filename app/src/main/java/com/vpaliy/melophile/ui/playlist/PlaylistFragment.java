@@ -1,6 +1,5 @@
 package com.vpaliy.melophile.ui.playlist;
 
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
@@ -9,7 +8,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
@@ -23,12 +21,10 @@ import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.utils.Constants;
-import com.vpaliy.melophile.ui.utils.PresentationUtils;
 import com.vpaliy.melophile.ui.view.FabToggle;
 import com.vpaliy.melophile.ui.view.ParallaxRatioImageView;
 import com.vpaliy.melophile.ui.view.TranslatableLayout;
 import java.util.List;
-
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -94,12 +90,9 @@ public class PlaylistFragment extends BaseFragment
                 .build().inject(this);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root=inflater.inflate(R.layout.fragment_playlist,container,false);
-        bind(root);
-        return root;
+    protected int layoutId() {
+        return R.layout.fragment_playlist;
     }
 
     @Override
