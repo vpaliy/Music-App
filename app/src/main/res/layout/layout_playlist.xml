@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent"
+    android:padding="@dimen/spacing_large"
     android:minHeight="@dimen/shot_collapsed_app_bar_height"
     android:background="@color/colorAccent"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="wrap_content">
 
     <TextView
         tools:text="I Love San Francisco"
@@ -15,9 +16,6 @@
         android:transitionName="@string/playlist_title_trans_name"
         android:textColor="@color/white_50"
         android:id="@+id/playlist_title"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -40,21 +38,21 @@
 
     <TextView
         android:id="@+id/tracks_number"
+        android:layout_marginTop="@dimen/spacing_large"
         android:drawableTop="@drawable/ic_heart"
         android:drawablePadding="@dimen/spacing_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="138 Likes"
-        app:layout_constraintVertical_bias="0.8"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/share"
-        app:layout_constraintTop_toBottomOf="@+id/playlist_title"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/playlist_title" />
 
 
     <TextView
         android:id="@+id/share"
         android:text="@string/share_action"
+        android:drawablePadding="@dimen/spacing_medium"
         android:drawableTop="@drawable/ic_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

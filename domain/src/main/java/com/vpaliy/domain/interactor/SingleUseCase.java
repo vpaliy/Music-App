@@ -34,7 +34,6 @@ public abstract class SingleUseCase<T,Params>{
 
     public void dispose(){
         if(!disposables.isDisposed()){
-            disposables.dispose();
             disposables.clear();
         }
     }

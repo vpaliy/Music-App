@@ -1,5 +1,6 @@
 package com.vpaliy.melophile.ui.playlist;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
@@ -9,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.target.ImageViewTarget;
@@ -21,16 +21,20 @@ import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.utils.Constants;
+import com.vpaliy.melophile.ui.utils.PresentationUtils;
 import com.vpaliy.melophile.ui.view.FabToggle;
 import com.vpaliy.melophile.ui.view.ParallaxRatioImageView;
 import com.vpaliy.melophile.ui.view.TranslatableLayout;
 import java.util.List;
+
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import javax.inject.Inject;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.vpaliy.melophile.ui.playlist.PlaylistContract.Presenter;
 
@@ -57,6 +61,12 @@ public class PlaylistFragment extends BaseFragment
 
     @BindView(R.id.tracks_number)
     protected TextView trackNumber;
+
+    @BindView(R.id.share)
+    protected TextView shareButton;
+
+    @BindView(R.id.back)
+    protected ImageView back;
 
     private PlaylistTrackAdapter adapter;
 
@@ -138,15 +148,17 @@ public class PlaylistFragment extends BaseFragment
                     .into(new ImageViewTarget<Bitmap>(playlistArt) {
                         @Override
                         protected void setResource(Bitmap resource) {
+                            final int imageHeight=playlistArt.getHeight();
+                            final int padding=getResources().getDimensionPixelOffset(R.dimen.spacing_large);
                             playlistArt.setImageBitmap(resource);
-                            parent.setStaticOffset(playlistArt.getHeight());
-                            parent.setOffset(playlistArt.getHeight());
-                            love.setStaticOffset(playlistArt.getHeight()-love.getHeight()/2);
-                            love.setOffset(playlistArt.getOffset()-love.getHeight()/2);
+                            parent.setStaticOffset(imageHeight);
+                            parent.setOffset(imageHeight);
+                            love.setStaticOffset(imageHeight-love.getHeight()/2);
+                            love.setOffset(imageHeight-love.getHeight()/2);
                             love.setMinOffset(ViewCompat.getMinimumHeight(playlistArt)-love.getHeight()/2);
                             View blank = adapter.getBlank();
                             ViewGroup.LayoutParams params = blank.getLayoutParams();
-                            params.height = parent.getTop()+parent.getHeight()+playlistArt.getHeight();
+                            params.height = parent.getTop()+parent.getHeight()+imageHeight+padding;
                             blank.setLayoutParams(params);
                             tracks.addOnScrollListener(listener);
                             tracks.setOnFlingListener(flingListener);
@@ -164,6 +176,11 @@ public class PlaylistFragment extends BaseFragment
         if(swatch!=null){
             parent.setBackgroundColor(swatch.getRgb());
             playlistTitle.setTextColor(swatch.getTitleTextColor());
+            trackNumber.setTextColor(swatch.getTitleTextColor());
+            shareButton.setTextColor(swatch.getTitleTextColor());
+            PresentationUtils.setDrawableColor(back,swatch.getTitleTextColor());
+            PresentationUtils.setDrawableColor(trackNumber,swatch.getTitleTextColor());
+            PresentationUtils.setDrawableColor(shareButton,swatch.getTitleTextColor());
         }
     }
 
@@ -175,6 +192,11 @@ public class PlaylistFragment extends BaseFragment
     @Override
     public void showUser(User user) {
 
+    }
+
+    @OnClick(R.id.back)
+    public void goBack(){
+        getActivity().supportFinishAfterTransition();
     }
 
     @Inject
@@ -212,7 +234,6 @@ public class PlaylistFragment extends BaseFragment
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(PlaylistFragment.class.getSimpleName(),"onStop");
         if(presenter!=null){
             presenter.stop();
         }

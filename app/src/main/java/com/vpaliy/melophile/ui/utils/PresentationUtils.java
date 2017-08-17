@@ -1,13 +1,17 @@
 package com.vpaliy.melophile.ui.utils;
 
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntRange;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.IntProperty;
 import android.util.Property;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class PresentationUtils {
 
@@ -33,6 +37,24 @@ public class PresentationUtils {
     @ColorInt int modifyAlpha(@ColorInt int color,
                               @FloatRange(from = 0f, to = 1f) float alpha) {
         return modifyAlpha(color, (int) (255f * alpha));
+    }
+
+    public static void setDrawableColor(TextView view, int color){
+        Drawable[] drawables=view.getCompoundDrawables();
+        for(Drawable drawable:drawables){
+            if(drawable!=null){
+                drawable.mutate();
+                DrawableCompat.setTint(drawable,color);
+            }
+        }
+    }
+
+    public static void setDrawableColor(ImageView view, int color) {
+        Drawable drawable = view.getDrawable();
+        if (drawable != null) {
+            drawable.mutate();
+            DrawableCompat.setTint(drawable, color);
+        }
     }
 
     public static abstract class IntProp<T> {
