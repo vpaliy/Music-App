@@ -7,12 +7,15 @@ import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.interactor.GetTrack;
 import com.vpaliy.domain.interactor.GetTracks;
+import com.vpaliy.domain.playback.Playback;
 import com.vpaliy.domain.repository.Repository;
 import com.vpaliy.melophile.di.module.ApplicationModule;
 import com.vpaliy.melophile.di.module.DataModule;
 import com.vpaliy.melophile.di.module.InteractorModule;
 import com.vpaliy.melophile.di.module.MapperModule;
 import com.vpaliy.melophile.di.module.NetworkModule;
+import com.vpaliy.melophile.di.module.PlaybackModule;
+import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseActivity;
 import com.vpaliy.melophile.ui.base.Navigator;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
@@ -25,6 +28,7 @@ import dagger.Component;
         DataModule.class,
         MapperModule.class,
         NetworkModule.class,
+        PlaybackModule.class,
         InteractorModule.class,
         ApplicationModule.class})
 public interface ApplicationComponent {
@@ -41,4 +45,7 @@ public interface ApplicationComponent {
     GetTracks tracksInteractor();
     GetPlaylist playlistInteractor();
     GetTrack trackInteractor();
+
+    //playback
+    PlaybackManager playbackManager();
 }
