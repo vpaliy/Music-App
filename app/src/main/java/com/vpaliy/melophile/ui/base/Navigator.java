@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.playlist.PlaylistActivity;
 import com.vpaliy.melophile.ui.track.TrackActivity;
+import com.vpaliy.melophile.ui.user.PersonActivity;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.utils.Permission;
 
@@ -19,6 +20,8 @@ public class Navigator {
             case ExposeEvent.PLAYER:
                 clazz= TrackActivity.class;
                 break;
+            case ExposeEvent.USER:
+                clazz= PersonActivity.class;
         }
         Intent intent=new Intent(activity,clazz);
         intent.putExtra(Constants.EXTRA_DATA,exposeEvent.data);

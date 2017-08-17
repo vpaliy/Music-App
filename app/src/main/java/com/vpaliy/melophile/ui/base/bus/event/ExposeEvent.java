@@ -8,6 +8,7 @@ public class ExposeEvent {
 
     public static final int PLAYER=0;
     public static final int PLAYLIST=1;
+    public static final int USER=2;
 
     public final int code;
     public final Bundle data;
@@ -27,4 +28,7 @@ public class ExposeEvent {
         return new ExposeEvent(data,pack,PLAYER);
     }
 
+    public static ExposeEvent exposeUser(Bundle data, Pair<View,String>...pack){
+        return new ExposeEvent(data,pack,USER);
+    }
 }

@@ -6,7 +6,7 @@
 
     <changeBounds android:duration="300">
         <pathMotion
-            class="com.vpaliy.melophile.ui.transition.ArcMotion"
+            class="com.vpaliy.melophile.ui.transition.ArcPathMotion"
             android:maximumAngle="50" />
     </changeBounds>
     <transition

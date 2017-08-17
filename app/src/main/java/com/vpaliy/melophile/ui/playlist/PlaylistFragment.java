@@ -2,6 +2,7 @@ package com.vpaliy.melophile.ui.playlist;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DividerItemDecoration;
@@ -20,6 +21,7 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
+import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.view.FabToggle;
 import com.vpaliy.melophile.ui.view.ParallaxRatioImageView;
@@ -75,6 +77,8 @@ public class PlaylistFragment extends BaseFragment
     private PlaylistTrackAdapter adapter;
 
     private boolean loaded;
+
+    private User userModel;
 
     public static PlaylistFragment newInstance(Bundle args){
         PlaylistFragment fragment=new PlaylistFragment();
@@ -194,6 +198,7 @@ public class PlaylistFragment extends BaseFragment
 
     @Override
     public void showUser(User user) {
+        this.userModel=user;
         Glide.with(getContext())
                 .load(user.getAvatarUrl())
                 .asBitmap()
@@ -249,6 +254,12 @@ public class PlaylistFragment extends BaseFragment
 
     @OnClick(R.id.user_avatar)
     public void userClick(){
-
+        if(userModel!=null) {
+            Bundle data = new Bundle();
+            data.putString(Constants.EXTRA_ID,userModel.getId());
+            data.putString(Constants.EXTRA_DATA,userModel.getAvatarUrl());
+            rxBus.send(ExposeEvent.exposeUser(data, Pair.create(userAvatar,getString(R.string.background_trans_name)),
+                    Pair.create(userAvatar,getString(R.string.user_trans_name))));
+        }
     }
 }
