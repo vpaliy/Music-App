@@ -8,7 +8,6 @@
     <View
         android:id="@+id/background"
         android:transitionName="@string/background_trans_name"
-        android:visibility="gone"
         android:background="@color/white_50"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -37,6 +36,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tracks"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -61,7 +61,9 @@
         app:maxScrimAlpha="0.4"
         app:parallaxFactor="-0.5" />
 
-    <include layout="@layout/layout_playlist"/>
+    <include
+        android:visibility="gone"
+        layout="@layout/layout_playlist"/>
 
     <com.vpaliy.melophile.ui.view.FabToggle
         android:id="@+id/love"

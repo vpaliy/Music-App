@@ -2,6 +2,8 @@ package com.vpaliy.melophile.ui.playlists;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -41,9 +43,13 @@ public class PlaylistAdapter extends BaseAdapter<Playlist>{
             itemView.setOnClickListener(v->{
                 Playlist playlist=at(getAdapterPosition());
                 Bundle data=new Bundle();
+                Context context=inflater.getContext();
+                ViewCompat.setTransitionName(artImage,context.getString(R.string.playlist_art_trans_name));
+                ViewCompat.setTransitionName(itemView,context.getString(R.string.background_trans_name));
                 data.putString(Constants.EXTRA_DATA,playlist.getArtUrl());
                 data.putString(Constants.EXTRA_ID,playlist.getId());
-                rxBus.send(ExposeEvent.exposePlaylist(data,null));
+                rxBus.send(ExposeEvent.exposePlaylist(data, Pair.create(artImage,context.getString(R.string.playlist_art_trans_name)),
+                        Pair.create(artImage,context.getString(R.string.background_trans_name))));
             });
         }
 

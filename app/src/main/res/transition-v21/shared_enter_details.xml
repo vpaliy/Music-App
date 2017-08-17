@@ -1,0 +1,6 @@
+<transitionSet
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="350"
+    android:transitionOrdering="together">
+    <changeBounds android:interpolator="@android:interpolator/fast_out_slow_in"/>
+</transitionSet>

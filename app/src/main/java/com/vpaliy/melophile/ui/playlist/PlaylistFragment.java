@@ -86,6 +86,7 @@ public class PlaylistFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().supportPostponeEnterTransition();
         extractId(savedInstanceState);
         if(view!=null){
             adapter=new PlaylistTrackAdapter(getContext(),rxBus);
@@ -146,6 +147,7 @@ public class PlaylistFragment extends BaseFragment
                             tracks.addOnScrollListener(listener);
                             tracks.setOnFlingListener(flingListener);
                             new Palette.Builder(resource).generate(PlaylistFragment.this::applyPalette);
+                            getActivity().supportStartPostponedEnterTransition();
                         }
                     });
         }

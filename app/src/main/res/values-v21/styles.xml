@@ -25,9 +25,9 @@
         <item name="android:windowAllowReturnTransitionOverlap">false</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
         <item name="android:windowSharedElementEnterTransition">@transition/shared_enter_details</item>
-        <item name="android:windowEnterTransition">@transition/details_enter</item>
-        <item name="android:windowReturnTransition">@transition/details_exit</item>
-        <item name="android:windowSharedElementReturnTransition">@transition/shared_exit_details</item>
+        <item name="android:windowEnterTransition">@transition/playlist_enter</item>
+        <item name="android:windowReturnTransition">@transition/playlist_exit</item>
+        <item name="android:windowSharedElementReturnTransition">@transition/shared_playlist_exit</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>

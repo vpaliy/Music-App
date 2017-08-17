@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.playlist.PlaylistActivity"/>
+        <activity android:name=".ui.playlist.PlaylistActivity"
+            android:theme="@style/MelophileTheme.Details"/>
     </application>
 
 </manifest>
