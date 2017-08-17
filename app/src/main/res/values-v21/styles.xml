@@ -26,8 +26,29 @@
         <item name="android:windowSharedElementsUseOverlay">false</item>
         <item name="android:windowSharedElementEnterTransition">@transition/shared_enter_details</item>
         <item name="android:windowEnterTransition">@transition/playlist_enter</item>
-        <item name="android:windowReturnTransition">@transition/playlist_exit</item>
-        <item name="android:windowSharedElementReturnTransition">@transition/shared_playlist_exit</item>
+        <item name="android:windowReturnTransition">@transition/playlist_return</item>
+        <item name="android:windowSharedElementReturnTransition">@transition/shared_playlist_return</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowBackground">@color/scrim</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
+    <style name="MelophileTheme.Track" parent="MelophileTheme">
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">false</item>
+        <item name="android:windowSharedElementsUseOverlay">false</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/shared_enter_details</item>
+        <item name="android:windowEnterTransition">@transition/track_enter</item>
+        <item name="android:windowReturnTransition">@transition/track_return</item>
+        <item name="android:windowSharedElementReturnTransition">@transition/shared_track_return</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>

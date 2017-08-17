@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <transitionSet>
+        <targets>
+            <target android:excludeId="@android:id/navigationBarBackground" />
+            <target android:excludeId="@android:id/statusBarBackground" />
+            <target android:excludeId="@id/circle" />
+            <target android:excludeId="@id/back_wrapper" />
+            <target android:excludeId="@id/play_pause" />
+            <target android:excludeId="@id/next"/>
+            <target android:excludeId="@id/prev"/>
+        </targets>
+        <slide
+            android:duration="350"
+            android:interpolator="@android:interpolator/linear_out_slow_in" />
+        <!-- Delay fading in so that the shared element transition on the background
+             has time to run -->
+        <fade
+            android:startDelay="250"
+            android:duration="100"
+            android:interpolator="@android:interpolator/linear" />
+    </transitionSet>
+
+    <transitionSet>
+        <targets>
+            <target android:targetId="@id/prev" />
+            <target android:targetId="@id/next" />
+            <target android:targetId="@id/play_pause" />
+        </targets>
+        <transition
+            class="com.vpaliy.melophile.ui.transition.Pop"
+            android:startDelay="350"
+            android:duration="350"
+            android:interpolator="@android:interpolator/linear_out_slow_in" />
+        <slide
+            android:slideEdge="bottom"
+            android:startDelay="100"
+            android:duration="360"
+            android:interpolator="@android:interpolator/linear_out_slow_in" />
+    </transitionSet>
+
+    <fade
+        android:duration="350"
+        android:interpolator="@android:interpolator/linear">
+        <targets>
+            <target android:targetId="@android:id/statusBarBackground" />
+            <target android:targetId="@android:id/navigationBarBackground" />
+        </targets>
+    </fade>
+</transitionSet>
