@@ -31,11 +31,14 @@ android {
     }
 }
 
+//TODO remove unused dependencies from here
+
 dependencies {
     compile project (":domain")
     compile project (":data")
 
     compile 'com.google.android.exoplayer:exoplayer:r2.4.1'
+    compile 'com.github.ohoussein.playpauseview:playpauseview:1.0.1'
     compile 'com.aurelhubert:ahbottomnavigation:2.0.6'
     compile 'jp.wasabeef:blurry:2.1.1'
     compile 'com.roughike:bottom-bar:2.3.1'

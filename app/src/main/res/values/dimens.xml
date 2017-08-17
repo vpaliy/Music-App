@@ -28,6 +28,9 @@
     <dimen name="details_poster_height">180dp</dimen>
     <dimen name="details_backdrop_height">300dp</dimen>
 
+    <!-- Player -->
+    <dimen name="button_size">64dp</dimen>
+
     <!-- Z-axis elevations -->
     <dimen name="z_app_bar">4dp</dimen>
     <dimen name="z_card">2dp</dimen>

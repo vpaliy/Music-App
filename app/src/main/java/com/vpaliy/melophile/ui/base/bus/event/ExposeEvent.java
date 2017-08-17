@@ -6,15 +6,25 @@ import android.view.View;
 
 public class ExposeEvent {
 
+    public static final int PLAYER=0;
+    public static final int PLAYLIST=1;
+
+    public final int code;
     public final Bundle data;
     public final Pair<View,String>[] pack;
 
-    private ExposeEvent(Bundle data, Pair<View,String>[] pack){
+    private ExposeEvent(Bundle data, Pair<View,String>[] pack, int code){
         this.data=data;
         this.pack=pack;
+        this.code=code;
     }
 
     public static ExposeEvent exposePlaylist(Bundle data, Pair<View,String> ... pack){
-        return new ExposeEvent(data,pack);
+        return new ExposeEvent(data,pack,PLAYLIST);
     }
+
+    public static ExposeEvent exposeTrack(Bundle data, Pair<View,String> ... pack){
+        return new ExposeEvent(data,pack,PLAYER);
+    }
+
 }

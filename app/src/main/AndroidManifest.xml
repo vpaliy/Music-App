@@ -23,6 +23,9 @@
 
         <activity android:name=".ui.playlist.PlaylistActivity"
             android:theme="@style/MelophileTheme.Details"/>
+
+        <activity android:name=".ui.track.TrackActivity"
+            android:theme="@style/MelophileTheme.Details"/>
     </application>
 
 </manifest>

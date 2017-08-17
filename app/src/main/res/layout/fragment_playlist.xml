@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="450dp"
         android:minHeight="@dimen/shot_collapsed_app_bar_height"
-        android:transitionName="@string/playlist_art_trans_name"
+        android:transitionName="@string/art_trans_name"
         android:stateListAnimator="@animator/app_bar_pin"
         android:background="@color/light_grey"
         app:scrimColor="@color/scrim"

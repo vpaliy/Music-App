@@ -1,0 +1,142 @@
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:transitionGroup="false"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/evolve"
+        android:id="@+id/background"
+        android:transitionName="@string/background_trans_name"
+        android:scaleType="centerCrop"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    <TextView
+        android:id="@+id/end_time"
+        tools:text="4.50"
+        android:textSize="16sp"
+        style="@style/Widget.Title"
+        android:layout_width="wrap_content"
+        android:textColor="@color/colorGray"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintRight_toRightOf="@+id/progressView"
+        app:layout_constraintTop_toTopOf="@+id/start_time" />
+
+    <TextView
+        android:id="@+id/start_time"
+        tools:text="2.0"
+        android:textSize="16sp"
+        android:textColor="@color/colorGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Title"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="@+id/progressView"
+        app:layout_constraintBottom_toBottomOf="@+id/progressView"
+        android:layout_marginBottom="18dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle"
+        android:src="@drawable/evolve"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:transitionName="@string/art_trans_name"
+        app:layout_constraintLeft_toLeftOf="@+id/progressView"
+        app:layout_constraintRight_toRightOf="@+id/progressView"
+        app:layout_constraintBottom_toBottomOf="@+id/progressView"
+        app:layout_constraintTop_toTopOf="@+id/progressView" />
+
+    <TextView
+        android:id="@+id/artist"
+        tools:text="Imagine Dragons"
+        android:textStyle="bold"
+        style="@style/Widget.BigTitle"
+        android:textColor="@color/colorGray"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/progressView"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <TextView
+        android:id="@+id/track_name"
+        tools:text="Whatever it takes"
+        android:textColor="@color/colorGray"
+        android:layout_width="wrap_content"
+        style="@style/Widget.Title"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/artist"
+        app:layout_constraintLeft_toLeftOf="@+id/artist"
+        app:layout_constraintRight_toRightOf="@+id/artist" />
+
+    <ProgressBar
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:progressDrawable="@drawable/circle"
+        android:max="100"
+        tools:progress="10"
+        android:rotation="150"
+        style="?android:attr/progressBarStyleHorizontal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.256"
+        android:id="@+id/progressView" />
+
+    <ImageView
+        android:id="@+id/prev"
+        app:srcCompat="@drawable/ic_prev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@+id/play_pause"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.909" />
+
+    <ImageView
+        android:id="@+id/next"
+        app:srcCompat="@drawable/ic_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/play_pause"
+        app:layout_constraintBottom_toBottomOf="@+id/play_pause"
+        app:layout_constraintLeft_toRightOf="@+id/play_pause"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.ohoussein.playpause.PlayPauseView
+        android:id="@+id/play_pause"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:clickable="true"
+        app:fill_color="#fafafa"
+        app:pause_bg="#d50000"
+        app:play_bg="#d50000"
+        app:layout_constraintRight_toLeftOf="@+id/next"
+        app:layout_constraintLeft_toRightOf="@+id/prev"
+        app:layout_constraintTop_toTopOf="@+id/prev"
+        app:layout_constraintBottom_toBottomOf="@+id/prev"
+        app:layout_constraintVertical_bias="0.0"/>
+
+</android.support.constraint.ConstraintLayout>

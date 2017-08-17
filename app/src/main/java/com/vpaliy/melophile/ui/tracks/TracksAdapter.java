@@ -1,6 +1,9 @@
 package com.vpaliy.melophile.ui.tracks;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,6 +14,9 @@ import com.vpaliy.domain.model.Track;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
+import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
+import com.vpaliy.melophile.ui.utils.Constants;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
@@ -34,6 +40,17 @@ public class TracksAdapter extends BaseAdapter<Track> {
         public TrackViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this,itemView);
+            itemView.setOnClickListener(v->{
+                Track track=at(getAdapterPosition());
+                Bundle data=new Bundle();
+                Context context=inflater.getContext();
+                ViewCompat.setTransitionName(artImage,context.getString(R.string.art_trans_name));
+                ViewCompat.setTransitionName(itemView,context.getString(R.string.background_trans_name));
+                data.putString(Constants.EXTRA_DATA,track.getArtworkUrl());
+                data.putString(Constants.EXTRA_ID,track.getId());
+                rxBus.send(ExposeEvent.exposeTrack(data, Pair.create(artImage,context.getString(R.string.art_trans_name)),
+                        Pair.create(artImage,context.getString(R.string.background_trans_name))));
+            });
         }
 
         @Override
