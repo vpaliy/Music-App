@@ -2,6 +2,7 @@ package com.vpaliy.data.mapper;
 
 import com.vpaliy.domain.model.User;
 import com.vpaliy.soundcloud.model.MiniUserEntity;
+import com.vpaliy.soundcloud.model.UserEntity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

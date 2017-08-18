@@ -7,6 +7,9 @@
     <string name="home_layout_manager" translatable="false">LinearLayoutManager</string>
 
     <string name="follow_label">Follow</string>
+    <string name="tracks_label">Tracks</string>
+    <string name="albums_label">Albums</string>
+    <string name="playlist_label">Playlists</string>
 
     <string name="share_action">Share</string>
     <string name="background_trans_name" translatable="false">background_trans</string>

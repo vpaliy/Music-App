@@ -1,5 +1,7 @@
 package com.vpaliy.data.repository;
 
+import com.google.common.cache.CacheBuilder;
+import com.vpaliy.data.cache.CacheStore;
 import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.data.model.UserDetailsEntity;
 import com.vpaliy.data.source.Source;
@@ -12,20 +14,26 @@ import com.vpaliy.soundcloud.model.PlaylistEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
 import com.vpaliy.soundcloud.model.UserEntity;
 import java.util.List;
-
+import java.util.concurrent.TimeUnit;
+import io.reactivex.Single;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Single;
-
 @Singleton
 public class MusicRepository implements Repository {
+
+    private static final int DEFAULT_CACHE_SIZE=150; //max 150 items
+    private static final int DEFAULT_CACHE_DURATION=20; //20 minutes
 
     private Mapper<Playlist,PlaylistEntity> playlistMapper;
     private Mapper<Track,TrackEntity> trackMapper;
     private Mapper<User,UserEntity> userMapper;
     private Mapper<UserDetails,UserDetailsEntity> detailsMapper;
     private Source remoteSource;
+
+    private CacheStore<String,Playlist> playlistCacheStore;
+    private CacheStore<String,Track> trackCacheStore;
+    private CacheStore<String,User> userCacheStore;
 
     @Inject
     public MusicRepository(Mapper<Playlist,PlaylistEntity> playlistMapper,
@@ -38,6 +46,19 @@ public class MusicRepository implements Repository {
         this.userMapper=userMapper;
         this.detailsMapper=detailsMapper;
         this.remoteSource=remoteSource;
+        //initialize cache
+        playlistCacheStore=new CacheStore<>(CacheBuilder.newBuilder()
+                .maximumSize(DEFAULT_CACHE_SIZE)
+                .expireAfterAccess(DEFAULT_CACHE_DURATION, TimeUnit.MINUTES)
+                .build());
+        trackCacheStore=new CacheStore<>(CacheBuilder.newBuilder()
+                .maximumSize(DEFAULT_CACHE_SIZE)
+                .expireAfterAccess(DEFAULT_CACHE_DURATION, TimeUnit.MINUTES)
+                .build());
+        userCacheStore=new CacheStore<>(CacheBuilder.newBuilder()
+                .maximumSize(DEFAULT_CACHE_SIZE)
+                .expireAfterAccess(DEFAULT_CACHE_DURATION, TimeUnit.MINUTES)
+                .build());
     }
 
     @Override
@@ -80,5 +101,20 @@ public class MusicRepository implements Repository {
     public Single<List<User>> getUserFollowers(String id) {
         return remoteSource.getUserFollowers(id)
                 .map(userMapper::map);
+    }
+
+    @Override
+    public void cache(Playlist playlist) {
+        playlistCacheStore.put(playlist.getId(),playlist);
+    }
+
+    @Override
+    public void cache(Track track) {
+        trackCacheStore.put(track.getId(),track);
+    }
+
+    @Override
+    public void cache(User user) {
+        userCacheStore.put(user.getId(),user);
     }
 }

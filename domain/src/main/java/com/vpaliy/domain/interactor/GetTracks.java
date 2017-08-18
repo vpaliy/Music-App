@@ -27,6 +27,10 @@ public class GetTracks extends SingleUseCase<TrackSet,MelophileTheme>{
         this.repository=repository;
     }
 
+    public void cache(Track track){
+        repository.cache(track);
+    }
+
     @Override
     public Single<TrackSet> buildUseCase(MelophileTheme theme) {
         if(theme!=null){

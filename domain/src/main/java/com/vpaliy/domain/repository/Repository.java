@@ -16,4 +16,9 @@ public interface Repository {
     Single<Track> getTrackBy(String id);
     Single<Playlist> getPlaylistBy(String id);
     Single<List<User>> getUserFollowers(String id);
+
+    //cache them
+    void cache(Playlist playlist);
+    void cache(Track track);
+    void cache(User user);
 }

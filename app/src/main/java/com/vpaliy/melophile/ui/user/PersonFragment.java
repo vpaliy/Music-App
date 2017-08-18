@@ -2,6 +2,9 @@ package com.vpaliy.melophile.ui.user;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -15,17 +18,15 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
+import com.vpaliy.melophile.ui.playlists.CategoryAdapter;
 import com.vpaliy.melophile.ui.utils.Constants;
 import java.util.List;
 import java.util.Locale;
-
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import javax.inject.Inject;
-
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -48,6 +49,14 @@ public class PersonFragment extends BaseFragment
 
     @BindView(R.id.likes)
     protected TextView likes;
+
+    @BindView(R.id.playlists_count)
+    protected TextView playlistCount;
+
+    @BindView(R.id.media)
+    protected RecyclerView media;
+
+    private CategoryAdapter adapter;
 
 
     public static PersonFragment newInstance(Bundle args){
@@ -87,12 +96,21 @@ public class PersonFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().supportPostponeEnterTransition();
-        extractId(savedInstanceState);
+        if(view!=null){
+            adapter=new CategoryAdapter(getContext(),rxBus);
+            media.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+            media.setAdapter(adapter);
+            extractId(savedInstanceState);
+        }
     }
 
     @Override
     public void showTracks(List<Track> tracks) {
-
+        Log.d(PersonFragment.class.getSimpleName(),Integer.toString(tracks.size()));
+        UserTracksAdapter tracksAdapter=new UserTracksAdapter(getContext(),rxBus);
+        tracksAdapter.setData(tracks);
+        media.setAdapter(tracksAdapter);
+        //adapter.addItem(CategoryAdapter.CategoryWrapper.wrap(getString(R.string.tracks_label),adapter,0));
     }
 
     @Override
@@ -142,7 +160,10 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showPlaylists(List<Playlist> playlists) {
-
+        Log.d(PersonFragment.class.getSimpleName(),Integer.toString(playlists.size()));
+        UserPlaylistsAdapter playlistsAdapter=new UserPlaylistsAdapter(getContext(),rxBus);
+        playlistsAdapter.setData(playlists);
+      //  adapter.addItem(CategoryAdapter.CategoryWrapper.wrap(getString(R.string.tracks_label),adapter,1));
     }
 
     @OnClick(R.id.follow)
