@@ -50,6 +50,16 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
+    <TextView
+        android:id="@+id/description"
+        app:layout_constraintWidth_default="wrap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/spacing_huge"
+        app:layout_constraintTop_toBottomOf="@+id/follow"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 
     <TextView
         android:id="@+id/followers"
@@ -73,7 +83,7 @@
         android:layout_height="wrap_content"
         tools:text="28 mins"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/follow"
+        app:layout_constraintTop_toBottomOf="@+id/description"
         app:layout_constraintRight_toLeftOf="@+id/followers" />
 
     <TextView

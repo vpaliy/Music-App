@@ -174,13 +174,18 @@ public class PlaylistFragment extends BaseFragment
                         ViewGroup.LayoutParams params=blank.getLayoutParams();
                         params.height=playlistArt.getHeight()+parent.getHeight();
                         blank.setLayoutParams(params);
-                        Log.d(PlaylistFragment.class.getSimpleName(),Integer.toString(params.height));
                         parent.removeOnLayoutChangeListener(this);
                     }
                 });
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(id,Constants.EXTRA_ID);
     }
 
     @Override

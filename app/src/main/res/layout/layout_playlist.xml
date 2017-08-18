@@ -31,6 +31,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:scaleType="centerCrop"
         tools:src="@drawable/evolve"
         android:transitionName="@string/user_trans_name"
         app:layout_constraintRight_toRightOf="parent"

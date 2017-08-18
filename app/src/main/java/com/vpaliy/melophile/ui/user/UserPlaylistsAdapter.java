@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,14 +17,11 @@ import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.utils.Constants;
-
 import butterknife.ButterKnife;
 import android.support.annotation.NonNull;
 import butterknife.BindView;
 
 public class UserPlaylistsAdapter extends BaseAdapter<Playlist> {
-
-    private static final String TAG=UserPlaylistsAdapter.class.getSimpleName();
 
     public UserPlaylistsAdapter(@NonNull Context context, @NonNull RxBus rxBus){
         super(context,rxBus);
@@ -61,7 +57,6 @@ public class UserPlaylistsAdapter extends BaseAdapter<Playlist> {
         @Override
         public void onBindData() {
             Playlist playlist= at(getAdapterPosition());
-            //artist.setText(playlist.get);
             trackTitle.setText(playlist.getTitle());
 
             Glide.with(itemView.getContext())

@@ -4,12 +4,11 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.vpaliy.chips_lover.ChipsLayout;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
@@ -24,10 +23,12 @@ import java.util.Locale;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.vpaliy.melophile.ui.user.PersonContract.Presenter;
 
@@ -51,6 +52,9 @@ public class PersonFragment extends BaseFragment
 
     @BindView(R.id.playlists_count)
     protected TextView playlistCount;
+
+    @BindView(R.id.description)
+    protected TextView description;
 
     @BindView(R.id.media)
     protected RecyclerView media;
@@ -104,6 +108,11 @@ public class PersonFragment extends BaseFragment
     }
 
     @Override
+    public void showDescription(String description) {
+        this.description.setText(description);
+    }
+
+    @Override
     public void showTracks(List<Track> tracks) {
         UserTracksAdapter tracksAdapter=new UserTracksAdapter(getContext(),rxBus);
         tracksAdapter.setData(tracks);
@@ -144,7 +153,7 @@ public class PersonFragment extends BaseFragment
                             media.post(()->{
                                 View blank = adapter.getBlank();
                                 ViewGroup.LayoutParams params = blank.getLayoutParams();
-                                params.height = followers.getTop()+followers.getHeight();
+                                params.height = followers.getTop()+followers.getHeight()*2;
                                 blank.setLayoutParams(params);
                             });
                             getActivity().supportStartPostponedEnterTransition();

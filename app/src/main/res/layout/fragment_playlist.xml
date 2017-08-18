@@ -60,8 +60,7 @@
         app:maxScrimAlpha="0.4"
         app:parallaxFactor="-0.5" />
 
-    <include
-        layout="@layout/layout_playlist"/>
+    <include layout="@layout/layout_playlist"/>
 
     <com.vpaliy.melophile.ui.view.FabToggle
         android:id="@+id/love"

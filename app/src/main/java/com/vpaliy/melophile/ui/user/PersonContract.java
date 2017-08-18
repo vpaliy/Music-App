@@ -17,6 +17,7 @@ public interface PersonContract {
         void showAvatar(String avatarUrl);
         void showTracks(List<Track> tracks);
         void showPlaylists(List<Playlist> playlists);
+        void showDescription(String description);
         void showFollowers(List<User> followers);
         void showTitle(String title);
         void showFollowersCount(int count);

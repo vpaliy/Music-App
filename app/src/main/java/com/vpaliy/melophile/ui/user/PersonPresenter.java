@@ -7,6 +7,7 @@ import com.vpaliy.domain.model.UserDetails;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.List;
 
@@ -58,17 +59,26 @@ public class PersonPresenter implements PersonContract.Presenter{
 
     private void catchData(UserDetails details){
         if(details!=null){
-            view.showPlaylists(details.getPlaylists());
-            view.showTracks(details.getTracks());
+            if(!isEmpty(details.getTracks())) {
+                view.showTracks(details.getTracks());
+            }
+            if(!isEmpty(details.getPlaylists())) {
+                view.showPlaylists(details.getPlaylists());
+            }
             User user=details.getUser();
             if(user!=null){
                 view.showFollowersCount(user.getFollowersCount());
                 view.showTitle(user.getNickName());
+                view.showDescription(user.getDescription());
                 view.showLikedCount(user.getLikedTracksCount());
             }
         }else{
             view.showEmptyMessage();
         }
+    }
+
+    private <T> boolean isEmpty(List<T> items){
+        return items==null||items.isEmpty();
     }
 
     private void catchError(Throwable ex){
