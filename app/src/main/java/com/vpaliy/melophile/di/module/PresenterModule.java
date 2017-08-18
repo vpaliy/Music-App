@@ -4,6 +4,7 @@ import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
+import com.vpaliy.domain.interactor.GetUserFollowers;
 import com.vpaliy.melophile.ui.playlist.PlaylistContract;
 import com.vpaliy.melophile.ui.playlist.PlaylistPresenter;
 import com.vpaliy.melophile.ui.playlists.PlaylistsContract;
@@ -35,7 +36,7 @@ public class PresenterModule {
     }
 
     @ViewScope @Provides
-    PersonContract.Presenter person(GetUserDetails getUserDetails){
-        return new PersonPresenter(getUserDetails);
+    PersonContract.Presenter person(GetUserDetails getUserDetails, GetUserFollowers getUserFollowers){
+        return new PersonPresenter(getUserDetails,getUserFollowers);
     }
 }

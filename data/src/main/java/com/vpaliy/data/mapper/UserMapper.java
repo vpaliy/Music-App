@@ -24,6 +24,7 @@ public class UserMapper extends Mapper<User,UserEntity> {
         user.setFollowingCount(MapperUtils.convertToInt(userEntity.followings_count));
         user.setPlaylistsCount(MapperUtils.convertToInt(userEntity.playlist_count));
         user.setTracksCount(MapperUtils.convertToInt(userEntity.track_count));
+        user.setLikedTracksCount(MapperUtils.convertToInt(userEntity.public_favorites_count));
         return user;
     }
 
@@ -39,6 +40,7 @@ public class UserMapper extends Mapper<User,UserEntity> {
         entity.followings_count=Integer.toString(user.getFollowingCount());
         entity.playlist_count=Integer.toString(user.getPlaylistsCount());
         entity.track_count=Integer.toString(user.getTracksCount());
+        entity.public_favorites_count=Integer.toBinaryString(user.getLikedTracksCount());
         return entity;
     }
 }

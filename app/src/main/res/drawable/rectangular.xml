@@ -1,0 +1,7 @@
+<shape android:innerRadiusRatio="2.3"
+    android:shape="rectangle"
+    android:thickness="3.8sp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="2dp"/>
+    <solid android:color="@color/colorAccent" />
+</shape>

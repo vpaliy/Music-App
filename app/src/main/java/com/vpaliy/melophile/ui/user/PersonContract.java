@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
+import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.ui.base.BasePresenter;
 import com.vpaliy.melophile.ui.base.BaseView;
 
@@ -16,6 +17,10 @@ public interface PersonContract {
         void showAvatar(String avatarUrl);
         void showTracks(List<Track> tracks);
         void showPlaylists(List<Playlist> playlists);
+        void showFollowers(List<User> followers);
+        void showTitle(String title);
+        void showFollowersCount(int count);
+        void showLikedCount(int count);
         void showEmptyMessage();
         void showErrorMessage();
     }
@@ -23,6 +28,7 @@ public interface PersonContract {
     interface Presenter extends BasePresenter<View> {
         void attachView(@NonNull View view);
         void stop();
+        void requestFollowers(String id);
         void start(String id);
     }
 }

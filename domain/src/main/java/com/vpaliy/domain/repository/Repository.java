@@ -15,4 +15,5 @@ public interface Repository {
     Single<UserDetails> getUserBy(String id);
     Single<Track> getTrackBy(String id);
     Single<Playlist> getPlaylistBy(String id);
+    Single<List<User>> getUserFollowers(String id);
 }

@@ -153,4 +153,19 @@ public class RemoteSource implements Source{
         return Single.error(new IllegalArgumentException("id is null"));
     }
 
+    @Override
+    public Single<List<UserEntity>> getUserFollowers(String id) {
+        if(id!=null){
+            return service.fetchUserFollowers(id);
+        }
+        return Single.error(new IllegalArgumentException("id is null"));
+    }
+
+    @Override
+    public Single<List<TrackEntity>> getUserFavorites(String id) {
+        if(id!=null){
+            return service.fetchUserFavoriteTracks(id);
+        }
+        return Single.error(new IllegalArgumentException("id is null"));
+    }
 }

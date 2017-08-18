@@ -6,6 +6,8 @@
     <string name="text_layout_manager" translatable="false">LinearLayoutManager</string>
     <string name="home_layout_manager" translatable="false">LinearLayoutManager</string>
 
+    <string name="follow_label">Follow</string>
+
     <string name="share_action">Share</string>
     <string name="background_trans_name" translatable="false">background_trans</string>
     <string name="art_trans_name" translatable="false">playlist_art_trans</string>

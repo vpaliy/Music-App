@@ -1,10 +1,16 @@
 package com.vpaliy.melophile.ui.user;
 
 import com.vpaliy.domain.interactor.GetUserDetails;
+import com.vpaliy.domain.interactor.GetUserFollowers;
+import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.model.UserDetails;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
+
+import java.util.List;
+
+import io.reactivex.observers.DisposableSingleObserver;
 
 import static com.vpaliy.melophile.ui.user.PersonContract.View;
 
@@ -13,10 +19,13 @@ public class PersonPresenter implements PersonContract.Presenter{
 
     private View view;
     private GetUserDetails userDetailsUseCase;
+    private GetUserFollowers userFollowersUseCase;
 
     @Inject
-    public PersonPresenter(GetUserDetails userDetailsUseCase){
+    public PersonPresenter(GetUserDetails userDetailsUseCase,
+                           GetUserFollowers userFollowersUseCase){
         this.userDetailsUseCase=userDetailsUseCase;
+        this.userFollowersUseCase=userFollowersUseCase;
     }
 
     @Override
@@ -29,10 +38,34 @@ public class PersonPresenter implements PersonContract.Presenter{
         userDetailsUseCase.execute(this::catchData,this::catchError,id);
     }
 
+    @Override
+    public void requestFollowers(String id) {
+        userFollowersUseCase.execute(new DisposableSingleObserver<List<User>>() {
+            @Override
+            public void onSuccess(List<User> value) {
+                if(value!=null){
+                    view.showFollowers(value);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                view.showErrorMessage();
+            }
+        },id);
+    }
+
     private void catchData(UserDetails details){
         if(details!=null){
             view.showPlaylists(details.getPlaylists());
             view.showTracks(details.getTracks());
+            User user=details.getUser();
+            if(user!=null){
+                view.showFollowersCount(user.getFollowersCount());
+                view.showTitle(user.getNickName());
+                view.showLikedCount(user.getLikedTracksCount());
+            }
         }else{
             view.showEmptyMessage();
         }

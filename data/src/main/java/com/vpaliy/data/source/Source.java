@@ -15,4 +15,6 @@ public interface Source {
     Single<UserDetailsEntity> getUserBy(String id);
     Single<TrackEntity> getTrackBy(String id);
     Single<PlaylistEntity> getPlaylistBy(String id);
+    Single<List<UserEntity>> getUserFollowers(String id);
+    Single<List<TrackEntity>> getUserFavorites(String id);
 }

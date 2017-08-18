@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/evolve"
+        tools:src="@drawable/evolve"
         android:id="@+id/background"
         android:transitionName="@string/background_trans_name"
         android:scaleType="centerCrop"

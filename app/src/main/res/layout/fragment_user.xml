@@ -18,4 +18,75 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/spacing_huge" />
+
+    <TextView
+        android:id="@+id/username"
+        tools:text="Imagine Dragons"
+        style="@style/Widget.BigTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/user_avatar"
+        app:layout_constraintLeft_toLeftOf="@+id/user_avatar"
+        android:layout_marginTop="@dimen/spacing_huge"
+        app:layout_constraintRight_toRightOf="@+id/user_avatar" />
+
+    <!-- TODO get the elevation -->
+    <TextView
+        android:id="@+id/follow"
+        android:drawableLeft="@drawable/ic_person_add"
+        android:drawableStart="@drawable/ic_person_add"
+        android:text="Follow"
+        android:textAllCaps="true"
+        android:textColor="@color/white_50"
+        android:elevation="@dimen/bb_default_elevation"
+        android:background="@drawable/rectangular"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:padding="@dimen/spacing_medium"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_big"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+
+    <TextView
+        android:id="@+id/followers"
+        android:drawableTop="@drawable/ic_followers"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="138 Likes"
+        app:layout_constraintLeft_toLeftOf="@+id/duration"
+        app:layout_constraintRight_toLeftOf="@+id/likes"
+        app:layout_constraintTop_toTopOf="@+id/duration"
+        app:layout_constraintBottom_toBottomOf="@+id/duration" />
+
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_marginTop="@dimen/spacing_huge"
+        android:drawableTop="@drawable/ic_playlist_duration"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="28 mins"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/follow"
+        app:layout_constraintRight_toLeftOf="@+id/followers"
+        app:layout_constraintHorizontal_chainStyle="spread" />
+
+    <TextView
+        android:id="@+id/likes"
+        tools:text="24345 Likes"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:drawableTop="@drawable/ic_playlist_heart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/followers"
+        app:layout_constraintLeft_toRightOf="@+id/followers"
+        app:layout_constraintBottom_toBottomOf="@+id/followers"
+        app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>

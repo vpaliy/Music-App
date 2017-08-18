@@ -6,6 +6,7 @@ import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.interactor.GetTrack;
 import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
+import com.vpaliy.domain.interactor.GetUserFollowers;
 import com.vpaliy.domain.repository.Repository;
 
 import javax.inject.Singleton;
@@ -37,5 +38,10 @@ public class InteractorModule {
     @Singleton @Provides
     GetUserDetails getUserDetails(Repository repository, BaseSchedulerProvider schedulerProvider){
         return new GetUserDetails(schedulerProvider,repository);
+    }
+
+    @Singleton @Provides
+    GetUserFollowers getUserFollowers(Repository repository, BaseSchedulerProvider schedulerProvider){
+        return new GetUserFollowers(repository,schedulerProvider);
     }
 }

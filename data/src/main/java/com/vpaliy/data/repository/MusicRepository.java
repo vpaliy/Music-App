@@ -75,4 +75,10 @@ public class MusicRepository implements Repository {
         return remoteSource.getUserBy(id)
                 .map(detailsMapper::map);
     }
+
+    @Override
+    public Single<List<User>> getUserFollowers(String id) {
+        return remoteSource.getUserFollowers(id)
+                .map(userMapper::map);
+    }
 }

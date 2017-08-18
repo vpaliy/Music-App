@@ -11,6 +11,7 @@ public class User {
     private int followersCount;
     private int playlistsCount;
     private int tracksCount;
+    private int likedTracksCount;
 
     public String getDescription() {
         return description;
@@ -42,6 +43,14 @@ public class User {
 
     public String getId() {
         return id;
+    }
+
+    public void setLikedTracksCount(int likedTracksCount) {
+        this.likedTracksCount = likedTracksCount;
+    }
+
+    public int getLikedTracksCount() {
+        return likedTracksCount;
     }
 
     public String getNickName() {
