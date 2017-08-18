@@ -36,7 +36,7 @@ public class CacheStore<K, V> {
     }
 
     public  boolean isInCache(K key) {
-        return cache.getIfPresent(key) != null;
+        return key!=null && cache.getIfPresent(key) != null;
     }
 
     public long size(){

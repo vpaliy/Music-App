@@ -1,109 +1,120 @@
-<android.support.constraint.ConstraintLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
+    android:id="@+id/rootView"
+    android:transitionGroup="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        tools:background="@color/colorRevealLight"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        android:id="@+id/art_background" />
-
-    <ImageView
-        android:id="@+id/playlist_art"
-        tools:src="@drawable/evolve"
-        android:layout_width="@dimen/album_width"
-        android:layout_height="@dimen/album_height"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/art_background"
-        app:layout_constraintBottom_toBottomOf="@+id/art_background"
-        app:layout_constraintVertical_bias="0.7" />
-
-    <TextView
-        tools:text="I Love San Francisco"
-        android:textSize="30sp"
-        style="@style/Widget.BigTitle"
-        android:textColor="@color/white_50"
-        android:id="@+id/playlist_title"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="@dimen/spacing_big"
-        app:layout_constraintTop_toBottomOf="@+id/art_background" />
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:transitionGroup="false"
+        android:layout_height="wrap_content">
+        <android.support.constraint.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:transitionGroup="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/tracks_number"
-        android:drawableTop="@drawable/ic_playlist_heart"
-        android:drawablePadding="@dimen/spacing_medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="138 Likes"
-        app:layout_constraintLeft_toLeftOf="@+id/track_number"
-        app:layout_constraintRight_toLeftOf="@+id/share"
-        app:layout_constraintTop_toTopOf="@+id/track_number"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/track_number"
-        android:layout_marginBottom="0dp"
-        app:layout_constraintVertical_bias="1.0" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_avatar"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                tools:src="@drawable/evolve"
+                android:transitionName="@string/user_trans_name"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/spacing_huge"
+                app:layout_constraintHorizontal_bias="0.505" />
 
-    <TextView
-        android:id="@+id/track_number"
-        android:drawableTop="@drawable/ic_playlist_album"
-        android:drawablePadding="@dimen/spacing_medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="138 tracks"
-        android:layout_marginTop="32dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/tracks_number"
-        app:layout_constraintTop_toBottomOf="@+id/playlist_title" />
+            <TextView
+                android:id="@+id/username"
+                tools:text="Imagine Dragons"
+                style="@style/Widget.BigTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/user_avatar"
+                app:layout_constraintLeft_toLeftOf="@+id/user_avatar"
+                android:layout_marginTop="@dimen/spacing_huge"
+                app:layout_constraintRight_toRightOf="@+id/user_avatar" />
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fabSize="normal"
-        android:id="@+id/love"
-        app:srcCompat="@drawable/ic_playlist_heart"
-        android:layout_marginRight="@dimen/spacing_big"
-        android:layout_marginEnd="@dimen/spacing_big"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/art_background"
-        app:layout_constraintBottom_toBottomOf="@+id/art_background"
-        />
+            <TextView
+                android:id="@+id/follow"
+                android:drawableLeft="@drawable/ic_person_add"
+                android:drawableStart="@drawable/ic_person_add"
+                android:text="Follow"
+                android:textAllCaps="true"
+                android:textColor="@color/white_50"
+                android:elevation="@dimen/bb_default_elevation"
+                android:background="@drawable/rectangular"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:padding="@dimen/spacing_medium"
+                android:drawablePadding="@dimen/spacing_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_big"
+                app:layout_constraintTop_toBottomOf="@+id/username"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
-    <TextView
-        android:id="@+id/share"
-        android:text="@string/share_action"
-        android:drawableTop="@drawable/ic_playlist_share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/spacing_medium"
-        app:layout_constraintTop_toTopOf="@+id/tracks_number"
-        app:layout_constraintLeft_toRightOf="@+id/tracks_number"
-        app:layout_constraintBottom_toBottomOf="@+id/tracks_number"
-        app:layout_constraintRight_toRightOf="parent" />
+
+            <TextView
+                android:id="@+id/followers"
+                android:drawableTop="@drawable/ic_followers"
+                android:drawablePadding="@dimen/spacing_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="138 Likes"
+                app:layout_constraintLeft_toLeftOf="@+id/playlists_count"
+                app:layout_constraintRight_toLeftOf="@+id/likes"
+                app:layout_constraintTop_toTopOf="@+id/playlists_count"
+                app:layout_constraintBottom_toBottomOf="@+id/playlists_count" />
+
+
+            <TextView
+                android:id="@+id/playlists_count"
+                android:layout_marginTop="@dimen/spacing_huge"
+                android:drawableTop="@drawable/ic_music_lib"
+                android:drawablePadding="@dimen/spacing_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="28 mins"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/follow"
+                app:layout_constraintRight_toLeftOf="@+id/followers" />
+
+            <TextView
+                android:id="@+id/likes"
+                tools:text="24345 Likes"
+                android:gravity="center"
+                android:drawablePadding="@dimen/spacing_medium"
+                android:drawableTop="@drawable/ic_playlist_heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/followers"
+                app:layout_constraintLeft_toRightOf="@+id/followers"
+                app:layout_constraintBottom_toBottomOf="@+id/followers"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.design.widget.AppBarLayout>
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/tracks"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        tools:listitem="@layout/layout_blank"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:id="@+id/media"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

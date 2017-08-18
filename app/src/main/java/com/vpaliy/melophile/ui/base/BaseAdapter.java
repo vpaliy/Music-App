@@ -3,6 +3,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public abstract class BaseAdapter<T> extends
     }
 
     public BaseAdapter<T> addItem(T item) {
-        int size = data.size();
+        int size = getItemCount();
         data.add(item);
         notifyItemRangeInserted(size, getItemCount());
         return this;

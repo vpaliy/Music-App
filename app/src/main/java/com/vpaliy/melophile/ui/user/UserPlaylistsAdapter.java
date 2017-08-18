@@ -57,7 +57,7 @@ public class UserPlaylistsAdapter extends BaseAdapter<Playlist> {
 
     @Override
     public GenericViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new TrackViewHolder(inflate(R.layout.adapter_playlist_track,parent));
+        return new TrackViewHolder(inflater.inflate(R.layout.adapter_playlist_track,parent,false));
     }
 
     @Override

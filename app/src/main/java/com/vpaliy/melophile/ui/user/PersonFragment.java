@@ -22,6 +22,8 @@ import com.vpaliy.melophile.ui.playlists.CategoryAdapter;
 import com.vpaliy.melophile.ui.utils.Constants;
 import java.util.List;
 import java.util.Locale;
+
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import javax.inject.Inject;
@@ -56,7 +58,7 @@ public class PersonFragment extends BaseFragment
     @BindView(R.id.media)
     protected RecyclerView media;
 
-    private CategoryAdapter adapter;
+    private MediaAdapter adapter;
 
 
     public static PersonFragment newInstance(Bundle args){
@@ -97,20 +99,24 @@ public class PersonFragment extends BaseFragment
         super.onViewCreated(view, savedInstanceState);
         getActivity().supportPostponeEnterTransition();
         if(view!=null){
-            adapter=new CategoryAdapter(getContext(),rxBus);
+            adapter=new MediaAdapter(getContext(),rxBus);
             media.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
             media.setAdapter(adapter);
-            extractId(savedInstanceState);
+            followers.post(()->{
+                View blank=adapter.getBlank();
+                ViewGroup.LayoutParams params=blank.getLayoutParams();
+                params.height=followers.getTop()+followers.getHeight()*2;
+                blank.setLayoutParams(params);
+                blank.post(()->extractId(savedInstanceState));
+            });
         }
     }
 
     @Override
     public void showTracks(List<Track> tracks) {
-        Log.d(PersonFragment.class.getSimpleName(),Integer.toString(tracks.size()));
         UserTracksAdapter tracksAdapter=new UserTracksAdapter(getContext(),rxBus);
         tracksAdapter.setData(tracks);
-        media.setAdapter(tracksAdapter);
-        //adapter.addItem(CategoryAdapter.CategoryWrapper.wrap(getString(R.string.tracks_label),adapter,0));
+        adapter.addItem(MediaAdapter.CategoryWrapper.wrap(getString(R.string.tracks_label),tracksAdapter,0));
     }
 
     @Override
@@ -130,7 +136,7 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showLikedCount(int count) {
-        likes.setText(String.format(Locale.US,"%d",count));
+       likes.setText(String.format(Locale.US,"%d",count));
     }
 
     @Override
@@ -160,20 +166,9 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showPlaylists(List<Playlist> playlists) {
-        Log.d(PersonFragment.class.getSimpleName(),Integer.toString(playlists.size()));
         UserPlaylistsAdapter playlistsAdapter=new UserPlaylistsAdapter(getContext(),rxBus);
         playlistsAdapter.setData(playlists);
-      //  adapter.addItem(CategoryAdapter.CategoryWrapper.wrap(getString(R.string.tracks_label),adapter,1));
-    }
-
-    @OnClick(R.id.follow)
-    public void follow(){
-
-    }
-
-    @OnClick(R.id.followers)
-    public void requestFollowers(){
-        presenter.requestFollowers(id);
+        adapter.addItem(MediaAdapter.CategoryWrapper.wrap(getString(R.string.playlist_label),playlistsAdapter,1));
     }
 
     @Override

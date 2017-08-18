@@ -13,6 +13,8 @@ import android.view.View;
 
 public class PlaylistActivity extends BaseActivity {
 
+    private Bundle data;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +23,7 @@ public class PlaylistActivity extends BaseActivity {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         if(savedInstanceState==null){
-            savedInstanceState=getIntent().getExtras().getBundle(Constants.EXTRA_DATA);
+            data=getIntent().getExtras().getBundle(Constants.EXTRA_DATA);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.frame, PlaylistFragment.newInstance(savedInstanceState))
                     .commit();
@@ -31,6 +33,12 @@ public class PlaylistActivity extends BaseActivity {
     @Override
     public void inject() {
         App.appInstance().appComponent().inject(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
     }
 
     @Override

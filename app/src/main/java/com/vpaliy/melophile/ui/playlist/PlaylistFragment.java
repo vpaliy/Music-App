@@ -153,6 +153,16 @@ public class PlaylistFragment extends BaseFragment
     public void showTitle(String title) {
         playlistTitle.setText(title);
         titleBackground.setVisibility(View.VISIBLE);
+        changeBlank();
+    }
+
+    @Override
+    public void showTags(List<String> tags) {
+       // chipsLayout.setVisibility(View.VISIBLE);
+       // chipsLayout.setTags(tags);
+    }
+
+    private void changeBlank(){
         parent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -164,19 +174,13 @@ public class PlaylistFragment extends BaseFragment
                         ViewGroup.LayoutParams params=blank.getLayoutParams();
                         params.height=playlistArt.getHeight()+parent.getHeight();
                         blank.setLayoutParams(params);
+                        Log.d(PlaylistFragment.class.getSimpleName(),Integer.toString(params.height));
                         parent.removeOnLayoutChangeListener(this);
                     }
                 });
                 return true;
             }
         });
-    }
-
-    @Override
-    public void showTags(List<String> tags) {
-        Log.d(PlaylistFragment.class.getSimpleName(),Integer.toString(tags.size()));
-        chipsLayout.setVisibility(View.VISIBLE);
-        chipsLayout.setTags(tags);
     }
 
     @Override

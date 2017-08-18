@@ -29,7 +29,7 @@
         android:layout_marginTop="@dimen/spacing_huge"
         app:layout_constraintRight_toRightOf="@+id/user_avatar" />
 
-    <!-- TODO get the elevation -->
+
     <TextView
         android:id="@+id/follow"
         android:drawableLeft="@drawable/ic_person_add"
@@ -37,7 +37,7 @@
         android:text="Follow"
         android:textAllCaps="true"
         android:textColor="@color/white_50"
-        android:elevation="@dimen/bb_default_elevation"
+        android:elevation="@dimen/z_card"
         android:background="@drawable/rectangular"
         android:gravity="center"
         android:textStyle="bold"
@@ -89,21 +89,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/followers"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <FrameLayout
-        android:layout_height="0dp"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/media"
         android:layout_width="0dp"
-        android:layout_marginTop="@dimen/spacing_medium"
-        app:layout_constraintTop_toBottomOf="@+id/likes"
+        android:layout_height="0dp"
+        android:elevation="@dimen/z_card"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/media"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            android:orientation="vertical"
-            android:scrollbars="vertical"
-            android:scrollbarStyle="insideOverlay" />
-    </FrameLayout>
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
