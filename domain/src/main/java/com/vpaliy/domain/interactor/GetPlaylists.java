@@ -21,10 +21,6 @@ public class GetPlaylists extends SingleUseCase<PlaylistSet,MelophileTheme>{
         this.repository=repository;
     }
 
-    public void cache(Playlist playlist){
-        repository.cache(playlist);
-    }
-
     @Override
     public Single<PlaylistSet> buildUseCase(MelophileTheme theme) {
         if(theme!=null){

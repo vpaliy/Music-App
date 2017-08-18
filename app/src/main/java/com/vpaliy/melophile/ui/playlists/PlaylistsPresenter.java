@@ -49,12 +49,6 @@ public class PlaylistsPresenter implements PlaylistsContract.Presenter{
         view.showErrorMessage();
     }
 
-    @Override
-    public void onPlaylistClicked(OnClick<Playlist> onClick) {
-        onClick=checkNotNull(onClick);
-        playlistsUseCase.cache(onClick.clicked);
-        view.showPlaylist(onClick);
-    }
 
     @Override
     public void stop() {

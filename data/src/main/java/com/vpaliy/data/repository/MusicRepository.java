@@ -108,19 +108,4 @@ public class MusicRepository implements Repository {
         return remoteSource.getUserFollowers(id)
                 .map(userMapper::map);
     }
-
-    @Override
-    public void cache(Playlist playlist) {
-        playlistCacheStore.put(playlist.getId(),playlist);
-    }
-
-    @Override
-    public void cache(Track track) {
-        trackCacheStore.put(track.getId(),track);
-    }
-
-    @Override
-    public void cache(User user) {
-        userCacheStore.put(user.getId(),user);
-    }
 }
