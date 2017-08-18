@@ -26,7 +26,12 @@ import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.view.FabToggle;
 import com.vpaliy.melophile.ui.view.ParallaxRatioImageView;
 import com.vpaliy.melophile.ui.view.TranslatableLayout;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +39,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import javax.inject.Inject;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.vpaliy.melophile.ui.playlist.PlaylistContract.Presenter;
@@ -73,6 +79,12 @@ public class PlaylistFragment extends BaseFragment
 
     @BindView(R.id.user_avatar)
     protected ImageView userAvatar;
+
+    @BindView(R.id.playlists_count)
+    protected TextView duration;
+
+    @BindView(R.id.title_background)
+    protected View titleBackground;
 
     private PlaylistTrackAdapter adapter;
 
@@ -115,7 +127,6 @@ public class PlaylistFragment extends BaseFragment
     private void extractId(Bundle bundle){
         if(bundle==null) bundle=getArguments();
         id=bundle.getString(Constants.EXTRA_ID);
-        Log.d(PlaylistFragment.class.getSimpleName(),"ID:"+id);
         showPlaylistArt(bundle.getString(Constants.EXTRA_DATA));
     }
 
@@ -141,6 +152,38 @@ public class PlaylistFragment extends BaseFragment
     @Override
     public void showTitle(String title) {
         playlistTitle.setText(title);
+        titleBackground.setVisibility(View.VISIBLE);
+        parent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                parent.getViewTreeObserver().removeOnPreDrawListener(this);
+                parent.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                    @Override
+                    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                        View blank=adapter.getBlank();
+                        ViewGroup.LayoutParams params=blank.getLayoutParams();
+                        params.height=playlistArt.getHeight()+parent.getHeight();
+                        blank.setLayoutParams(params);
+                        parent.removeOnLayoutChangeListener(this);
+                    }
+                });
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void showButtons() {
+        List<View> buttons= Arrays.asList(shareButton,trackNumber,duration);
+        for(int index=0;index<buttons.size();index++){
+            View view=buttons.get(index);
+            view.animate()
+                    .scaleX(1)
+                    .scaleY(1)
+                    .setDuration(200)
+                    .setStartDelay(index*100)
+                    .start();
+        }
     }
 
     @Override

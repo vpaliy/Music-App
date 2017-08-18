@@ -29,6 +29,7 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
     private void catchData(Playlist playlist){
         if(playlist!=null){
             view.showTitle(playlist.getTitle());
+            view.showButtons();
             view.showUser(playlist.getUser());
             view.showTrackNumber(playlist.getTrackCount());
             view.showTracks(playlist.getTracks());

@@ -81,12 +81,18 @@ public class MusicRepository implements Repository {
 
     @Override
     public Single<Playlist> getPlaylistBy(String id) {
+        if(playlistCacheStore.isInCache(id)){
+            return playlistCacheStore.getStream(id);
+        }
         return remoteSource.getPlaylistBy(id)
                 .map(playlistMapper::map);
     }
 
     @Override
     public Single<Track> getTrackBy(String id) {
+        if(trackCacheStore.isInCache(id)){
+            return trackCacheStore.getStream(id);
+        }
         return remoteSource.getTrackBy(id)
                 .map(trackMapper::map);
     }

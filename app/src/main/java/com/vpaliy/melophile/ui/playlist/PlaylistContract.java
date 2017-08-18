@@ -17,6 +17,7 @@ public interface PlaylistContract {
         void showTracks(List<Track> tracks);
         void showTitle(String title);
         void showLikes(String likes);
+        void showButtons();
         void showTrackNumber(String trackNumber);
         void showUser(User user);
         void showErrorMessage();

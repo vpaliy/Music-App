@@ -1,11 +1,14 @@
 package com.vpaliy.melophile.ui.playlists;
 
+import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.PlaylistSet;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
+import com.vpaliy.melophile.ui.base.bus.event.OnClick;
+
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +17,8 @@ import android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import butterknife.BindView;
+import io.reactivex.disposables.CompositeDisposable;
+
 import javax.inject.Inject;
 import static com.vpaliy.melophile.ui.playlists.PlaylistsContract.Presenter;
 
@@ -22,6 +27,7 @@ public class PlaylistsFragment extends BaseFragment
 
     private Presenter presenter;
     private CategoryAdapter adapter;
+    private CompositeDisposable disposables;
 
     @BindView(R.id.categories)
     protected RecyclerView categories;
@@ -49,6 +55,34 @@ public class PlaylistsFragment extends BaseFragment
     @Override
     public void showErrorMessage() {
         //TODO show error message
+    }
+
+    @Override
+    public void showPlaylist(@NonNull OnClick<Playlist> onClick) {
+        rxBus.send(onClick.exposeEvent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        disposables=new CompositeDisposable();
+        disposables.add(rxBus.asFlowable().subscribe(this::onClick));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void onClick(Object object){
+        if(object instanceof OnClick){
+            OnClick<Playlist> onClick=(OnClick<Playlist>)(object);
+            presenter.onPlaylistClicked(onClick);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(disposables!=null){
+            disposables.clear();
+        }
     }
 
     @Override

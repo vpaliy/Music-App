@@ -2,13 +2,16 @@ package com.vpaliy.melophile.ui.playlists;
 
 import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.model.MelophileTheme;
+import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.PlaylistSet;
+import com.vpaliy.melophile.ui.base.bus.event.OnClick;
+import java.util.Arrays;
+import java.util.List;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
-import java.util.Arrays;
-import java.util.List;
 import static com.vpaliy.melophile.ui.playlists.PlaylistsContract.View;
+import static dagger.internal.Preconditions.checkNotNull;
 
 @ViewScope
 public class PlaylistsPresenter implements PlaylistsContract.Presenter{
@@ -47,12 +50,19 @@ public class PlaylistsPresenter implements PlaylistsContract.Presenter{
     }
 
     @Override
+    public void onPlaylistClicked(OnClick<Playlist> onClick) {
+        onClick=checkNotNull(onClick);
+        playlistsUseCase.cache(onClick.clicked);
+        view.showPlaylist(onClick);
+    }
+
+    @Override
     public void stop() {
         playlistsUseCase.dispose();
     }
 
     @Override
     public void attachView(@NonNull View view) {
-        this.view=view;
+        this.view=checkNotNull(view);
     }
 }

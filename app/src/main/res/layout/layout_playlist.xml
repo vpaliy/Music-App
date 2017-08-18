@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent"
+    android:paddingBottom="@dimen/spacing_large"
     android:minHeight="@dimen/shot_collapsed_app_bar_height"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -39,9 +40,12 @@
         android:id="@+id/user_avatar" />
 
     <View
+        android:id="@+id/title_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/blue_grey_400"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:background="@color/colorGray"
         app:layout_constraintBottom_toBottomOf="@+id/playlist_title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -81,6 +85,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="138 Likes"
+        android:scaleX="0"
+        android:scaleY="0"
+        tools:scaleY="1"
+        tools:scaleX="1"
         app:layout_constraintLeft_toLeftOf="@+id/playlists_count"
         app:layout_constraintRight_toLeftOf="@+id/share"
         app:layout_constraintTop_toTopOf="@+id/playlists_count"
@@ -89,6 +97,10 @@
 
     <TextView
         android:id="@+id/playlists_count"
+        android:scaleX="0"
+        android:scaleY="0"
+        tools:scaleY="1"
+        tools:scaleX="1"
         android:layout_marginTop="@dimen/spacing_huge"
         android:drawableTop="@drawable/ic_playlist_duration"
         android:drawablePadding="@dimen/spacing_medium"
@@ -102,6 +114,10 @@
 
     <TextView
         android:id="@+id/share"
+        android:scaleX="0"
+        android:scaleY="0"
+        tools:scaleY="1"
+        tools:scaleX="1"
         android:text="@string/share_action"
         android:drawablePadding="@dimen/spacing_medium"
         android:drawableTop="@drawable/ic_playlist_share"
