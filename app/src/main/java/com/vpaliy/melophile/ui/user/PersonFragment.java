@@ -18,11 +18,9 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
-import com.vpaliy.melophile.ui.playlists.CategoryAdapter;
 import com.vpaliy.melophile.ui.utils.Constants;
 import java.util.List;
 import java.util.Locale;
-
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +28,6 @@ import javax.inject.Inject;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import butterknife.BindView;
-import butterknife.OnClick;
 
 import static com.vpaliy.melophile.ui.user.PersonContract.Presenter;
 
@@ -98,17 +95,11 @@ public class PersonFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().supportPostponeEnterTransition();
-        if(view!=null){
-            adapter=new MediaAdapter(getContext(),rxBus);
-            media.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        if(view!=null) {
+            adapter = new MediaAdapter(getContext(), rxBus);
+            media.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             media.setAdapter(adapter);
-            followers.post(()->{
-                View blank=adapter.getBlank();
-                ViewGroup.LayoutParams params=blank.getLayoutParams();
-                params.height=followers.getTop()+followers.getHeight()*2;
-                blank.setLayoutParams(params);
-                blank.post(()->extractId(savedInstanceState));
-            });
+            extractId(savedInstanceState);
         }
     }
 
@@ -149,7 +140,15 @@ public class PersonFragment extends BaseFragment
                     @Override
                     protected void setResource(Bitmap resource) {
                         avatar.setImageBitmap(resource);
-                        getActivity().supportStartPostponedEnterTransition();
+                        avatar.post(()->{
+                            media.post(()->{
+                                View blank = adapter.getBlank();
+                                ViewGroup.LayoutParams params = blank.getLayoutParams();
+                                params.height = followers.getTop()+followers.getHeight();
+                                blank.setLayoutParams(params);
+                            });
+                            getActivity().supportStartPostponedEnterTransition();
+                        });
                     }
                 });
     }

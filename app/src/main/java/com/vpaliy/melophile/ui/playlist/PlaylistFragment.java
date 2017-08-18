@@ -303,6 +303,14 @@ public class PlaylistFragment extends BaseFragment
     };
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(userAvatar!=null){
+            userAvatar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         if(presenter!=null){

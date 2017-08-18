@@ -1,6 +1,9 @@
 package com.vpaliy.melophile.ui.user;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,9 @@ import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
+import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
+import com.vpaliy.melophile.ui.utils.Constants;
+
 import butterknife.ButterKnife;
 import android.support.annotation.NonNull;
 import butterknife.BindView;
@@ -39,6 +45,17 @@ public class UserPlaylistsAdapter extends BaseAdapter<Playlist> {
         public TrackViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this,itemView);
+            itemView.setOnClickListener(v->{
+                Playlist playlist=at(getAdapterPosition());
+                Bundle data=new Bundle();
+                Context context=inflater.getContext();
+                ViewCompat.setTransitionName(trackArt,context.getString(R.string.art_trans_name));
+                ViewCompat.setTransitionName(itemView,context.getString(R.string.background_trans_name));
+                data.putString(Constants.EXTRA_DATA,playlist.getArtUrl());
+                data.putString(Constants.EXTRA_ID,playlist.getId());
+                rxBus.send(ExposeEvent.exposePlaylist(data, Pair.create(trackArt,context.getString(R.string.art_trans_name)),
+                        Pair.create(trackArt,context.getString(R.string.background_trans_name))));
+            });
         }
 
         @Override

@@ -66,7 +66,7 @@
     <com.vpaliy.melophile.ui.view.FabToggle
         android:id="@+id/love"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_empty_heart"
+        app:srcCompat="@drawable/ic_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0"

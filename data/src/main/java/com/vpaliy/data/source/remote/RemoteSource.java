@@ -2,6 +2,7 @@ package com.vpaliy.data.source.remote;
 
 import com.vpaliy.data.model.UserDetailsEntity;
 import com.vpaliy.data.source.Source;
+import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.soundcloud.SoundCloudService;
 import com.vpaliy.soundcloud.model.PlaylistEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
@@ -19,10 +20,13 @@ import io.reactivex.Single;
 public class RemoteSource implements Source{
 
     private SoundCloudService service;
+    private BaseSchedulerProvider schedulerProvider;
 
     @Inject
-    public RemoteSource(SoundCloudService service){
+    public RemoteSource(SoundCloudService service,
+                        BaseSchedulerProvider schedulerProvider){
         this.service=service;
+        this.schedulerProvider=schedulerProvider;
     }
 
     @Override
@@ -42,16 +46,7 @@ public class RemoteSource implements Source{
                     return first;
                 });
             }
-            return start.map(list->{
-                List<PlaylistEntity> result=new LinkedList<>();
-                for(PlaylistEntity entity:list){
-                    if(entity.artwork_url!=null){
-                        entity.artwork_url=entity.artwork_url.replace("large","t500x500");
-                        result.add(entity);
-                    }
-                }
-                return result;
-            });
+            return start.map(this::fixPlaylistImage);
         }
         return Single.error(new IllegalArgumentException("categories are null"));
     }
@@ -72,16 +67,7 @@ public class RemoteSource implements Source{
                     return first;
                 });
             }
-            return start.map(list->{
-                List<TrackEntity> result=new LinkedList<>();
-                for(TrackEntity entity:list){
-                    if(entity.artwork_url!=null){
-                        entity.artwork_url=entity.artwork_url.replace("large","t500x500");
-                        result.add(entity);
-                    }
-                }
-                return result;
-            });
+            return start.map(this::fixTrackImage);
         }
         return Single.error(new IllegalArgumentException("categories are null"));
     }
@@ -129,11 +115,16 @@ public class RemoteSource implements Source{
     @Override
     public Single<UserDetailsEntity> getUserBy(String id) {
         if(id!=null){
-            Single<List<TrackEntity>> singleTracks=service.fetchUserTracks(id);
-            Single<List<PlaylistEntity>> singlePlaylists=service.fetchUserPlaylists(id);
-            Single<List<TrackEntity>> singleFavoriteTracks=service.fetchUserFavoriteTracks(id);
-            Single<List<WebProfileEntity>> singleWebProfiles=service.fetchUserWebProfiles(id);
-            Single<UserEntity> singleUser=service.fetchUser(id);
+            Single<List<TrackEntity>> singleTracks=service.fetchUserTracks(id)
+                    .subscribeOn(schedulerProvider.multi());
+            Single<List<PlaylistEntity>> singlePlaylists=service.fetchUserPlaylists(id)
+                    .subscribeOn(schedulerProvider.multi());
+            Single<List<TrackEntity>> singleFavoriteTracks=service.fetchUserFavoriteTracks(id)
+                    .subscribeOn(schedulerProvider.multi());
+            Single<List<WebProfileEntity>> singleWebProfiles=service.fetchUserWebProfiles(id)
+                    .subscribeOn(schedulerProvider.multi());
+            Single<UserEntity> singleUser=service.fetchUser(id)
+                    .subscribeOn(schedulerProvider.multi());
             return Single.zip(singleUser,
                     singleTracks.onErrorResumeNext(Single.just(new ArrayList<>())),
                     singlePlaylists.onErrorResumeNext(Single.just(new ArrayList<>())),
@@ -141,16 +132,54 @@ public class RemoteSource implements Source{
                     singleWebProfiles.onErrorResumeNext(Single.just(new ArrayList<>())),
                     (user,tracks,playlists,favoriteTracks,webProfiles)->{
                         UserDetailsEntity userDetails=new UserDetailsEntity();
-                        userDetails.setUserEntity(user);
-                        userDetails.setFavoriteTracks(favoriteTracks);
-                        userDetails.setTracks(tracks);
-                        userDetails.setPlaylists(playlists);
+                        userDetails.setUserEntity(fixUserImage(user));
+                        userDetails.setFavoriteTracks(fixTrackImage(favoriteTracks));
+                        userDetails.setTracks(fixTrackImage(tracks));
+                        userDetails.setPlaylists(fixPlaylistImage(playlists));
                         userDetails.setWebProfiles(webProfiles);
                         return userDetails;
                     });
 
         }
         return Single.error(new IllegalArgumentException("id is null"));
+    }
+
+    private List<PlaylistEntity> fixPlaylistImage(List<PlaylistEntity> list){
+        if (list != null) {
+            List<PlaylistEntity> result=new ArrayList<>(list.size());
+            for(PlaylistEntity entity:list){
+                if(entity.artwork_url!=null){
+                    entity.artwork_url=entity.artwork_url.replace("large","t500x500");
+                    result.add(entity);
+                }
+            }
+            return result;
+        }
+        return null;
+    }
+
+    private List<TrackEntity> fixTrackImage(List<TrackEntity> list){
+        if (list != null) {
+            List<TrackEntity> result=new ArrayList<>(list.size());
+            for(TrackEntity entity:list){
+                if(entity.artwork_url!=null){
+                    entity.artwork_url=entity.artwork_url.replace("large","t500x500");
+                    result.add(entity);
+                }
+            }
+            return result;
+        }
+        return null;
+    }
+
+    private UserEntity fixUserImage(UserEntity entity){
+        if(entity!=null){
+            if(entity.avatar_url!=null){
+                entity.avatar_url=entity.avatar_url.replace("large","t500x500");
+                return entity;
+            }
+        }
+        return entity;
     }
 
     @Override
