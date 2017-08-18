@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.vpaliy.chips_lover.ChipsLayout;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.App;
@@ -86,6 +87,9 @@ public class PlaylistFragment extends BaseFragment
     @BindView(R.id.title_background)
     protected View titleBackground;
 
+    @BindView(R.id.chips)
+    protected ChipsLayout chipsLayout;
+
     private PlaylistTrackAdapter adapter;
 
     private boolean loaded;
@@ -141,10 +145,6 @@ public class PlaylistFragment extends BaseFragment
     }
 
     @Override
-    public void showLikes(String likes) {
-    }
-
-    @Override
     public void showTrackNumber(String trackNumber) {
         this.trackNumber.setText(trackNumber);
     }
@@ -173,6 +173,13 @@ public class PlaylistFragment extends BaseFragment
     }
 
     @Override
+    public void showTags(List<String> tags) {
+        Log.d(PlaylistFragment.class.getSimpleName(),Integer.toString(tags.size()));
+        chipsLayout.setVisibility(View.VISIBLE);
+        chipsLayout.setTags(tags);
+    }
+
+    @Override
     public void showButtons() {
         List<View> buttons= Arrays.asList(shareButton,trackNumber,duration);
         for(int index=0;index<buttons.size();index++){
@@ -190,7 +197,6 @@ public class PlaylistFragment extends BaseFragment
     public void showPlaylistArt(String artUrl) {
         if(!loaded) {
             loaded=true;
-            Log.d(PlaylistFragment.class.getSimpleName(), artUrl);
             Glide.with(getContext())
                     .load(artUrl)
                     .asBitmap()
@@ -232,6 +238,11 @@ public class PlaylistFragment extends BaseFragment
             //PresentationUtils.setDrawableColor(trackNumber,swatch.getTitleTextColor());
             //PresentationUtils.setDrawableColor(shareButton,swatch.getTitleTextColor());
         }
+    }
+
+    @Override
+    public void showDuration(String duration) {
+        this.duration.setText(duration);
     }
 
     @Override

@@ -7,7 +7,8 @@ import java.util.List;
 public class MapperUtils {
 
     public static List<String> splitString(String string){
-        if(string==null) return null;
+        if(string==null||string.isEmpty()) return null;
+        string=string.replace(" ",",");
         return Arrays.asList(string.split("\\s*,\\s*"));
     }
 

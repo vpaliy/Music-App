@@ -61,30 +61,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-    <!-- <com.vpaliy.chips_lover.ChipsLayout
-         android:id="@+id/chipsContainer"
-         android:orientation="horizontal"
-         app:chip_layout_horizontal_margin="@dimen/spacing_small"
-         app:chipTextColor="@color/blue_grey_700"
-         app:chipTextStyle="@style/Widget.HashTag"
-         android:layout_width="0dp"
-         app:chips_array="@array/temp"
-         app:layout_constraintWidth_default="wrap"
-         android:layout_height="wrap_content"
-         app:layout_constraintRight_toRightOf="parent"
-         android:layout_marginTop="@dimen/spacing_medium"
-         app:layout_constraintTop_toBottomOf="@+id/playlist_title"
-         app:layout_constraintLeft_toLeftOf="parent" />  -->
-
-
+    <com.vpaliy.chips_lover.ChipsLayout
+        android:id="@+id/chips"
+        android:orientation="horizontal"
+        app:chip_layout_horizontal_margin="@dimen/spacing_small"
+        app:chipTextColor="@color/blue_grey_700"
+        app:chipTextStyle="@style/Widget.HashTag"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="wrap"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/spacing_huge"
+        app:layout_constraintTop_toBottomOf="@+id/playlist_title"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/tracks_number"
-        android:drawableTop="@drawable/ic_playlist_album"
+        android:drawableTop="@drawable/ic_music_lib"
         android:drawablePadding="@dimen/spacing_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="138 Likes"
+        tools:text="138 Tracks"
         android:scaleX="0"
         android:scaleY="0"
         tools:scaleY="1"
@@ -108,7 +105,7 @@
         android:layout_height="wrap_content"
         tools:text="28 mins"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playlist_title"
+        app:layout_constraintTop_toBottomOf="@+id/chips"
         app:layout_constraintRight_toLeftOf="@+id/tracks_number"
         app:layout_constraintHorizontal_chainStyle="spread" />
 

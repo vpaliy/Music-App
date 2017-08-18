@@ -8,6 +8,10 @@ import javax.inject.Inject;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import static com.vpaliy.melophile.ui.playlist.PlaylistContract.View;
 
 @ViewScope
@@ -28,17 +32,33 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
 
     private void catchData(Playlist playlist){
         if(playlist!=null){
+            List<String> tags=tags(playlist);
+            if(!tags.isEmpty()) {
+                view.showTags(tags);
+            }
             view.showTitle(playlist.getTitle());
             view.showButtons();
             view.showUser(playlist.getUser());
             view.showTrackNumber(playlist.getTrackCount());
             view.showTracks(playlist.getTracks());
+            view.showDuration(playlist.getDuration());
             view.showPlaylistArt(playlist.getArtUrl());
         }else{
             view.showEmptyMessage();
         }
     }
 
+    private List<String> tags(Playlist playlist){
+        List<String> list=new LinkedList<>();
+        if(playlist.getTags()!=null){
+            list.addAll(playlist.getTags());
+        }
+        //
+        if(playlist.getGenres()!=null){
+            list.addAll(playlist.getGenres());
+        }
+        return list;
+    }
     private void catchError(Throwable ex){
         ex.printStackTrace();
         view.showErrorMessage();

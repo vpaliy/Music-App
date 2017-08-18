@@ -1,5 +1,7 @@
 package com.vpaliy.data.mapper;
 
+import android.util.Log;
+
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
@@ -26,6 +28,7 @@ public class PlaylistMapper extends Mapper<Playlist,PlaylistEntity>{
     @Override
     public Playlist map(PlaylistEntity playlistEntity) {
         if(playlistEntity==null) return null;
+        Log.d(PlaylistMapper.class.getSimpleName(),"Tags:"+playlistEntity.tag_list);
         Playlist playlist=new Playlist();
         playlist.setId(playlistEntity.id);
         playlist.setArtUrl(playlistEntity.artwork_url);

@@ -6,7 +6,6 @@ import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.ui.base.BasePresenter;
 import com.vpaliy.melophile.ui.base.BaseView;
-
 import java.util.List;
 
 public interface PlaylistContract {
@@ -15,8 +14,9 @@ public interface PlaylistContract {
         void attachPresenter(@NonNull Presenter presenter);
         void showPlaylistArt(String artUrl);
         void showTracks(List<Track> tracks);
+        void showTags(List<String> tags);
         void showTitle(String title);
-        void showLikes(String likes);
+        void showDuration(String duration);
         void showButtons();
         void showTrackNumber(String trackNumber);
         void showUser(User user);
