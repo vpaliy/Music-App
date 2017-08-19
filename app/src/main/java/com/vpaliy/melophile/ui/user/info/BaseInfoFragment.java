@@ -1,4 +1,4 @@
-package com.vpaliy.melophile.ui.user.favorite;
+package com.vpaliy.melophile.ui.user.info;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -15,7 +15,7 @@ import butterknife.BindView;
 import android.support.annotation.Nullable;
 import butterknife.OnClick;
 import butterknife.ButterKnife;
-import static com.vpaliy.melophile.ui.user.favorite.UserInfoContract.Presenter;
+import static com.vpaliy.melophile.ui.user.info.UserInfoContract.Presenter;
 
 public abstract class BaseInfoFragment<T>  extends BottomSheetDialogFragment
         implements UserInfoContract.View<T>{

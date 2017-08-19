@@ -8,8 +8,8 @@ import com.vpaliy.melophile.ui.playlists.PlaylistsFragment;
 import com.vpaliy.melophile.ui.track.TrackFragment;
 import com.vpaliy.melophile.ui.tracks.TracksFragment;
 import com.vpaliy.melophile.ui.user.PersonFragment;
-import com.vpaliy.melophile.ui.user.favorite.FavoriteFragment;
-import com.vpaliy.melophile.ui.user.favorite.FollowersFragment;
+import com.vpaliy.melophile.ui.user.info.FavoriteFragment;
+import com.vpaliy.melophile.ui.user.info.FollowersFragment;
 
 import dagger.Component;
 

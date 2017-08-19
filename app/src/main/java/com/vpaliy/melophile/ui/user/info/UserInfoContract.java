@@ -1,4 +1,4 @@
-package com.vpaliy.melophile.ui.user.favorite;
+package com.vpaliy.melophile.ui.user.info;
 
 import android.support.annotation.NonNull;
 import com.vpaliy.melophile.ui.base.BasePresenter;

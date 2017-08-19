@@ -1,4 +1,4 @@
-package com.vpaliy.melophile.ui.user.favorite;
+package com.vpaliy.melophile.ui.user.info;
 
 import android.os.Bundle;
 import com.vpaliy.domain.model.Track;

@@ -17,9 +17,9 @@ import com.vpaliy.melophile.ui.tracks.TracksContract;
 import com.vpaliy.melophile.ui.tracks.TracksPresenter;
 import com.vpaliy.melophile.ui.user.PersonContract;
 import com.vpaliy.melophile.ui.user.PersonPresenter;
-import com.vpaliy.melophile.ui.user.favorite.FavoritePresenter;
-import com.vpaliy.melophile.ui.user.favorite.FollowersPresenter;
-import com.vpaliy.melophile.ui.user.favorite.UserInfoContract;
+import com.vpaliy.melophile.ui.user.info.FavoritePresenter;
+import com.vpaliy.melophile.ui.user.info.FollowersPresenter;
+import com.vpaliy.melophile.ui.user.info.UserInfoContract;
 
 import dagger.Module;
 import dagger.Provides;

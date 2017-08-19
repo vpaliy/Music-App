@@ -1,4 +1,4 @@
-package com.vpaliy.melophile.ui.user.favorite;
+package com.vpaliy.melophile.ui.user.info;
 
 import com.vpaliy.domain.interactor.GetUserFollowers;
 import com.vpaliy.domain.model.User;

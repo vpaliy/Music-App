@@ -1,11 +1,11 @@
-package com.vpaliy.melophile.ui.user.favorite;
+package com.vpaliy.melophile.ui.user.info;
 
 
 import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import static com.vpaliy.melophile.ui.user.favorite.UserInfoContract.View;
+import static com.vpaliy.melophile.ui.user.info.UserInfoContract.View;
 
 public abstract class UserInfoPresenter<T>
         implements UserInfoContract.Presenter<T> {

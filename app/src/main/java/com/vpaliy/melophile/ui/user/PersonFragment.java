@@ -18,7 +18,7 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
-import com.vpaliy.melophile.ui.user.favorite.FavoriteEvent;
+import com.vpaliy.melophile.ui.user.info.InfoEvent;
 import com.vpaliy.melophile.ui.utils.Constants;
 import java.util.List;
 import java.util.Locale;
@@ -165,7 +165,12 @@ public class PersonFragment extends BaseFragment
 
     @OnClick(R.id.likes)
     public void showFavorites(){
-        rxBus.send(FavoriteEvent.show(id));
+        rxBus.send(InfoEvent.showFavorites(id));
+    }
+
+    @OnClick(R.id.followers)
+    public void showFollowers(){
+        rxBus.send(InfoEvent.showFollowers(id));
     }
 
     @Override
