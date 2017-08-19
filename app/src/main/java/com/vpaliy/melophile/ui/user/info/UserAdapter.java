@@ -1,7 +1,8 @@
 package com.vpaliy.melophile.ui.user.info;
 
 import android.content.Context;
-import android.util.Log;
+import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,10 +12,14 @@ import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
+import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
+import com.vpaliy.melophile.ui.utils.Constants;
+
+import butterknife.ButterKnife;
 import android.support.annotation.NonNull;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
+@SuppressWarnings("WeakerAccess")
 public class UserAdapter extends BaseAdapter<User> {
 
     public UserAdapter(@NonNull Context context, @NonNull RxBus rxBus){
@@ -29,6 +34,15 @@ public class UserAdapter extends BaseAdapter<User> {
         public UserViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this,itemView);
+            itemView.setOnClickListener(view->{
+                final Context context=itemView.getContext();
+                final User userModel=at(getAdapterPosition());
+                Bundle data = new Bundle();
+                data.putString(Constants.EXTRA_ID,userModel.getId());
+                data.putString(Constants.EXTRA_DATA,userModel.getAvatarUrl());
+                rxBus.send(ExposeEvent.exposeUser(data, Pair.create(art,context.getString(R.string.background_trans_name)),
+                        Pair.create(art,context.getString(R.string.user_trans_name))));
+            });
         }
 
         @Override

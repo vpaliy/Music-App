@@ -3,7 +3,6 @@ package com.vpaliy.melophile.ui.user.info;
 import com.vpaliy.domain.interactor.GetUserFollowers;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.di.scope.ViewScope;
-
 import javax.inject.Inject;
 
 @ViewScope

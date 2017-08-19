@@ -16,9 +16,7 @@ import com.vpaliy.melophile.ui.playlists.CategoryAdapter;
 import butterknife.BindView;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import javax.inject.Inject;
-
 import static com.vpaliy.melophile.ui.tracks.TracksContract.Presenter;
 
 public class TracksFragment extends BaseFragment
