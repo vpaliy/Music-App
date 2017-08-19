@@ -62,7 +62,7 @@ public class MediaAdapter extends BaseAdapter<MediaAdapter.CategoryWrapper>{
             CategoryWrapper wrapper=at(getAdapterPosition()-1);
             list.setAdapter(wrapper.adapter);
             title.setText(wrapper.text);
-            more.setTextColor(wrapper.color);
+          //  more.setTextColor(wrapper.color);
         }
     }
 
@@ -105,16 +105,14 @@ public class MediaAdapter extends BaseAdapter<MediaAdapter.CategoryWrapper>{
     public static class CategoryWrapper {
         private final String text;
         private final RecyclerView.Adapter<?> adapter;
-        private final int color;
 
-        private CategoryWrapper(@NonNull String text, @NonNull RecyclerView.Adapter<?> adapter, int color){
+        private CategoryWrapper(@NonNull String text, @NonNull RecyclerView.Adapter<?> adapter){
             this.text=text;
             this.adapter=adapter;
-            this.color=color;
         }
 
-        public static CategoryWrapper wrap(@NonNull String text, @NonNull RecyclerView.Adapter<?> adapter, int color){
-            return new CategoryWrapper(text,adapter,color);
+        public static CategoryWrapper wrap(@NonNull String text, @NonNull RecyclerView.Adapter<?> adapter){
+            return new CategoryWrapper(text,adapter);
         }
     }
 }

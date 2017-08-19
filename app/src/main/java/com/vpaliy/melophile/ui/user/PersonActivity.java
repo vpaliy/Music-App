@@ -11,6 +11,7 @@ import com.vpaliy.melophile.ui.utils.Constants;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 
@@ -46,7 +47,10 @@ public class PersonActivity extends BaseActivity{
     }
 
     private void showFavorites(FavoriteEvent event){
+        FragmentTransaction transaction=getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.slide_in,0,R.anim.slide_in,0);
         FavoriteFragment.newInstance(event.toBundle())
-                .show(getSupportFragmentManager(),null);
+                .show(transaction,null);
     }
 }

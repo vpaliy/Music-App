@@ -89,8 +89,6 @@
         app:layout_constraintRight_toLeftOf="@+id/followers"
         app:layout_constraintHorizontal_chainStyle="spread" />
 
-
-
     <TextView
         android:id="@+id/likes"
         tools:text="24345 Likes"
@@ -133,9 +131,7 @@
         android:id="@+id/media"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scrollbars="vertical"
-        android:scrollbarStyle="outsideOverlay"
-        android:clipToPadding="false"
+        android:elevation="@dimen/z_card"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"

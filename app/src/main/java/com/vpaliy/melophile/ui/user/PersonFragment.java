@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,7 +14,6 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
-import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
@@ -69,6 +69,9 @@ public class PersonFragment extends BaseFragment
     @BindView(R.id.empty_media_message)
     protected TextView emptyMessage;
 
+    @BindView(R.id.container)
+    protected ViewGroup container;
+
     private MediaAdapter adapter;
 
 
@@ -88,14 +91,12 @@ public class PersonFragment extends BaseFragment
 
     @Override
     protected int layoutId() {
-        return R.layout.fragment_user;
+        return R.layout.fragment_c_playlist;
     }
 
     private void extractId(Bundle bundle){
         if(bundle==null) bundle=getArguments();
         this.id=bundle.getString(Constants.EXTRA_ID);
-        Log.d(PersonFragment.class.getSimpleName(),id);
-        presenter.start(id);
         showAvatar(bundle.getString(Constants.EXTRA_DATA));
     }
 
@@ -110,24 +111,37 @@ public class PersonFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().supportPostponeEnterTransition();
+        getActivity().setEnterSharedElementCallback(new SharedElementCallback() {
+            @Override
+            public void onSharedElementEnd(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
+                presenter.start(id);
+            }
+        });
         if(view!=null) {
+            final LinearLayoutManager layoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
             adapter = new MediaAdapter(getContext(), rxBus);
-            media.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            media.setLayoutManager(layoutManager);
             media.setAdapter(adapter);
             extractId(savedInstanceState);
+            media.setOnTouchListener((v,event)->{
+                final int firstVisible = layoutManager.findFirstVisibleItemPosition();
+                if (firstVisible > 0) return false;
+
+                final RecyclerView.ViewHolder vh = media.findViewHolderForAdapterPosition(1);
+                if (vh == null) return false;
+                final int firstTop = vh.itemView.getTop();
+                if (event.getY() < firstTop) {
+                    return container.dispatchTouchEvent(event);
+                }
+                return false;
+            });
         }
     }
 
     @Override
     public void showDescription(String description) {
         this.description.setText(description);
-    }
-
-    @Override
-    public void showTracks(List<Track> tracks) {
-        UserTracksAdapter tracksAdapter=new UserTracksAdapter(getContext(),rxBus);
-        tracksAdapter.setData(tracks);
-        adapter.addItem(MediaAdapter.CategoryWrapper.wrap(getString(R.string.tracks_label),tracksAdapter,0));
     }
 
     @Override
@@ -202,7 +216,10 @@ public class PersonFragment extends BaseFragment
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
-                        progress.setVisibility(View.GONE);
+                        //if the animation is still running when the back button has been pressed
+                        if(progress!=null) {
+                            progress.setVisibility(View.GONE);
+                        }
                     }
                 }).start();
     }
@@ -221,7 +238,22 @@ public class PersonFragment extends BaseFragment
     public void showPlaylists(List<Playlist> playlists) {
         UserPlaylistsAdapter playlistsAdapter=new UserPlaylistsAdapter(getContext(),rxBus);
         playlistsAdapter.setData(playlists);
-        adapter.addItem(MediaAdapter.CategoryWrapper.wrap(getString(R.string.playlist_label),playlistsAdapter,1));
+        adapter.addItem(MediaAdapter.CategoryWrapper.wrap(getString(R.string.playlist_label),playlistsAdapter));
+        media.post(()->{
+            media.scrollToPosition(0);
+            media.animate()
+                    .alpha(1)
+                    .setDuration(400)
+                    .start();
+        });
+    }
+
+    @Override
+    public void showTracks(List<Track> tracks) {
+        UserTracksAdapter tracksAdapter=new UserTracksAdapter(getContext(),rxBus);
+        tracksAdapter.setData(tracks);
+        adapter.addItem(MediaAdapter.CategoryWrapper.wrap(getString(R.string.tracks_label),tracksAdapter));
+        media.post(()->media.scrollToPosition(0));
     }
 
     @Override
@@ -231,6 +263,4 @@ public class PersonFragment extends BaseFragment
             presenter.stop();
         }
     }
-
-
 }

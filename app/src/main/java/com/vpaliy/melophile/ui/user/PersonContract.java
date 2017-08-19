@@ -14,18 +14,18 @@ public interface PersonContract {
 
     interface View extends BaseView<Presenter> {
         void attachPresenter(@NonNull Presenter presenter);
-        void showAvatar(String avatarUrl);
         void showTracks(List<Track> tracks);
         void showPlaylists(List<Playlist> playlists);
+        void showAvatar(String avatarUrl);
         void showDescription(String description);
-        void showLoading();
-        void hideLoading();
-        void showEmptyMediaMessage();
         void showTitle(String title);
         void showFollowersCount(int count);
         void showLikedCount(int count);
+        void showEmptyMediaMessage();
         void showEmptyMessage();
         void showErrorMessage();
+        void showLoading();
+        void hideLoading();
     }
 
     interface Presenter extends BasePresenter<View> {

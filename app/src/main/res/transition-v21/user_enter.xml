@@ -7,6 +7,7 @@
             <target android:excludeId="@android:id/navigationBarBackground" />
             <target android:excludeId="@android:id/statusBarBackground" />
             <target android:excludeId="@id/playlist_art" />
+            <target android:excludeId="@id/media"/>
             <target android:excludeId="@id/back_wrapper" />
             <target android:excludeId="@id/love" />
         </targets>
