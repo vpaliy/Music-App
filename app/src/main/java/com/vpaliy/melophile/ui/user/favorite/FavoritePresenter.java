@@ -4,11 +4,9 @@ import static com.vpaliy.melophile.ui.user.favorite.FavoriteContract.View;
 import static dagger.internal.Preconditions.checkNotNull;
 import com.vpaliy.domain.interactor.GetUserFavorites;
 import com.vpaliy.domain.model.Track;
+import java.util.List;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import android.support.annotation.NonNull;
-
-import java.util.List;
-
 import javax.inject.Inject;
 
 @ViewScope
@@ -41,7 +39,7 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
     }
 
     private void catchError(Throwable throwable){
-        throwable.printStackTrace();;
+        throwable.printStackTrace();
         view.showError();
     }
 

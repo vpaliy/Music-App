@@ -19,6 +19,7 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
+import com.vpaliy.melophile.ui.user.favorite.FavoriteEvent;
 import com.vpaliy.melophile.ui.utils.Constants;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.vpaliy.melophile.ui.user.PersonContract.Presenter;
 
@@ -148,6 +150,11 @@ public class PersonFragment extends BaseFragment
        likes.setText(String.format(Locale.US,"%d",count));
     }
 
+    @OnClick(R.id.likes)
+    public void showFavorites(){
+        rxBus.send(FavoriteEvent.show(id));
+    }
+
     @Override
     public void showAvatar(String avatarUrl) {
         Glide.with(getContext())
@@ -224,4 +231,6 @@ public class PersonFragment extends BaseFragment
             presenter.stop();
         }
     }
+
+
 }

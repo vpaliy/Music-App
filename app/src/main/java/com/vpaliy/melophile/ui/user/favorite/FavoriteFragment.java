@@ -3,22 +3,25 @@ package com.vpaliy.melophile.ui.user.favorite;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.vpaliy.domain.model.Track;
+import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
+import com.vpaliy.melophile.di.component.DaggerViewComponent;
+import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import com.vpaliy.melophile.ui.user.UserTracksAdapter;
 import com.vpaliy.melophile.ui.utils.Constants;
 import java.util.List;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import static com.vpaliy.melophile.ui.user.favorite.FavoriteContract.Presenter;
+import butterknife.BindView;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import javax.inject.Inject;
-import static com.vpaliy.melophile.ui.user.favorite.FavoriteContract.Presenter;
 
 public class FavoriteFragment extends BottomSheetDialogFragment
         implements FavoriteContract.View{
@@ -36,6 +39,16 @@ public class FavoriteFragment extends BottomSheetDialogFragment
         FavoriteFragment fragment=new FavoriteFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        DaggerViewComponent.builder()
+                .applicationComponent(App.appInstance().appComponent())
+                .presenterModule(new PresenterModule())
+                .build().inject(this);
     }
 
     @Nullable
