@@ -11,6 +11,8 @@
     <string name="albums_label">Albums</string>
     <string name="playlist_label">Playlists</string>
 
+    <string name="user_empty_media">This user has no media items</string>
+
     <string name="share_action">Share</string>
     <string name="background_trans_name" translatable="false">background_trans</string>
     <string name="art_trans_name" translatable="false">playlist_art_trans</string>

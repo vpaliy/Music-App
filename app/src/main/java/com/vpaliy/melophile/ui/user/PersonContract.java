@@ -20,6 +20,7 @@ public interface PersonContract {
         void showDescription(String description);
         void showLoading();
         void hideLoading();
+        void showEmptyMediaMessage();
         void showFollowers(List<User> followers);
         void showTitle(String title);
         void showFollowersCount(int count);

@@ -64,6 +64,9 @@ public class PersonFragment extends BaseFragment
     @BindView(R.id.media_progress)
     protected ProgressBar progress;
 
+    @BindView(R.id.empty_media_message)
+    protected TextView emptyMessage;
+
     private MediaAdapter adapter;
 
 
@@ -200,6 +203,11 @@ public class PersonFragment extends BaseFragment
                         progress.setVisibility(View.GONE);
                     }
                 }).start();
+    }
+
+    @Override
+    public void showEmptyMediaMessage() {
+        emptyMessage.setVisibility(View.VISIBLE);
     }
 
     @Override

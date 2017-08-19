@@ -20,7 +20,7 @@ public class UserMapper extends Mapper<User,UserEntity> {
         user.setId(userEntity.id);
         user.setNickName(userEntity.username);
         user.setFullName(userEntity.full_name);
-        user.setDescription(user.getDescription());
+        user.setDescription(userEntity.city);
         user.setFollowersCount(MapperUtils.convertToInt(userEntity.followers_count));
         user.setFollowingCount(MapperUtils.convertToInt(userEntity.followings_count));
         user.setPlaylistsCount(MapperUtils.convertToInt(userEntity.playlist_count));
