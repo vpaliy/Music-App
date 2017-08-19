@@ -23,7 +23,7 @@ public abstract class BaseInfoFragment<T>  extends BottomSheetDialogFragment
     protected String id;
 
     @BindView(R.id.favorites)
-    protected RecyclerView favorites;
+    protected RecyclerView data;
 
     @Inject
     protected RxBus rxBus;
@@ -57,7 +57,7 @@ public abstract class BaseInfoFragment<T>  extends BottomSheetDialogFragment
         extractId(savedInstanceState);
         if(view!=null){
             presenter.start(id);
-            favorites.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            data.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);

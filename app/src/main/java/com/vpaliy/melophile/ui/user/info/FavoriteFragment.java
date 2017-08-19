@@ -22,7 +22,7 @@ public class FavoriteFragment extends BaseInfoFragment<Track>{
     public void showInfo(@NonNull List<Track> tracks) {
         UserTracksAdapter adapter=new UserTracksAdapter(getContext(),rxBus);
         adapter.setData(tracks);
-        favorites.setAdapter(adapter);
+        data.setAdapter(adapter);
     }
 
     @Override

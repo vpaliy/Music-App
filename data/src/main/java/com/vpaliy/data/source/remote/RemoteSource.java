@@ -177,7 +177,8 @@ public class RemoteSource implements Source{
     @Override
     public Single<List<UserEntity>> getUserFollowers(String id) {
         if(id!=null){
-            return service.fetchUserFollowers(id);
+            return service.fetchUserFollowers(id)
+                    .map(page->page.collection);
         }
         return Single.error(new IllegalArgumentException("id is null"));
     }

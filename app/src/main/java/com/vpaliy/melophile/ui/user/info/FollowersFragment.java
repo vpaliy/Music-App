@@ -1,17 +1,16 @@
 package com.vpaliy.melophile.ui.user.info;
 
 import android.os.Bundle;
-
 import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
-
 import java.util.List;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
 
 public class FollowersFragment extends BaseInfoFragment<User>{
+
 
     public static FollowersFragment newInstance(Bundle args){
         FollowersFragment fragment=new FollowersFragment();
@@ -20,10 +19,10 @@ public class FollowersFragment extends BaseInfoFragment<User>{
     }
 
     @Override
-    public void showInfo(@NonNull List<User> tracks) {
-     //   UserTracksAdapter adapter=new UserTracksAdapter(getContext(),rxBus);
-      //  adapter.setData(tracks);
-       // favorites.setAdapter(adapter);
+    public void showInfo(@NonNull List<User> users) {
+        UserAdapter adapter=new UserAdapter(getContext(),rxBus);
+        adapter.setData(users);
+        data.setAdapter(adapter);
     }
 
     @Override
