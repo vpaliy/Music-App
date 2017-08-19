@@ -7,13 +7,11 @@ import com.vpaliy.domain.model.UserDetails;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
 import java.util.List;
-
 import io.reactivex.observers.DisposableSingleObserver;
 
 import static com.vpaliy.melophile.ui.user.PersonContract.View;
+import static dagger.internal.Preconditions.checkNotNull;
 
 @ViewScope
 public class PersonPresenter implements PersonContract.Presenter{
@@ -31,11 +29,12 @@ public class PersonPresenter implements PersonContract.Presenter{
 
     @Override
     public void attachView(@NonNull View view) {
-        this.view=view;
+        this.view=checkNotNull(view);
     }
 
     @Override
     public void start(String id) {
+        view.showLoading();
         userDetailsUseCase.execute(this::catchData,this::catchError,id);
     }
 
@@ -58,6 +57,7 @@ public class PersonPresenter implements PersonContract.Presenter{
     }
 
     private void catchData(UserDetails details){
+        view.hideLoading();
         if(details!=null){
             if(!isEmpty(details.getTracks())) {
                 view.showTracks(details.getTracks());
@@ -82,6 +82,7 @@ public class PersonPresenter implements PersonContract.Presenter{
     }
 
     private void catchError(Throwable ex){
+        view.hideLoading();
         ex.printStackTrace();
         view.showErrorMessage();
 

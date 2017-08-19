@@ -111,6 +111,12 @@ public class PlaylistFragment extends BaseFragment
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        extractId(savedInstanceState);
+    }
+
+    @Override
     protected int layoutId() {
         return R.layout.fragment_playlist;
     }
@@ -119,19 +125,23 @@ public class PlaylistFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().supportPostponeEnterTransition();
-        extractId(savedInstanceState);
         if(view!=null){
             adapter=new PlaylistTrackAdapter(getContext(),rxBus);
             tracks.setAdapter(adapter);
             tracks.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+            loadCover(savedInstanceState);
             presenter.start(id);
         }
+    }
+
+    private void loadCover(Bundle bundle){
+        if(bundle==null) bundle=getArguments();
+        showPlaylistArt(bundle.getString(Constants.EXTRA_DATA));
     }
 
     private void extractId(Bundle bundle){
         if(bundle==null) bundle=getArguments();
         id=bundle.getString(Constants.EXTRA_ID);
-        showPlaylistArt(bundle.getString(Constants.EXTRA_DATA));
     }
 
     @Override

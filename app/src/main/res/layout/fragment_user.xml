@@ -55,6 +55,7 @@
         app:layout_constraintWidth_default="wrap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/spacing_huge"
         app:layout_constraintTop_toBottomOf="@+id/follow"
@@ -67,7 +68,8 @@
         android:drawablePadding="@dimen/spacing_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="138 Likes"
+        android:gravity="center"
+        tools:text="138 followers"
         app:layout_constraintLeft_toLeftOf="@+id/playlists_count"
         app:layout_constraintRight_toLeftOf="@+id/likes"
         app:layout_constraintTop_toTopOf="@+id/playlists_count"
@@ -79,12 +81,16 @@
         android:layout_marginTop="@dimen/spacing_huge"
         android:drawableTop="@drawable/ic_music_lib"
         android:drawablePadding="@dimen/spacing_medium"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="28 mins"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description"
-        app:layout_constraintRight_toLeftOf="@+id/followers" />
+        app:layout_constraintRight_toLeftOf="@+id/followers"
+        app:layout_constraintHorizontal_chainStyle="spread" />
+
+
 
     <TextView
         android:id="@+id/likes"
@@ -100,6 +106,15 @@
         app:layout_constraintRight_toRightOf="parent" />
 
 
+    <ProgressBar
+        android:id="@+id/media_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_huge"
+        app:layout_constraintTop_toBottomOf="@+id/followers"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/media"
         android:layout_width="0dp"
@@ -109,5 +124,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
-
 </android.support.constraint.ConstraintLayout>

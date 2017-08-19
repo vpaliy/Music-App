@@ -1,14 +1,16 @@
 package com.vpaliy.melophile.ui.user;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.target.ImageViewTarget;
-import com.vpaliy.chips_lover.ChipsLayout;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
@@ -22,13 +24,13 @@ import java.util.List;
 import java.util.Locale;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.vpaliy.melophile.ui.user.PersonContract.Presenter;
 
@@ -59,6 +61,9 @@ public class PersonFragment extends BaseFragment
     @BindView(R.id.media)
     protected RecyclerView media;
 
+    @BindView(R.id.media_progress)
+    protected ProgressBar progress;
+
     private MediaAdapter adapter;
 
 
@@ -84,6 +89,7 @@ public class PersonFragment extends BaseFragment
     private void extractId(Bundle bundle){
         if(bundle==null) bundle=getArguments();
         this.id=bundle.getString(Constants.EXTRA_ID);
+        Log.d(PersonFragment.class.getSimpleName(),id);
         presenter.start(id);
         showAvatar(bundle.getString(Constants.EXTRA_DATA));
     }
@@ -153,7 +159,8 @@ public class PersonFragment extends BaseFragment
                             media.post(()->{
                                 View blank = adapter.getBlank();
                                 ViewGroup.LayoutParams params = blank.getLayoutParams();
-                                params.height = followers.getTop()+followers.getHeight()*2;
+                                params.height = followers.getTop()+followers.getHeight()
+                                        +getResources().getDimensionPixelOffset(R.dimen.spacing_large);
                                 blank.setLayoutParams(params);
                             });
                             getActivity().supportStartPostponedEnterTransition();
@@ -164,7 +171,35 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showFollowers(List<User> followers) {
+        //TODO add followers
+    }
 
+    @Override
+    public void showLoading() {
+        progress.setScaleX(0);
+        progress.setScaleY(0);
+        progress.setVisibility(View.VISIBLE);
+        progress.animate()
+                .scaleX(1)
+                .scaleY(1)
+                .setDuration(300)
+                .setListener(null)
+                .start();
+    }
+
+    @Override
+    public void hideLoading() {
+        progress.animate()
+                .scaleX(0)
+                .scaleY(0)
+                .setDuration(300)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        progress.setVisibility(View.GONE);
+                    }
+                }).start();
     }
 
     @Override

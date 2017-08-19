@@ -1,5 +1,7 @@
 package com.vpaliy.data.mapper;
 
+import android.util.Log;
+
 import com.vpaliy.domain.model.User;
 import com.vpaliy.soundcloud.model.UserEntity;
 import javax.inject.Inject;

@@ -119,24 +119,16 @@ public class RemoteSource implements Source{
                     .subscribeOn(schedulerProvider.multi());
             Single<List<PlaylistEntity>> singlePlaylists=service.fetchUserPlaylists(id)
                     .subscribeOn(schedulerProvider.multi());
-            Single<List<TrackEntity>> singleFavoriteTracks=service.fetchUserFavoriteTracks(id)
-                    .subscribeOn(schedulerProvider.multi());
-            Single<List<WebProfileEntity>> singleWebProfiles=service.fetchUserWebProfiles(id)
-                    .subscribeOn(schedulerProvider.multi());
             Single<UserEntity> singleUser=service.fetchUser(id)
                     .subscribeOn(schedulerProvider.multi());
             return Single.zip(singleUser,
                     singleTracks.onErrorResumeNext(Single.just(new ArrayList<>())),
                     singlePlaylists.onErrorResumeNext(Single.just(new ArrayList<>())),
-                    singleFavoriteTracks.onErrorResumeNext(Single.just(new ArrayList<>())),
-                    singleWebProfiles.onErrorResumeNext(Single.just(new ArrayList<>())),
-                    (user,tracks,playlists,favoriteTracks,webProfiles)->{
+                    (user,tracks,playlists)->{
                         UserDetailsEntity userDetails=new UserDetailsEntity();
                         userDetails.setUserEntity(fixUserImage(user));
-                        userDetails.setFavoriteTracks(fixTrackImage(favoriteTracks));
                         userDetails.setTracks(fixTrackImage(tracks));
                         userDetails.setPlaylists(fixPlaylistImage(playlists));
-                        userDetails.setWebProfiles(webProfiles);
                         return userDetails;
                     });
 

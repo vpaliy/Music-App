@@ -18,6 +18,8 @@ public interface PersonContract {
         void showTracks(List<Track> tracks);
         void showPlaylists(List<Playlist> playlists);
         void showDescription(String description);
+        void showLoading();
+        void hideLoading();
         void showFollowers(List<User> followers);
         void showTitle(String title);
         void showFollowersCount(int count);
