@@ -6,6 +6,8 @@ import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
 import com.vpaliy.domain.interactor.GetUserFavorites;
 import com.vpaliy.domain.interactor.GetUserFollowers;
+import com.vpaliy.domain.model.Track;
+import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.ui.playlist.PlaylistContract;
 import com.vpaliy.melophile.ui.playlist.PlaylistPresenter;
 import com.vpaliy.melophile.ui.playlists.PlaylistsContract;
@@ -15,8 +17,9 @@ import com.vpaliy.melophile.ui.tracks.TracksContract;
 import com.vpaliy.melophile.ui.tracks.TracksPresenter;
 import com.vpaliy.melophile.ui.user.PersonContract;
 import com.vpaliy.melophile.ui.user.PersonPresenter;
-import com.vpaliy.melophile.ui.user.favorite.FavoriteContract;
 import com.vpaliy.melophile.ui.user.favorite.FavoritePresenter;
+import com.vpaliy.melophile.ui.user.favorite.FollowersPresenter;
+import com.vpaliy.melophile.ui.user.favorite.UserInfoContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -44,7 +47,12 @@ public class PresenterModule {
     }
 
     @ViewScope @Provides
-    FavoriteContract.Presenter favorites(GetUserFavorites getUserFavorites){
+    UserInfoContract.Presenter<User> followers(GetUserFollowers getUserFollowers){
+        return new FollowersPresenter(getUserFollowers);
+    }
+
+    @ViewScope @Provides
+    UserInfoContract.Presenter<Track> favorites(GetUserFavorites getUserFavorites){
         return new FavoritePresenter(getUserFavorites);
     }
 }
