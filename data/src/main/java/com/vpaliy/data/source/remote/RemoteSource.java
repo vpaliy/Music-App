@@ -1,5 +1,7 @@
 package com.vpaliy.data.source.remote;
 
+import android.util.Log;
+
 import com.vpaliy.data.model.UserDetailsEntity;
 import com.vpaliy.data.source.Source;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;

@@ -1,6 +1,7 @@
 package com.vpaliy.melophile.ui.user.info;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;

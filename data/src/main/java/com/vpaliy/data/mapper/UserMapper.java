@@ -21,6 +21,7 @@ public class UserMapper extends Mapper<User,UserEntity> {
         user.setNickName(userEntity.username);
         user.setFullName(userEntity.full_name);
         user.setDescription(userEntity.city);
+        user.setAvatarUrl(userEntity.avatar_url);
         user.setFollowersCount(MapperUtils.convertToInt(userEntity.followers_count));
         user.setFollowingCount(MapperUtils.convertToInt(userEntity.followings_count));
         user.setPlaylistsCount(MapperUtils.convertToInt(userEntity.playlist_count));
@@ -34,6 +35,7 @@ public class UserMapper extends Mapper<User,UserEntity> {
         if(user==null) return null;
         UserEntity entity=new UserEntity();
         entity.id=user.getId();
+        entity.avatar_url=user.getAvatarUrl();
         entity.username=user.getNickName();
         entity.full_name=user.getFullName();
         entity.description=user.getDescription();
