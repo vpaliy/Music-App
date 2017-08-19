@@ -5,7 +5,6 @@ import com.vpaliy.domain.interactor.GetUserFollowers;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.model.UserDetails;
 import java.util.List;
-import io.reactivex.observers.DisposableSingleObserver;
 import static com.vpaliy.melophile.ui.user.PersonContract.View;
 import static dagger.internal.Preconditions.checkNotNull;
 import com.vpaliy.melophile.di.scope.ViewScope;

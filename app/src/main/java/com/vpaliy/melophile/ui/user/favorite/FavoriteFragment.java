@@ -3,7 +3,6 @@ package com.vpaliy.melophile.ui.user.favorite;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,10 @@ import com.vpaliy.melophile.ui.user.UserTracksAdapter;
 import com.vpaliy.melophile.ui.utils.Constants;
 import java.util.List;
 import butterknife.ButterKnife;
+import android.widget.TextView;
 import static com.vpaliy.melophile.ui.user.favorite.FavoriteContract.Presenter;
 import butterknife.BindView;
+import butterknife.OnClick;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import javax.inject.Inject;
@@ -34,6 +35,12 @@ public class FavoriteFragment extends BottomSheetDialogFragment
 
     @Inject
     protected RxBus rxBus;
+
+    @BindView(R.id.title)
+    protected TextView title;
+
+    @BindView(R.id.action_bar)
+    protected View actionBar;
 
     public static FavoriteFragment newInstance(Bundle args){
         FavoriteFragment fragment=new FavoriteFragment();
@@ -65,9 +72,20 @@ public class FavoriteFragment extends BottomSheetDialogFragment
         extractId(savedInstanceState);
         if(view!=null){
             presenter.start(id);
+            favorites.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    actionBar.setActivated(dy>0);
+                }
+            });
         }
     }
 
+    @OnClick(R.id.close)
+    public void close(){
+        getActivity().onBackPressed();
+    }
 
     @Override
     public void showTracks(@NonNull List<Track> tracks) {

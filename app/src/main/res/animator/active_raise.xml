@@ -1,0 +1,16 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true">
+        <objectAnimator
+            android:duration="@integer/rapid_animation"
+            android:propertyName="translationZ"
+            android:valueTo="@dimen/z_app_bar"
+            android:valueType="floatType" />
+    </item>
+    <item android:state_activated="false">
+        <objectAnimator
+            android:duration="@android:integer/config_shortAnimTime"
+            android:propertyName="translationZ"
+            android:valueTo="0dp"
+            android:valueType="floatType" />
+    </item>
+</selector>

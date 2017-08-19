@@ -48,8 +48,7 @@ public class PersonActivity extends BaseActivity{
 
     private void showFavorites(FavoriteEvent event){
         FragmentTransaction transaction=getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.slide_in,0,R.anim.slide_in,0);
+                .beginTransaction();
         FavoriteFragment.newInstance(event.toBundle())
                 .show(transaction,null);
     }
