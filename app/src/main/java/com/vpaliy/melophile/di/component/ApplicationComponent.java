@@ -8,6 +8,7 @@ import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.interactor.GetTrack;
 import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
+import com.vpaliy.domain.interactor.GetUserFavorites;
 import com.vpaliy.domain.interactor.GetUserFollowers;
 import com.vpaliy.domain.playback.Playback;
 import com.vpaliy.domain.repository.Repository;
@@ -49,6 +50,7 @@ public interface ApplicationComponent {
     GetTrack trackInteractor();
     GetUserDetails userDetailsInteractor();
     GetUserFollowers userFollowersInteractor();
+    GetUserFavorites userFavoritesInteractor();
 
     //playback
     PlaybackManager playbackManager();

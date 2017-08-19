@@ -38,24 +38,6 @@ public class PersonPresenter implements PersonContract.Presenter{
         userDetailsUseCase.execute(this::catchData,this::catchError,id);
     }
 
-    @Override
-    public void requestFollowers(String id) {
-        userFollowersUseCase.execute(new DisposableSingleObserver<List<User>>() {
-            @Override
-            public void onSuccess(List<User> value) {
-                if(value!=null){
-                    view.showFollowers(value);
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                view.showErrorMessage();
-            }
-        },id);
-    }
-
     private void catchData(UserDetails details){
         view.hideLoading();
         if(details!=null){

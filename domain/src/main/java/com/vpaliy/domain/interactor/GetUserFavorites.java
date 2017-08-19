@@ -20,7 +20,7 @@ public class GetUserFavorites extends SingleUseCase<List<Track>,String>{
     }
 
     @Override
-    public Single<List<Track>> buildUseCase(String s) {
-        return null;
+    public Single<List<Track>> buildUseCase(String id) {
+        return repository.getUserFavorites(id);
     }
 }

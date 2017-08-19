@@ -6,6 +6,7 @@ import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.interactor.GetTrack;
 import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
+import com.vpaliy.domain.interactor.GetUserFavorites;
 import com.vpaliy.domain.interactor.GetUserFollowers;
 import com.vpaliy.domain.repository.Repository;
 
@@ -43,5 +44,10 @@ public class InteractorModule {
     @Singleton @Provides
     GetUserFollowers getUserFollowers(Repository repository, BaseSchedulerProvider schedulerProvider){
         return new GetUserFollowers(repository,schedulerProvider);
+    }
+
+    @Singleton @Provides
+    GetUserFavorites getUserFavorites(Repository repository, BaseSchedulerProvider schedulerProvider){
+        return new GetUserFavorites(repository,schedulerProvider);
     }
 }

@@ -5,6 +5,7 @@ import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseActivity;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
+import com.vpaliy.melophile.ui.user.favorite.FavoriteEvent;
 import com.vpaliy.melophile.ui.utils.Constants;
 
 import android.support.annotation.NonNull;
@@ -38,6 +39,8 @@ public class PersonActivity extends BaseActivity{
     public void handleEvent(@NonNull Object event) {
         if(event instanceof ExposeEvent){
             navigator.navigate(this,(ExposeEvent)(event));
+        }else if(event instanceof FavoriteEvent){
+
         }
     }
 }

@@ -173,11 +173,6 @@ public class PersonFragment extends BaseFragment
     }
 
     @Override
-    public void showFollowers(List<User> followers) {
-        //TODO add followers
-    }
-
-    @Override
     public void showLoading() {
         progress.setScaleX(0);
         progress.setScaleY(0);

@@ -98,6 +98,12 @@ public class MusicRepository implements Repository {
     }
 
     @Override
+    public Single<List<Track>> getUserFavorites(String id) {
+        return remoteSource.getUserFavorites(id)
+                .map(trackMapper::map);
+    }
+
+    @Override
     public Single<UserDetails> getUserBy(String id) {
         return remoteSource.getUserBy(id)
                 .map(detailsMapper::map);

@@ -21,7 +21,6 @@ public interface PersonContract {
         void showLoading();
         void hideLoading();
         void showEmptyMediaMessage();
-        void showFollowers(List<User> followers);
         void showTitle(String title);
         void showFollowersCount(int count);
         void showLikedCount(int count);
@@ -32,7 +31,6 @@ public interface PersonContract {
     interface Presenter extends BasePresenter<View> {
         void attachView(@NonNull View view);
         void stop();
-        void requestFollowers(String id);
         void start(String id);
     }
 }
