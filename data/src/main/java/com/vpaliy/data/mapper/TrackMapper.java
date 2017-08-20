@@ -24,7 +24,7 @@ public class TrackMapper extends Mapper<Track,TrackEntity> {
         if(trackEntity==null) return null;
         Track track=new Track();
         track.setId(trackEntity.id);
-        track.setStreamUrl(trackEntity.stream_url);
+        track.setStreamUrl(MapperUtils.convertToStream(trackEntity.stream_url));
         track.setUser(userMapper.map(trackEntity.user));
         track.setArtworkUrl(trackEntity.artwork_url);
         track.setDuration(trackEntity.duration);

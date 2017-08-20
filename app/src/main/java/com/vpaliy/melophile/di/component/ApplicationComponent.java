@@ -1,7 +1,11 @@
 package com.vpaliy.melophile.di.component;
 
 import android.content.Context;
+import android.support.v4.media.MediaMetadataCompat;
+
+import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.data.source.Source;
+import com.vpaliy.data.source.remote.Filter;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
@@ -10,6 +14,7 @@ import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
 import com.vpaliy.domain.interactor.GetUserFavorites;
 import com.vpaliy.domain.interactor.GetUserFollowers;
+import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.playback.Playback;
 import com.vpaliy.domain.repository.Repository;
 import com.vpaliy.melophile.di.module.ApplicationModule;
@@ -37,6 +42,7 @@ public interface ApplicationComponent {
     void inject(BaseActivity activity);
     Context context();
     Source remote();
+    Filter filter();
     Repository repository();
     BaseSchedulerProvider scheduler();
     SoundCloudService soundCloud();
@@ -50,4 +56,6 @@ public interface ApplicationComponent {
     GetUserDetails userDetailsInteractor();
     GetUserFollowers userFollowersInteractor();
     GetUserFavorites userFavoritesInteractor();
+
+    Mapper<MediaMetadataCompat,Track> mapper();
 }

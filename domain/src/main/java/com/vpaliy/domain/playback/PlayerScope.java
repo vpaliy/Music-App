@@ -1,4 +1,4 @@
-package com.vpaliy.melophile.di.scope;
+package com.vpaliy.domain.playback;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

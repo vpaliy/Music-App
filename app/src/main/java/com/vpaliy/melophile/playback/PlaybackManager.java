@@ -5,30 +5,33 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
+import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.playback.Playback;
+import com.vpaliy.domain.playback.PlayerScope;
 import com.vpaliy.domain.playback.QueueManager;
-import com.vpaliy.melophile.di.scope.PlayerScope;
 import javax.inject.Inject;
 
+@SuppressWarnings("WeakerAccess")
 @PlayerScope
 public class PlaybackManager implements Playback.Callback {
 
     private static final String TAG= PlaybackManager.class.getSimpleName();
 
-    private Playback playback;
-    private QueueManager queueManager;
-    private MetadataUpdateListener updateListener;
     private PlaybackServiceCallback serviceCallback;
     private MediaSessionCallback mediaSessionCallback;
+    private Mapper<MediaMetadataCompat,Track> mapper;
+    private MetadataUpdateListener updateListener;
+    protected QueueManager queueManager;
+    protected Playback playback;
+
 
     @Inject
-    public PlaybackManager(Playback playback,
-                           QueueManager queueManager){
-        this.playback=playback;
-        this.queueManager=queueManager;
+    public PlaybackManager(Playback playback, Mapper<MediaMetadataCompat,Track> mapper){
         this.mediaSessionCallback=new MediaSessionCallback();
+        this.playback=playback;
         this.playback.setCallback(this);
+        this.mapper=mapper;
     }
 
     public void setUpdateListener(MetadataUpdateListener updateListener) {
@@ -39,16 +42,13 @@ public class PlaybackManager implements Playback.Callback {
         return mediaSessionCallback;
     }
 
-    public void setServiceCallback(PlaybackServiceCallback serviceCallback) {
-        this.serviceCallback = serviceCallback;
-    }
-
     public void setQueueManager(QueueManager queueManager) {
         this.queueManager = queueManager;
     }
 
     public void handlePlayRequest(Track track){
         if(track!=null) {
+            Log.d(TAG,track.getStreamUrl());
             playback.play(track.getStreamUrl());
             updateMetadata();
         }
@@ -88,6 +88,12 @@ public class PlaybackManager implements Playback.Callback {
     }
 
     @Override
+    public void onStop() {
+        updatePlaybackState(PlaybackStateCompat.STATE_STOPPED);
+        serviceCallback.onPlaybackStop();
+    }
+
+    @Override
     public void onError() {
 
     }
@@ -95,12 +101,6 @@ public class PlaybackManager implements Playback.Callback {
     @Override
     public void onCompletetion() {
         handlePlayRequest(queueManager.next());
-    }
-
-    @Override
-    public void onStop() {
-        updatePlaybackState(PlaybackStateCompat.STATE_STOPPED);
-        serviceCallback.onPlaybackStop();
     }
 
     public void handleResumeRequest(){
@@ -114,21 +114,25 @@ public class PlaybackManager implements Playback.Callback {
     }
 
     public void updatePlaybackState(int state){
-        long position=playback.getPosition();
+        long position = playback.getPosition();
         if (state == PlaybackStateCompat.STATE_PLAYING ||
                 state == PlaybackStateCompat.STATE_PAUSED) {
             serviceCallback.onNotificationRequired();
         }
-        PlaybackStateCompat.Builder builder=new PlaybackStateCompat.Builder()
+        PlaybackStateCompat.Builder builder = new PlaybackStateCompat.Builder()
                 .setActions(getAvailableActions())
-                .setState(state,position,1.0f, SystemClock.elapsedRealtime());
+                .setState(state, position, 1.0f, SystemClock.elapsedRealtime());
         serviceCallback.onPlaybackStateUpdated(builder.build());
     }
 
     private void updateMetadata(){
         if(updateListener!=null){
-           // updateListener.onMetadataChanged(queueManager.current());
+            updateListener.onMetadataChanged(mapper.map(queueManager.current()));
         }
+    }
+
+    public void setServiceCallback(PlaybackServiceCallback serviceCallback) {
+        this.serviceCallback=serviceCallback;
     }
 
     private class MediaSessionCallback extends MediaSessionCompat.Callback {
@@ -184,11 +188,11 @@ public class PlaybackManager implements Playback.Callback {
         void onCurrentQueueIndexUpdated(int queueIndex);
     }
 
-    public interface PlaybackServiceCallback {
+    public interface PlaybackServiceCallback  {
         void onPlaybackStart();
         void onPlaybackPause();
-        void onNotificationRequired();
         void onPlaybackStop();
+        void onNotificationRequired();
         void onPlaybackStateUpdated(PlaybackStateCompat newState);
     }
 }

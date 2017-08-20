@@ -1,5 +1,6 @@
 package com.vpaliy.data.mapper;
 
+import com.vpaliy.data.Config;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,5 +21,10 @@ public class MapperUtils {
     public static int convertToInt(String number){
         if(number==null) return 0;
         return Integer.parseInt(number);
+    }
+
+    public static String convertToStream(String streamUrl){
+        if(streamUrl==null) return null;
+        return streamUrl+"?client_id="+ Config.CLIENT_ID;
     }
 }

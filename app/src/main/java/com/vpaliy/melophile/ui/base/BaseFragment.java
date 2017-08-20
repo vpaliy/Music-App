@@ -51,5 +51,5 @@ public abstract class BaseFragment extends Fragment {
         return -1;
     }
 
-    public abstract void initializeDependencies();
+    public void initializeDependencies(){};
 }

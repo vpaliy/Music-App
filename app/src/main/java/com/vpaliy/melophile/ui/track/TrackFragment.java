@@ -14,39 +14,35 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.google.gson.reflect.TypeToken;
 import com.ohoussein.playpause.PlayPauseView;
+import com.vpaliy.domain.playback.QueueManager;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
-import com.vpaliy.melophile.di.component.DaggerViewComponent;
-import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.playback.MusicPlaybackService;
+import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseFragment;
-import com.vpaliy.melophile.ui.playlist.PlaylistFragment;
 import com.vpaliy.melophile.ui.utils.Constants;
-
-import butterknife.OnClick;
+import com.vpaliy.melophile.ui.utils.PresentationUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
-import android.support.annotation.Nullable;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-
-import butterknife.BindView;
 import jp.wasabeef.blurry.Blurry;
-
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+import butterknife.OnClick;
+import javax.inject.Inject;
+import android.support.annotation.Nullable;
+import butterknife.BindView;
 
 public class TrackFragment extends BaseFragment {
 
@@ -76,14 +72,13 @@ public class TrackFragment extends BaseFragment {
 
     private String id;
 
-
     private static final long PROGRESS_UPDATE_INTERNAL = 100;
     private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 10;
 
-    private final ScheduledExecutorService mExecutorService =
+    private final ScheduledExecutorService executorService =
             Executors.newSingleThreadScheduledExecutor();
 
-    private ScheduledFuture<?> mScheduleFuture;
+    private ScheduledFuture<?> scheduledFuture;
 
     private PlaybackStateCompat lastState;
     private Handler handler=new Handler();
@@ -95,6 +90,7 @@ public class TrackFragment extends BaseFragment {
             super.onConnected();
             MediaSessionCompat.Token token=browserCompat.getSessionToken();
             try {
+                inject();
                 MediaControllerCompat mediaController =new MediaControllerCompat(getActivity(), token);
                 // Save the controller
                 mediaController.registerCallback(controllerCallback);
@@ -110,6 +106,7 @@ public class TrackFragment extends BaseFragment {
             }
         }
     };
+
 
     private MediaControllerCompat.Callback controllerCallback=new MediaControllerCompat.Callback() {
         @Override
@@ -145,22 +142,20 @@ public class TrackFragment extends BaseFragment {
         }
     }
 
-
-
     private void startSeekBarUpdate(){
-        mScheduleFuture = mExecutorService.scheduleAtFixedRate(()-> handler.post(TrackFragment.this::updateProgress),
+        scheduledFuture = executorService.scheduleAtFixedRate(()-> handler.post(TrackFragment.this::updateProgress),
                 PROGRESS_UPDATE_INITIAL_INTERVAL, PROGRESS_UPDATE_INTERNAL, TimeUnit.MILLISECONDS);
     }
 
     private void stopSeekBarUpdate(){
-        if(mScheduleFuture!=null) mScheduleFuture.cancel(false);
+        if(scheduledFuture !=null) scheduledFuture.cancel(false);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         stopSeekBarUpdate();
-        mExecutorService.shutdown();
+        executorService.shutdown();
     }
 
     @OnClick(R.id.play_pause)
@@ -223,6 +218,18 @@ public class TrackFragment extends BaseFragment {
         }
     }
 
+
+    @Inject
+    public void updateQueue(PlaybackManager manager){
+        manager.setQueueManager(fetchQueue());
+        manager.handleResumeRequest();
+    }
+
+    private QueueManager fetchQueue(){
+        String queueString=getArguments().getString(Constants.EXTRA_QUEUE);
+        return PresentationUtils.convertFromJsonString(queueString,new TypeToken<QueueManager>(){}.getType());
+    }
+
     @OnClick(R.id.next)
     public void playNext(){
         MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(getActivity());
@@ -258,12 +265,9 @@ public class TrackFragment extends BaseFragment {
         return fragment;
     }
 
-    @Override
-    public void initializeDependencies() {
-        DaggerViewComponent.builder()
-                .presenterModule(new PresenterModule())
-                .applicationComponent(App.appInstance().appComponent())
-                .build().inject(this);
+    private void inject(){
+        App.appInstance().playerComponent()
+                .inject(this);
     }
 
     @Override
@@ -279,11 +283,10 @@ public class TrackFragment extends BaseFragment {
     private void extractId(Bundle bundle){
         if(bundle==null) bundle=getArguments();
         id=bundle.getString(Constants.EXTRA_ID);
-        Log.d(PlaylistFragment.class.getSimpleName(),"ID:"+id);
-        showArt(bundle.getString(Constants.EXTRA_DATA));
+        showArt(bundle.getString(Constants.EXTRA_DATA),true);
     }
 
-    public void showArt(String artUrl){
+    public void showArt(String artUrl, boolean transition){
         Glide.with(getContext())
                 .load(artUrl)
                 .asBitmap()
@@ -296,7 +299,9 @@ public class TrackFragment extends BaseFragment {
                                 .async()
                                 .from(resource)
                                 .into(background);
-                        getActivity().supportStartPostponedEnterTransition();
+                        if(transition) {
+                            getActivity().supportStartPostponedEnterTransition();
+                        }
                     }
                 });
     }
@@ -309,8 +314,8 @@ public class TrackFragment extends BaseFragment {
         trackName.setText(metadataCompat.getText(MediaMetadataCompat.METADATA_KEY_TITLE));
         artist.setText(metadataCompat.getText(MediaMetadataCompat.METADATA_KEY_ARTIST));
         String imageUrl=metadataCompat.getString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI);
+        showArt(imageUrl,false);
     }
-
 
     @Override
     protected int layoutId() {

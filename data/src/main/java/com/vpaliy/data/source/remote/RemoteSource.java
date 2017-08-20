@@ -1,7 +1,5 @@
 package com.vpaliy.data.source.remote;
 
-import android.util.Log;
-
 import com.vpaliy.data.model.UserDetailsEntity;
 import com.vpaliy.data.source.Source;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
@@ -9,7 +7,6 @@ import com.vpaliy.soundcloud.SoundCloudService;
 import com.vpaliy.soundcloud.model.PlaylistEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
 import com.vpaliy.soundcloud.model.UserEntity;
-import com.vpaliy.soundcloud.model.WebProfileEntity;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,12 +20,15 @@ public class RemoteSource implements Source{
 
     private SoundCloudService service;
     private BaseSchedulerProvider schedulerProvider;
+    private Filter filter;
 
     @Inject
     public RemoteSource(SoundCloudService service,
-                        BaseSchedulerProvider schedulerProvider){
+                        BaseSchedulerProvider schedulerProvider,
+                        Filter filter){
         this.service=service;
         this.schedulerProvider=schedulerProvider;
+        this.filter=filter;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class RemoteSource implements Source{
                     return first;
                 });
             }
-            return start.map(this::fixPlaylistImage);
+            return start.map(filter::filterPlaylists);
         }
         return Single.error(new IllegalArgumentException("categories are null"));
     }
@@ -69,7 +69,7 @@ public class RemoteSource implements Source{
                     return first;
                 });
             }
-            return start.map(this::fixTrackImage);
+            return start.map(filter::filterTracks);
         }
         return Single.error(new IllegalArgumentException("categories are null"));
     }
@@ -99,12 +99,7 @@ public class RemoteSource implements Source{
     public Single<PlaylistEntity> getPlaylistBy(String id) {
         if(id!=null){
             return service.fetchPlaylist(id)
-                    .map(playlistEntity ->{
-                        if(playlistEntity.artwork_url!=null){
-                            playlistEntity.artwork_url=playlistEntity.artwork_url.replace("large","t500x500");
-                        }
-                        return playlistEntity;
-                    });
+                    .map(filter::filter);
         }
         return Single.error(new IllegalArgumentException("id is null"));
     }
@@ -128,52 +123,14 @@ public class RemoteSource implements Source{
                     singlePlaylists.onErrorResumeNext(Single.just(new ArrayList<>())),
                     (user,tracks,playlists)->{
                         UserDetailsEntity userDetails=new UserDetailsEntity();
-                        userDetails.setUserEntity(fixUserImage(user));
-                        userDetails.setTracks(fixTrackImage(tracks));
-                        userDetails.setPlaylists(fixPlaylistImage(playlists));
+                        userDetails.setUserEntity(user);
+                        userDetails.setTracks(filter.filterTracks(tracks));
+                        userDetails.setPlaylists(filter.filterPlaylists(playlists));
                         return userDetails;
                     });
 
         }
         return Single.error(new IllegalArgumentException("id is null"));
-    }
-
-    private List<PlaylistEntity> fixPlaylistImage(List<PlaylistEntity> list){
-        if (list != null) {
-            List<PlaylistEntity> result=new ArrayList<>(list.size());
-            for(PlaylistEntity entity:list){
-                if(entity.artwork_url!=null){
-                    entity.artwork_url=entity.artwork_url.replace("large","t500x500");
-                    result.add(entity);
-                }
-            }
-            return result;
-        }
-        return null;
-    }
-
-    private List<TrackEntity> fixTrackImage(List<TrackEntity> list){
-        if (list != null) {
-            List<TrackEntity> result=new ArrayList<>(list.size());
-            for(TrackEntity entity:list){
-                if(entity.artwork_url!=null){
-                    entity.artwork_url=entity.artwork_url.replace("large","t500x500");
-                    result.add(entity);
-                }
-            }
-            return result;
-        }
-        return null;
-    }
-
-    private UserEntity fixUserImage(UserEntity entity){
-        if(entity!=null){
-            if(entity.avatar_url!=null){
-                entity.avatar_url=entity.avatar_url.replace("large","t500x500");
-                return entity;
-            }
-        }
-        return entity;
     }
 
     @Override
