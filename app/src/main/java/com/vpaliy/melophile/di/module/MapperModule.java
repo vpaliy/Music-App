@@ -1,5 +1,7 @@
 package com.vpaliy.melophile.di.module;
 
+import android.support.v4.media.MediaMetadataCompat;
+
 import com.vpaliy.data.mapper.CommentMapper;
 import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.data.mapper.MiniUserMapper;
@@ -15,6 +17,8 @@ import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.model.UserDetails;
 import com.vpaliy.domain.model.WebProfile;
+import com.vpaliy.melophile.di.scope.PlayerScope;
+import com.vpaliy.melophile.playback.MetadataMapper;
 import com.vpaliy.soundcloud.model.CommentEntity;
 import com.vpaliy.soundcloud.model.MiniUserEntity;
 import com.vpaliy.soundcloud.model.PlaylistEntity;
@@ -62,6 +66,11 @@ public class MapperModule {
 
     @Singleton @Provides
     Mapper<WebProfile,WebProfileEntity> webProfileMapper(WebProfileMapper mapper){
+        return mapper;
+    }
+
+    @Singleton @Provides
+    Mapper<MediaMetadataCompat,Track> metadataMapper(MetadataMapper mapper){
         return mapper;
     }
 }

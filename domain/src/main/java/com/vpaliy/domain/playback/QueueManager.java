@@ -1,7 +1,6 @@
 package com.vpaliy.domain.playback;
 
 import com.vpaliy.domain.model.Track;
-
 import java.util.List;
 
 public class QueueManager {

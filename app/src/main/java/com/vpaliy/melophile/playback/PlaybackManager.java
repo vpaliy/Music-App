@@ -5,13 +5,13 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
-
+import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.playback.Playback;
-
+import com.vpaliy.domain.playback.QueueManager;
+import com.vpaliy.melophile.di.scope.PlayerScope;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
+@PlayerScope
 public class PlaybackManager implements Playback.Callback {
 
     private static final String TAG= PlaybackManager.class.getSimpleName();
@@ -47,10 +47,9 @@ public class PlaybackManager implements Playback.Callback {
         this.queueManager = queueManager;
     }
 
-    public void handlePlayRequest(MediaMetadataCompat metadataCompat){
-        if(metadataCompat!=null) {
-            String url=metadataCompat.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI);
-            playback.play(url);
+    public void handlePlayRequest(Track track){
+        if(track!=null) {
+            playback.play(track.getStreamUrl());
             updateMetadata();
         }
     }
@@ -128,7 +127,7 @@ public class PlaybackManager implements Playback.Callback {
 
     private void updateMetadata(){
         if(updateListener!=null){
-            updateListener.onMetadataChanged(queueManager.current());
+           // updateListener.onMetadataChanged(queueManager.current());
         }
     }
 
@@ -152,9 +151,9 @@ public class PlaybackManager implements Playback.Callback {
         public void onSkipToPrevious() {
             super.onSkipToPrevious();
             Log.d(TAG,"onSkipToPrev");
-            MediaMetadataCompat mediaMetadataCompat=queueManager.previous();
-            if(mediaMetadataCompat==null) mediaMetadataCompat=queueManager.current();
-            handlePlayRequest(mediaMetadataCompat);
+            Track track=queueManager.previous();
+            if(track==null) track=queueManager.current();
+            handlePlayRequest(track);
         }
 
         @Override
