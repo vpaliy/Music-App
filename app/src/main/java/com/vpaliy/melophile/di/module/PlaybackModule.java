@@ -2,7 +2,11 @@ package com.vpaliy.melophile.di.module;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
+
+import com.vpaliy.domain.model.TrackSet;
 import com.vpaliy.domain.playback.Playback;
+import com.vpaliy.melophile.di.scope.PlayerScope;
 import com.vpaliy.melophile.playback.BasePlayback;
 import com.vpaliy.melophile.playback.MediaPlayback;
 import com.vpaliy.melophile.playback.MediaPlayback21;
@@ -17,7 +21,13 @@ import dagger.Provides;
 @Module
 public class PlaybackModule {
 
-    @Singleton @Provides
+    private final QueueManager queueManager;
+
+    public PlaybackModule(@NonNull QueueManager queueManager){
+        this.queueManager=queueManager;
+    }
+
+    @PlayerScope @Provides
     Playback playback(Context context){
         if(Permission.checkForVersion(Build.VERSION_CODES.LOLLIPOP)){
             return new MediaPlayback21(context,null,null);
@@ -25,13 +35,8 @@ public class PlaybackModule {
         return new MediaPlayback(context,null,null);
     }
 
-    @Singleton @Provides
-    QueueManager queueManager(){
-        return new QueueManager();
-    }
-
-    @Singleton @Provides
-    PlaybackManager playbackManager(Playback playback, QueueManager queueManager){
+    @PlayerScope @Provides
+    PlaybackManager playbackManager(Playback playback){
         return new PlaybackManager(playback,queueManager);
     }
 }

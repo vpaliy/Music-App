@@ -8,39 +8,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/author"
-        tools:text="Imagine Dragons"
-        style="@style/Widget.CommentAuthor"
-        android:maxWidth="80dp"
-        android:maxLines="2"
-        android:layout_marginTop="@dimen/spacing_huge"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:layout_marginRight="@dimen/spacing_small"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:gravity="center"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintTop_toBottomOf="@+id/share"
-        app:layout_constraintRight_toLeftOf="@+id/user_avatar"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="centerCrop"
-        tools:src="@drawable/evolve"
-        android:transitionName="@string/user_trans_name"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/author"
-        app:layout_constraintTop_toTopOf="@+id/author"
-        app:layout_constraintBottom_toBottomOf="@+id/author"
-        app:layout_constraintVertical_bias="0.65"
-        android:id="@+id/user_avatar" />
-
     <View
         android:id="@+id/title_background"
         android:layout_width="0dp"
@@ -63,19 +30,55 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-    <com.vpaliy.chips_lover.ChipsLayout
+    <TextView
+        android:id="@+id/author"
+        tools:text="Imagine Dragons"
+        style="@style/Widget.CommentAuthor"
+        android:maxWidth="80dp"
+        android:maxLines="2"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_small"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintTop_toBottomOf="@+id/tracks_number"
+        app:layout_constraintRight_toLeftOf="@+id/user_avatar"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/user_avatar"
+        android:layout_marginBottom="8dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/evolve"
+        android:transitionName="@string/user_trans_name"
+        android:id="@+id/user_avatar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/author"
+        app:layout_constraintTop_toTopOf="@+id/author"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <FrameLayout
         android:id="@+id/chips"
-        android:orientation="horizontal"
-        app:chip_layout_horizontal_margin="@dimen/spacing_small"
-        app:chipTextColor="@color/blue_grey_700"
-        app:chipTextStyle="@style/Widget.HashTag"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintWidth_default="wrap"
-        android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/spacing_huge"
         app:layout_constraintTop_toBottomOf="@+id/playlist_title"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent" >
+        <com.vpaliy.chips_lover.ChipsLayout
+            android:id="@+id/chips_layout"
+            app:chip_layout_horizontal_margin="@dimen/spacing_small"
+            app:chipTextColor="@color/blue_grey_700"
+            app:chipTextStyle="@style/Widget.HashTag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tracks_number"
@@ -88,24 +91,24 @@
         android:scaleY="0"
         tools:scaleY="1"
         tools:scaleX="1"
-        app:layout_constraintLeft_toLeftOf="@+id/playlists_count"
+        app:layout_constraintLeft_toRightOf="@+id/time"
         app:layout_constraintRight_toLeftOf="@+id/share"
-        app:layout_constraintTop_toTopOf="@+id/playlists_count"
-        app:layout_constraintBottom_toBottomOf="@+id/playlists_count" />
+        app:layout_constraintTop_toTopOf="@+id/time"
+        app:layout_constraintBottom_toBottomOf="@+id/time" />
 
 
     <TextView
-        android:id="@+id/playlists_count"
+        android:id="@+id/time"
         android:scaleX="0"
         android:scaleY="0"
         tools:scaleY="1"
         tools:scaleX="1"
-        android:layout_marginTop="@dimen/spacing_huge"
+        android:layout_marginTop="33dp"
         android:drawableTop="@drawable/ic_playlist_duration"
         android:drawablePadding="@dimen/spacing_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="28 mins"
+        tools:text="28 min"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chips"
         app:layout_constraintRight_toLeftOf="@+id/tracks_number"
@@ -125,5 +128,6 @@
         app:layout_constraintTop_toTopOf="@+id/tracks_number"
         app:layout_constraintLeft_toRightOf="@+id/tracks_number"
         app:layout_constraintBottom_toBottomOf="@+id/tracks_number"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintRight_toRightOf="parent" />
 </com.vpaliy.melophile.ui.view.TranslatableLayout>

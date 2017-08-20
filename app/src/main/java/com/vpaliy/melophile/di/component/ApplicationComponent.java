@@ -31,7 +31,6 @@ import dagger.Component;
         DataModule.class,
         MapperModule.class,
         NetworkModule.class,
-        PlaybackModule.class,
         InteractorModule.class,
         ApplicationModule.class})
 public interface ApplicationComponent {
@@ -51,7 +50,4 @@ public interface ApplicationComponent {
     GetUserDetails userDetailsInteractor();
     GetUserFollowers userFollowersInteractor();
     GetUserFavorites userFavoritesInteractor();
-
-    //playback
-    PlaybackManager playbackManager();
 }

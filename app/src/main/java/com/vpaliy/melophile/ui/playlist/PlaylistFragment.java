@@ -8,7 +8,6 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
@@ -28,7 +27,6 @@ import com.vpaliy.melophile.ui.view.FabToggle;
 import com.vpaliy.melophile.ui.view.ParallaxRatioImageView;
 import com.vpaliy.melophile.ui.view.TranslatableLayout;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +38,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import javax.inject.Inject;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.vpaliy.melophile.ui.playlist.PlaylistContract.Presenter;
@@ -81,13 +78,13 @@ public class PlaylistFragment extends BaseFragment
     @BindView(R.id.user_avatar)
     protected ImageView userAvatar;
 
-    @BindView(R.id.playlists_count)
+    @BindView(R.id.time)
     protected TextView duration;
 
     @BindView(R.id.title_background)
     protected View titleBackground;
 
-    @BindView(R.id.chips)
+    @BindView(R.id.chips_layout)
     protected ChipsLayout chipsLayout;
 
     private PlaylistTrackAdapter adapter;
@@ -168,8 +165,7 @@ public class PlaylistFragment extends BaseFragment
 
     @Override
     public void showTags(List<String> tags) {
-       // chipsLayout.setVisibility(View.VISIBLE);
-       // chipsLayout.setTags(tags);
+        chipsLayout.setTags(tags);
     }
 
     private void changeBlank(){
@@ -331,7 +327,7 @@ public class PlaylistFragment extends BaseFragment
             Bundle data = new Bundle();
             data.putString(Constants.EXTRA_ID,userModel.getId());
             data.putString(Constants.EXTRA_DATA,userModel.getAvatarUrl());
-            rxBus.send(ExposeEvent.exposeUser(data, Pair.create(userAvatar,getString(R.string.background_trans_name)),
+            rxBus.send(ExposeEvent.exposeUser(data,
                     Pair.create(userAvatar,getString(R.string.user_trans_name))));
         }
     }

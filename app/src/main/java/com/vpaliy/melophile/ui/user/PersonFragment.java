@@ -4,11 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -55,7 +52,7 @@ public class PersonFragment extends BaseFragment
     @BindView(R.id.likes)
     protected TextView likes;
 
-    @BindView(R.id.playlists_count)
+    @BindView(R.id.time)
     protected TextView playlistCount;
 
     @BindView(R.id.description)

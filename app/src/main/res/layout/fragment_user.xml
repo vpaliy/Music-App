@@ -69,14 +69,14 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         tools:text="138 followers"
-        app:layout_constraintLeft_toLeftOf="@+id/playlists_count"
+        app:layout_constraintLeft_toLeftOf="@+id/time"
         app:layout_constraintRight_toLeftOf="@+id/likes"
-        app:layout_constraintTop_toTopOf="@+id/playlists_count"
-        app:layout_constraintBottom_toBottomOf="@+id/playlists_count" />
+        app:layout_constraintTop_toTopOf="@+id/time"
+        app:layout_constraintBottom_toBottomOf="@+id/time" />
 
 
     <TextView
-        android:id="@+id/playlists_count"
+        android:id="@+id/time"
         android:layout_marginTop="@dimen/spacing_huge"
         android:drawableTop="@drawable/ic_music_lib"
         android:drawablePadding="@dimen/spacing_medium"

@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import android.support.annotation.NonNull;
 import butterknife.BindView;
 
+@SuppressWarnings("WeakerAccess")
 public class TracksAdapter extends BaseAdapter<Track> {
 
     public TracksAdapter(@NonNull Context context, @NonNull RxBus rxBus){

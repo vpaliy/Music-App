@@ -11,9 +11,6 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.graphics.Palette;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +21,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.ohoussein.playpause.PlayPauseView;
 import com.vpaliy.melophile.App;
@@ -306,15 +302,12 @@ public class TrackFragment extends BaseFragment {
     }
 
     private void updateDuration(MediaMetadataCompat metadataCompat){
-        Log.d(TAG,"updatedDuration is called()");
         int duration=(int)metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
         endTime.setText(DateUtils.formatElapsedTime(duration/1000));
         startTime.setText("0");
         progress.setMax(duration);
-        //
         trackName.setText(metadataCompat.getText(MediaMetadataCompat.METADATA_KEY_TITLE));
         artist.setText(metadataCompat.getText(MediaMetadataCompat.METADATA_KEY_ARTIST));
-
         String imageUrl=metadataCompat.getString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI);
     }
 
