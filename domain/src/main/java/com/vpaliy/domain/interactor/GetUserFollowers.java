@@ -24,6 +24,9 @@ public class GetUserFollowers extends SingleUseCase<List<User>,String>{
 
     @Override
     public Single<List<User>> buildUseCase(String id) {
+        if(id==null||id.isEmpty()){
+            return Single.error(new IllegalArgumentException("Id is null"));
+        }
         return repository.getUserFollowers(id);
     }
 }

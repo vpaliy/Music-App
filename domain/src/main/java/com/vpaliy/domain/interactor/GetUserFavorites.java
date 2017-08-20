@@ -21,6 +21,9 @@ public class GetUserFavorites extends SingleUseCase<List<Track>,String>{
 
     @Override
     public Single<List<Track>> buildUseCase(String id) {
+        if(id==null||id.isEmpty()){
+            return Single.error(new IllegalArgumentException("Id is null"));
+        }
         return repository.getUserFavorites(id);
     }
 }

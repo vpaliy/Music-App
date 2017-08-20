@@ -22,6 +22,9 @@ public class GetTrack extends SingleUseCase<Track,String> {
 
     @Override
     public Single<Track> buildUseCase(String id) {
+        if(id==null||id.isEmpty()){
+            return Single.error(new IllegalArgumentException("Id is null"));
+        }
         return repository.getTrackBy(id);
     }
 }

@@ -23,6 +23,9 @@ public class GetUserDetails extends SingleUseCase<UserDetails,String> {
 
     @Override
     public Single<UserDetails> buildUseCase(String id) {
+        if(id==null||id.isEmpty()){
+            return Single.error(new IllegalArgumentException("Id is null"));
+        }
         return repository.getUserBy(id);
     }
 }

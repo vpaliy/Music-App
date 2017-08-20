@@ -23,6 +23,9 @@ public class GetPlaylist extends SingleUseCase<Playlist,String> {
 
     @Override
     public Single<Playlist> buildUseCase(String id) {
+        if(id==null||id.isEmpty()){
+            return Single.error(new IllegalArgumentException("Id is null"));
+        }
         return repository.getPlaylistBy(id);
     }
 }

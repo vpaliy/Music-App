@@ -14,7 +14,6 @@ import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.utils.Constants;
-
 import butterknife.ButterKnife;
 import android.support.annotation.NonNull;
 import butterknife.BindView;
