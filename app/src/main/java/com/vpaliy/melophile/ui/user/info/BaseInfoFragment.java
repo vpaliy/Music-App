@@ -10,12 +10,12 @@ import android.widget.TextView;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import com.vpaliy.melophile.ui.utils.Constants;
+import butterknife.ButterKnife;
+import static com.vpaliy.melophile.ui.user.info.UserInfoContract.Presenter;
 import javax.inject.Inject;
 import butterknife.BindView;
 import android.support.annotation.Nullable;
 import butterknife.OnClick;
-import butterknife.ButterKnife;
-import static com.vpaliy.melophile.ui.user.info.UserInfoContract.Presenter;
 
 public abstract class BaseInfoFragment<T>  extends BottomSheetDialogFragment
         implements UserInfoContract.View<T>{
@@ -87,5 +87,13 @@ public abstract class BaseInfoFragment<T>  extends BottomSheetDialogFragment
     private void extractId(Bundle bundle){
         if(bundle==null) bundle=getArguments();
         id=bundle.getString(Constants.EXTRA_ID);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(presenter!=null){
+            presenter.stop();
+        }
     }
 }

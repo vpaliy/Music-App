@@ -20,10 +20,6 @@ public abstract class BaseAdapter<T> extends
     protected List<T> data;
     protected LayoutInflater inflater;
     protected RxBus rxBus;
-    private Handler handler = new Handler();
-    private volatile boolean lock;
-
-    protected final static long UNLOCK_TIMEOUT = 500;
 
     public BaseAdapter(@NonNull Context context,
                        @NonNull RxBus rxBus) {
@@ -45,29 +41,13 @@ public abstract class BaseAdapter<T> extends
         public abstract void onBindData();
     }
 
-    public boolean isLocked() {
-        return lock;
-    }
-
-    protected void unlockAfter(long milliSec) {
-        handler.postDelayed(this::unlock, milliSec);
-    }
-
     @Override
     public int getItemCount() {
         return data.size();
     }
 
-    public void unlock() {
-        lock = false;
-    }
-
     protected View inflate(@LayoutRes int id, ViewGroup container){
         return inflater.inflate(id,container,false);
-    }
-
-    public void lock() {
-        lock = true;
     }
 
     protected T at(int index) {

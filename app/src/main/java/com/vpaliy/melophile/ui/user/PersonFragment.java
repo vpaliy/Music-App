@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -74,7 +75,6 @@ public class PersonFragment extends BaseFragment
 
     private MediaAdapter adapter;
 
-
     public static PersonFragment newInstance(Bundle args){
         PersonFragment fragment=new PersonFragment();
         fragment.setArguments(args);
@@ -111,13 +111,6 @@ public class PersonFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().supportPostponeEnterTransition();
-        getActivity().setEnterSharedElementCallback(new SharedElementCallback() {
-            @Override
-            public void onSharedElementEnd(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
-                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
-                presenter.start(id);
-            }
-        });
         if(view!=null) {
             final LinearLayoutManager layoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
             adapter = new MediaAdapter(getContext(), rxBus);
@@ -166,13 +159,12 @@ public class PersonFragment extends BaseFragment
 
     @OnClick(R.id.likes)
     public void showFavorites(){
-        rxBus.send(InfoEvent.showFavorites(id));
+        rxBus.sendWithLock(InfoEvent.showFavorites(id));
     }
 
     @OnClick(R.id.followers)
     public void showFollowers(){
-        Log.d(PersonFragment.class.getSimpleName(),id);
-        rxBus.send(InfoEvent.showFollowers(id));
+        rxBus.sendWithLock(InfoEvent.showFollowers(id));
     }
 
     @Override
@@ -194,6 +186,7 @@ public class PersonFragment extends BaseFragment
                                 blank.setLayoutParams(params);
                             });
                             getActivity().supportStartPostponedEnterTransition();
+                            presenter.start(id);
                         });
                     }
                 });

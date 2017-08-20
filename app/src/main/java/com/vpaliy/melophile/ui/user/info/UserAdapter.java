@@ -34,13 +34,13 @@ public class UserAdapter extends BaseAdapter<User> {
             super(itemView);
             ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(view->{
-                final Context context=itemView.getContext();
-                final User userModel=at(getAdapterPosition());
+                final Context context = itemView.getContext();
+                final User userModel = at(getAdapterPosition());
                 Bundle data = new Bundle();
-                data.putString(Constants.EXTRA_ID,userModel.getId());
-                data.putString(Constants.EXTRA_DATA,userModel.getAvatarUrl());
-                rxBus.send(ExposeEvent.exposeUser(data, Pair.create(art,context.getString(R.string.background_trans_name)),
-                        Pair.create(art,context.getString(R.string.user_trans_name))));
+                data.putString(Constants.EXTRA_ID, userModel.getId());
+                data.putString(Constants.EXTRA_DATA, userModel.getAvatarUrl());
+                rxBus.sendWithLock(ExposeEvent.exposeUser(data, Pair.create(art, context.getString(R.string.background_trans_name)),
+                        Pair.create(art, context.getString(R.string.user_trans_name))));
             });
         }
 

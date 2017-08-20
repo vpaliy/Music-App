@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 
 public class FollowersFragment extends BaseInfoFragment<User>{
 
-
     public static FollowersFragment newInstance(Bundle args){
         FollowersFragment fragment=new FollowersFragment();
         fragment.setArguments(args);
@@ -20,7 +19,7 @@ public class FollowersFragment extends BaseInfoFragment<User>{
 
     @Override
     public void showInfo(@NonNull List<User> users) {
-        UserAdapter adapter=new UserAdapter(getContext(),rxBus);
+        UserAdapter adapter = new UserAdapter(getContext(), rxBus);
         adapter.setData(users);
         data.setAdapter(adapter);
     }

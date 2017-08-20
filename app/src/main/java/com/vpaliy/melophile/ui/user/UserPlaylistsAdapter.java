@@ -42,15 +42,15 @@ public class UserPlaylistsAdapter extends BaseAdapter<Playlist> {
             super(itemView);
             ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(v->{
-                Playlist playlist=at(getAdapterPosition());
-                Bundle data=new Bundle();
-                Context context=inflater.getContext();
-                ViewCompat.setTransitionName(trackArt,context.getString(R.string.art_trans_name));
-                ViewCompat.setTransitionName(itemView,context.getString(R.string.background_trans_name));
-                data.putString(Constants.EXTRA_DATA,playlist.getArtUrl());
-                data.putString(Constants.EXTRA_ID,playlist.getId());
-                rxBus.send(ExposeEvent.exposePlaylist(data, Pair.create(trackArt,context.getString(R.string.art_trans_name)),
-                        Pair.create(trackArt,context.getString(R.string.background_trans_name))));
+                Playlist playlist = at(getAdapterPosition());
+                Bundle data = new Bundle();
+                Context context = inflater.getContext();
+                ViewCompat.setTransitionName(trackArt, context.getString(R.string.art_trans_name));
+                ViewCompat.setTransitionName(itemView, context.getString(R.string.background_trans_name));
+                data.putString(Constants.EXTRA_DATA, playlist.getArtUrl());
+                data.putString(Constants.EXTRA_ID, playlist.getId());
+                rxBus.sendWithLock(ExposeEvent.exposePlaylist(data, Pair.create(trackArt, context.getString(R.string.art_trans_name)),
+                        Pair.create(trackArt, context.getString(R.string.background_trans_name))));
             });
         }
 

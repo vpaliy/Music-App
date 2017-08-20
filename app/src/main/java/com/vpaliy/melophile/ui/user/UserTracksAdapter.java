@@ -43,15 +43,15 @@ public class UserTracksAdapter extends BaseAdapter<Track> {
             super(itemView);
             ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(v->{
-                Track track=at(getAdapterPosition());
-                Bundle data=new Bundle();
-                Context context=inflater.getContext();
-                ViewCompat.setTransitionName(trackArt,context.getString(R.string.art_trans_name));
-                ViewCompat.setTransitionName(itemView,context.getString(R.string.background_trans_name));
-                data.putString(Constants.EXTRA_DATA,track.getArtworkUrl());
-                data.putString(Constants.EXTRA_ID,track.getId());
-                rxBus.send(ExposeEvent.exposeTrack(data, Pair.create(trackArt,context.getString(R.string.art_trans_name)),
-                        Pair.create(trackArt,context.getString(R.string.background_trans_name))));
+                Track track = at(getAdapterPosition());
+                Bundle data = new Bundle();
+                Context context = inflater.getContext();
+                ViewCompat.setTransitionName(trackArt, context.getString(R.string.art_trans_name));
+                ViewCompat.setTransitionName(itemView, context.getString(R.string.background_trans_name));
+                data.putString(Constants.EXTRA_DATA, track.getArtworkUrl());
+                data.putString(Constants.EXTRA_ID, track.getId());
+                rxBus.sendWithLock(ExposeEvent.exposeTrack(data, Pair.create(trackArt, context.getString(R.string.art_trans_name)),
+                        Pair.create(trackArt, context.getString(R.string.background_trans_name))));
             });
         }
 
