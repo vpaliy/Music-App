@@ -127,7 +127,11 @@ public class PlaybackManager implements Playback.Callback {
 
     private void updateMetadata(){
         if(updateListener!=null){
-            updateListener.onMetadataChanged(mapper.map(queueManager.current()));
+            MediaMetadataCompat result=new MediaMetadataCompat.Builder(mapper.map(queueManager.current()))
+                    .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS,queueManager.size())
+                    .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER,queueManager.currentIndex()+1)
+                    .build();
+            updateListener.onMetadataChanged(result);
         }
     }
 

@@ -1,7 +1,5 @@
 package com.vpaliy.data.source.remote;
 
-import android.util.Log;
-
 import com.vpaliy.soundcloud.model.PlaylistEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
 import java.util.LinkedList;
@@ -44,6 +42,7 @@ public class Filter {
     public TrackEntity filter(TrackEntity trackEntity){
         if(trackEntity!=null){
             if(trackEntity.artwork_url!=null && trackEntity.is_streamable){
+                trackEntity.artwork_url=trackEntity.artwork_url.replace("large","t500x500");
                 return trackEntity;
             }
         }
@@ -53,6 +52,7 @@ public class Filter {
     public PlaylistEntity filter(PlaylistEntity playlistEntity){
         if(playlistEntity!=null){
             if(playlistEntity.artwork_url!=null){
+                playlistEntity.artwork_url=playlistEntity.artwork_url.replace("large","t500x500");
                 playlistEntity.tracks=filterTracks(playlistEntity.tracks);
                 return playlistEntity;
             }

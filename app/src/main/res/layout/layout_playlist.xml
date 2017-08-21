@@ -28,7 +28,9 @@
         android:transitionName="@string/playlist_title_trans_name"
         android:id="@+id/playlist_title"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="0dp"
+        android:layout_width="0dp" />
 
     <TextView
         android:id="@+id/author"
@@ -64,7 +66,7 @@
 
     <FrameLayout
         android:id="@+id/chips"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintWidth_default="wrap"
         app:layout_constraintRight_toRightOf="parent"
@@ -111,8 +113,7 @@
         tools:text="28 min"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chips"
-        app:layout_constraintRight_toLeftOf="@+id/tracks_number"
-        app:layout_constraintHorizontal_chainStyle="spread" />
+        app:layout_constraintRight_toLeftOf="@+id/tracks_number" />
 
     <TextView
         android:id="@+id/share"

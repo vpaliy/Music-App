@@ -15,7 +15,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -30,7 +30,8 @@ import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.utils.PresentationUtils;
-import de.hdodenhof.circleimageview.CircleImageView;
+
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -56,7 +57,7 @@ public class TrackFragment extends BaseFragment {
     protected TextView startTime;
 
     @BindView(R.id.circle)
-    protected CircleImageView smallImage;
+    protected ImageView smallImage;
 
     @BindView(R.id.artist)
     protected TextView artist;
@@ -65,12 +66,13 @@ public class TrackFragment extends BaseFragment {
     protected TextView trackName;
 
     @BindView(R.id.progressView)
-    protected ProgressBar progress;
+    protected SeekBar progress;
 
     @BindView(R.id.play_pause)
     protected PlayPauseView playPause;
 
-    private String id;
+    @BindView(R.id.pages)
+    protected TextView pages;
 
     private static final long PROGRESS_UPDATE_INTERNAL = 100;
     private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 10;
@@ -148,6 +150,7 @@ public class TrackFragment extends BaseFragment {
     }
 
     private void stopSeekBarUpdate(){
+        lastState=null;
         if(scheduledFuture !=null) scheduledFuture.cancel(false);
     }
 
@@ -176,7 +179,7 @@ public class TrackFragment extends BaseFragment {
                     controls.play();
                     break;
                 default:
-                    Log.d(TAG, "onClick with state "+stateCompat.getState());
+                    Log.d(TAG, "State "+stateCompat.getState());
             }
         }
     }
@@ -254,8 +257,10 @@ public class TrackFragment extends BaseFragment {
                     lastState.getLastPositionUpdateTime();
             currentPosition += (int) timeDelta * lastState.getPlaybackSpeed();
         }
-        progress.setProgress((int) currentPosition);
-        startTime.setText(DateUtils.formatElapsedTime(progress.getProgress() / 1000));
+        if(progress!=null) {
+            progress.setProgress((int) currentPosition);
+            startTime.setText(DateUtils.formatElapsedTime(progress.getProgress() / 1000));
+        }
     }
 
 
@@ -278,15 +283,33 @@ public class TrackFragment extends BaseFragment {
                 new ComponentName(getActivity(), MusicPlaybackService.class),
                 connectionCallback,null);
         extractId(savedInstanceState);
+        progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                startTime.setText(DateUtils.formatElapsedTime(progress/1000));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                stopSeekBarUpdate();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                getControls().seekTo(seekBar.getProgress());
+                startSeekBarUpdate();
+            }
+        });
     }
 
     private void extractId(Bundle bundle){
-        if(bundle==null) bundle=getArguments();
-        id=bundle.getString(Constants.EXTRA_ID);
-        showArt(bundle.getString(Constants.EXTRA_DATA),true);
     }
 
-    public void showArt(String artUrl, boolean transition){
+    private MediaControllerCompat.TransportControls getControls(){
+        return MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
+    }
+
+    public void showArt(String artUrl){
         Glide.with(getContext())
                 .load(artUrl)
                 .asBitmap()
@@ -299,9 +322,8 @@ public class TrackFragment extends BaseFragment {
                                 .async()
                                 .from(resource)
                                 .into(background);
-                        if(transition) {
                             getActivity().supportStartPostponedEnterTransition();
-                        }
+
                     }
                 });
     }
@@ -311,10 +333,13 @@ public class TrackFragment extends BaseFragment {
         endTime.setText(DateUtils.formatElapsedTime(duration/1000));
         startTime.setText("0");
         progress.setMax(duration);
-        trackName.setText(metadataCompat.getText(MediaMetadataCompat.METADATA_KEY_TITLE));
+        String text=Long.toString(metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER))
+                +" of "+Long.toString(metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS));
+        trackName.setText(metadataCompat.getText(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE));
         artist.setText(metadataCompat.getText(MediaMetadataCompat.METADATA_KEY_ARTIST));
+        pages.setText(text);
         String imageUrl=metadataCompat.getString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI);
-        showArt(imageUrl,false);
+        showArt(imageUrl);
     }
 
     @Override

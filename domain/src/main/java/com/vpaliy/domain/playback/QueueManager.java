@@ -43,6 +43,14 @@ public class QueueManager {
         return tracks.get(--index);
     }
 
+    public int size(){
+        return tracks.size();
+    }
+
+    public int currentIndex(){
+        return index;
+    }
+
     public static QueueManager createQueue(List<Track> tracks, int index){
         return new QueueManager(tracks,index);
     }

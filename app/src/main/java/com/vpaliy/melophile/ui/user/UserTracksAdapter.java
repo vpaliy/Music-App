@@ -11,12 +11,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.common.reflect.TypeToken;
 import com.vpaliy.domain.model.Track;
+import com.vpaliy.domain.playback.QueueManager;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.utils.Constants;
+import com.vpaliy.melophile.ui.utils.PresentationUtils;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -44,12 +47,15 @@ public class UserTracksAdapter extends BaseAdapter<Track> {
             ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(v->{
                 Track track = at(getAdapterPosition());
+                QueueManager queueManager=QueueManager.createQueue(data,getAdapterPosition());
                 Bundle data = new Bundle();
                 Context context = inflater.getContext();
                 ViewCompat.setTransitionName(trackArt, context.getString(R.string.art_trans_name));
                 ViewCompat.setTransitionName(itemView, context.getString(R.string.background_trans_name));
                 data.putString(Constants.EXTRA_DATA, track.getArtworkUrl());
                 data.putString(Constants.EXTRA_ID, track.getId());
+                data.putString(Constants.EXTRA_QUEUE, PresentationUtils.
+                        convertToJsonString(queueManager,new TypeToken<QueueManager>(){}.getType()));
                 rxBus.sendWithLock(ExposeEvent.exposeTrack(data, Pair.create(trackArt, context.getString(R.string.art_trans_name)),
                         Pair.create(trackArt, context.getString(R.string.background_trans_name))));
             });
