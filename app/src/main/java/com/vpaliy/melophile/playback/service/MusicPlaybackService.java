@@ -1,4 +1,4 @@
-package com.vpaliy.melophile.playback;
+package com.vpaliy.melophile.playback.service;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -15,8 +15,8 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import com.vpaliy.melophile.App;
-import com.vpaliy.melophile.di.component.DaggerPlayerComponent;
-import com.vpaliy.melophile.di.module.PlaybackModule;
+import com.vpaliy.melophile.playback.MediaTasks;
+import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.track.TrackActivity;
 import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_EMPTY_ROOT;
 import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_ROOT;
@@ -33,7 +33,7 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
     private static final long STOP_DELAY=10000; //30 sec before the service stops
 
     private MediaSessionCompat mediaSession;
-    //private MusicNotification musicNotification;
+    private TrackNotification notification;
     private DelayedStopHandler stopHandler=new DelayedStopHandler(this);
 
     @Inject
@@ -46,8 +46,8 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
     @Override
     public void onCreate() {
         super.onCreate();
-        playbackManager.setServiceCallback(MusicPlaybackService.this);
-        playbackManager.setUpdateListener(MusicPlaybackService.this);
+        playbackManager.setServiceCallback(this);
+        playbackManager.setUpdateListener(this);
         mediaSession=new MediaSessionCompat(getApplicationContext(),LOG_TAG);
         mediaSession.setCallback(playbackManager.getMediaSessionCallback());
         mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
@@ -58,7 +58,7 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
         PendingIntent pi = PendingIntent.getActivity(context, 99,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mediaSession.setSessionActivity(pi);
-        //musicNotification=new MusicNotification(MusicPlaybackService.this);
+        notification=new TrackNotification(this);
         playbackManager.updatePlaybackState(PlaybackStateCompat.STATE_NONE);
     }
 
@@ -78,13 +78,9 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
     public void onMetadataChanged(MediaMetadataCompat metadata) {
         Log.d(LOG_TAG,"onMetadataChanged");
         mediaSession.setMetadata(metadata);
-       // musicNotification.updateMetadata(metadata);
+        notification.updateMetadata(metadata);
     }
 
-    @Override
-    public void onCurrentQueueIndexUpdated(int queueIndex) {
-
-    }
 
     @Override
     public void onMetadataRetrieveError() {
@@ -119,13 +115,13 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
     public void onPlaybackStateUpdated(PlaybackStateCompat stateCompat) {
         Log.d(LOG_TAG,"onPlaybackStateUpdated");
         mediaSession.setPlaybackState(stateCompat);
-       // musicNotification.updatePlaybackState(stateCompat);
+        notification.updatePlaybackState(stateCompat);
     }
 
     @Override
     public void onNotificationRequired() {
         Log.d(LOG_TAG,"onNotificationRequired");
-        //musicNotification.startNotification();
+        notification.startNotification();
     }
 
     @Override
@@ -133,7 +129,7 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
         super.onDestroy();
         Log.d(LOG_TAG,"onDestroy()");
         playbackManager.handleStopRequest();
-      //  musicNotification.stopNotification();
+        notification.stopNotification();
         stopHandler.removeCallbacksAndMessages(null);
         mediaSession.release();
     }
@@ -169,7 +165,7 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
                 boolean stopThis=service.playbackManager.getPlayback()==null
                         ||!service.playbackManager.getPlayback().isPlaying();
                 if(stopThis){
-                   // service.musicNotification.stopNotification();
+                    service.notification.stopNotification();
                     service.stopSelf();
                 }
             }

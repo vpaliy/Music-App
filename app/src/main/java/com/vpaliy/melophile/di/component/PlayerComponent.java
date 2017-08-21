@@ -1,7 +1,7 @@
 package com.vpaliy.melophile.di.component;
 
 import com.vpaliy.melophile.di.module.PlaybackModule;
-import com.vpaliy.melophile.playback.MusicPlaybackService;
+import com.vpaliy.melophile.playback.service.MusicPlaybackService;
 import dagger.Component;
 import com.vpaliy.domain.playback.PlayerScope;
 import com.vpaliy.melophile.ui.track.TrackFragment;

@@ -25,7 +25,7 @@
         </activity>
 
         <service
-            android:name=".playback.MusicPlaybackService"
+            android:name=".playback.service.MusicPlaybackService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />
@@ -36,6 +36,7 @@
             android:theme="@style/MelophileTheme.Details"/>
 
         <activity android:name=".ui.track.TrackActivity"
+            android:launchMode="singleTop"
             android:theme="@style/MelophileTheme.Track"/>
 
         <activity android:name=".ui.user.PersonActivity"

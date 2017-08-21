@@ -25,13 +25,12 @@ import com.ohoussein.playpause.PlayPauseView;
 import com.vpaliy.domain.playback.QueueManager;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
-import com.vpaliy.melophile.playback.MusicPlaybackService;
+import com.vpaliy.melophile.playback.service.MusicPlaybackService;
 import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.utils.PresentationUtils;
 
-import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -224,13 +223,22 @@ public class TrackFragment extends BaseFragment {
 
     @Inject
     public void updateQueue(PlaybackManager manager){
-        manager.setQueueManager(fetchQueue());
-        manager.handleResumeRequest();
+        QueueManager queueManager=fetchQueue();
+        if(queueManager!=null) {
+            manager.setQueueManager(fetchQueue());
+            manager.handleResumeRequest();
+        }
     }
 
     private QueueManager fetchQueue(){
-        String queueString=getArguments().getString(Constants.EXTRA_QUEUE);
-        return PresentationUtils.convertFromJsonString(queueString,new TypeToken<QueueManager>(){}.getType());
+        if(getArguments()!=null) {
+            String queueString = getArguments().getString(Constants.EXTRA_QUEUE);
+            if(queueString!=null){
+                return PresentationUtils.convertFromJsonString(queueString,
+                        new TypeToken<QueueManager>() {}.getType());
+            }
+        }
+        return null;
     }
 
     @OnClick(R.id.next)

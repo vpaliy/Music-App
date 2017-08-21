@@ -189,7 +189,6 @@ public class PlaybackManager implements Playback.Callback {
     public interface MetadataUpdateListener {
         void onMetadataChanged(MediaMetadataCompat metadata);
         void onMetadataRetrieveError();
-        void onCurrentQueueIndexUpdated(int queueIndex);
     }
 
     public interface PlaybackServiceCallback  {
