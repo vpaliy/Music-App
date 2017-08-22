@@ -14,9 +14,13 @@ import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
 import com.vpaliy.domain.interactor.GetUserFavorites;
 import com.vpaliy.domain.interactor.GetUserFollowers;
+import com.vpaliy.domain.interactor.PlaylistSearch;
+import com.vpaliy.domain.interactor.TrackSearch;
+import com.vpaliy.domain.interactor.UserSearch;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.playback.Playback;
 import com.vpaliy.domain.repository.Repository;
+import com.vpaliy.domain.repository.SearchRepository;
 import com.vpaliy.melophile.di.module.ApplicationModule;
 import com.vpaliy.melophile.di.module.DataModule;
 import com.vpaliy.melophile.di.module.InteractorModule;
@@ -44,6 +48,7 @@ public interface ApplicationComponent {
     Source remote();
     Filter filter();
     Repository repository();
+    SearchRepository searchRepository();
     BaseSchedulerProvider scheduler();
     SoundCloudService soundCloud();
     Navigator navigator();
@@ -56,6 +61,9 @@ public interface ApplicationComponent {
     GetUserDetails userDetailsInteractor();
     GetUserFollowers userFollowersInteractor();
     GetUserFavorites userFavoritesInteractor();
+    TrackSearch trackSearchInteractor();
+    PlaylistSearch playlistSearchInteractor();
+    UserSearch userSearchInteractor();
 
     Mapper<MediaMetadataCompat,Track> mapper();
 }

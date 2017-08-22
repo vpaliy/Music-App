@@ -12,6 +12,7 @@ import com.vpaliy.domain.interactor.PlaylistSearch;
 import com.vpaliy.domain.interactor.TrackSearch;
 import com.vpaliy.domain.interactor.UserSearch;
 import com.vpaliy.domain.repository.Repository;
+import com.vpaliy.domain.repository.SearchRepository;
 
 import javax.inject.Singleton;
 import dagger.Module;
@@ -57,17 +58,17 @@ public class InteractorModule {
     }
 
     @Singleton @Provides
-    TrackSearch trackSearch(){
-        return new TrackSearch();
+    TrackSearch trackSearch(BaseSchedulerProvider schedulerProvider, SearchRepository repository){
+        return new TrackSearch(schedulerProvider,repository);
     }
 
     @Singleton @Provides
-    UserSearch userSearch(){
-        return new UserSearch();
+    UserSearch userSearch(BaseSchedulerProvider schedulerProvider,SearchRepository repository){
+        return new UserSearch(schedulerProvider,repository);
     }
 
     @Singleton @Provides
-    PlaylistSearch playlistSearch(){
-        return new PlaylistSearch();
+    PlaylistSearch playlistSearch(BaseSchedulerProvider schedulerProvider, SearchRepository repository){
+        return new PlaylistSearch(schedulerProvider,repository);
     }
 }
