@@ -5,6 +5,7 @@ import com.vpaliy.melophile.di.scope.ViewScope;
 import com.vpaliy.melophile.ui.personal.PersonalFragment;
 import com.vpaliy.melophile.ui.playlist.PlaylistFragment;
 import com.vpaliy.melophile.ui.playlists.PlaylistsFragment;
+import com.vpaliy.melophile.ui.search.SearchActivity;
 import com.vpaliy.melophile.ui.track.TrackFragment;
 import com.vpaliy.melophile.ui.tracks.TracksFragment;
 import com.vpaliy.melophile.ui.user.PersonFragment;
@@ -24,4 +25,5 @@ public interface ViewComponent {
     void inject(PersonFragment fragment);
     void inject(FavoriteFragment fragment);
     void inject(FollowersFragment fragment);
+    void inject(SearchActivity activity);
 }

@@ -51,6 +51,10 @@ public class QueueManager {
         return index;
     }
 
+    public List<Track> getTracks() {
+        return tracks;
+    }
+
     public static QueueManager createQueue(List<Track> tracks, int index){
         return new QueueManager(tracks,index);
     }

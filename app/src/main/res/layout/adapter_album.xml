@@ -1,0 +1,7 @@
+<com.vpaliy.melophile.ui.view.RoundedImageView
+    android:id="@+id/image"
+    android:layout_width="250dp"
+    android:layout_height="250dp"
+    android:scaleType="centerCrop"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+</com.vpaliy.melophile.ui.view.RoundedImageView>

@@ -1,5 +1,6 @@
 package com.vpaliy.melophile.playback;
 
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -48,7 +49,6 @@ public class PlaybackManager implements Playback.Callback {
 
     public void handlePlayRequest(Track track){
         if(track!=null) {
-            Log.d(TAG,track.getStreamUrl());
             playback.play(track.getStreamUrl());
             updateMetadata();
         }
@@ -150,21 +150,18 @@ public class PlaybackManager implements Playback.Callback {
         @Override
         public void onPlay() {
             super.onPlay();
-            Log.d(TAG,"onPlay");
             handlePlayRequest(queueManager.current());
         }
 
         @Override
         public void onSkipToNext() {
             super.onSkipToNext();
-            Log.d(TAG,"onSkipToNext");
             handlePlayRequest(queueManager.next());
         }
 
         @Override
         public void onSkipToPrevious() {
             super.onSkipToPrevious();
-            Log.d(TAG,"onSkipToPrev");
             Track track=queueManager.previous();
             if(track==null) track=queueManager.current();
             handlePlayRequest(track);
@@ -173,22 +170,25 @@ public class PlaybackManager implements Playback.Callback {
         @Override
         public void onPause() {
             super.onPause();
-            Log.d(TAG,"onPause");
             handlePauseRequest();
         }
 
         @Override
         public void onStop() {
             super.onStop();
-            Log.d(TAG,"onStop");
             handleStopRequest();
         }
 
         @Override
         public void onSeekTo(long pos) {
             super.onSeekTo(pos);
-            Log.d(TAG,"onSeekTo");
             playback.seekTo((int)pos);
+        }
+
+        @Override
+        public void onCustomAction(String action, Bundle extras) {
+            super.onCustomAction(action, extras);
+
         }
     }
 

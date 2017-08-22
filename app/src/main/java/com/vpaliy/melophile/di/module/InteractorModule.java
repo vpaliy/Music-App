@@ -8,11 +8,16 @@ import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
 import com.vpaliy.domain.interactor.GetUserFavorites;
 import com.vpaliy.domain.interactor.GetUserFollowers;
+import com.vpaliy.domain.interactor.PlaylistSearch;
+import com.vpaliy.domain.interactor.TrackSearch;
+import com.vpaliy.domain.interactor.UserSearch;
 import com.vpaliy.domain.repository.Repository;
 
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
+
+//TODO are you sure they should live all the time???
 
 @Module
 public class InteractorModule {
@@ -49,5 +54,20 @@ public class InteractorModule {
     @Singleton @Provides
     GetUserFavorites getUserFavorites(Repository repository, BaseSchedulerProvider schedulerProvider){
         return new GetUserFavorites(repository,schedulerProvider);
+    }
+
+    @Singleton @Provides
+    TrackSearch trackSearch(){
+        return new TrackSearch();
+    }
+
+    @Singleton @Provides
+    UserSearch userSearch(){
+        return new UserSearch();
+    }
+
+    @Singleton @Provides
+    PlaylistSearch playlistSearch(){
+        return new PlaylistSearch();
     }
 }

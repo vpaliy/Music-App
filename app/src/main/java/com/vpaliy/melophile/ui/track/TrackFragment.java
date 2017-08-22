@@ -11,6 +11,7 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
@@ -37,14 +38,14 @@ import java.util.concurrent.TimeUnit;
 import jp.wasabeef.blurry.Blurry;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
-
 import butterknife.OnClick;
 import javax.inject.Inject;
 import android.support.annotation.Nullable;
 import butterknife.BindView;
 
 public class TrackFragment extends BaseFragment {
+
+    private static final String TAG=TrackFragment.class.getSimpleName();
 
     @BindView(R.id.background)
     protected ImageView background;
@@ -56,7 +57,7 @@ public class TrackFragment extends BaseFragment {
     protected TextView startTime;
 
     @BindView(R.id.circle)
-    protected ImageView smallImage;
+    protected ViewPager smallImage;
 
     @BindView(R.id.artist)
     protected TextView artist;
@@ -72,6 +73,7 @@ public class TrackFragment extends BaseFragment {
 
     @BindView(R.id.pages)
     protected TextView pages;
+
 
     private static final long PROGRESS_UPDATE_INTERNAL = 100;
     private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 10;
@@ -163,6 +165,7 @@ public class TrackFragment extends BaseFragment {
 
     @OnClick(R.id.play_pause)
     public void playPause(){
+        lastState=null;
         MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(getActivity());
         PlaybackStateCompat stateCompat=controllerCompat.getPlaybackState();
         if(stateCompat!=null){
@@ -226,6 +229,23 @@ public class TrackFragment extends BaseFragment {
     public void updateQueue(PlaybackManager manager){
         QueueManager queueManager=fetchQueue();
         if(queueManager!=null) {
+            AlbumAdapter adapter=new AlbumAdapter(getContext());
+            adapter.setData(queueManager.getTracks(),queueManager.currentIndex());
+            adapter.setCallback(new AlbumAdapter.Callback() {
+                @Override
+                public void onTransitionImageLoaded(ImageView image, Bitmap bitmap) {
+                    Log.d(TAG,"Gotcha");
+                    image.setImageBitmap(bitmap);
+                    Blurry.with(getContext())
+                            .async()
+                            .from(bitmap)
+                            .into(background);
+                    getActivity().supportStartPostponedEnterTransition();
+                }
+            });
+            smallImage.setAdapter(adapter);
+            smallImage.setOffscreenPageLimit(3);
+            smallImage.setCurrentItem(queueManager.currentIndex());
             manager.setQueueManager(fetchQueue());
             manager.handleResumeRequest();
         }
@@ -259,19 +279,18 @@ public class TrackFragment extends BaseFragment {
     }
 
     private void updateProgress() {
-        if(lastState==null) return;
+        if (lastState == null) return;
         long currentPosition = lastState.getPosition();
         if (lastState.getState() == PlaybackStateCompat.STATE_PLAYING) {
             long timeDelta = SystemClock.elapsedRealtime() -
                     lastState.getLastPositionUpdateTime();
             currentPosition += (int) timeDelta * lastState.getPlaybackSpeed();
         }
-        if(progress!=null) {
+        if (progress != null) {
             progress.setProgress((int) currentPosition);
             startTime.setText(DateUtils.formatElapsedTime(progress.getProgress() / 1000));
         }
     }
-
 
     public static TrackFragment newInstance(Bundle args){
         TrackFragment fragment=new TrackFragment();
@@ -315,7 +334,8 @@ public class TrackFragment extends BaseFragment {
     }
 
     public void showArt(String artUrl){
-        Glide.with(getContext())
+        Log.d(TAG,"showArt");
+        /*Glide.with(getContext())
                 .load(artUrl)
                 .asBitmap()
                 .priority(Priority.IMMEDIATE)
@@ -330,10 +350,11 @@ public class TrackFragment extends BaseFragment {
                             getActivity().supportStartPostponedEnterTransition();
 
                     }
-                });
+                });*/
     }
 
     private void updateDuration(MediaMetadataCompat metadataCompat){
+        Log.d(TAG,"Update duration");
         int duration=(int)metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
         endTime.setText(DateUtils.formatElapsedTime(duration/1000));
         startTime.setText("0");

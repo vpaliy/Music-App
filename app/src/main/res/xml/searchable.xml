@@ -1,0 +1,6 @@
+<searchable
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="@string/search_hint"
+    android:hint="@string/search_hint"
+    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
+    android:voicePromptText="@string/search_hint" />
