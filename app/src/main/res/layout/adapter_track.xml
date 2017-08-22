@@ -13,7 +13,8 @@
         tools:src="@drawable/evolve"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_margin="@dimen/spacing_large"/>
+        android:layout_margin="@dimen/spacing_large"
+        tools:ignore="ContentDescription"/>
 
     <TextView
         android:id="@+id/track_title"

@@ -31,9 +31,8 @@
 
     <TextView
         android:id="@+id/follow"
-        android:drawableLeft="@drawable/ic_person_add"
         android:drawableStart="@drawable/ic_person_add"
-        android:text="Follow"
+        android:text="@string/follow_label"
         android:textAllCaps="true"
         android:textColor="@color/white_50"
         android:elevation="@dimen/z_card"

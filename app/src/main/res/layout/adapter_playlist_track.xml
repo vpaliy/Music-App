@@ -12,12 +12,12 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
-        android:layout_marginLeft="@dimen/spacing_medium"
         android:layout_marginStart="@dimen/spacing_medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/spacing_medium"
-        android:id="@+id/track_art" />
+        android:id="@+id/track_art"
+        tools:ignore="ContentDescription"/>
 
     <TextView
         android:id="@+id/artist"
@@ -28,7 +28,6 @@
         app:layout_constraintTop_toTopOf="@+id/track_art"
         android:layout_marginTop="@dimen/spacing_medium"
         app:layout_constraintLeft_toRightOf="@+id/track_art"
-        android:layout_marginLeft="@dimen/spacing_medium"
         android:layout_marginStart="@dimen/spacing_medium" />
 
     <TextView

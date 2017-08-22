@@ -11,7 +11,6 @@
         android:transitionName="@string/user_trans_name"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="@dimen/spacing_medium"
         android:layout_marginStart="@dimen/spacing_medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,6 +28,4 @@
         app:layout_constraintLeft_toRightOf="@+id/user_art"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintRight_toRightOf="parent" />
-
-
 </android.support.constraint.ConstraintLayout>

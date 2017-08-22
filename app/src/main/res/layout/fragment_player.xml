@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -18,13 +17,14 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="ContentDescription"/>
 
     <TextView
         android:id="@+id/pages"
         tools:text="1 of 3"
         android:textColor="@color/white_50"
-        style="@style/Widget.HashTag"
+        style="@style/Widget.NumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
@@ -61,10 +61,8 @@
         android:layout_height="wrap_content"
         style="@style/Widget.NumberText"
         android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/progressView"
-        android:layout_marginRight="8dp"
         app:layout_constraintTop_toTopOf="@+id/progressView"
         app:layout_constraintBottom_toBottomOf="@+id/progressView"
         android:layout_marginEnd="8dp" />
@@ -126,7 +124,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.909" />
+        app:layout_constraintVertical_bias="0.909"
+        tools:ignore="ContentDescription"/>
 
     <SeekBar
         android:id="@+id/progressView"
@@ -151,7 +150,8 @@
         app:layout_constraintTop_toTopOf="@+id/play_pause"
         app:layout_constraintBottom_toBottomOf="@+id/play_pause"
         app:layout_constraintLeft_toRightOf="@+id/play_pause"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="ContentDescription"/>
 
     <com.ohoussein.playpause.PlayPauseView
         android:id="@+id/play_pause"

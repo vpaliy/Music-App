@@ -25,7 +25,8 @@
             android:layout_width="?android:actionBarSize"
             android:layout_height="?android:actionBarSize"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_back" />
+            app:srcCompat="@drawable/ic_back"
+            tools:ignore="ContentDescription"/>
     </FrameLayout>
 
     <View
@@ -70,6 +71,5 @@
         android:layout_height="wrap_content"
         android:alpha="0"
         android:layout_gravity="end"
-        android:layout_marginRight="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium" />
 </FrameLayout>
