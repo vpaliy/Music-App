@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.vpaliy.domain.playback.Playback;
+import com.vpaliy.melophile.playback.service.MusicPlaybackService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -45,9 +46,9 @@ public abstract class BasePlayback implements Playback,
             if (AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 if (isPlaying()) {
                     Log.d(TAG,"Headphones disconnected");
-                    /*Intent i=new Intent(context, MusicPlaybackService.class);
+                    Intent i=new Intent(context, MusicPlaybackService.class);
                     i.setAction(MediaTasks.ACTION_PAUSE);
-                    context.startService(i);    */
+                    context.startService(i);
                 }
             }
         }
@@ -146,6 +147,7 @@ public abstract class BasePlayback implements Playback,
     @Override
     public void stop() {
         Log.d(TAG,"Stopping");
+        currentUrl=null;
         releaseFocus();
         releaseWifiLock();
         unregisterNoiseReceiver();

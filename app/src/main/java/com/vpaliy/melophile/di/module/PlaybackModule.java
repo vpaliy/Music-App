@@ -27,7 +27,7 @@ public class PlaybackModule {
         if(Permission.checkForVersion(Build.VERSION_CODES.LOLLIPOP)){
             return new MediaPlayback21(context,audioManager,wifiManager);
         }
-        return new MediaPlayback(context,null,null);
+        return new MediaPlayback(context,audioManager,wifiManager);
     }
 
     @PlayerScope @Provides

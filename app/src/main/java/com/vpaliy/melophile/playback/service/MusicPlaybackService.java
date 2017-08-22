@@ -4,11 +4,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaBrowserServiceCompat;
-import java.lang.ref.WeakReference;
 import java.util.List;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -18,11 +15,11 @@ import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.playback.MediaTasks;
 import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.track.TrackActivity;
-import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_EMPTY_ROOT;
-import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_ROOT;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import javax.inject.Inject;
+import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_EMPTY_ROOT;
+import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_ROOT;
 
 public class MusicPlaybackService extends MediaBrowserServiceCompat
         implements PlaybackManager.PlaybackServiceCallback,
@@ -30,11 +27,8 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
 
     private static final String LOG_TAG=MusicPlaybackService.class.getSimpleName();
 
-    private static final long STOP_DELAY=10000; //30 sec before the service stops
-
     private MediaSessionCompat mediaSession;
     private TrackNotification notification;
-    private DelayedStopHandler stopHandler=new DelayedStopHandler(this);
 
     @Inject
     protected PlaybackManager playbackManager;
@@ -67,11 +61,17 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
         Log.d(LOG_TAG,"onStartCommand()");
         if (startIntent != null) {
             String action = startIntent.getAction();
-             MediaTasks.executeTask(playbackManager,action);
+            if(action!=null) {
+                if (action.equals(MediaTasks.ACTION_STOP)) {
+                    Log.d(LOG_TAG,"Stopping self");
+                    stopSelf();
+                }
+                MediaTasks.executeTask(playbackManager, action);
+            }
             // Try to handle the intent as a media button event wrapped by MediaButtonReceiver
             // MediaButtonReceiver.handleIntent(mediaSession, startIntent);
         }
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -91,7 +91,6 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
     public void onPlaybackStart() {
         Log.d(LOG_TAG,"onPlaybackStart");
         mediaSession.setActive(true);
-        stopHandler.removeCallbacksAndMessages(null);
         Intent intent=new Intent(this,MusicPlaybackService.class);
         startService(intent);
     }
@@ -99,16 +98,14 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
     @Override
     public void onPlaybackPause() {
         Log.d(LOG_TAG,"onPlaybackPause");
-        mediaSession.setActive(false);
+        stopForeground(false);
     }
 
     @Override
     public void onPlaybackStop() {
         Log.d(LOG_TAG,"onPlaybackStop");
         mediaSession.setActive(false);
-        stopHandler.removeCallbacksAndMessages(null);
-        stopHandler.sendEmptyMessageDelayed(0,STOP_DELAY);
-        stopForeground(true);
+        notification.pauseNotification();
     }
 
     @Override
@@ -126,12 +123,10 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         Log.d(LOG_TAG,"onDestroy()");
-        playbackManager.handleStopRequest();
-        notification.stopNotification();
-        stopHandler.removeCallbacksAndMessages(null);
         mediaSession.release();
+        stopForeground(true);
+        super.onDestroy();
     }
 
     @Nullable
@@ -147,28 +142,5 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
     @Override
     public void onLoadChildren(@NonNull String parentId, @NonNull Result<List<MediaBrowserCompat.MediaItem>> result) {
 
-    }
-
-    private static class DelayedStopHandler extends Handler {
-        private final WeakReference<MusicPlaybackService> mWeakReference;
-
-        private DelayedStopHandler(MusicPlaybackService service) {
-            mWeakReference = new WeakReference<>(service);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            Log.d(LOG_TAG,"Handling message before destroying");
-            MusicPlaybackService service = mWeakReference.get();
-            Log.d(this.getClass().getSimpleName(),"Null:"+(service==null));
-            if(service!=null){
-                boolean stopThis=service.playbackManager.getPlayback()==null
-                        ||!service.playbackManager.getPlayback().isPlaying();
-                if(stopThis){
-                    service.notification.stopNotification();
-                    service.stopSelf();
-                }
-            }
-        }
     }
 }

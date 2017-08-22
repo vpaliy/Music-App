@@ -30,7 +30,6 @@ import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.utils.PresentationUtils;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -39,6 +38,7 @@ import jp.wasabeef.blurry.Blurry;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+
 import butterknife.OnClick;
 import javax.inject.Inject;
 import android.support.annotation.Nullable;
@@ -138,8 +138,9 @@ public class TrackFragment extends BaseFragment {
         if(browserCompat!=null){
             browserCompat.disconnect();
         }
-        if(MediaControllerCompat.getMediaController(getActivity())!=null){
-            MediaControllerCompat.getMediaController(getActivity()).unregisterCallback(controllerCallback);
+        MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(getActivity());
+        if(controllerCompat!=null){
+            controllerCompat.unregisterCallback(controllerCallback);
         }
     }
 
@@ -223,6 +224,7 @@ public class TrackFragment extends BaseFragment {
 
     @Inject
     public void updateQueue(PlaybackManager manager){
+        Log.d(TAG,"updateQueue");
         QueueManager queueManager=fetchQueue();
         if(queueManager!=null) {
             manager.setQueueManager(fetchQueue());
@@ -290,7 +292,6 @@ public class TrackFragment extends BaseFragment {
         browserCompat=new MediaBrowserCompat(getActivity(),
                 new ComponentName(getActivity(), MusicPlaybackService.class),
                 connectionCallback,null);
-        extractId(savedInstanceState);
         progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -308,9 +309,6 @@ public class TrackFragment extends BaseFragment {
                 startSeekBarUpdate();
             }
         });
-    }
-
-    private void extractId(Bundle bundle){
     }
 
     private MediaControllerCompat.TransportControls getControls(){

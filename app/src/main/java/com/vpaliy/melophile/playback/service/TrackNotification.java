@@ -14,14 +14,12 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.track.TrackActivity;
-import com.vpaliy.melophile.ui.utils.Constants;
 
 public class TrackNotification {
 
@@ -34,11 +32,13 @@ public class TrackNotification {
     private static final int PLAY_PENDING_INTENT_ID=3407;
     private static final int PLAY_NEXT_PENDING_INTENT_ID=3408;
     private static final int PLAY_PREV_PENDING_INTENT_ID=3409;
+    private static final int STOP_PENDING_INTENT_ID=3410;
 
     public static final String ACTION_PAUSE = "com.vpaliy.melophile.pause";
     public static final String ACTION_PLAY = "com.vpaliy.melophile.play";
     public static final String ACTION_PREV = "com.vpaliy.melophile.prev";
     public static final String ACTION_NEXT = "com.vpaliy.melophile.next";
+    public static final String ACTION_STOP="com.vpaliy.melophile.stop";
 
 
     private PlaybackStateCompat playbackState;
@@ -105,6 +105,13 @@ public class TrackNotification {
         }
     }
 
+    public void pauseNotification(){
+        if(isStarted){
+            isStarted=false;
+            service.stopForeground(false);
+        }
+    }
+
     private PendingIntent contentIntent(Context context){
         Intent startActivityIntent=new Intent(context, TrackActivity.class);
         startActivityIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP |
@@ -159,6 +166,16 @@ public class TrackNotification {
         return new NotificationCompat.Action(R.drawable.ic_play_notif,"Play",prevPendingIntent);
     }
 
+    private PendingIntent dismissedNotification(Context context){
+        Intent prevIntent=new Intent(context,MusicPlaybackService.class);
+        prevIntent.setAction(ACTION_STOP);
+
+        return PendingIntent.getService(context,
+                STOP_PENDING_INTENT_ID,
+                prevIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
     private Notification createNotification(){
         if(mediaMetadata==null||playbackState==null) return null;
         NotificationCompat.Builder builder=new NotificationCompat.Builder(service);
@@ -168,6 +185,7 @@ public class TrackNotification {
                 .setColor(Color.WHITE)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setUsesChronometer(true)
+                .setDeleteIntent(dismissedNotification(service))
                 .setSmallIcon(R.drawable.ic_music_note)
                 .setContentIntent(contentIntent(service))
                 .setContentTitle(mediaMetadata.getString(MediaMetadataCompat.METADATA_KEY_ARTIST))
@@ -186,6 +204,7 @@ public class TrackNotification {
 
     private void setNotificationPlaybackState(NotificationCompat.Builder builder) {
         if (playbackState == null || !isStarted) {
+            Log.d(TAG,"Shutting down this");
             service.stopForeground(true);
             return;
         }

@@ -78,7 +78,9 @@ public class PlaybackManager implements Playback.Callback {
     }
 
     public void handleStopRequest(){
-        playback.stop();
+        if(!playback.isPlaying()) {
+            playback.stop();
+        }
     }
 
     @Override
@@ -104,7 +106,11 @@ public class PlaybackManager implements Playback.Callback {
     }
 
     public void handleResumeRequest(){
-        handlePlayRequest(queueManager.current());
+        if(queueManager!=null) {
+            handlePlayRequest(queueManager.current());
+        }else{
+            Log.d(TAG,"Queue is null");
+        }
     }
 
     @Override

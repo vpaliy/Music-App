@@ -1,11 +1,17 @@
 package com.vpaliy.melophile.playback;
 
+import android.util.Log;
+
 public class MediaTasks {
 
-    public static final String ACTION_PAUSE = "com.vpaliy.player.pause";
-    public static final String ACTION_PLAY = "com.vpaliy.player.play";
-    public static final String ACTION_PREV = "com.vpaliy.player.prev";
-    public static final String ACTION_NEXT = "com.vpaliy.player.next";
+    private static final String TAG=MediaTasks.class.getSimpleName();
+
+    public static final String ACTION_PAUSE = "com.vpaliy.melophile.pause";
+    public static final String ACTION_PLAY = "com.vpaliy.melophile.play";
+    public static final String ACTION_PREV = "com.vpaliy.melophile.prev";
+    public static final String ACTION_NEXT = "com.vpaliy.melophile.next";
+    public static final String ACTION_STOP="com.vpaliy.melophile.stop";
+
     public static final String ACTION_STOP_CASTING = "com.vpaliy.player.stop_casting";
 
     public static final String ACTION_CMD="action:cmd";
@@ -14,6 +20,7 @@ public class MediaTasks {
 
 
     public static void executeTask(PlaybackManager playbackManager, String action){
+        Log.d(TAG,"executeTask with action:"+action);
         if(playbackManager==null || action==null) return ;
         if(action.equals(ACTION_PAUSE)){
             playbackManager.handlePauseRequest();
