@@ -10,10 +10,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.vpaliy.domain.playback.Playback;
+import com.vpaliy.melophile.playback.service.MediaTasks;
 import com.vpaliy.melophile.playback.service.MusicPlaybackService;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import static dagger.internal.Preconditions.checkNotNull;
 

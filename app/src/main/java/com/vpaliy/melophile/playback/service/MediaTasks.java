@@ -1,6 +1,8 @@
-package com.vpaliy.melophile.playback;
+package com.vpaliy.melophile.playback.service;
 
 import android.util.Log;
+
+import com.vpaliy.melophile.playback.PlaybackManager;
 
 public class MediaTasks {
 

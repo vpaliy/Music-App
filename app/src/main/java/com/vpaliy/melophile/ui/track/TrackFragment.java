@@ -224,7 +224,6 @@ public class TrackFragment extends BaseFragment {
 
     @Inject
     public void updateQueue(PlaybackManager manager){
-        Log.d(TAG,"updateQueue");
         QueueManager queueManager=fetchQueue();
         if(queueManager!=null) {
             manager.setQueueManager(fetchQueue());

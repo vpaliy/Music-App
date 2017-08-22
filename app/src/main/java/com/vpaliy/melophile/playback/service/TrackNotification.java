@@ -13,7 +13,6 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -22,8 +21,6 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.track.TrackActivity;
 
 public class TrackNotification {
-
-    private static final String TAG=TrackNotification.class.getSimpleName();
 
     public static final int NOTIFICATION_ID = 412;
 
@@ -57,10 +54,8 @@ public class TrackNotification {
 
     public void updatePlaybackState(PlaybackStateCompat playbackState){
         this.playbackState=playbackState;
-        Log.d(TAG,"playbackState:"+playbackState.getState());
         if(playbackState.getState()==PlaybackStateCompat.STATE_STOPPED||
                 playbackState.getState()==PlaybackStateCompat.STATE_NONE){
-            Log.d(TAG,"Gotta stop notification");
             stopNotification();
         }else{
             updateNotification();
@@ -68,13 +63,11 @@ public class TrackNotification {
     }
 
     public void startNotification(){
-        Log.d(TAG,"startNotification");
         if(!isStarted){
             Notification notification=createNotification();
             if(notification!=null) {
                 service.startForeground(NOTIFICATION_ID,notification);
                 isStarted=true;
-                Log.d(TAG,"Notification has been started");
             }
         }
     }
@@ -96,19 +89,18 @@ public class TrackNotification {
     }
 
     public void stopNotification(){
-        Log.d(TAG,"stopNotification");
         if(isStarted){
             isStarted=false;
             manager.cancel(NOTIFICATION_ID);
             service.stopForeground(true);
-            Log.d(TAG,"Notification has been stopped");
         }
     }
 
     public void pauseNotification(){
         if(isStarted){
-            isStarted=false;
             service.stopForeground(false);
+            manager.notify(NOTIFICATION_ID,createNotification());
+            isStarted=false;
         }
     }
 
@@ -204,8 +196,6 @@ public class TrackNotification {
 
     private void setNotificationPlaybackState(NotificationCompat.Builder builder) {
         if (playbackState == null || !isStarted) {
-            Log.d(TAG,"Shutting down this");
-            service.stopForeground(true);
             return;
         }
         if (playbackState.getState() == PlaybackStateCompat.STATE_PLAYING

@@ -199,7 +199,6 @@ public class PlaybackManager implements Playback.Callback {
 
     public interface PlaybackServiceCallback  {
         void onPlaybackStart();
-        void onPlaybackPause();
         void onPlaybackStop();
         void onNotificationRequired();
         void onPlaybackStateUpdated(PlaybackStateCompat newState);
