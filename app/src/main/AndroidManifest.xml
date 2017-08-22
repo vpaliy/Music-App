@@ -43,7 +43,8 @@
             android:theme="@style/MelophileTheme.User"/>
 
         <activity
-            android:name=".ui.search.SearchActivity">
+            android:name=".ui.search.SearchActivity"
+            android:theme="@style/MelophileTheme.Search">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

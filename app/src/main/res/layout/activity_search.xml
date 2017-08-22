@@ -1,8 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/search_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:outlineProvider="bounds"
+        android:elevation="@dimen/z_app_bar"
+        android:transitionGroup="false"
+        android:theme="@style/SearchTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+
+        <View
+            android:id="@+id/search_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_dark" />
+
+        <SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/item_padding"
+            android:iconifiedByDefault="false"
+            android:transitionGroup="true" />
+
+        <!-- wrapping layout needed for the touch ripple
+        <FrameLayout
+            android:id="@+id/back_wrapper"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:paddingStart="4dp"
+            android:background="@android:color/transparent">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_back"
+                android:transitionName="@string/transition_search_back" />
+
+        </FrameLayout>  -->
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/scrim"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+</android.support.constraint.ConstraintLayout>

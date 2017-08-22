@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.playlist.PlaylistActivity;
+import com.vpaliy.melophile.ui.search.SearchActivity;
 import com.vpaliy.melophile.ui.track.TrackActivity;
 import com.vpaliy.melophile.ui.user.PersonActivity;
 import com.vpaliy.melophile.ui.utils.Constants;
@@ -31,6 +32,12 @@ public class Navigator {
             activity.startActivity(intent,optionsCompat.toBundle());
             return;
         }
+        //in case if I wanted to switch to a lower API
+        activity.startActivity(intent);
+    }
+
+    public void search(Activity activity){
+        Intent intent=new Intent(activity,SearchActivity.class);
         activity.startActivity(intent);
     }
 }
