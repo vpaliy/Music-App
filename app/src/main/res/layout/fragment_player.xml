@@ -102,9 +102,10 @@
         app:layout_constraintLeft_toLeftOf="@+id/artist"
         app:layout_constraintRight_toRightOf="@+id/artist" />
 
-    <android.support.v4.view.ViewPager
-        android:layout_width="0dp"
+    <com.vpaliy.melophile.ui.view.RoundedImageView
+        android:layout_width="250dp"
         android:layout_height="250dp"
+        android:scaleType="centerCrop"
         tools:src="@drawable/evolve"
         android:transitionName="@string/art_trans_name"
         app:layout_constraintRight_toRightOf="parent"

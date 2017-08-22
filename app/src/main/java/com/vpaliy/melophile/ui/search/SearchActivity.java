@@ -14,8 +14,8 @@ import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseActivity;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
-import com.vpaliy.melophile.ui.playlists.PlaylistAdapter;
-import com.vpaliy.melophile.ui.tracks.TracksAdapter;
+import com.vpaliy.melophile.ui.user.UserPlaylistsAdapter;
+import com.vpaliy.melophile.ui.user.UserTracksAdapter;
 import com.vpaliy.melophile.ui.user.info.UserAdapter;
 import java.util.List;
 import android.support.design.widget.TabLayout;
@@ -36,7 +36,6 @@ import butterknife.BindView;
 
 public class SearchActivity extends BaseActivity
             implements SearchContract.View{
-
 
     private Presenter presenter;
     private SearchAdapter searchAdapter;
@@ -162,7 +161,7 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showTracks(@NonNull List<Track> tracks) {
         gotResult();
-        TracksAdapter adapter=new TracksAdapter(this,eventBus);
+        UserTracksAdapter adapter=new UserTracksAdapter(this,eventBus);
         adapter.setData(tracks);
         SearchResult result=searchAdapter.getItem(0);
         if(result!=null){
@@ -173,7 +172,7 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showPlaylists(@NonNull List<Playlist> playlists) {
         gotResult();
-        PlaylistAdapter adapter=new PlaylistAdapter(this,eventBus);
+        UserPlaylistsAdapter adapter=new UserPlaylistsAdapter(this,eventBus);
         adapter.setData(playlists);
         setResultAdapter(adapter,1);
     }

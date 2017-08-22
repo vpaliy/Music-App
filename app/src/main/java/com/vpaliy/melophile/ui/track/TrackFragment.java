@@ -57,7 +57,7 @@ public class TrackFragment extends BaseFragment {
     protected TextView startTime;
 
     @BindView(R.id.circle)
-    protected ViewPager smallImage;
+    protected ImageView smallImage;
 
     @BindView(R.id.artist)
     protected TextView artist;
@@ -229,23 +229,6 @@ public class TrackFragment extends BaseFragment {
     public void updateQueue(PlaybackManager manager){
         QueueManager queueManager=fetchQueue();
         if(queueManager!=null) {
-            AlbumAdapter adapter=new AlbumAdapter(getContext());
-            adapter.setData(queueManager.getTracks(),queueManager.currentIndex());
-            adapter.setCallback(new AlbumAdapter.Callback() {
-                @Override
-                public void onTransitionImageLoaded(ImageView image, Bitmap bitmap) {
-                    Log.d(TAG,"Gotcha");
-                    image.setImageBitmap(bitmap);
-                    Blurry.with(getContext())
-                            .async()
-                            .from(bitmap)
-                            .into(background);
-                    getActivity().supportStartPostponedEnterTransition();
-                }
-            });
-            smallImage.setAdapter(adapter);
-            smallImage.setOffscreenPageLimit(3);
-            smallImage.setCurrentItem(queueManager.currentIndex());
             manager.setQueueManager(fetchQueue());
             manager.handleResumeRequest();
         }
@@ -335,7 +318,7 @@ public class TrackFragment extends BaseFragment {
 
     public void showArt(String artUrl){
         Log.d(TAG,"showArt");
-        /*Glide.with(getContext())
+        Glide.with(getContext())
                 .load(artUrl)
                 .asBitmap()
                 .priority(Priority.IMMEDIATE)
@@ -350,7 +333,7 @@ public class TrackFragment extends BaseFragment {
                             getActivity().supportStartPostponedEnterTransition();
 
                     }
-                });*/
+                });
     }
 
     private void updateDuration(MediaMetadataCompat metadataCompat){
