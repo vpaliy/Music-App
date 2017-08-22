@@ -6,8 +6,14 @@ import com.vpaliy.domain.interactor.UserSearch;
 import static com.vpaliy.melophile.ui.search.SearchContract.View;
 import static dagger.internal.Preconditions.checkNotNull;
 
+import com.vpaliy.domain.model.Playlist;
+import com.vpaliy.domain.model.Track;
+import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import android.support.annotation.NonNull;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 @ViewScope
@@ -33,17 +39,45 @@ public class SearchPresenter implements SearchContract.Presenter {
     }
 
     @Override
-    public void stop() {
-
-    }
-
-    @Override
     public void start() {
 
     }
 
     @Override
     public void query(String query) {
+        trackSearchUseCase.execute(this::catchTracks,this::catchError,query);
+        playlistSearchUseCase.execute(this::catchPlaylists,this::catchError,query);
+        userSearchUseCase.execute(this::catchUsers,this::catchError,query);
+    }
 
+    private void catchTracks(List<Track> result){
+        if(result!=null){
+            view.showTracks(result);
+        }
+    }
+
+    private void catchPlaylists(List<Playlist> playlists){
+        if(playlists!=null){
+            view.showPlaylists(playlists);
+        }
+    }
+
+    private void catchError(Throwable ex){
+        ex.printStackTrace();
+        view.showErrorMessage();
+    }
+
+    private void catchUsers(List<User> result){
+        if(result!=null){
+            view.showUsers(result);
+        }
+    }
+
+    @Override
+    public void stop() {
+        trackSearchUseCase.dispose();
+        playlistSearchUseCase.dispose();
+        userSearchUseCase.dispose();
+        view=null;
     }
 }

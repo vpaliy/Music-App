@@ -1,6 +1,8 @@
 package com.vpaliy.melophile.ui.search;
 
 import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
@@ -10,11 +12,17 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseActivity;
+import com.vpaliy.melophile.ui.tracks.TracksAdapter;
 import java.util.List;
+import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import butterknife.ButterKnife;
+
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import static com.vpaliy.melophile.ui.search.SearchContract.Presenter;
 import android.support.annotation.NonNull;
@@ -25,10 +33,19 @@ import butterknife.BindView;
 public class SearchActivity extends BaseActivity
             implements SearchContract.View{
 
+    private static final String TAG=SearchActivity.class.getSimpleName();
+
     private Presenter presenter;
+    private SearchAdapter searchAdapter;
 
     @BindView(R.id.search_view)
     protected SearchView searchView;
+
+    @BindView(R.id.pager)
+    protected ViewPager pager;
+
+    @BindView(R.id.progress)
+    protected ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,12 +53,30 @@ public class SearchActivity extends BaseActivity
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         setupSearch();
+        setupPager();
+        onNewIntent(getIntent());
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (intent.hasExtra(SearchManager.QUERY)) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            if (!TextUtils.isEmpty(query)) {
+                searchView.setQuery(query, false);
+                presenter.query(query);
+            }
+        }
+    }
+
+    private void setupPager(){
+        searchAdapter=new SearchAdapter(getSupportFragmentManager());
+        pager.setAdapter(searchAdapter);
     }
 
     private void setupSearch(){
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        // hint, inputType & ime options seem to be ignored from XML! Set in code
         searchView.setQueryHint(getString(R.string.search_hint));
         searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         searchView.setImeOptions(searchView.getImeOptions() | EditorInfo.IME_ACTION_SEARCH |
@@ -50,13 +85,15 @@ public class SearchActivity extends BaseActivity
             @Override
             public boolean onQueryTextSubmit(String query) {
                 presenter.query(query);
+                progressBar.setVisibility(View.VISIBLE);
+                hideKeyboard();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
                 if (TextUtils.isEmpty(query)) {
-                    //clearResults();
+                    clear();
                 }
                 return true;
             }
@@ -76,6 +113,33 @@ public class SearchActivity extends BaseActivity
 
     }
 
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    private void clear(){
+        pager.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(presenter!=null){
+            presenter.stop();
+        }
+    }
+
+    private void gotResult(){
+        progressBar.setVisibility(View.GONE);
+        if(pager.getVisibility()!= View.VISIBLE){
+            pager.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     @Inject
     public void attachPresenter(@NonNull Presenter presenter) {
@@ -85,7 +149,13 @@ public class SearchActivity extends BaseActivity
 
     @Override
     public void showTracks(@NonNull List<Track> tracks) {
-
+        gotResult();
+        TracksAdapter adapter=new TracksAdapter(this,eventBus);
+        adapter.setData(tracks);
+        SearchResult result=searchAdapter.getItem(0);
+        if(result!=null){
+            result.setAdapter(adapter);
+        }
     }
 
     @Override
