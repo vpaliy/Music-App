@@ -12,15 +12,19 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseActivity;
+import com.vpaliy.melophile.ui.base.BaseAdapter;
+import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
+import com.vpaliy.melophile.ui.playlists.PlaylistAdapter;
 import com.vpaliy.melophile.ui.tracks.TracksAdapter;
+import com.vpaliy.melophile.ui.user.info.UserAdapter;
 import java.util.List;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import butterknife.ButterKnife;
-
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -33,7 +37,6 @@ import butterknife.BindView;
 public class SearchActivity extends BaseActivity
             implements SearchContract.View{
 
-    private static final String TAG=SearchActivity.class.getSimpleName();
 
     private Presenter presenter;
     private SearchAdapter searchAdapter;
@@ -46,6 +49,9 @@ public class SearchActivity extends BaseActivity
 
     @BindView(R.id.progress)
     protected ProgressBar progressBar;
+
+    @BindView(R.id.tabs)
+    protected TabLayout tabs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +77,9 @@ public class SearchActivity extends BaseActivity
 
     private void setupPager(){
         searchAdapter=new SearchAdapter(getSupportFragmentManager());
+        pager.setOffscreenPageLimit(3);
         pager.setAdapter(searchAdapter);
+        tabs.setupWithViewPager(pager);
     }
 
     private void setupSearch(){
@@ -110,7 +118,9 @@ public class SearchActivity extends BaseActivity
 
     @Override
     public void handleEvent(@NonNull Object event) {
-
+        if(event instanceof ExposeEvent){
+            navigator.navigate(this,(ExposeEvent)(event));
+        }
     }
 
     private void hideKeyboard(){
@@ -123,6 +133,7 @@ public class SearchActivity extends BaseActivity
 
     private void clear(){
         pager.setVisibility(View.GONE);
+        tabs.setVisibility(View.GONE);
     }
 
     @Override
@@ -136,6 +147,7 @@ public class SearchActivity extends BaseActivity
     private void gotResult(){
         progressBar.setVisibility(View.GONE);
         if(pager.getVisibility()!= View.VISIBLE){
+            tabs.setVisibility(View.VISIBLE);
             pager.setVisibility(View.VISIBLE);
         }
     }
@@ -160,12 +172,25 @@ public class SearchActivity extends BaseActivity
 
     @Override
     public void showPlaylists(@NonNull List<Playlist> playlists) {
-
+        gotResult();
+        PlaylistAdapter adapter=new PlaylistAdapter(this,eventBus);
+        adapter.setData(playlists);
+        setResultAdapter(adapter,1);
     }
 
     @Override
     public void showUsers(@NonNull List<User> users) {
+        gotResult();
+        UserAdapter adapter=new UserAdapter(this,eventBus);
+        adapter.setData(users);
+        setResultAdapter(adapter,2);
+    }
 
+    private void setResultAdapter(BaseAdapter<?> adapter, int position){
+        SearchResult result=searchAdapter.getItem(position);
+        if(result!=null){
+            result.setAdapter(adapter);
+        }
     }
 
     @Override

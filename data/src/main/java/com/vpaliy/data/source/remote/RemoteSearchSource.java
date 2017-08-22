@@ -34,7 +34,7 @@ public class RemoteSearchSource implements SearchSource {
     @Override
     public Single<List<TrackEntity>> searchTracks(@NonNull String query) {
         return service.searchTracks(TrackEntity.Filter.start()
-                                    .byName(query).createOptions())
+                                    .byName(query).limit(100).createOptions())
                                 .map(filter::filterTracks);
     }
 
