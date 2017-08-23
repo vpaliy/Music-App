@@ -69,7 +69,6 @@ public class SearchActivity extends BaseActivity
     @BindView(R.id.root)
     protected ViewGroup root;
 
-    private boolean isFocus=true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,8 +85,9 @@ public class SearchActivity extends BaseActivity
         if (intent.hasExtra(SearchManager.QUERY)) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             if (!TextUtils.isEmpty(query)) {
-                Log.d(TAG,query);
                 searchView.setQuery(query, false);
+                searchView.clearFocus();
+                hideKeyboard();
                 presenter.query(query);
             }
         }
@@ -97,14 +97,6 @@ public class SearchActivity extends BaseActivity
     public void close(){
         back.setBackground(null);
         finishAfterTransition();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(isFocus){
-
-        }
     }
 
     private void setupPager(){
@@ -126,6 +118,7 @@ public class SearchActivity extends BaseActivity
             public boolean onQueryTextSubmit(String query) {
                 presenter.query(query);
                 progressBar.setVisibility(View.VISIBLE);
+                searchView.clearFocus();
                 hideKeyboard();
                 return true;
             }
