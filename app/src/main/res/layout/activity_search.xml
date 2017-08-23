@@ -2,9 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:transitionGroup="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <FrameLayout
         android:id="@+id/search_toolbar"
@@ -18,12 +18,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">
 
-
         <View
             android:id="@+id/search_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background_dark" />
+            android:background="@color/white_50" />
 
         <SearchView
             android:id="@+id/search_view"
@@ -33,23 +32,24 @@
             android:iconifiedByDefault="false"
             android:transitionGroup="true" />
 
-        <!-- wrapping layout needed for the touch ripple
-        <FrameLayout
-            android:id="@+id/back_wrapper"
-            android:layout_width="96dp"
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingStart="4dp"
-            android:background="@android:color/transparent">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@null"
+            app:srcCompat="@drawable/ic_back"
+            android:transitionName="@string/search_trans"
+            tools:ignore="ContentDescription"/>
 
-            <ImageButton
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_back"
-                android:transitionName="@string/transition_search_back" />
-
-        </FrameLayout>  -->
+        <View
+            android:id="@+id/end"
+            android:visibility="invisible"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center_vertical|end"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
 
     </FrameLayout>
 

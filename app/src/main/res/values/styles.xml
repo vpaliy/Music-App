@@ -20,6 +20,7 @@
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
+        <item name="android:statusBarColor">@color/background_super_dark</item>
     </style>
 
     <style name="MelophileTheme.Details" parent="MelophileTheme">
@@ -82,20 +83,23 @@
     <style name="MelophileTheme.Search" parent="MelophileTheme">
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">false</item>
-        <item name="android:windowSharedElementsUseOverlay">false</item>
         <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/shared_search_enter</item>
+        <item name="android:windowSharedElementReturnTransition">@transition/shared_search_return</item>
         <item name="android:windowEnterTransition">@transition/search_enter</item>
         <item name="android:windowReturnTransition">@transition/search_return</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowBackground">@color/scrim</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsFloating">false</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowBackground">@color/scrim</item>
-        <item name="android:navigationBarColor">@android:color/black</item>
-        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:statusBarColor">@color/background_super_dark</item>
+        <item name="android:navigationBarColor">@color/background_super_dark</item>
+        <item name="android:windowSharedElementsUseOverlay">true</item>
+
     </style>
 
     <style name="Widget.SearchView" parent="android:style/Widget.Material.SearchView">

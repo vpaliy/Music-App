@@ -1,5 +1,15 @@
 <transitionSet
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <transitionSet android:duration="400">
+        <targets>
+            <target android:targetId="@id/pager" />
+        </targets>
+        <transition
+            class="com.vpaliy.melophile.ui.transition.CircularReveal"
+            android:interpolator="@android:interpolator/linear_out_slow_in" />
+    </transitionSet>
 
     <fade
         android:duration="120"

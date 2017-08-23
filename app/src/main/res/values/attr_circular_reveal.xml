@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="CircularReveal">
+        <attr name="startRadius" format="dimension" />
+        <attr name="endRadius" format="dimension" />
+        <attr name="centerOn" format="reference" />
+    </declare-styleable>
+</resources>

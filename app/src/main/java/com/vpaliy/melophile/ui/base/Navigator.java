@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.view.View;
 
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.playlist.PlaylistActivity;
@@ -36,8 +38,16 @@ public class Navigator {
         activity.startActivity(intent);
     }
 
-    public void search(Activity activity){
+    @SuppressWarnings("unchecked")
+    public void search(Activity activity,Pair<View,String> pair){
         Intent intent=new Intent(activity,SearchActivity.class);
+        if(Permission.checkForVersion(Build.VERSION_CODES.LOLLIPOP)) {
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(activity, pair);
+            activity.startActivity(intent,optionsCompat.toBundle());
+            return;
+        }
+        //in case if I wanted to switch to a lower API
         activity.startActivity(intent);
     }
 }

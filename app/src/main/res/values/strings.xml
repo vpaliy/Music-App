@@ -20,6 +20,7 @@
     <string name="art_trans_name" translatable="false">playlist_art_trans</string>
     <string name="playlist_title_trans_name" translatable="false">playlist_title_trans</string>
     <string name="user_trans_name" translatable="false">user_trans</string>
+    <string name="search_trans" translatable="false">search_trans</string>
 
     <array name="temp">
         <item>One</item>

@@ -1,5 +1,16 @@
-<transitionSet
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <transitionSet android:duration="400">
+        <targets>
+            <target android:targetId="@id/background" />
+        </targets>
+        <transition
+            class="com.vpaliy.melophile.ui.transition.CircularReveal"
+            app:centerOn="@id/back"
+            android:interpolator="@android:interpolator/linear_out_slow_in" />
+    </transitionSet>
+
     <fade
         android:startDelay="400"
         android:duration="400"

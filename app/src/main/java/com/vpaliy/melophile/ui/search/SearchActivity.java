@@ -23,6 +23,7 @@ import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import butterknife.ButterKnife;
 import android.view.inputmethod.InputMethodManager;
@@ -33,6 +34,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import javax.inject.Inject;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SearchActivity extends BaseActivity
             implements SearchContract.View{
@@ -51,6 +53,9 @@ public class SearchActivity extends BaseActivity
 
     @BindView(R.id.tabs)
     protected TabLayout tabs;
+
+    @BindView(R.id.back)
+    protected View back;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +77,12 @@ public class SearchActivity extends BaseActivity
                 presenter.query(query);
             }
         }
+    }
+
+    @OnClick(R.id.back)
+    public void close(){
+        back.setBackground(null);
+        finishAfterTransition();
     }
 
     private void setupPager(){
