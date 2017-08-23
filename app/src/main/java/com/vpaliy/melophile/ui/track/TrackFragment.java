@@ -28,6 +28,7 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.playback.service.MusicPlaybackService;
 import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseFragment;
+import com.vpaliy.melophile.ui.utils.BundleUtils;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.utils.PresentationUtils;
 import java.util.concurrent.Executors;
@@ -223,25 +224,14 @@ public class TrackFragment extends BaseFragment {
         }
     }
 
-
     @Inject
     public void updateQueue(PlaybackManager manager){
-        QueueManager queueManager=fetchQueue();
+        QueueManager queueManager=BundleUtils.fetchHeavyObject(new TypeToken<QueueManager>() {}.getType(),
+                getArguments(),Constants.EXTRA_QUEUE);
         if(queueManager!=null) {
-            manager.setQueueManager(fetchQueue());
+            manager.setQueueManager(queueManager);
             manager.handleResumeRequest();
         }
-    }
-
-    private QueueManager fetchQueue(){
-        if(getArguments()!=null) {
-            String queueString = getArguments().getString(Constants.EXTRA_QUEUE);
-            if(queueString!=null){
-                return PresentationUtils.convertFromJsonString(queueString,
-                        new TypeToken<QueueManager>() {}.getType());
-            }
-        }
-        return null;
     }
 
     @OnClick(R.id.next)

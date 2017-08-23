@@ -1,63 +1,62 @@
 package com.vpaliy.melophile.ui.search;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
-import com.vpaliy.melophile.ui.base.bus.RxBus;
+import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.utils.OnReachBottomListener;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import android.support.annotation.Nullable;
-import javax.inject.Inject;
+import java.util.List;
 import butterknife.BindView;
 
-public class SearchResult extends Fragment {
+public class SearchResult<T> extends BaseFragment{
 
     @BindView(R.id.search_result)
     protected RecyclerView searchResult;
 
-    @Inject
-    protected RxBus event;
+    @BindView(R.id.refresher)
+    protected SwipeRefreshLayout refreshLayout;
 
-    private Unbinder unbinder;
+    private BaseAdapter<T> adapter;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root=inflater.inflate(R.layout.fragment_search_result,container,false);
-        unbinder=ButterKnife.bind(this,root);
-        App.appInstance().appComponent().inject(this);
-        return root;
+    protected int layoutId() {
+        return R.layout.fragment_search_result;
     }
 
-    public void setAdapter(BaseAdapter<?> adapter) {
+    public void setAdapter(BaseAdapter<T> adapter) {
+        this.adapter=adapter;
         if(adapter!=null){
             searchResult.setAdapter(adapter);
-            searchResult.addOnScrollListener(new OnReachBottomListener(searchResult,null) {
+            searchResult.addOnScrollListener(new OnReachBottomListener(searchResult,refreshLayout) {
                 @Override
                 public void onLoadMore() {
+                    refreshLayout.setRefreshing(true);
                     request();
                 }
             });
         }
     }
 
-    private void request(){
-        event.send(MoreEvent.requestMore(this));
+    @Override
+    public void initializeDependencies() {
+        App.appInstance().appComponent().inject(this);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(unbinder!=null){
-            unbinder.unbind();
+    public void appendData(List<T> data){
+        if(adapter!=null){
+            adapter.appendData(data);
         }
+    }
+
+    public void stopRefreshing(){
+        if(refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
+        }
+    }
+
+    private void request(){
+        rxBus.send(MoreEvent.requestMore(this));
     }
 }

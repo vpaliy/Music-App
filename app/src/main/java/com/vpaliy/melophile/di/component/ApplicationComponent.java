@@ -29,6 +29,7 @@ import com.vpaliy.melophile.di.module.NetworkModule;
 import com.vpaliy.melophile.di.module.PlaybackModule;
 import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseActivity;
+import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.base.Navigator;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import com.vpaliy.melophile.ui.search.SearchResult;
@@ -45,7 +46,7 @@ import dagger.Component;
         ApplicationModule.class})
 public interface ApplicationComponent {
     void inject(BaseActivity activity);
-    void inject(SearchResult searchResult);
+    void inject(BaseFragment fragment);
     Context context();
     Source remote();
     Filter filter();

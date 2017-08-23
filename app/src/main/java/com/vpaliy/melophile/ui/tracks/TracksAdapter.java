@@ -17,6 +17,7 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
+import com.vpaliy.melophile.ui.utils.BundleUtils;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.utils.PresentationUtils;
 
@@ -53,8 +54,9 @@ public class TracksAdapter extends BaseAdapter<Track> {
                 ViewCompat.setTransitionName(itemView, context.getString(R.string.background_trans_name));
                 data.putString(Constants.EXTRA_DATA, track.getArtworkUrl());
                 data.putString(Constants.EXTRA_ID, track.getId());
-                data.putString(Constants.EXTRA_QUEUE, PresentationUtils.
-                        convertToJsonString(queueManager,new TypeToken<QueueManager>(){}.getType()));
+                //pack the data
+                BundleUtils.packHeavyObject(data,Constants.EXTRA_QUEUE,queueManager,
+                        new TypeToken<QueueManager>(){}.getType());
                 rxBus.sendWithLock(ExposeEvent.exposeTrack(data,
                         Pair.create(artImage, context.getString(R.string.art_trans_name)),
                         Pair.create(artImage, context.getString(R.string.background_trans_name))));

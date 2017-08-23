@@ -13,12 +13,16 @@ import java.util.Map;
 
 import io.reactivex.Single;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 
 @Singleton
 public class RemoteSearchSource implements SearchSource {
+
+    private static final String TAG=RemoteSearchSource.class.getSimpleName();
 
     private SoundCloudService service;
     private Filter filter;
@@ -106,6 +110,7 @@ public class RemoteSearchSource implements SearchSource {
                     .map(result->{
                         if(result!=null){
                             queryMap.put(Type.TRACK,result);
+                            Log.d(TAG,"Collection:"+Integer.toString(result.collection.size()));
                             return result.collection;
                         }
                         return null;

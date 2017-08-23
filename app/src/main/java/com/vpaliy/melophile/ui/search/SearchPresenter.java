@@ -5,15 +5,12 @@ import com.vpaliy.domain.interactor.TrackSearch;
 import com.vpaliy.domain.interactor.UserSearch;
 import static com.vpaliy.melophile.ui.search.SearchContract.View;
 import static dagger.internal.Preconditions.checkNotNull;
-
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
+import java.util.List;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import android.support.annotation.NonNull;
-
-import java.util.List;
-
 import javax.inject.Inject;
 
 @ViewScope
@@ -70,17 +67,32 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     @Override
     public void morePlaylists() {
-        playlistSearchUseCase.more(this::catchPlaylists,this::catchError);
+        playlistSearchUseCase.more(this::appendPlaylists,this::catchError);
     }
 
     @Override
     public void moreTracks() {
-        trackSearchUseCase.more(this::catchTracks,this::catchError);
+        trackSearchUseCase.more(this::appendTracks,this::catchError);
     }
 
     @Override
     public void moreUsers() {
-        userSearchUseCase.more(this::catchUsers,this::catchError);
+        userSearchUseCase.more(this::appendUsers,this::catchError);
+    }
+
+    private void appendTracks(List<Track> tracks){
+        if(tracks==null||tracks.isEmpty()) return;
+        view.appendTracks(tracks);
+    }
+
+    private void appendPlaylists(List<Playlist> playlists){
+        if(playlists==null||playlists.isEmpty()) return;
+        view.showPlaylists(playlists);
+    }
+
+    private void appendUsers(List<User> users){
+        if(users==null||users.isEmpty()) return;
+        view.showUsers(users);
     }
 
     @Override

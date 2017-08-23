@@ -1,8 +1,16 @@
-<android.support.v7.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layoutManager="LinearLayoutManager"
-    android:orientation="vertical"
-    android:id="@+id/search_result"
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/refresher"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_result"
+        app:layoutManager="LinearLayoutManager"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+</android.support.v4.widget.SwipeRefreshLayout>

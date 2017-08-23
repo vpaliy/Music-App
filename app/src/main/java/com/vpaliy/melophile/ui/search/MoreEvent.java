@@ -2,13 +2,13 @@ package com.vpaliy.melophile.ui.search;
 
 public class MoreEvent {
 
-    public final SearchResult result;
+    public final SearchResult<?> result;
 
-    public MoreEvent(SearchResult result){
+    public MoreEvent(SearchResult<?> result){
         this.result=result;
     }
 
-    public static MoreEvent requestMore(SearchResult result){
+    public static MoreEvent requestMore(SearchResult<?> result){
         return new MoreEvent(result);
     }
 }

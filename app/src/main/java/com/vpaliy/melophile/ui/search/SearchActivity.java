@@ -66,7 +66,6 @@ public class SearchActivity extends BaseActivity
     @BindView(R.id.root)
     protected ViewGroup root;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,10 +208,7 @@ public class SearchActivity extends BaseActivity
         gotResult();
         UserTracksAdapter adapter=new UserTracksAdapter(this,eventBus);
         adapter.setData(tracks);
-        SearchResult result=searchAdapter.getItem(0);
-        if(result!=null){
-            result.setAdapter(adapter);
-        }
+        searchAdapter.setTracks(adapter);
     }
 
     @Override
@@ -220,7 +216,7 @@ public class SearchActivity extends BaseActivity
         gotResult();
         UserPlaylistsAdapter adapter=new UserPlaylistsAdapter(this,eventBus);
         adapter.setData(playlists);
-        setResultAdapter(adapter,1);
+        searchAdapter.setPlaylists(adapter);
     }
 
     @Override
@@ -228,7 +224,7 @@ public class SearchActivity extends BaseActivity
         gotResult();
         UserAdapter adapter=new UserAdapter(this,eventBus);
         adapter.setData(users);
-        setResultAdapter(adapter,2);
+        searchAdapter.setUsers(adapter);
     }
 
     @Override
@@ -247,13 +243,6 @@ public class SearchActivity extends BaseActivity
     public void appendUsers(@NonNull List<User> users) {
         gotResult();
         searchAdapter.appendUsers(users);
-    }
-
-    private void setResultAdapter(BaseAdapter<?> adapter, int position){
-        SearchResult result=searchAdapter.getItem(position);
-        if(result!=null){
-            result.setAdapter(adapter);
-        }
     }
 
     @Override
