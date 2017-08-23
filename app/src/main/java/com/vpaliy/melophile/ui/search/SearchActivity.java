@@ -14,16 +14,23 @@ import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseActivity;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
+import com.vpaliy.melophile.ui.transition.CircularReveal;
 import com.vpaliy.melophile.ui.user.UserPlaylistsAdapter;
 import com.vpaliy.melophile.ui.user.UserTracksAdapter;
 import com.vpaliy.melophile.ui.user.info.UserAdapter;
 import java.util.List;
+
+import android.support.annotation.TransitionRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import butterknife.ButterKnife;
 import android.view.inputmethod.InputMethodManager;
@@ -38,6 +45,8 @@ import butterknife.OnClick;
 
 public class SearchActivity extends BaseActivity
             implements SearchContract.View{
+
+    private static final String TAG=SearchActivity.class.getSimpleName();
 
     private Presenter presenter;
     private SearchAdapter searchAdapter;
@@ -57,6 +66,11 @@ public class SearchActivity extends BaseActivity
     @BindView(R.id.back)
     protected View back;
 
+    @BindView(R.id.root)
+    protected ViewGroup root;
+
+    private boolean isFocus=true;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,12 +81,12 @@ public class SearchActivity extends BaseActivity
         onNewIntent(getIntent());
     }
 
-
     @Override
     protected void onNewIntent(Intent intent) {
         if (intent.hasExtra(SearchManager.QUERY)) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             if (!TextUtils.isEmpty(query)) {
+                Log.d(TAG,query);
                 searchView.setQuery(query, false);
                 presenter.query(query);
             }
@@ -83,6 +97,14 @@ public class SearchActivity extends BaseActivity
     public void close(){
         back.setBackground(null);
         finishAfterTransition();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isFocus){
+
+        }
     }
 
     private void setupPager(){
@@ -142,6 +164,7 @@ public class SearchActivity extends BaseActivity
     }
 
     private void clear(){
+        TransitionManager.beginDelayedTransition(root,getTransition(R.transition.search_hide_result));
         pager.setVisibility(View.GONE);
         tabs.setVisibility(View.GONE);
     }
@@ -157,9 +180,15 @@ public class SearchActivity extends BaseActivity
     private void gotResult(){
         progressBar.setVisibility(View.GONE);
         if(pager.getVisibility()!= View.VISIBLE){
+            TransitionManager.beginDelayedTransition(root,getTransition(R.transition.search_show_result));
             tabs.setVisibility(View.VISIBLE);
             pager.setVisibility(View.VISIBLE);
         }
+    }
+
+    private Transition getTransition(@TransitionRes int transitionId) {
+        TransitionInflater inflater=TransitionInflater.from(this);
+        return inflater.inflateTransition(transitionId);
     }
 
     @Override

@@ -1,9 +1,9 @@
 <transitionSet
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="650"
+    android:duration="450"
     android:transitionOrdering="together">
     <targets>
-        <target android:targetId="@id/back" />
+        <target android:targetId="@id/back_wrapper" />
     </targets>
     <changeBounds android:interpolator="@android:interpolator/fast_out_slow_in" />
 </transitionSet>

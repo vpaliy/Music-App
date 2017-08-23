@@ -44,6 +44,7 @@
 
         <activity
             android:name=".ui.search.SearchActivity"
+            android:launchMode="singleTop"
             android:theme="@style/MelophileTheme.Search">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
