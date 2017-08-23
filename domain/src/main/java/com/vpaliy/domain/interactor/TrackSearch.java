@@ -6,6 +6,7 @@ import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.repository.SearchRepository;
 import java.util.List;
 import io.reactivex.Single;
+import io.reactivex.functions.Consumer;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -29,5 +30,12 @@ public class TrackSearch extends SingleUseCase<List<Track>,String>{
             return Single.error(new IllegalArgumentException("Query is null"));
         }
         return repository.searchTrack(query);
+    }
+
+    public void more(Consumer<? super List<Track>> onSuccess, Consumer<? super Throwable> onError){
+        Single<List<Track>> single=repository.moreTracks()
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui());
+        disposables.add(single.subscribe(onSuccess,onError));
     }
 }

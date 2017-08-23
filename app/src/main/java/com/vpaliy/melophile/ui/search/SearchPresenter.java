@@ -39,11 +39,6 @@ public class SearchPresenter implements SearchContract.Presenter {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public void query(String query) {
         trackSearchUseCase.execute(this::catchTracks,this::catchError,query);
         playlistSearchUseCase.execute(this::catchPlaylists,this::catchError,query);
@@ -71,6 +66,21 @@ public class SearchPresenter implements SearchContract.Presenter {
         if(result!=null){
             view.showUsers(result);
         }
+    }
+
+    @Override
+    public void morePlaylists() {
+        playlistSearchUseCase.more(this::catchPlaylists,this::catchError);
+    }
+
+    @Override
+    public void moreTracks() {
+        trackSearchUseCase.more(this::catchTracks,this::catchError);
+    }
+
+    @Override
+    public void moreUsers() {
+        userSearchUseCase.more(this::catchUsers,this::catchError);
     }
 
     @Override

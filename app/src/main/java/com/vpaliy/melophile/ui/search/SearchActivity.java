@@ -150,10 +150,13 @@ public class SearchActivity extends BaseActivity
     private void handleRequest(MoreEvent event){
         switch (searchAdapter.getType(event.result)){
             case SearchAdapter.TYPE_TRACKS:
+                presenter.moreTracks();
                 break;
             case SearchAdapter.TYPE_PLAYLISTS:
+                presenter.morePlaylists();
                 break;
             case SearchAdapter.TYPE_USERS:
+                presenter.moreUsers();
                 break;
         }
     }

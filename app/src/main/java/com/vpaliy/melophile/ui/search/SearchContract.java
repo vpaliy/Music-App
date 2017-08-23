@@ -26,7 +26,9 @@ public interface SearchContract  {
     interface Presenter extends BasePresenter<View> {
         void attachView(@NonNull View view);
         void query(String query);
+        void moreTracks();
+        void morePlaylists();
+        void moreUsers();
         void stop();
-        void start();
     }
 }

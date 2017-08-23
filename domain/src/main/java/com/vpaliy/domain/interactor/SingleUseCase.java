@@ -8,8 +8,8 @@ import io.reactivex.observers.DisposableSingleObserver;
 
 public abstract class SingleUseCase<T,Params>{
 
-    private BaseSchedulerProvider schedulerProvider;
-    private CompositeDisposable disposables;
+    protected BaseSchedulerProvider schedulerProvider;
+    protected CompositeDisposable disposables;
 
     public SingleUseCase(BaseSchedulerProvider schedulerProvider){
         this.schedulerProvider=schedulerProvider;

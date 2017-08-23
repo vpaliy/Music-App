@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Single;
+import io.reactivex.functions.Consumer;
 
 @Singleton
 public class UserSearch extends SingleUseCase<List<User>,String>{
@@ -29,5 +30,12 @@ public class UserSearch extends SingleUseCase<List<User>,String>{
             return Single.error(new IllegalArgumentException("Query is null"));
         }
         return repository.searchUser(query);
+    }
+
+    public void more(Consumer<? super List<User>> onSuccess, Consumer<? super Throwable> onError){
+        Single<List<User>> single=repository.moreUsers()
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui());
+        disposables.add(single.subscribe(onSuccess,onError));
     }
 }
