@@ -16,6 +16,9 @@ public interface SearchContract  {
         void showTracks(@NonNull List<Track> tracks);
         void showPlaylists(@NonNull List<Playlist> playlists);
         void showUsers(@NonNull List<User> users);
+        void appendUsers(@NonNull List<User> users);
+        void appendPlaylists(@NonNull List<Playlist> playlists);
+        void appendTracks(@NonNull List<Track> tracks);
         void showErrorMessage();
         void showEmptyMessage();
     }

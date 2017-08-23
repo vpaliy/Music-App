@@ -14,13 +14,10 @@ import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseActivity;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
-import com.vpaliy.melophile.ui.transition.CircularReveal;
 import com.vpaliy.melophile.ui.user.UserPlaylistsAdapter;
 import com.vpaliy.melophile.ui.user.UserTracksAdapter;
 import com.vpaliy.melophile.ui.user.info.UserAdapter;
 import java.util.List;
-
-import android.support.annotation.TransitionRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
@@ -28,7 +25,6 @@ import android.text.TextUtils;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -42,6 +38,7 @@ import android.support.annotation.Nullable;
 import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
+import android.support.annotation.TransitionRes;
 
 public class SearchActivity extends BaseActivity
             implements SearchContract.View{
@@ -145,6 +142,19 @@ public class SearchActivity extends BaseActivity
     public void handleEvent(@NonNull Object event) {
         if(event instanceof ExposeEvent){
             navigator.navigate(this,(ExposeEvent)(event));
+        }else if(event instanceof MoreEvent){
+            handleRequest((MoreEvent)event);
+        }
+    }
+
+    private void handleRequest(MoreEvent event){
+        switch (searchAdapter.getType(event.result)){
+            case SearchAdapter.TYPE_TRACKS:
+                break;
+            case SearchAdapter.TYPE_PLAYLISTS:
+                break;
+            case SearchAdapter.TYPE_USERS:
+                break;
         }
     }
 
@@ -216,6 +226,24 @@ public class SearchActivity extends BaseActivity
         UserAdapter adapter=new UserAdapter(this,eventBus);
         adapter.setData(users);
         setResultAdapter(adapter,2);
+    }
+
+    @Override
+    public void appendPlaylists(@NonNull List<Playlist> playlists) {
+        gotResult();
+        searchAdapter.appendPlaylists(playlists);
+    }
+
+    @Override
+    public void appendTracks(@NonNull List<Track> tracks) {
+        gotResult();
+        searchAdapter.appendTracks(tracks);
+    }
+
+    @Override
+    public void appendUsers(@NonNull List<User> users) {
+        gotResult();
+        searchAdapter.appendUsers(users);
     }
 
     private void setResultAdapter(BaseAdapter<?> adapter, int position){

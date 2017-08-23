@@ -31,6 +31,7 @@ import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseActivity;
 import com.vpaliy.melophile.ui.base.Navigator;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
+import com.vpaliy.melophile.ui.search.SearchResult;
 import com.vpaliy.soundcloud.SoundCloudService;
 import javax.inject.Singleton;
 import dagger.Component;
@@ -44,6 +45,7 @@ import dagger.Component;
         ApplicationModule.class})
 public interface ApplicationComponent {
     void inject(BaseActivity activity);
+    void inject(SearchResult searchResult);
     Context context();
     Source remote();
     Filter filter();

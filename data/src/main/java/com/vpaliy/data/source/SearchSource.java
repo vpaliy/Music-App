@@ -11,4 +11,8 @@ public interface SearchSource {
     Single<List<TrackEntity>> searchTracks(@NonNull String query);
     Single<List<PlaylistEntity>> searchPlaylists(@NonNull String query);
     Single<List<UserEntity>> searchUsers(@NonNull String query);
+
+    Single<List<TrackEntity>> moreTracks();
+    Single<List<PlaylistEntity>> morePlaylists();
+    Single<List<UserEntity>> moreUsers();
 }
