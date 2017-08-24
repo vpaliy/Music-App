@@ -7,6 +7,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import com.vpaliy.data.mapper.Mapper;
+import com.vpaliy.domain.interactor.SaveInteractor;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.playback.Playback;
 import com.vpaliy.domain.playback.PlayerScope;
@@ -23,16 +24,17 @@ public class PlaybackManager implements Playback.Callback {
     private MediaSessionCallback mediaSessionCallback;
     private Mapper<MediaMetadataCompat,Track> mapper;
     private MetadataUpdateListener updateListener;
-    protected QueueManager queueManager;
-    protected Playback playback;
-
+    private QueueManager queueManager;
+    private Playback playback;
+    private SaveInteractor saveInteractor;
 
     @Inject
-    public PlaybackManager(Playback playback, Mapper<MediaMetadataCompat,Track> mapper){
+    public PlaybackManager(Playback playback, Mapper<MediaMetadataCompat,Track> mapper, SaveInteractor saveInteractor){
         this.mediaSessionCallback=new MediaSessionCallback();
         this.playback=playback;
         this.playback.setCallback(this);
         this.mapper=mapper;
+        this.saveInteractor=saveInteractor;
     }
 
     public void setUpdateListener(MetadataUpdateListener updateListener) {
@@ -49,6 +51,7 @@ public class PlaybackManager implements Playback.Callback {
 
     public void handlePlayRequest(Track track){
         if(track!=null) {
+            saveInteractor.saveTrack(track);
             playback.play(track.getStreamUrl());
             updateMetadata();
         }
@@ -97,7 +100,7 @@ public class PlaybackManager implements Playback.Callback {
 
     @Override
     public void onError() {
-
+        updateListener.onMetadataRetrieveError();
     }
 
     @Override
@@ -108,8 +111,6 @@ public class PlaybackManager implements Playback.Callback {
     public void handleResumeRequest(){
         if(queueManager!=null) {
             handlePlayRequest(queueManager.current());
-        }else{
-            Log.d(TAG,"Queue is null");
         }
     }
 

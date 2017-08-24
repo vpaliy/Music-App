@@ -16,7 +16,6 @@ import com.vpaliy.melophile.ui.playlist.PlaylistContract;
 import com.vpaliy.melophile.ui.playlist.PlaylistPresenter;
 import com.vpaliy.melophile.ui.playlists.PlaylistsContract;
 import com.vpaliy.melophile.ui.playlists.PlaylistsPresenter;
-import com.vpaliy.melophile.di.scope.ViewScope;
 import com.vpaliy.melophile.ui.search.SearchContract;
 import com.vpaliy.melophile.ui.search.SearchPresenter;
 import com.vpaliy.melophile.ui.tracks.TracksContract;
@@ -26,7 +25,7 @@ import com.vpaliy.melophile.ui.user.PersonPresenter;
 import com.vpaliy.melophile.ui.user.info.FavoritePresenter;
 import com.vpaliy.melophile.ui.user.info.FollowersPresenter;
 import com.vpaliy.melophile.ui.user.info.UserInfoContract;
-
+import com.vpaliy.melophile.di.scope.ViewScope;
 import dagger.Module;
 import dagger.Provides;
 

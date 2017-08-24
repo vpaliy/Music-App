@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import com.vpaliy.data.mapper.Mapper;
+import com.vpaliy.domain.interactor.SaveInteractor;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.playback.Playback;
 import com.vpaliy.melophile.playback.MediaPlayback;
@@ -31,7 +32,7 @@ public class PlaybackModule {
     }
 
     @PlayerScope @Provides
-    PlaybackManager playbackManager(Playback playback, Mapper<MediaMetadataCompat,Track> mapper){
-        return new PlaybackManager(playback,mapper);
+    PlaybackManager playbackManager(Playback playback, Mapper<MediaMetadataCompat,Track> mapper, SaveInteractor saveInteractor){
+        return new PlaybackManager(playback,mapper,saveInteractor);
     }
 }

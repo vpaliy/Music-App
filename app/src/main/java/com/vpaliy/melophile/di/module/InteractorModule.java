@@ -99,7 +99,7 @@ public class InteractorModule {
     }
 
     @Singleton @Provides
-    SaveInteractor saveInteractor(BaseSchedulerProvider schedulerProvider, PersonalRepository repository){
-        return new SaveInteractor(schedulerProvider,repository);
+    SaveInteractor saveInteractor(PersonalRepository repository){
+        return new SaveInteractor(repository);
     }
 }
