@@ -2,8 +2,6 @@ package com.vpaliy.melophile.ui.utils;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-
 import com.google.gson.Gson;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
