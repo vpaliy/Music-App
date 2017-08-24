@@ -1,5 +1,6 @@
 package com.vpaliy.melophile.ui.personal;
 
+import com.bumptech.glide.Glide;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
@@ -8,11 +9,17 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
+import com.vpaliy.melophile.ui.user.UserTracksAdapter;
+
+import java.util.ArrayList;
 import java.util.List;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import static com.vpaliy.melophile.ui.personal.PersonalContract.Presenter;
+import android.support.annotation.Nullable;
 import android.support.annotation.NonNull;
 import javax.inject.Inject;
 import butterknife.BindView;
@@ -30,6 +37,8 @@ public class PersonalFragment extends BaseFragment
 
     @BindView(R.id.nickname)
     protected TextView nickname;
+
+    private PersonalAdapter adapter;
 
     @Override
     public void initializeDependencies() {
@@ -52,8 +61,17 @@ public class PersonalFragment extends BaseFragment
     }
 
     @Override
-    public void showLovedTracks(@NonNull List<Track> tracks) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(view!=null){
+            adapter=new PersonalAdapter(getContext(),rxBus);
+            personalMedia.setAdapter(adapter);
+            presenter.start();
+        }
+    }
 
+    @Override
+    public void showLovedTracks(@NonNull List<Track> tracks) {
     }
 
     @Override
@@ -63,11 +81,18 @@ public class PersonalFragment extends BaseFragment
 
     @Override
     public void showTrackHistory(@NonNull List<Track> tracks) {
-
+        if(tracks!=null) {
+            UserTracksAdapter tracksAdapter = new UserTracksAdapter(getContext(), rxBus);
+            tracksAdapter.setData(tracks);
+            adapter.addItem(PersonalAdapter.CategoryWrapper.wrap("Recently Played Tracks", tracksAdapter));
+        }
     }
 
     @Override
     public void showMyself(User user) {
-
+        Glide.with(getContext())
+                .load(user.getAvatarUrl())
+                .into(image);
+        nickname.setText(user.getNickName());
     }
 }

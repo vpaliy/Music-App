@@ -10,6 +10,8 @@
     <string name="tracks_label">Tracks</string>
     <string name="albums_label">Albums</string>
     <string name="playlist_label">Playlists</string>
+    <string name="track_history_label">Recently Played Tracks</string>
+    <string name="playlist_history_label">Recent Playlists</string>
 
     <string name="user_empty_media">This user has no media items</string>
     <string name="item_search">Search</string>

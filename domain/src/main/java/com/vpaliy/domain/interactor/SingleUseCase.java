@@ -26,10 +26,12 @@ public abstract class SingleUseCase<T,Params>{
     }
 
     public void execute(Consumer<? super T> onSuccess, Consumer<? super Throwable> onError, Params params){
-        Single<T> single= buildUseCase(params)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui());
-        disposables.add(single.subscribe(onSuccess,onError));
+        Single<T> single= buildUseCase(params);
+        if(single!=null) {
+                single=single.subscribeOn(schedulerProvider.io())
+                             .observeOn(schedulerProvider.ui());
+            disposables.add(single.subscribe(onSuccess, onError));
+        }
     }
 
     public void dispose(){

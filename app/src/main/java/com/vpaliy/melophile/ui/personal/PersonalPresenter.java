@@ -37,6 +37,7 @@ public class PersonalPresenter implements PersonalContract.Presenter{
 
     @Override
     public void start() {
+        fetchMeUseCase.execute(this::catchMyself,this::catchError,null);
         trackHistoryUseCase.execute(this::catchTrackHistory,this::catchError,null);
         playlistHistoryUseCase.execute(this::catchPlaylistHistory,this::catchError,null);
     }

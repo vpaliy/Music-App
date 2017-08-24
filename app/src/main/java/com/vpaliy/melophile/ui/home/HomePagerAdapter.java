@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.vpaliy.melophile.ui.personal.PersonalFragment;
 import com.vpaliy.melophile.ui.playlists.PlaylistsFragment;
 import com.vpaliy.melophile.ui.tracks.TracksFragment;
 
@@ -18,7 +20,7 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -26,8 +28,10 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
         switch (position){
             case 0:
                 return new PlaylistsFragment();
-            default:
+            case 1:
                 return new TracksFragment();
+            default:
+                return new PersonalFragment();
         }
     }
 

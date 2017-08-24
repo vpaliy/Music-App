@@ -43,7 +43,7 @@ public abstract class BaseAdapter<T> extends
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data!=null?data.size():0;
     }
 
     protected View inflate(@LayoutRes int id, ViewGroup container){

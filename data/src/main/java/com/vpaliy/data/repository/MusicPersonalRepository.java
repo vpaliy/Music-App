@@ -1,6 +1,7 @@
 package com.vpaliy.data.repository;
 
 import com.vpaliy.data.mapper.Mapper;
+import com.vpaliy.data.source.remote.Filter;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
@@ -24,16 +25,19 @@ public class MusicPersonalRepository implements PersonalRepository {
     private Mapper<User,UserEntity> userMapper;
     private Mapper<Playlist,PlaylistEntity> playlistMapper;
     private Mapper<Track,TrackEntity> trackMapper;
+    private Filter filter;
 
     @Inject
     public MusicPersonalRepository(SoundCloudService service,
                                    Mapper<User,UserEntity> userMapper,
                                    Mapper<Playlist,PlaylistEntity> playlistMapper,
-                                   Mapper<Track,TrackEntity> trackMapper){
+                                   Mapper<Track,TrackEntity> trackMapper,
+                                   Filter filter){
         this.service=service;
         this.userMapper=userMapper;
         this.playlistMapper=playlistMapper;
         this.trackMapper=trackMapper;
+        this.filter=filter;
     }
 
     @Override
@@ -64,7 +68,10 @@ public class MusicPersonalRepository implements PersonalRepository {
 
     @Override
     public Single<List<Track>> fetchTrackHistory() {
-        return null;
+        return service.searchTracks(TrackEntity.Filter.start()
+                .byName("Imagine Dragons").limit(100).createOptions())
+                .map(filter::filterTracks)
+                .map(trackMapper::map);
     }
 
     @Override

@@ -1,8 +1,7 @@
-package com.vpaliy.melophile.ui.playlists;
+package com.vpaliy.melophile.ui.personal;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,10 +12,9 @@ import butterknife.ButterKnife;
 import butterknife.BindView;
 import android.support.annotation.NonNull;
 
-@SuppressWarnings("WeakerAccess")
-public class CategoryAdapter extends BaseAdapter<CategoryAdapter.CategoryWrapper>{
+public class PersonalAdapter  extends BaseAdapter<PersonalAdapter.CategoryWrapper>{
 
-    public CategoryAdapter(@NonNull Context context, @NonNull RxBus rxBus){
+    public PersonalAdapter(@NonNull Context context, @NonNull RxBus rxBus){
         super(context,rxBus);
     }
 
@@ -44,7 +42,6 @@ public class CategoryAdapter extends BaseAdapter<CategoryAdapter.CategoryWrapper
             CategoryWrapper wrapper=at(getAdapterPosition());
             list.setAdapter(wrapper.adapter);
             title.setText(wrapper.text);
-            more.setTextColor(wrapper.color);
         }
     }
 
@@ -55,7 +52,7 @@ public class CategoryAdapter extends BaseAdapter<CategoryAdapter.CategoryWrapper
 
     @Override
     public TypeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View root=inflater.inflate(R.layout.adapter_playlist_category,parent,false);
+        View root=inflater.inflate(R.layout.adapter_user_media,parent,false);
         return new TypeViewHolder(root);
     }
 
@@ -67,16 +64,14 @@ public class CategoryAdapter extends BaseAdapter<CategoryAdapter.CategoryWrapper
     public static class CategoryWrapper {
         private final String text;
         private final RecyclerView.Adapter<?> adapter;
-        private final int color;
 
-        private CategoryWrapper(@NonNull String text, @NonNull RecyclerView.Adapter<?> adapter, int color){
+        private CategoryWrapper(@NonNull String text, @NonNull RecyclerView.Adapter<?> adapter){
             this.text=text;
             this.adapter=adapter;
-            this.color=color;
         }
 
-        public static CategoryWrapper wrap(@NonNull String text, @NonNull RecyclerView.Adapter<?> adapter, int color){
-            return new CategoryWrapper(text,adapter,color);
+        public static CategoryWrapper wrap(@NonNull String text, @NonNull RecyclerView.Adapter<?> adapter){
+            return new CategoryWrapper(text,adapter);
         }
     }
 }
