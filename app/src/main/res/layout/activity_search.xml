@@ -72,6 +72,7 @@
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
+        android:elevation="10dp"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         app:tabMode="fixed"

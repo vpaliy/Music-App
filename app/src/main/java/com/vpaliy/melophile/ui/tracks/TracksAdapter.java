@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -29,6 +30,7 @@ import butterknife.BindView;
 
 @SuppressWarnings("WeakerAccess")
 public class TracksAdapter extends BaseAdapter<Track> {
+
 
     public TracksAdapter(@NonNull Context context, @NonNull RxBus rxBus){
         super(context,rxBus);

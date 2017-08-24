@@ -18,10 +18,6 @@
         android:theme="@style/MelophileTheme">
         <activity
             android:name=".ui.home.HomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service
@@ -56,6 +52,24 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+        </activity>
+
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:theme="@style/MelophileTheme.Auth">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="vpaliy"
+                    android:host="soundcloud"
+                    android:pathPrefix="/redirect"/>
+            </intent-filter>
         </activity>
     </application>
 

@@ -30,7 +30,6 @@ import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.utils.BundleUtils;
 import com.vpaliy.melophile.ui.utils.Constants;
-import com.vpaliy.melophile.ui.utils.PresentationUtils;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -73,7 +72,6 @@ public class TrackFragment extends BaseFragment {
 
     @BindView(R.id.pages)
     protected TextView pages;
-
 
     private static final long PROGRESS_UPDATE_INTERNAL = 100;
     private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 10;
@@ -306,7 +304,6 @@ public class TrackFragment extends BaseFragment {
     }
 
     public void showArt(String artUrl){
-        Log.d(TAG,"showArt");
         Glide.with(getContext())
                 .load(artUrl)
                 .asBitmap()
@@ -326,7 +323,6 @@ public class TrackFragment extends BaseFragment {
     }
 
     private void updateDuration(MediaMetadataCompat metadataCompat){
-        Log.d(TAG,"Update duration");
         int duration=(int)metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
         endTime.setText(DateUtils.formatElapsedTime(duration/1000));
         startTime.setText("0");

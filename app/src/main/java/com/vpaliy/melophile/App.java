@@ -14,6 +14,7 @@ import com.vpaliy.melophile.di.module.InteractorModule;
 import com.vpaliy.melophile.di.module.MapperModule;
 import com.vpaliy.melophile.di.module.NetworkModule;
 import com.vpaliy.melophile.di.module.PlaybackModule;
+import com.vpaliy.soundcloud.model.Token;
 
 public class App extends Application {
 
@@ -24,9 +25,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initializeComponent();
         INSTANCE = this;
-
     }
 
     @Override
@@ -34,14 +33,7 @@ public class App extends Application {
         super.attachBaseContext(base);
     }
 
-    private void initializeComponent() {
-        applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .dataModule(new DataModule())
-                .networkModule(new NetworkModule())
-                .mapperModule(new MapperModule())
-                .interactorModule(new InteractorModule())
-                .build();
+    private void initializePlayerComponent() {
         playerComponent= DaggerPlayerComponent.builder()
                 .applicationComponent(applicationComponent)
                 .playbackModule(new PlaybackModule()).build();
@@ -49,6 +41,21 @@ public class App extends Application {
 
     public void setApplicationComponent(ApplicationComponent applicationComponent) {
         this.applicationComponent = applicationComponent;
+    }
+
+    public void appendToken(Token token){
+        initializeAppComponent(token);
+    }
+
+    private void initializeAppComponent(Token token){
+        applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .dataModule(new DataModule())
+                .networkModule(new NetworkModule(token))
+                .mapperModule(new MapperModule())
+                .interactorModule(new InteractorModule())
+                .build();
+        initializePlayerComponent();
     }
 
     @NonNull

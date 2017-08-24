@@ -99,7 +99,12 @@
         <item name="android:statusBarColor">@color/background_super_dark</item>
         <item name="android:navigationBarColor">@color/background_super_dark</item>
         <item name="android:windowSharedElementsUseOverlay">true</item>
+    </style>
 
+    <style name="MelophileTheme.Auth" parent="MelophileTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Widget.SearchView" parent="android:style/Widget.Material.SearchView">
@@ -146,6 +151,15 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="Widget.AppTitle">
+        <item name="android:textSize">40sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFeatureSettings">smcp</item>
+        <item name="android:letterSpacing">0.2</item>
+    </style>
+
     <style name="Widget.Label">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -153,8 +167,6 @@
         <item name="android:fontFeatureSettings">smcp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
-
-
 
     <style name="Widget.ToolbarText">
         <item name="android:textSize">18sp</item>
