@@ -26,7 +26,7 @@ public class PlaylistsPresenter implements PlaylistsContract.Presenter{
 
     @Override
     public void start() {
-        List<MelophileTheme> themes= Arrays.asList(MelophileTheme.create("Motivation","sport","motivation"),
+        List<MelophileTheme> themes= Arrays.asList(MelophileTheme.create("Good Morning","Good Morning", "2017","Morning","Coffee","Tea","Paris"),
                 MelophileTheme.create("Sleeping","Dream","travel","road"),
                 MelophileTheme.create("Relaxing","relax","relaxing","chills"),
                 MelophileTheme.create("Chilling","chills","party","friends"),

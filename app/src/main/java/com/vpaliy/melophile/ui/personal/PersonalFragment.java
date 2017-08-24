@@ -9,16 +9,14 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
+import com.vpaliy.melophile.ui.user.UserPlaylistsAdapter;
 import com.vpaliy.melophile.ui.user.UserTracksAdapter;
-
-import java.util.ArrayList;
 import java.util.List;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import static com.vpaliy.melophile.ui.personal.PersonalContract.Presenter;
+
 import android.support.annotation.Nullable;
 import android.support.annotation.NonNull;
 import javax.inject.Inject;
@@ -31,12 +29,6 @@ public class PersonalFragment extends BaseFragment
 
     @BindView(R.id.personal_media)
     protected RecyclerView personalMedia;
-
-    @BindView(R.id.avatar)
-    protected ImageView image;
-
-    @BindView(R.id.nickname)
-    protected TextView nickname;
 
     private PersonalAdapter adapter;
 
@@ -76,23 +68,20 @@ public class PersonalFragment extends BaseFragment
 
     @Override
     public void showPlaylistHistory(@NonNull List<Playlist> playlists) {
-
+        UserPlaylistsAdapter playlistsAdapter=new UserPlaylistsAdapter(getContext(),rxBus);
+        playlistsAdapter.setData(playlists);
+        adapter.addItem(PersonalAdapter.CategoryWrapper.wrap("Recently Played", playlistsAdapter));
     }
 
     @Override
     public void showTrackHistory(@NonNull List<Track> tracks) {
-        if(tracks!=null) {
-            UserTracksAdapter tracksAdapter = new UserTracksAdapter(getContext(), rxBus);
-            tracksAdapter.setData(tracks);
-            adapter.addItem(PersonalAdapter.CategoryWrapper.wrap("Recently Played Tracks", tracksAdapter));
-        }
+        UserTracksAdapter tracksAdapter = new UserTracksAdapter(getContext(), rxBus);
+        tracksAdapter.setData(tracks);
+        adapter.addItem(PersonalAdapter.CategoryWrapper.wrap("Recently Played", tracksAdapter));
     }
 
     @Override
     public void showMyself(User user) {
-        Glide.with(getContext())
-                .load(user.getAvatarUrl())
-                .into(image);
-        nickname.setText(user.getNickName());
+        adapter.setUser(user);
     }
 }

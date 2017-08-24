@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -58,13 +59,19 @@ public class UserPlaylistsAdapter extends BaseAdapter<Playlist> {
         public void onBindData() {
             Playlist playlist= at(getAdapterPosition());
             trackTitle.setText(playlist.getTitle());
-
+            artist.setText(playlist.getUser().getNickName());
             Glide.with(itemView.getContext())
                     .load(playlist.getArtUrl())
                     .priority(Priority.IMMEDIATE)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(trackArt);
         }
+    }
+
+    @Override
+    public int getItemCount() {
+        int count=super.getItemCount();
+        return count>5?5:count;
     }
 
     @Override

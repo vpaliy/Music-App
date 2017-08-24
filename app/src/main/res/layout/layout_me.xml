@@ -1,0 +1,55 @@
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/spacing_huge"
+    xmlns:tools="http://schemas.android.com/tools">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatar"
+        tools:src="@drawable/evolve"
+        android:scaleType="centerCrop"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="@dimen/spacing_huge"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/nickname"
+        tools:text="Alan Walker"
+        android:maxLines="1"
+        android:layout_marginTop="@dimen/spacing_medium"
+        style="@style/Widget.BigTitle"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/avatar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/followers"
+        android:drawableTop="@drawable/ic_followers"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="138 followers"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/likes"
+        app:layout_constraintTop_toBottomOf="@+id/nickname"
+        android:layout_marginTop="@dimen/spacing_large" />
+    <TextView
+        android:id="@+id/likes"
+        tools:text="24345 Likes"
+        android:gravity="center"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:drawableTop="@drawable/ic_playlist_heart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/followers"
+        app:layout_constraintLeft_toRightOf="@+id/followers"
+        app:layout_constraintBottom_toBottomOf="@+id/followers"
+        app:layout_constraintRight_toRightOf="parent" />
+</android.support.constraint.ConstraintLayout>

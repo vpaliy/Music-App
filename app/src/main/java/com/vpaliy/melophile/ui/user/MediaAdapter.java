@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 public class MediaAdapter extends BaseAdapter<MediaAdapter.CategoryWrapper>{
 
     private static final int BLANK_TYPE=0;
-    private static final int MEDIA_TYPE=2;
+    private static final int MEDIA_TYPE=1;
 
     private View blank;
 

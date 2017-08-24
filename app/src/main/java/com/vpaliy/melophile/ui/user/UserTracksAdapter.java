@@ -78,6 +78,12 @@ public class UserTracksAdapter extends BaseAdapter<Track> {
     }
 
     @Override
+    public int getItemCount() {
+        int count=super.getItemCount();
+        return count>5?5:count;
+    }
+
+    @Override
     public GenericViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return  new TrackViewHolder(inflater.inflate(R.layout.adapter_playlist_track,parent,false));
     }

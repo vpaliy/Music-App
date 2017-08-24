@@ -63,7 +63,10 @@ public class MusicPersonalRepository implements PersonalRepository {
     //database stuff
     @Override
     public Single<List<Playlist>> fetchPlaylistHistory() {
-        return null;
+        return service.searchPlaylists(PlaylistEntity.Filter.start()
+                .byName("Imagine").limit(100).createOptions())
+                .map(filter::filterPlaylists)
+                .map(playlistMapper::map);
     }
 
     @Override

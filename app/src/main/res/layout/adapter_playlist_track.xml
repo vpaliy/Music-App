@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/spacing_large"
-    android:paddingTop="@dimen/spacing_large"
+    android:paddingBottom="@dimen/spacing_small"
+    android:paddingTop="@dimen/spacing_small"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         tools:src="@drawable/evolve"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:scaleType="centerCrop"
         android:layout_marginStart="@dimen/spacing_medium"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -22,6 +22,7 @@
     <TextView
         android:id="@+id/artist"
         tools:text="Artist"
+        android:textSize="17sp"
         style="@style/Widget.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,12 +31,17 @@
         app:layout_constraintLeft_toRightOf="@+id/track_art"
         android:layout_marginStart="@dimen/spacing_medium" />
 
+    <!-- TODO specify the max width for every possible screen -->
     <TextView
         android:id="@+id/track_title"
-        tools:text="Whatever It Takes"
+        tools:text="Whatever It Takes fdsfsdgdsgfgd"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:maxWidth="300dp"
+        android:ellipsize="end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@+id/artist"
-        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
         app:layout_constraintTop_toBottomOf="@+id/artist" />
 </android.support.constraint.ConstraintLayout>
