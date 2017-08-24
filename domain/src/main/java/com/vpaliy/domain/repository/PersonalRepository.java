@@ -13,9 +13,11 @@ public interface PersonalRepository {
     Completable unlikeTrack(@NonNull Track track);
     Completable follow(@NonNull User user);
     Completable unfollow(@NonNull User user);
-    Single<List<Track>> fetchTrackHistory();
-    Single<List<Playlist>> fetchPlaylistHistory();
     Single<User> fetchMe();
     void saveTrack(@NonNull Track track);
     void savePlaylist(@NonNull Playlist playlist);
+    Single<List<Track>> fetchTrackHistory();
+    Single<List<Playlist>> fetchPlaylistHistory();
+    void clearTracks();
+    void clearPlaylists();
 }

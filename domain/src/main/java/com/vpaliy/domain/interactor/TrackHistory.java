@@ -11,12 +11,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class GetRecentTracks extends SingleUseCase<List<Track>,Void>{
+public class TrackHistory extends SingleUseCase<List<Track>,Void>{
 
     private PersonalRepository repository;
 
     @Inject
-    public GetRecentTracks(BaseSchedulerProvider schedulerProvider, PersonalRepository repository){
+    public TrackHistory(BaseSchedulerProvider schedulerProvider, PersonalRepository repository){
         super(schedulerProvider);
         this.repository=repository;
     }
@@ -24,5 +24,9 @@ public class GetRecentTracks extends SingleUseCase<List<Track>,Void>{
     @Override
     public Single<List<Track>> buildUseCase(Void aVoid) {
         return repository.fetchTrackHistory();
+    }
+
+    public void clearHistory(){
+        repository.clearTracks();
     }
 }

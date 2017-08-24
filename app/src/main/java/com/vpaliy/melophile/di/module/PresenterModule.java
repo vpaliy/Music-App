@@ -3,8 +3,8 @@ package com.vpaliy.melophile.di.module;
 import com.vpaliy.domain.interactor.GetMe;
 import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
-import com.vpaliy.domain.interactor.GetRecentPlaylists;
-import com.vpaliy.domain.interactor.GetRecentTracks;
+import com.vpaliy.domain.interactor.PlaylistHistory;
+import com.vpaliy.domain.interactor.TrackHistory;
 import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
 import com.vpaliy.domain.interactor.GetUserFavorites;
@@ -72,7 +72,7 @@ public class PresenterModule {
     }
 
     @ViewScope @Provides
-    PersonalContract.Presenter personal(GetRecentPlaylists getRecentPlaylists, GetRecentTracks getRecentTracks, GetMe getMe){
-        return new PersonalPresenter(getRecentTracks,getRecentPlaylists,getMe);
+    PersonalContract.Presenter personal(PlaylistHistory playlistHistory, TrackHistory trackHistory, GetMe getMe){
+        return new PersonalPresenter(trackHistory, playlistHistory,getMe);
     }
 }

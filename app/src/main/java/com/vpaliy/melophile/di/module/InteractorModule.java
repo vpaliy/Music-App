@@ -5,8 +5,8 @@ import com.vpaliy.domain.interactor.FollowUser;
 import com.vpaliy.domain.interactor.GetMe;
 import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
-import com.vpaliy.domain.interactor.GetRecentPlaylists;
-import com.vpaliy.domain.interactor.GetRecentTracks;
+import com.vpaliy.domain.interactor.PlaylistHistory;
+import com.vpaliy.domain.interactor.TrackHistory;
 import com.vpaliy.domain.interactor.GetTrack;
 import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
@@ -80,13 +80,13 @@ public class InteractorModule {
     }
 
     @Singleton @Provides
-    GetRecentPlaylists recentPlaylists(BaseSchedulerProvider schedulerProvider, PersonalRepository repository){
-        return new GetRecentPlaylists(schedulerProvider,repository);
+    PlaylistHistory recentPlaylists(BaseSchedulerProvider schedulerProvider, PersonalRepository repository){
+        return new PlaylistHistory(schedulerProvider,repository);
     }
 
     @Singleton @Provides
-    GetRecentTracks recentTracks(BaseSchedulerProvider schedulerProvider, PersonalRepository repository){
-        return new GetRecentTracks(schedulerProvider,repository);
+    TrackHistory recentTracks(BaseSchedulerProvider schedulerProvider, PersonalRepository repository){
+        return new TrackHistory(schedulerProvider,repository);
     }
 
     @Singleton @Provides

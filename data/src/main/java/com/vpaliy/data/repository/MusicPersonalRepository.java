@@ -82,4 +82,14 @@ public class MusicPersonalRepository implements PersonalRepository {
     public void saveTrack(@NonNull Track track) {
 
     }
+
+    @Override
+    public void clearPlaylists() {
+
+    }
+
+    @Override
+    public void clearTracks() {
+
+    }
 }

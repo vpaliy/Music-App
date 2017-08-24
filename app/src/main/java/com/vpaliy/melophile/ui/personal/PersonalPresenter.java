@@ -1,8 +1,8 @@
 package com.vpaliy.melophile.ui.personal;
 
 import com.vpaliy.domain.interactor.GetMe;
-import com.vpaliy.domain.interactor.GetRecentPlaylists;
-import com.vpaliy.domain.interactor.GetRecentTracks;
+import com.vpaliy.domain.interactor.PlaylistHistory;
+import com.vpaliy.domain.interactor.TrackHistory;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import java.util.List;
@@ -17,13 +17,13 @@ import javax.inject.Inject;
 public class PersonalPresenter implements PersonalContract.Presenter{
 
     private View view;
-    private GetRecentPlaylists playlistHistoryUseCase;
-    private GetRecentTracks trackHistoryUseCase;
+    private PlaylistHistory playlistHistoryUseCase;
+    private TrackHistory trackHistoryUseCase;
     private GetMe fetchMeUseCase;
 
     @Inject
-    public PersonalPresenter(GetRecentTracks trackHistoryUseCase,
-                             GetRecentPlaylists playlistHistoryUseCase,
+    public PersonalPresenter(TrackHistory trackHistoryUseCase,
+                             PlaylistHistory playlistHistoryUseCase,
                              GetMe fetchMeUseCase){
         this.trackHistoryUseCase=trackHistoryUseCase;
         this.playlistHistoryUseCase=playlistHistoryUseCase;

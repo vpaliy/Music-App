@@ -10,8 +10,8 @@ import com.vpaliy.domain.interactor.FollowUser;
 import com.vpaliy.domain.interactor.GetMe;
 import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
-import com.vpaliy.domain.interactor.GetRecentPlaylists;
-import com.vpaliy.domain.interactor.GetRecentTracks;
+import com.vpaliy.domain.interactor.PlaylistHistory;
+import com.vpaliy.domain.interactor.TrackHistory;
 import com.vpaliy.domain.interactor.GetTrack;
 import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
@@ -72,8 +72,8 @@ public interface ApplicationComponent {
     GetMe meInteractor();
     FollowUser followUserInteractor();
     LoveTrack loveTrackInteractor();
-    GetRecentPlaylists recentPlaylistsInteractor();
-    GetRecentTracks recentTracksInteractor();
+    PlaylistHistory recentPlaylistsInteractor();
+    TrackHistory recentTracksInteractor();
 
     Mapper<MediaMetadataCompat,Track> mapper();
 }
