@@ -7,6 +7,7 @@ import com.vpaliy.data.source.Source;
 import com.vpaliy.data.source.remote.Filter;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.interactor.FollowUser;
+import com.vpaliy.domain.interactor.GetMe;
 import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.interactor.GetRecentPlaylists;
@@ -68,6 +69,7 @@ public interface ApplicationComponent {
     PlaylistSearch playlistSearchInteractor();
     UserSearch userSearchInteractor();
     SaveInteractor saveInteractor();
+    GetMe meInteractor();
     FollowUser followUserInteractor();
     LoveTrack loveTrackInteractor();
     GetRecentPlaylists recentPlaylistsInteractor();

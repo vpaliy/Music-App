@@ -17,7 +17,7 @@ import butterknife.BindView;
 import android.support.annotation.Nullable;
 import butterknife.OnClick;
 
-public abstract class BaseInfoFragment<T>  extends BottomSheetDialogFragment
+public abstract class BaseInfoFragment<T> extends BottomSheetDialogFragment
         implements UserInfoContract.View<T>{
     //TODO private access ??
     protected String id;

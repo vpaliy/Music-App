@@ -2,20 +2,34 @@ package com.vpaliy.melophile.ui.personal;
 
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
+import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
 import java.util.List;
+import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import static com.vpaliy.melophile.ui.personal.PersonalContract.Presenter;
 import android.support.annotation.NonNull;
 import javax.inject.Inject;
+import butterknife.BindView;
 
 public class PersonalFragment extends BaseFragment
         implements PersonalContract.View{
 
     private Presenter presenter;
+
+    @BindView(R.id.personal_media)
+    protected RecyclerView personalMedia;
+
+    @BindView(R.id.avatar)
+    protected ImageView image;
+
+    @BindView(R.id.nickname)
+    protected TextView nickname;
 
     @Override
     public void initializeDependencies() {
@@ -49,6 +63,11 @@ public class PersonalFragment extends BaseFragment
 
     @Override
     public void showTrackHistory(@NonNull List<Track> tracks) {
+
+    }
+
+    @Override
+    public void showMyself(User user) {
 
     }
 }

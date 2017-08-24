@@ -2,6 +2,7 @@ package com.vpaliy.melophile.di.module;
 
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.interactor.FollowUser;
+import com.vpaliy.domain.interactor.GetMe;
 import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
 import com.vpaliy.domain.interactor.GetRecentPlaylists;
@@ -101,5 +102,10 @@ public class InteractorModule {
     @Singleton @Provides
     SaveInteractor saveInteractor(PersonalRepository repository){
         return new SaveInteractor(repository);
+    }
+
+    @Singleton @Provides
+    GetMe me(BaseSchedulerProvider schedulerProvider, PersonalRepository repository){
+        return new GetMe(schedulerProvider,repository);
     }
 }

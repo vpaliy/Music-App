@@ -1,12 +1,10 @@
 package com.vpaliy.melophile.ui.user.info;
 
-
+import java.util.List;
+import static com.vpaliy.melophile.ui.user.info.UserInfoContract.View;
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
-import static com.vpaliy.melophile.ui.user.info.UserInfoContract.View;
-
+@SuppressWarnings("WeakerAccess")
 public abstract class UserInfoPresenter<T>
         implements UserInfoContract.Presenter<T> {
 
