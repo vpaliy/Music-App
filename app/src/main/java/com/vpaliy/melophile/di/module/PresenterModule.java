@@ -2,6 +2,8 @@ package com.vpaliy.melophile.di.module;
 
 import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
+import com.vpaliy.domain.interactor.GetRecentPlaylists;
+import com.vpaliy.domain.interactor.GetRecentTracks;
 import com.vpaliy.domain.interactor.GetTracks;
 import com.vpaliy.domain.interactor.GetUserDetails;
 import com.vpaliy.domain.interactor.GetUserFavorites;
@@ -12,6 +14,8 @@ import com.vpaliy.domain.interactor.TrackSearch;
 import com.vpaliy.domain.interactor.UserSearch;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
+import com.vpaliy.melophile.ui.personal.PersonalContract;
+import com.vpaliy.melophile.ui.personal.PersonalPresenter;
 import com.vpaliy.melophile.ui.playlist.PlaylistContract;
 import com.vpaliy.melophile.ui.playlist.PlaylistPresenter;
 import com.vpaliy.melophile.ui.playlists.PlaylistsContract;
@@ -64,5 +68,10 @@ public class PresenterModule {
     @ViewScope @Provides
     SearchContract.Presenter search(TrackSearch trackSearch, UserSearch userSearch, PlaylistSearch playlistSearch){
         return new SearchPresenter(trackSearch,playlistSearch,userSearch);
+    }
+
+    @ViewScope @Provides
+    PersonalContract.Presenter personal(GetRecentPlaylists getRecentPlaylists, GetRecentTracks getRecentTracks){
+        return new PersonalPresenter(getRecentTracks,getRecentPlaylists);
     }
 }

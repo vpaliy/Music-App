@@ -1,7 +1,5 @@
 package com.vpaliy.data.repository;
 
-import android.support.annotation.NonNull;
-
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
@@ -12,6 +10,7 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import android.support.annotation.NonNull;
 
 @Singleton
 public class MusicPersonalRepository implements PersonalRepository {
@@ -25,23 +24,25 @@ public class MusicPersonalRepository implements PersonalRepository {
 
     @Override
     public Completable likeTrack(@NonNull Track track) {
-        return null;
+        return service.loveTrack(track.getId());
     }
 
     @Override
     public Completable unfollow(@NonNull User user) {
-        return null;
+        return service.unfollowUser(user.getId());
     }
 
     @Override
     public Completable follow(@NonNull User user) {
-        return null;
+        return service.followUser(user.getId());
     }
 
     @Override
     public Completable unlikeTrack(@NonNull Track track) {
-        return null;
+        return service.unloveTrack(track.getId());
     }
+
+    //database stuff
 
     @Override
     public Single<List<Playlist>> fetchPlaylistHistory() {

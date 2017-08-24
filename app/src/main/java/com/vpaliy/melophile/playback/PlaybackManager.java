@@ -5,14 +5,13 @@ import android.os.SystemClock;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Log;
 import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.domain.interactor.SaveInteractor;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.playback.Playback;
-import com.vpaliy.domain.playback.PlayerScope;
 import com.vpaliy.domain.playback.QueueManager;
 import javax.inject.Inject;
+import com.vpaliy.domain.playback.PlayerScope;
 
 @SuppressWarnings("WeakerAccess")
 @PlayerScope
