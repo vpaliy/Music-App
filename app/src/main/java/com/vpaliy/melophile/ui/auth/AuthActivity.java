@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import com.google.gson.reflect.TypeToken;
 import com.vpaliy.melophile.App;
@@ -29,8 +30,6 @@ public class AuthActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE=10;
 
-    @BindView(R.id.cover)
-    protected ImageView cover;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +45,7 @@ public class AuthActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(jsonToken)){
             Token token=BundleUtils.convertFromJsonString(jsonToken,new TypeToken<Token>(){}.getType());
             if(token!=null){
-                welcome(token);
+                new Handler().postDelayed(()->welcome(token), 400);
                 return;
             }
         }

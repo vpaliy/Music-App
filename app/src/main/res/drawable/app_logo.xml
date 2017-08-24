@@ -1,0 +1,11 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:drawable="@color/material_grey_300"
+        tools:ignore="PrivateResource"/>
+    <item>
+        <bitmap
+            android:src="@drawable/pink"
+            android:gravity="center" />
+    </item>
+</layer-list>
