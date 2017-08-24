@@ -2,22 +2,26 @@ package com.vpaliy.domain.interactor;
 
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.model.Playlist;
-import com.vpaliy.domain.repository.Repository;
-
+import com.vpaliy.domain.repository.PersonalRepository;
 import java.util.List;
 import io.reactivex.Single;
 
-public class GetRecentPlaylists extends SingleUseCase<List<Playlist>,String> {
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-    private Repository repository;
+@Singleton
+public class GetRecentPlaylists extends SingleUseCase<List<Playlist>,Void> {
 
-    public GetRecentPlaylists(BaseSchedulerProvider schedulerProvider, Repository repository){
+    private PersonalRepository repository;
+
+    @Inject
+    public GetRecentPlaylists(BaseSchedulerProvider schedulerProvider, PersonalRepository repository){
         super(schedulerProvider);
         this.repository=repository;
     }
 
     @Override
-    public Single<List<Playlist>> buildUseCase(String s) {
-        return null;
+    public Single<List<Playlist>> buildUseCase(Void aVoid) {
+        return repository.fetchPlaylistHistory();
     }
 }

@@ -1,6 +1,7 @@
 package com.vpaliy.melophile.ui.playlist;
 
 import com.vpaliy.domain.interactor.GetPlaylist;
+import com.vpaliy.domain.interactor.SaveInteractor;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.melophile.di.scope.ViewScope;
 
@@ -18,11 +19,13 @@ import static com.vpaliy.melophile.ui.playlist.PlaylistContract.View;
 public class PlaylistPresenter implements PlaylistContract.Presenter {
 
     private GetPlaylist playlistUseCase;
+    private SaveInteractor saveInteractor;
     private View view;
 
     @Inject
-    public PlaylistPresenter(GetPlaylist playlistUseCase){
+    public PlaylistPresenter(GetPlaylist playlistUseCase, SaveInteractor saveInteractor){
         this.playlistUseCase=playlistUseCase;
+        this.saveInteractor=saveInteractor;
     }
 
     @Override
@@ -32,6 +35,7 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
 
     private void catchData(Playlist playlist){
         if(playlist!=null){
+            saveInteractor.savePlaylist(playlist);
             List<String> tags=tags(playlist);
             if(!tags.isEmpty()) {
                 view.showTags(tags);
@@ -53,7 +57,7 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
         if(playlist.getTags()!=null){
             list.addAll(playlist.getTags());
         }
-        //
+        //get the genres
         if(playlist.getGenres()!=null){
             list.addAll(playlist.getGenres());
         }
@@ -67,6 +71,9 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
     @Override
     public void stop() {
         playlistUseCase.dispose();
+        playlistUseCase=null;
+        saveInteractor=null;
+        view=null;
     }
 
     @Override

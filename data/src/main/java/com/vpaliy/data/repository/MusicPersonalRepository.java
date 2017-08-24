@@ -7,14 +7,11 @@ import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.repository.PersonalRepository;
 import com.vpaliy.soundcloud.SoundCloudService;
-
 import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Singleton
 public class MusicPersonalRepository implements PersonalRepository {
@@ -54,5 +51,15 @@ public class MusicPersonalRepository implements PersonalRepository {
     @Override
     public Single<List<Track>> fetchTrackHistory() {
         return null;
+    }
+
+    @Override
+    public void savePlaylist(@NonNull Playlist playlist) {
+
+    }
+
+    @Override
+    public void saveTrack(@NonNull Track track) {
+
     }
 }

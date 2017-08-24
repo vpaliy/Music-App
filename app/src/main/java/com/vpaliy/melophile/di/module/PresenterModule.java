@@ -7,6 +7,7 @@ import com.vpaliy.domain.interactor.GetUserDetails;
 import com.vpaliy.domain.interactor.GetUserFavorites;
 import com.vpaliy.domain.interactor.GetUserFollowers;
 import com.vpaliy.domain.interactor.PlaylistSearch;
+import com.vpaliy.domain.interactor.SaveInteractor;
 import com.vpaliy.domain.interactor.TrackSearch;
 import com.vpaliy.domain.interactor.UserSearch;
 import com.vpaliy.domain.model.Track;
@@ -42,8 +43,8 @@ public class PresenterModule {
     }
 
     @ViewScope @Provides
-    PlaylistContract.Presenter playlist(GetPlaylist getPlaylist){
-        return new PlaylistPresenter(getPlaylist);
+    PlaylistContract.Presenter playlist(GetPlaylist getPlaylist, SaveInteractor saveInteractor){
+        return new PlaylistPresenter(getPlaylist,saveInteractor);
     }
 
     @ViewScope @Provides
