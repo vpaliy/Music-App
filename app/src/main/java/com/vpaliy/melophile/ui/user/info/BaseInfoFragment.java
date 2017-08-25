@@ -1,8 +1,10 @@
 package com.vpaliy.melophile.ui.user.info;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +38,8 @@ public abstract class BaseInfoFragment<T> extends BottomSheetDialogFragment
 
     protected Presenter<T> presenter;
 
+    protected Handler handler=new Handler();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +65,7 @@ public abstract class BaseInfoFragment<T> extends BottomSheetDialogFragment
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    actionBar.setActivated(dy>0);
+                    actionBar.setActivated(dy>0 || (data.computeVerticalScrollOffset()!=0));
                 }
             });
         }
@@ -73,11 +77,6 @@ public abstract class BaseInfoFragment<T> extends BottomSheetDialogFragment
     public void close(){
         getActivity().getSupportFragmentManager()
                 .beginTransaction().remove(this).commit();
-    }
-
-    @Override
-    public void showEmpty() {
-        //TODO show add a message
     }
 
     @Override
@@ -93,6 +92,7 @@ public abstract class BaseInfoFragment<T> extends BottomSheetDialogFragment
     @Override
     public void onStop() {
         super.onStop();
+        handler.removeCallbacksAndMessages(null);
         if(presenter!=null){
             presenter.stop();
         }

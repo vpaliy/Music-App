@@ -3,6 +3,7 @@ package com.vpaliy.melophile.ui.user.info;
 import android.os.Bundle;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.melophile.App;
+import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.user.UserTracksAdapter;
@@ -31,6 +32,17 @@ public class FavoriteFragment extends BaseInfoFragment<Track>{
                 .applicationComponent(App.appInstance().appComponent())
                 .presenterModule(new PresenterModule())
                 .build().inject(this);
+    }
+
+    @Override
+    public void showEmpty() {
+        title.setText(R.string.no_loved_message);
+        handler.postDelayed(this::close,2000);
+    }
+
+    @Override
+    public void showTitle() {
+        title.setText(R.string.loved_title);
     }
 
     @Inject

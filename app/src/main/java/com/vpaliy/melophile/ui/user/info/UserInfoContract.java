@@ -12,6 +12,7 @@ public interface UserInfoContract {
         void showError();
         void showEmpty();
         void showInfo(@NonNull List<T> tracks);
+        void showTitle();
     }
 
     interface Presenter<T> extends BasePresenter<View<T>> {
