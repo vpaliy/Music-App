@@ -11,6 +11,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
@@ -29,6 +30,7 @@ import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.utils.BundleUtils;
 import com.vpaliy.melophile.ui.utils.Constants;
+import com.vpaliy.melophile.ui.view.Chips;
 import com.vpaliy.melophile.ui.view.FabToggle;
 import com.vpaliy.melophile.ui.view.ParallaxRatioImageView;
 import com.vpaliy.melophile.ui.view.TranslatableLayout;
@@ -88,6 +90,9 @@ public class PlaylistFragment extends BaseFragment
 
     @BindView(R.id.title_background)
     protected View titleBackground;
+
+    @BindView(R.id.chips)
+    protected Chips chipsLayout;
 
     private PlaylistTrackAdapter adapter;
 
@@ -174,8 +179,12 @@ public class PlaylistFragment extends BaseFragment
 
     @Override
     public void showTags(List<String> tags) {
+        chipsLayout.setTags(tags);
+        chipsLayout.setOnTouchListener((view,event)->{
+            tracks.dispatchTouchEvent(event);
+            return false;
+        });
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

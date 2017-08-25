@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Chips">
+        <attr name="vertical_spacing" format="dimension"/>
+        <attr name="horizontal_spacing" format="dimension"/>
+        <attr name="text_style" format="reference"/>
+        <attr name="array" format="reference"/>
+    </declare-styleable>
+</resources>

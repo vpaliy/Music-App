@@ -7,6 +7,7 @@
     android:minHeight="?attr/actionBarSize"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/tracks_number"
         android:drawableTop="@drawable/ic_music_lib"
@@ -58,16 +59,16 @@
         style="@style/Widget.CommentAuthor"
         android:maxWidth="80dp"
         android:maxLines="2"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="@dimen/spacing_small"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_marginTop="@dimen/spacing_medium"
         android:gravity="center"
         app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintTop_toBottomOf="@+id/tracks_number"
         app:layout_constraintRight_toLeftOf="@+id/user_avatar"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@+id/parent"
+        app:layout_constraintTop_toBottomOf="@+id/chips" />
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -101,4 +102,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_height="0dp"
         android:layout_width="wrap_content" />
+
+    <com.vpaliy.melophile.ui.view.Chips
+        android:id="@+id/chips"
+        app:horizontal_spacing="@dimen/spacing_small"
+        app:vertical_spacing="@dimen/spacing_small"
+        app:text_style="@style/Widget.Title.Chip"
+        android:layout_width="0dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="@dimen/spacing_big"
+        app:layout_constraintWidth_default="wrap"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time"
+        app:layout_constraintLeft_toLeftOf="@+id/playlist_title"
+        app:layout_constraintHorizontal_chainStyle="spread" />
 </com.vpaliy.melophile.ui.view.TranslatableLayout>

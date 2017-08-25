@@ -152,6 +152,12 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="Widget.Title.Chip" parent="Widget.Title">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@drawable/ring</item>
+    </style>
+
     <style name="Widget.AppTitle">
         <item name="android:textSize">40sp</item>
         <item name="android:layout_width">wrap_content</item>

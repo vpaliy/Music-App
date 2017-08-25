@@ -16,7 +16,7 @@ ext {
 
     /* Library versions */
     daggerVersion = '2.9'
-    chipsLoverVersion='v1.2'
+    chipsLoverVersion='v1.3'
     calligraphyVersion='2.2.0'
     butterKnifeVersion = "8.5.1"
     supportVersion = "25.1.0"
