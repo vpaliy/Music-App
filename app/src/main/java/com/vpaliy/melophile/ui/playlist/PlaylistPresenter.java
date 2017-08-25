@@ -40,9 +40,9 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
             if(!tags.isEmpty()) {
                 view.showTags(tags);
             }
-            view.showTitle(playlist.getTitle());
             view.showButtons();
             view.showUser(playlist.getUser());
+            view.showTitle(playlist.getTitle());
             view.showTrackNumber(playlist.getTrackCount());
             view.showTracks(playlist.getTracks());
             view.showDuration(playlist.getDuration());

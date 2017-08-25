@@ -4,31 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent"
     android:paddingBottom="@dimen/spacing_large"
-    android:minHeight="200dp"
+    android:minHeight="?attr/actionBarSize"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <View
-        android:id="@+id/title_background"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        android:background="@color/colorGray"
-        app:layout_constraintBottom_toBottomOf="@+id/playlist_title"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-    <TextView
-        tools:text="Hello There, it's Imagine Dragons Playlist"
-        style="@style/Widget.BigTitle"
-        android:textSize="30sp"
-        android:padding="@dimen/spacing_large"
-        android:transitionName="@string/playlist_title_trans_name"
-        android:id="@+id/playlist_title"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_height="0dp"
-        android:layout_width="wrap_content" />
     <TextView
         android:id="@+id/tracks_number"
         android:drawableTop="@drawable/ic_music_lib"
@@ -57,7 +35,7 @@
         android:layout_height="wrap_content"
         tools:text="28 min"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playlist_title"
+        app:layout_constraintTop_toBottomOf="@+id/title_background"
         app:layout_constraintRight_toLeftOf="@+id/tracks_number" />
     <TextView
         android:id="@+id/share"
@@ -73,7 +51,6 @@
         app:layout_constraintTop_toTopOf="@+id/tracks_number"
         app:layout_constraintLeft_toRightOf="@+id/tracks_number"
         app:layout_constraintBottom_toBottomOf="@+id/tracks_number"
-        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintRight_toRightOf="parent" />
     <TextView
         android:id="@+id/author"
@@ -102,4 +79,26 @@
         app:layout_constraintLeft_toRightOf="@+id/author"
         app:layout_constraintTop_toTopOf="@+id/author"
         app:layout_constraintBottom_toBottomOf="@+id/author" />
+    <View
+        android:id="@+id/title_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:background="@color/colorGray"
+        app:layout_constraintBottom_toBottomOf="@+id/playlist_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+    <TextView
+        tools:text="Hello There, it's Imagine Dragons Playlist"
+        style="@style/Widget.BigTitle"
+        android:textSize="30sp"
+        android:padding="@dimen/spacing_large"
+        android:transitionName="@string/playlist_title_trans_name"
+        android:id="@+id/playlist_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="0dp"
+        android:layout_width="wrap_content" />
 </com.vpaliy.melophile.ui.view.TranslatableLayout>

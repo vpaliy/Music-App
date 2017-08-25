@@ -2,6 +2,8 @@ package com.vpaliy.melophile.ui.playlist;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.SharedElementCallback;
+import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
@@ -45,6 +47,8 @@ import static com.vpaliy.melophile.ui.playlist.PlaylistContract.Presenter;
 
 public class PlaylistFragment extends BaseFragment
         implements PlaylistContract.View{
+
+    private static final String TAG=PlaylistFragment.class.getSimpleName();
 
     private Presenter presenter;
     private String id;
@@ -238,7 +242,7 @@ public class PlaylistFragment extends BaseFragment
         if(swatch==null) swatch=palette.getDominantSwatch();
         //apply if not null
         if(swatch!=null){
-           // parent.setBackgroundColor(swatch.getRgb());
+            // parent.setBackgroundColor(swatch.getRgb());
             //playlistTitle.setTextColor(swatch.getTitleTextColor());
             //trackNumber.setTextColor(swatch.getTitleTextColor());
             //shareButton.setTextColor(swatch.getTitleTextColor());
@@ -320,8 +324,17 @@ public class PlaylistFragment extends BaseFragment
             Bundle data = new Bundle();
             data.putString(Constants.EXTRA_ID,userModel.getId());
             data.putString(Constants.EXTRA_DATA,userModel.getAvatarUrl());
+            preserveParent();
             rxBus.send(ExposeEvent.exposeUser(data,
                     Pair.create(userAvatar,getString(R.string.user_trans_name))));
+        }
+    }
+
+    private void preserveParent(){
+        ViewGroup.LayoutParams params=parent.getLayoutParams();
+        if(params.height!=parent.getBottom()){
+            params.height=parent.getBottom();
+            parent.setLayoutParams(params);
         }
     }
 }
