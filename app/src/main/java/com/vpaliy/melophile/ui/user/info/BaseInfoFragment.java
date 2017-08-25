@@ -71,7 +71,8 @@ public abstract class BaseInfoFragment<T> extends BottomSheetDialogFragment
 
     @OnClick(R.id.close)
     public void close(){
-        getActivity().onBackPressed();
+        getActivity().getSupportFragmentManager()
+                .beginTransaction().remove(this).commit();
     }
 
     @Override

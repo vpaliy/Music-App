@@ -12,11 +12,11 @@ import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
+import com.vpaliy.melophile.ui.user.info.InfoEvent;
+import java.util.Locale;
 import butterknife.ButterKnife;
 import butterknife.BindView;
 import android.support.annotation.NonNull;
-
-import java.util.Locale;
 
 public class PersonalAdapter extends BaseAdapter<PersonalAdapter.CategoryWrapper>{
 
@@ -39,6 +39,8 @@ public class PersonalAdapter extends BaseAdapter<PersonalAdapter.CategoryWrapper
         UserViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this,itemView);
+            followers.setOnClickListener(view->rxBus.sendWithLock(InfoEvent.showFollowers(user.getId())));
+            likes.setOnClickListener(view->rxBus.sendWithLock(InfoEvent.showFavorites(user.getId())));
         }
 
         @Override

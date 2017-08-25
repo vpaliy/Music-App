@@ -8,15 +8,20 @@ import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseActivity;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
+import com.vpaliy.melophile.ui.user.info.FavoriteFragment;
+import com.vpaliy.melophile.ui.user.info.FollowersFragment;
+import com.vpaliy.melophile.ui.user.info.InfoEvent;
 import com.vpaliy.melophile.ui.utils.PresentationUtils;
 import com.vpaliy.melophile.ui.view.HomePager;
 import butterknife.ButterKnife;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -95,6 +100,23 @@ public class HomeActivity extends BaseActivity {
     public void handleEvent(@NonNull Object event) {
         if(event instanceof ExposeEvent){
             navigator.navigate(this,(ExposeEvent)(event));
+        }else if(event instanceof InfoEvent){
+            Log.d(HomeActivity.class.getSimpleName(),"Got It");
+            showFavorites((InfoEvent)(event));
+        }
+    }
+
+    private void showFavorites(InfoEvent event){
+        FragmentTransaction transaction=getSupportFragmentManager()
+                .beginTransaction();
+        switch (event.code) {
+            case InfoEvent.FAVORITE:
+                FavoriteFragment.newInstance(event.toBundle())
+                        .show(transaction, null);
+                break;
+            case InfoEvent.FOLLOWERS:
+                FollowersFragment.newInstance(event.toBundle())
+                        .show(transaction,null);
         }
     }
 
