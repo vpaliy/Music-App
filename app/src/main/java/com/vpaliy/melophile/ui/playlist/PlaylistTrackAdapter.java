@@ -27,6 +27,8 @@ import com.vpaliy.melophile.ui.utils.BundleUtils;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.utils.PresentationUtils;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -100,6 +102,10 @@ public class PlaylistTrackAdapter extends BaseAdapter<Track> {
 
     public View getBlank() {
         return blank;
+    }
+
+    public List<Track> getTracks(){
+        return data;
     }
 
     @Override

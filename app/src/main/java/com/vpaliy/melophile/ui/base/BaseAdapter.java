@@ -29,6 +29,7 @@ public abstract class BaseAdapter<T> extends
     }
 
     public void setData(List<T> data) {
+        if(data==null) return;
         this.data = data;
         notifyDataSetChanged();
     }

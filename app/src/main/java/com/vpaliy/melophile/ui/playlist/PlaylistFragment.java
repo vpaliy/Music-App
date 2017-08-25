@@ -8,32 +8,33 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.google.common.reflect.TypeToken;
 import com.vpaliy.chips_lover.ChipsLayout;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
+import com.vpaliy.domain.playback.QueueManager;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
+import com.vpaliy.melophile.ui.utils.BundleUtils;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.view.FabToggle;
 import com.vpaliy.melophile.ui.view.ParallaxRatioImageView;
 import com.vpaliy.melophile.ui.view.TranslatableLayout;
-
 import java.util.Arrays;
 import java.util.List;
-
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import javax.inject.Inject;
@@ -55,7 +56,7 @@ public class PlaylistFragment extends BaseFragment
     protected RecyclerView tracks;
 
     @BindView(R.id.love)
-    protected FabToggle love;
+    protected FabToggle toggle;
 
     @BindView(R.id.parent)
     protected TranslatableLayout parent;
@@ -83,9 +84,6 @@ public class PlaylistFragment extends BaseFragment
 
     @BindView(R.id.title_background)
     protected View titleBackground;
-
-    @BindView(R.id.chips_layout)
-    protected ChipsLayout chipsLayout;
 
     private PlaylistTrackAdapter adapter;
 
@@ -123,6 +121,14 @@ public class PlaylistFragment extends BaseFragment
         super.onViewCreated(view, savedInstanceState);
         getActivity().supportPostponeEnterTransition();
         if(view!=null){
+            parent.addOnLayoutChangeListener(((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                View blank=adapter.getBlank();
+                if(blank!=null) {
+                    ViewGroup.LayoutParams params = blank.getLayoutParams();
+                    params.height = playlistArt.getHeight() + parent.getHeight();
+                    blank.setLayoutParams(params);
+                }
+            }));
             adapter=new PlaylistTrackAdapter(getContext(),rxBus);
             tracks.setAdapter(adapter);
             tracks.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -160,33 +166,12 @@ public class PlaylistFragment extends BaseFragment
     public void showTitle(String title) {
         playlistTitle.setText(title);
         titleBackground.setVisibility(View.VISIBLE);
-        changeBlank();
     }
 
     @Override
     public void showTags(List<String> tags) {
-        chipsLayout.setTags(tags);
     }
 
-    private void changeBlank(){
-        parent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                parent.getViewTreeObserver().removeOnPreDrawListener(this);
-                parent.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                    @Override
-                    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                        View blank=adapter.getBlank();
-                        ViewGroup.LayoutParams params=blank.getLayoutParams();
-                        params.height=playlistArt.getHeight()+parent.getHeight();
-                        blank.setLayoutParams(params);
-                        parent.removeOnLayoutChangeListener(this);
-                    }
-                });
-                return true;
-            }
-        });
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -224,19 +209,27 @@ public class PlaylistFragment extends BaseFragment
                             playlistArt.setImageBitmap(resource);
                             parent.setStaticOffset(imageHeight);
                             parent.setOffset(imageHeight);
-                            love.setStaticOffset(imageHeight-love.getHeight()/2);
-                            love.setOffset(imageHeight-love.getHeight()/2);
-                            love.setMinOffset(ViewCompat.getMinimumHeight(playlistArt)-love.getHeight()/2);
-                            View blank = adapter.getBlank();
-                            ViewGroup.LayoutParams params = blank.getLayoutParams();
-                            params.height = parent.getTop()+parent.getHeight()+imageHeight+padding;
-                            blank.setLayoutParams(params);
+                            toggle.setStaticOffset(imageHeight- toggle.getHeight()/2);
+                            toggle.setOffset(imageHeight- toggle.getHeight()/2);
+                            toggle.setMinOffset(ViewCompat.getMinimumHeight(playlistArt)- toggle.getHeight()/2);
                             tracks.addOnScrollListener(listener);
                             tracks.setOnFlingListener(flingListener);
                             new Palette.Builder(resource).generate(PlaylistFragment.this::applyPalette);
                             getActivity().supportStartPostponedEnterTransition();
                         }
                     });
+        }
+    }
+
+    @OnClick(R.id.love)
+    public void play(){
+        List<Track> tracks=adapter.getTracks();
+        if(tracks!=null && !tracks.isEmpty()){
+            QueueManager queueManager=QueueManager.createQueue(tracks,0);
+            Bundle data=new Bundle();
+            BundleUtils.packHeavyObject(data,Constants.EXTRA_QUEUE,queueManager,
+                    new TypeToken<QueueManager>(){}.getType());
+            rxBus.sendWithLock(ExposeEvent.exposeTrack(data,null));
         }
     }
 
@@ -309,7 +302,7 @@ public class PlaylistFragment extends BaseFragment
             final int scrollY= adapter.getBlank().getTop();
             playlistArt.setOffset(scrollY);
             parent.setOffset(parent.getStaticOffset()+scrollY);
-            love.setOffset(love.getStaticOffset()+scrollY);
+            toggle.setOffset(toggle.getStaticOffset()+scrollY);
         }
     };
 

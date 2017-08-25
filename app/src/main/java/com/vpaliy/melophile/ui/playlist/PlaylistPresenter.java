@@ -71,7 +71,6 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
     @Override
     public void stop() {
         playlistUseCase.dispose();
-        view=null;
     }
 
     @Override
