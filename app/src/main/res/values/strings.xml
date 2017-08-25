@@ -30,6 +30,30 @@
     <string name="user_trans_name" translatable="false">user_trans</string>
     <string name="search_trans" translatable="false">search_trans</string>
 
+    <plurals name="followers">
+        <item quantity="zero">No Followers</item>
+        <item quantity="one">%s follower</item>
+        <item quantity="other">%s followers</item>
+    </plurals>
+
+    <plurals name="likes">
+        <item quantity="zero">No liked tracks</item>
+        <item quantity="one">%s like</item>
+        <item quantity="other">%s likes</item>
+    </plurals>
+
+    <plurals name="hours">
+        <item quantity="zero"> </item>
+        <item quantity="one">%s hr</item>
+        <item quantity="other">%s hrs</item>
+    </plurals>
+
+    <plurals name="minutes">
+        <item quantity="zero"> </item>
+        <item quantity="other">%s min</item>
+    </plurals>
+
+
     <array name="temp">
         <item>One</item>
         <item>Two</item>

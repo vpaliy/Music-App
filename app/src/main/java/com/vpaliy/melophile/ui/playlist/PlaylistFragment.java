@@ -34,6 +34,8 @@ import com.vpaliy.melophile.ui.view.Chips;
 import com.vpaliy.melophile.ui.view.FabToggle;
 import com.vpaliy.melophile.ui.view.ParallaxRatioImageView;
 import com.vpaliy.melophile.ui.view.TranslatableLayout;
+
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
 import android.view.ViewTreeObserver;
@@ -167,8 +169,8 @@ public class PlaylistFragment extends BaseFragment
     }
 
     @Override
-    public void showTrackNumber(String trackNumber) {
-        this.trackNumber.setText(trackNumber);
+    public void showTrackNumber(int trackNumber) {
+        this.trackNumber.setText(getResources().getQuantityString(R.plurals.likes,trackNumber, trackNumber));
     }
 
     @Override

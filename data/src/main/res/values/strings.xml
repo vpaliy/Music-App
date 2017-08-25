@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">data</string>
+
+    <string name="hour_label">hr</string>
+    <string name="min_label">min</string>
+    <string name="hours_label">hrs</string>
+
+    <plurals name="hours">
+        <item quantity="one">%s hr</item>
+        <item quantity="other">%s hrs</item>
+    </plurals>
+
+    <plurals name="minutes">
+        <item quantity="zero"> </item>
+        <item quantity="other">%s min</item>
+    </plurals>
+
 </resources>

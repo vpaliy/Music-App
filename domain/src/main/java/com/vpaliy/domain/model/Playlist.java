@@ -10,7 +10,7 @@ public class Playlist {
     private List<Track> tracks;
     private User user;
     private String description;
-    private String trackCount;
+    private int trackCount;
     private List<String> genres;
     private String releaseDate;
     private List<String> tags;
@@ -76,7 +76,7 @@ public class Playlist {
         this.title = title;
     }
 
-    public void setTrackCount(String trackCount) {
+    public void setTrackCount(int trackCount) {
         this.trackCount = trackCount;
     }
 
@@ -100,7 +100,7 @@ public class Playlist {
         return title;
     }
 
-    public String getTrackCount() {
+    public int getTrackCount() {
         return trackCount;
     }
 }
