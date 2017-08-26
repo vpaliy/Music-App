@@ -73,6 +73,8 @@ public class TrackFragment extends BaseFragment {
     @BindView(R.id.pages)
     protected TextView pages;
 
+    private boolean isInjected;
+
     private static final long PROGRESS_UPDATE_INTERNAL = 100;
     private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 10;
 
@@ -91,21 +93,17 @@ public class TrackFragment extends BaseFragment {
             super.onConnected();
             MediaSessionCompat.Token token=browserCompat.getSessionToken();
             try {
-                inject();
                 MediaControllerCompat mediaController =new MediaControllerCompat(getActivity(), token);
                 // Save the controller
                 mediaController.registerCallback(controllerCallback);
                 MediaControllerCompat.setMediaController(getActivity(), mediaController);
-                PlaybackStateCompat stateCompat=mediaController.getPlaybackState();
-                updatePlaybackState(stateCompat);
-                MediaMetadataCompat metadataCompat=mediaController.getMetadata();
-                if(metadataCompat!=null){
-                    updateDuration(metadataCompat);
-                }
+                //inject the passed query
+                inject();
             }catch (RemoteException ex){
                 ex.printStackTrace();
             }
         }
+
     };
 
 
@@ -118,9 +116,9 @@ public class TrackFragment extends BaseFragment {
         @Override
         public void onMetadataChanged(MediaMetadataCompat metadata) {
             super.onMetadataChanged(metadata);
-            if(metadata!=null) {
-                updateDuration(metadata);
-            }
+            Log.d(TAG,"onMetadataChanged");
+            updateDuration(metadata);
+            updateArt(metadata);
         }
     };
 
@@ -271,8 +269,12 @@ public class TrackFragment extends BaseFragment {
     }
 
     private void inject(){
-        App.appInstance().playerComponent()
-                .inject(this);
+        if(!isInjected) {
+            isInjected=true;
+            App.appInstance()
+                    .playerComponent()
+                    .inject(this);
+        }
     }
 
     @Override
@@ -318,18 +320,25 @@ public class TrackFragment extends BaseFragment {
                                 .async()
                                 .from(resource)
                                 .into(background);
-                            getActivity().supportStartPostponedEnterTransition();
+                        Log.d(TAG,"showing art image");
+                        getActivity().supportStartPostponedEnterTransition();
 
                     }
                 });
     }
 
     private void updateDuration(MediaMetadataCompat metadataCompat){
+        if(metadataCompat==null) return;
+        Log.d(TAG,"updating duration");
         int duration=(int)metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DISC_NUMBER);
         startTime.setText(DateUtils.formatElapsedTime(duration/1000));
         duration=(int)metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
         endTime.setText(DateUtils.formatElapsedTime(duration/1000));
         progress.setMax(duration);
+    }
+
+    private void updateArt(MediaMetadataCompat metadataCompat){
+        if(metadataCompat==null) return;
         String text=Long.toString(metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER))
                 +" of "+Long.toString(metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS));
         trackName.setText(metadataCompat.getText(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE));
