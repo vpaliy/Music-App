@@ -46,13 +46,16 @@ public class PersonalAdapter extends BaseAdapter<PersonalAdapter.CategoryWrapper
         @Override
         public void onBindData() {
             if(user!=null){
+                final Context context=itemView.getContext();
                 Glide.with(itemView.getContext())
                         .load(user.getAvatarUrl())
                         .priority(Priority.IMMEDIATE)
                         .into(image);
                 nickname.setText(user.getNickName());
-                followers.setText(String.format(Locale.US,"%d",user.getFollowersCount()));
-                likes.setText(String.format(Locale.US,"%d",user.getLikedTracksCount()));
+                followers.setText(context.getResources().getQuantityString(R.plurals.followers,
+                        user.getFollowersCount(),user.getFollowersCount()));
+                likes.setText(context.getResources().getQuantityString(R.plurals.likes,
+                        user.getLikedTracksCount(),user.getLikedTracksCount()));
             }
         }
     }

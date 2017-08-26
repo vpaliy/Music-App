@@ -7,18 +7,19 @@
     android:minHeight="?attr/actionBarSize"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <TextView
         android:id="@+id/tracks_number"
         android:drawableTop="@drawable/ic_music_lib"
         android:drawablePadding="@dimen/spacing_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/Widget.NumberText"
         tools:text="138 Tracks"
         android:scaleX="0"
         android:scaleY="0"
         tools:scaleY="1"
         tools:scaleX="1"
+        android:gravity="center"
         app:layout_constraintLeft_toRightOf="@+id/time"
         app:layout_constraintRight_toLeftOf="@+id/share"
         app:layout_constraintTop_toTopOf="@+id/time"
@@ -29,6 +30,8 @@
         android:scaleY="0"
         tools:scaleY="1"
         tools:scaleX="1"
+        android:gravity="center"
+        style="@style/Widget.NumberText"
         android:layout_marginTop="33dp"
         android:drawableTop="@drawable/ic_playlist_duration"
         android:drawablePadding="@dimen/spacing_medium"
@@ -44,6 +47,8 @@
         android:scaleY="0"
         tools:scaleY="1"
         tools:scaleX="1"
+        android:gravity="center"
+        style="@style/Widget.NumberText"
         android:text="@string/share_action"
         android:drawablePadding="@dimen/spacing_medium"
         android:drawableTop="@drawable/ic_playlist_share"
@@ -102,7 +107,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_height="0dp"
         android:layout_width="wrap_content" />
-
     <com.vpaliy.melophile.ui.view.Chips
         android:id="@+id/chips"
         app:horizontal_spacing="@dimen/spacing_small"

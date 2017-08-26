@@ -135,7 +135,7 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showFollowersCount(int count) {
-        followers.setText(String.format(Locale.US,"%d",count));
+        followers.setText(getResources().getQuantityString(R.plurals.followers,count,count));
     }
 
     @Override
@@ -150,7 +150,7 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showLikedCount(int count) {
-       likes.setText(String.format(Locale.US,"%d",count));
+       likes.setText(getResources().getQuantityString(R.plurals.likes,count,count));
     }
 
     @OnClick(R.id.likes)
