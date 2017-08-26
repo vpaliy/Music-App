@@ -2,6 +2,8 @@ package com.vpaliy.melophile.ui.track;
 
 import android.content.ComponentName;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.icu.text.NumberFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -11,6 +13,7 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +33,8 @@ import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.utils.BundleUtils;
 import com.vpaliy.melophile.ui.utils.Constants;
+
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -75,6 +80,8 @@ public class TrackFragment extends BaseFragment {
 
     private boolean isInjected;
 
+    private String lastArtUrl;
+
     private static final long PROGRESS_UPDATE_INTERNAL = 100;
     private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 10;
 
@@ -107,6 +114,7 @@ public class TrackFragment extends BaseFragment {
     };
 
 
+
     private MediaControllerCompat.Callback controllerCallback=new MediaControllerCompat.Callback() {
         @Override
         public void onPlaybackStateChanged(PlaybackStateCompat state) {
@@ -116,7 +124,6 @@ public class TrackFragment extends BaseFragment {
         @Override
         public void onMetadataChanged(MediaMetadataCompat metadata) {
             super.onMetadataChanged(metadata);
-            Log.d(TAG,"onMetadataChanged");
             updateDuration(metadata);
             updateArt(metadata);
         }
@@ -281,6 +288,7 @@ public class TrackFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().supportPostponeEnterTransition();
+        loadArt();
         browserCompat=new MediaBrowserCompat(getActivity(),
                 new ComponentName(getActivity(), MusicPlaybackService.class),
                 connectionCallback,null);
@@ -303,33 +311,47 @@ public class TrackFragment extends BaseFragment {
         });
     }
 
+    private void loadArt(){
+        Bundle bundle=getArguments();
+        if(bundle!=null){
+            String art=bundle.getString(Constants.EXTRA_DATA,null);
+            if(art!=null){
+                showArt(art);
+            }
+        }
+    }
+
     private MediaControllerCompat.TransportControls getControls(){
         return MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
     }
 
     public void showArt(String artUrl){
-        Glide.with(getContext())
-                .load(artUrl)
-                .asBitmap()
-                .priority(Priority.IMMEDIATE)
-                .into(new ImageViewTarget<Bitmap>(smallImage) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        smallImage.setImageBitmap(resource);
-                        Blurry.with(getContext())
-                                .async()
-                                .from(resource)
-                                .into(background);
-                        Log.d(TAG,"showing art image");
-                        getActivity().supportStartPostponedEnterTransition();
-
-                    }
-                });
+        if(!TextUtils.equals(lastArtUrl,artUrl)) {
+            lastArtUrl=artUrl;
+            Glide.with(getContext())
+                    .load(artUrl)
+                    .asBitmap()
+                    .priority(Priority.IMMEDIATE)
+                    .into(new ImageViewTarget<Bitmap>(smallImage) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            smallImage.setImageBitmap(resource);
+                            smallImage.post(()->{
+                                Blurry.with(getContext())
+                                        .async(bitmap->{
+                                            background.setImageDrawable(bitmap);
+                                            getActivity().supportStartPostponedEnterTransition();
+                                        })
+                                        .from(resource)
+                                        .into(background);
+                            });
+                        }
+                    });
+        }
     }
 
     private void updateDuration(MediaMetadataCompat metadataCompat){
         if(metadataCompat==null) return;
-        Log.d(TAG,"updating duration");
         int duration=(int)metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DISC_NUMBER);
         startTime.setText(DateUtils.formatElapsedTime(duration/1000));
         duration=(int)metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);

@@ -14,13 +14,11 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.track.TrackActivity;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
-
-import javax.inject.Inject;
 import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_EMPTY_ROOT;
 import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_ROOT;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import javax.inject.Inject;
 
 public class MusicPlaybackService extends MediaBrowserServiceCompat
         implements PlaybackManager.PlaybackServiceCallback,
@@ -61,8 +59,6 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
     public int onStartCommand(Intent startIntent, int flags, int startId) {
         if (startIntent != null) {
             String action = startIntent.getAction();
-            //otherwise it gives null pointer exception on certain devices
-            playbackManager.setServiceCallback(this);
             if(action!=null) {
                 if (action.equals(MediaTasks.ACTION_STOP)) {
                     stopSelf();
@@ -77,7 +73,6 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
 
     @Override
     public void onMetadataChanged(MediaMetadataCompat metadata) {
-        Log.d(TAG,"onMetadataChanged");
         mediaSession.setMetadata(metadata);
         notification.updateMetadata(metadata);
     }

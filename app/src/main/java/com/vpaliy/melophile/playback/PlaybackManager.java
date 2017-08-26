@@ -5,8 +5,6 @@ import android.os.SystemClock;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Log;
-
 import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.domain.interactor.SaveInteractor;
 import com.vpaliy.domain.model.Track;
@@ -29,6 +27,7 @@ public class PlaybackManager implements Playback.Callback {
     private QueueManager queueManager;
     private Playback playback;
     private SaveInteractor saveInteractor;
+    private boolean isRepeat;
 
     @Inject
     public PlaybackManager(Playback playback, Mapper<MediaMetadataCompat,Track> mapper, SaveInteractor saveInteractor){
@@ -75,6 +74,10 @@ public class PlaybackManager implements Playback.Callback {
         } else {
             actions |= PlaybackStateCompat.ACTION_PLAY;
         }
+        //
+        if(isRepeat){
+            actions|=PlaybackStateCompat.ACTION_SET_REPEAT_MODE;
+        }
         return actions;
     }
 
@@ -107,7 +110,8 @@ public class PlaybackManager implements Playback.Callback {
 
     @Override
     public void onCompletetion() {
-        handlePlayRequest(queueManager.next());
+        Track track=isRepeat?queueManager.current():queueManager.next();
+        handlePlayRequest(track);
     }
 
     public void handleResumeRequest(){
@@ -127,12 +131,16 @@ public class PlaybackManager implements Playback.Callback {
         if(queueManager!=null){
             long position=TimeUnit.MILLISECONDS.toSeconds(playback.getPosition());
             playback.invalidateCurrent();
-            if(position>5 || position<=2) {
+            if(position > 5 || position <= 2) {
                 handlePlayRequest(queueManager.previous());
             }else{
                 handlePlayRequest(queueManager.current());
             }
         }
+    }
+
+    private void handleRepeatMode(){
+        isRepeat=!isRepeat;
     }
 
     @Override
@@ -154,9 +162,7 @@ public class PlaybackManager implements Playback.Callback {
     }
 
     private void updateMetadata(){
-        Log.d(TAG,"Right here!");
         if(updateListener!=null){
-            Log.d(TAG,"Sending data");
             MediaMetadataCompat result=new MediaMetadataCompat.Builder(mapper.map(queueManager.current()))
                     .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS,queueManager.size())
                     .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER,queueManager.currentIndex()+1)
@@ -194,6 +200,16 @@ public class PlaybackManager implements Playback.Callback {
         public void onPause() {
             super.onPause();
             handlePauseRequest();
+        }
+
+        @Override
+        public void onSetRepeatMode(int repeatMode) {
+            handleRepeatMode();
+        }
+
+        @Override
+        public void onSetShuffleModeEnabled(boolean enabled) {
+            super.onSetShuffleModeEnabled(enabled);
         }
 
         @Override
