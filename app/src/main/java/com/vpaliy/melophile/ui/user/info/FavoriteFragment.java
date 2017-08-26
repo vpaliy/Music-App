@@ -6,7 +6,7 @@ import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
-import com.vpaliy.melophile.ui.user.UserTracksAdapter;
+import com.vpaliy.melophile.ui.base.adapters.TracksAdapter;
 import java.util.List;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
@@ -21,7 +21,7 @@ public class FavoriteFragment extends BaseInfoFragment<Track>{
 
     @Override
     public void showInfo(@NonNull List<Track> tracks) {
-        UserTracksAdapter adapter=new UserTracksAdapter(getContext(),rxBus);
+        TracksAdapter adapter=new TracksAdapter(getContext(),rxBus);
         adapter.setData(tracks);
         data.setAdapter(adapter);
     }

@@ -1,6 +1,5 @@
 package com.vpaliy.melophile.ui.personal;
 
-import com.bumptech.glide.Glide;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
@@ -9,8 +8,8 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
-import com.vpaliy.melophile.ui.user.UserPlaylistsAdapter;
-import com.vpaliy.melophile.ui.user.UserTracksAdapter;
+import com.vpaliy.melophile.ui.base.adapters.PlaylistsAdapter;
+import com.vpaliy.melophile.ui.base.adapters.TracksAdapter;
 import java.util.List;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -68,14 +67,14 @@ public class PersonalFragment extends BaseFragment
 
     @Override
     public void showPlaylistHistory(@NonNull List<Playlist> playlists) {
-        UserPlaylistsAdapter playlistsAdapter=new UserPlaylistsAdapter(getContext(),rxBus);
+        PlaylistsAdapter playlistsAdapter=new PlaylistsAdapter(getContext(),rxBus);
         playlistsAdapter.setData(playlists);
         adapter.addItem(PersonalAdapter.CategoryWrapper.wrap("Recently Played", playlistsAdapter));
     }
 
     @Override
     public void showTrackHistory(@NonNull List<Track> tracks) {
-        UserTracksAdapter tracksAdapter = new UserTracksAdapter(getContext(), rxBus);
+        TracksAdapter tracksAdapter = new TracksAdapter(getContext(), rxBus);
         tracksAdapter.setData(tracks);
         adapter.addItem(PersonalAdapter.CategoryWrapper.wrap("Recently Played", tracksAdapter));
     }

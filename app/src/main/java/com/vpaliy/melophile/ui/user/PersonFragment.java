@@ -17,10 +17,11 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
+import com.vpaliy.melophile.ui.base.adapters.PlaylistsAdapter;
+import com.vpaliy.melophile.ui.base.adapters.TracksAdapter;
 import com.vpaliy.melophile.ui.user.info.InfoEvent;
 import com.vpaliy.melophile.ui.utils.Constants;
 import java.util.List;
-import java.util.Locale;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -231,7 +232,7 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showPlaylists(List<Playlist> playlists) {
-        UserPlaylistsAdapter playlistsAdapter=new UserPlaylistsAdapter(getContext(),rxBus);
+        PlaylistsAdapter playlistsAdapter=new PlaylistsAdapter(getContext(),rxBus);
         playlistsAdapter.setData(playlists);
         adapter.addItem(MediaAdapter.CategoryWrapper.wrap(getString(R.string.playlist_label),playlistsAdapter));
         media.post(()->{
@@ -245,7 +246,7 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showTracks(List<Track> tracks) {
-        UserTracksAdapter tracksAdapter=new UserTracksAdapter(getContext(),rxBus);
+        TracksAdapter tracksAdapter=new TracksAdapter(getContext(),rxBus);
         tracksAdapter.setData(tracks);
         adapter.addItem(MediaAdapter.CategoryWrapper.wrap(getString(R.string.tracks_label),tracksAdapter));
         media.post(()->media.scrollToPosition(0));

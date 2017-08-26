@@ -12,10 +12,9 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseActivity;
-import com.vpaliy.melophile.ui.base.BaseAdapter;
+import com.vpaliy.melophile.ui.base.adapters.PlaylistsAdapter;
+import com.vpaliy.melophile.ui.base.adapters.TracksAdapter;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
-import com.vpaliy.melophile.ui.user.UserPlaylistsAdapter;
-import com.vpaliy.melophile.ui.user.UserTracksAdapter;
 import com.vpaliy.melophile.ui.user.info.UserAdapter;
 import java.util.List;
 import android.support.design.widget.TabLayout;
@@ -206,7 +205,7 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showTracks(@NonNull List<Track> tracks) {
         gotResult();
-        UserTracksAdapter adapter=new UserTracksAdapter(this,eventBus);
+        TracksAdapter adapter=new TracksAdapter(this,eventBus);
         adapter.setData(tracks);
         searchAdapter.setTracks(adapter);
     }
@@ -214,7 +213,7 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showPlaylists(@NonNull List<Playlist> playlists) {
         gotResult();
-        UserPlaylistsAdapter adapter=new UserPlaylistsAdapter(this,eventBus);
+        PlaylistsAdapter adapter=new PlaylistsAdapter(this,eventBus);
         adapter.setData(playlists);
         searchAdapter.setPlaylists(adapter);
     }
