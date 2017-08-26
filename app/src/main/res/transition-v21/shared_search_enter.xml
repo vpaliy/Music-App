@@ -3,7 +3,10 @@
     android:duration="450"
     android:transitionOrdering="together">
     <targets>
-        <target android:targetId="@id/back_wrapper" />
+        <target android:targetId="@id/back" />
     </targets>
     <changeBounds android:interpolator="@android:interpolator/fast_out_slow_in" />
+    <transition
+        class="com.vpaliy.melophile.ui.view.StartAnimatable"
+        android:src="@drawable/avd_search_to_back" />
 </transitionSet>

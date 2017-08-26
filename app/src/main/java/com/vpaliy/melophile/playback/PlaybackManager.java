@@ -10,6 +10,7 @@ import com.vpaliy.domain.interactor.SaveInteractor;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.playback.Playback;
 import com.vpaliy.domain.playback.QueueManager;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import com.vpaliy.domain.playback.PlayerScope;
 
@@ -113,6 +114,25 @@ public class PlaybackManager implements Playback.Callback {
         }
     }
 
+    public void handleNextRequest(){
+        if(queueManager!=null){
+            playback.invalidateCurrent();
+            handlePlayRequest(queueManager.next());
+        }
+    }
+
+    public void handlePrevRequest(){
+        if(queueManager!=null){
+            long position=playback.getPosition();
+            playback.invalidateCurrent();
+            if(TimeUnit.MILLISECONDS.toSeconds(position)>5) {
+                handlePlayRequest(queueManager.previous());
+            }else{
+                handlePlayRequest(queueManager.current());
+            }
+        }
+    }
+
     @Override
     public void onPause() {
         updatePlaybackState(PlaybackStateCompat.STATE_PAUSED);
@@ -156,15 +176,13 @@ public class PlaybackManager implements Playback.Callback {
         @Override
         public void onSkipToNext() {
             super.onSkipToNext();
-            handlePlayRequest(queueManager.next());
+            handleNextRequest();
         }
 
         @Override
         public void onSkipToPrevious() {
             super.onSkipToPrevious();
-            Track track=queueManager.previous();
-            if(track==null) track=queueManager.current();
-            handlePlayRequest(track);
+            handlePrevRequest();
         }
 
         @Override

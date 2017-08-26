@@ -6,4 +6,7 @@
         <target android:targetId="@id/back" />
     </targets>
     <changeBounds android:interpolator="@android:interpolator/fast_out_slow_in" />
+    <transition
+        class="com.vpaliy.melophile.ui.view.StartAnimatable"
+        android:src="@drawable/avd_back_to_search" />
 </transitionSet>

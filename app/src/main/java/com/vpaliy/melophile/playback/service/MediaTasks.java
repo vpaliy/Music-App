@@ -29,6 +29,9 @@ public class MediaTasks {
         }else if(action.equals(ACTION_PLAY)){
             playbackManager.handleResumeRequest();
         }else if(action.equals(ACTION_PREV)){
+            playbackManager.handlePrevRequest();
+        }else if(action.equals(ACTION_NEXT)){
+            playbackManager.handleNextRequest();
         }
     }
 }

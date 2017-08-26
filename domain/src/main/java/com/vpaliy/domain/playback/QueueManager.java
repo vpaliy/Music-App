@@ -11,13 +11,16 @@ public class QueueManager {
     public QueueManager(List<Track> tracks, int index){
         this.index=index;
         this.tracks=tracks;
+        //just in case
+        invalidateIndexIfNeeded();
     }
 
     public void setTracks(List<Track> tracks) {
-        if(tracks==null){
+        if(isEmpty()){
             throw new IllegalArgumentException("Tracks are null");
         }
         this.tracks = tracks;
+        invalidateIndexIfNeeded();
     }
 
     public void addTrack(Track track){
@@ -25,22 +28,39 @@ public class QueueManager {
     }
 
     public Track current(){
-        if(tracks==null||tracks.isEmpty()) return null;
-        return tracks.get(index);
+        return !isEmpty()?tracks.get(index):null;
     }
 
     public Track next(){
-        if((index+1)<tracks.size()){
+        if(hasNext()) {
             return tracks.get(++index);
         }
-        return null;
+        return current();
     }
 
     public Track previous(){
-        if((index==0)||(index-1)>=tracks.size()){
-            return null;
+        if(hasPrevious()){
+            return tracks.get(--index);
         }
-        return tracks.get(--index);
+        return current();
+    }
+
+    private boolean isEmpty(){
+        return tracks==null || tracks.isEmpty();
+    }
+
+    private void invalidateIndexIfNeeded(){
+        if(isEmpty()||tracks.size()<=index) {
+            index=0;
+        }
+    }
+
+    public boolean hasNext(){
+        return !isEmpty() && tracks.size() > (index+1);
+    }
+
+    public boolean hasPrevious(){
+        return !isEmpty() && (index-1)>=0;
     }
 
     public int size(){

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
-    android:transitionGroup="false"
+    android:transitionGroup="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,7 +13,7 @@
         android:layout_height="56dp"
         android:outlineProvider="bounds"
         android:elevation="@dimen/z_app_bar"
-        android:transitionGroup="false"
+        android:transitionGroup="true"
         android:theme="@style/SearchTheme"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -23,7 +23,7 @@
             android:id="@+id/search_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background_dark" />
+            android:background="@color/colorGray" />
 
         <SearchView
             android:id="@+id/search_view"
@@ -36,17 +36,15 @@
         <FrameLayout
             android:id="@+id/back_wrapper"
             android:background="@android:color/transparent"
-            android:layout_width="wrap_content"
+            android:layout_width="96dp"
+            android:paddingStart="16dp"
             android:layout_height="match_parent">
-
             <ImageButton
                 android:id="@+id/back"
                 android:transitionName="@string/search_trans"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:background="@null"
+                android:background="?android:selectableItemBackgroundBorderless"
                 app:srcCompat="@drawable/ic_back"
                 tools:ignore="ContentDescription"/>
         </FrameLayout>

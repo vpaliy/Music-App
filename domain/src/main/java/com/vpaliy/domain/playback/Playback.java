@@ -9,6 +9,7 @@ public interface Playback  {
     void stop();
     void seekTo(int position);
     void setCallback(Callback callback);
+    void invalidateCurrent();
     boolean isPlaying();
     long getPosition();
 

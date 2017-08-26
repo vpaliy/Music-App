@@ -18,8 +18,6 @@ import static dagger.internal.Preconditions.checkNotNull;
 public abstract class BasePlayback implements Playback,
         AudioManager.OnAudioFocusChangeListener{
 
-    private static final String TAG=BasePlayback.class.getSimpleName();
-
     public static final float VOLUME_DUCK = 0.2f;
     public static final float VOLUME_NORMAL = 1.0f;
 
@@ -43,7 +41,6 @@ public abstract class BasePlayback implements Playback,
         public void onReceive(Context context, Intent intent) {
             if (AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 if (isPlaying()) {
-                    Log.d(TAG,"Headphones disconnected");
                     Intent i=new Intent(context, MusicPlaybackService.class);
                     i.setAction(MediaTasks.ACTION_PAUSE);
                     context.startService(i);
@@ -96,6 +93,11 @@ public abstract class BasePlayback implements Playback,
     }
 
     @Override
+    public void invalidateCurrent() {
+        currentUrl=null;
+    }
+
+    @Override
     public void onAudioFocusChange(int focusChange) {
         if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
             focusState = AUDIO_FOCUSED;
@@ -105,7 +107,6 @@ public abstract class BasePlayback implements Playback,
             boolean canDuck = focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK;
             focusState = canDuck ? AUDIO_NO_FOCUS_CAN_DUCK : AUDIO_NO_FOCUS_NO_DUCK;
         }
-        Log.d(TAG,"Focus changed");
         updatePlayer();
     }
 
@@ -136,7 +137,6 @@ public abstract class BasePlayback implements Playback,
 
     @Override
     public void pause() {
-        Log.d(TAG,"Will pause");
         pausePlayer();
         unregisterNoiseReceiver();
         releaseWifiLock();
@@ -144,7 +144,6 @@ public abstract class BasePlayback implements Playback,
 
     @Override
     public void stop() {
-        Log.d(TAG,"Stopping");
         currentUrl=null;
         releaseFocus();
         releaseWifiLock();
