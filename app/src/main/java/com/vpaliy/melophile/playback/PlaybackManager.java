@@ -5,6 +5,8 @@ import android.os.SystemClock;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
+
 import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.domain.interactor.SaveInteractor;
 import com.vpaliy.domain.model.Track;
@@ -156,6 +158,7 @@ public class PlaybackManager implements Playback.Callback {
             MediaMetadataCompat result=new MediaMetadataCompat.Builder(mapper.map(queueManager.current()))
                     .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS,queueManager.size())
                     .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER,queueManager.currentIndex()+1)
+                    .putLong(MediaMetadataCompat.METADATA_KEY_DISC_NUMBER,playback.getPosition())
                     .build();
             updateListener.onMetadataChanged(result);
         }
@@ -170,6 +173,7 @@ public class PlaybackManager implements Playback.Callback {
         @Override
         public void onPlay() {
             super.onPlay();
+            Log.d(TAG,"onPlay");
             handlePlayRequest(queueManager.current());
         }
 
@@ -188,6 +192,7 @@ public class PlaybackManager implements Playback.Callback {
         @Override
         public void onPause() {
             super.onPause();
+            Log.d(TAG,"onPlay");
             handlePauseRequest();
         }
 
@@ -206,7 +211,6 @@ public class PlaybackManager implements Playback.Callback {
         @Override
         public void onCustomAction(String action, Bundle extras) {
             super.onCustomAction(action, extras);
-
         }
     }
 

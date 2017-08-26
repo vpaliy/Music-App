@@ -16,6 +16,8 @@ import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.track.TrackActivity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
 import javax.inject.Inject;
 import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_EMPTY_ROOT;
 import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_ROOT;
@@ -24,7 +26,7 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
         implements PlaybackManager.PlaybackServiceCallback,
         PlaybackManager.MetadataUpdateListener{
 
-    private static final String LOG_TAG=MusicPlaybackService.class.getSimpleName();
+    private static final String TAG=MusicPlaybackService.class.getSimpleName();
 
     private MediaSessionCompat mediaSession;
     private TrackNotification notification;
@@ -41,7 +43,7 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
         super.onCreate();
         playbackManager.setServiceCallback(this);
         playbackManager.setUpdateListener(this);
-        mediaSession=new MediaSessionCompat(getApplicationContext(),LOG_TAG);
+        mediaSession=new MediaSessionCompat(getApplicationContext(),TAG);
         mediaSession.setCallback(playbackManager.getMediaSessionCallback());
         mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
                 MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
@@ -73,6 +75,7 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
 
     @Override
     public void onMetadataChanged(MediaMetadataCompat metadata) {
+        Log.d(TAG,"onMetadataChanged");
         mediaSession.setMetadata(metadata);
         notification.updateMetadata(metadata);
     }

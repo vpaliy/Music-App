@@ -151,7 +151,9 @@ public class TrackFragment extends BaseFragment {
 
     private void stopSeekBarUpdate(){
         lastState=null;
-        if(scheduledFuture !=null) scheduledFuture.cancel(false);
+        if(scheduledFuture !=null) {
+            scheduledFuture.cancel(false);
+        }
     }
 
     @Override
@@ -323,9 +325,10 @@ public class TrackFragment extends BaseFragment {
     }
 
     private void updateDuration(MediaMetadataCompat metadataCompat){
-        int duration=(int)metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
+        int duration=(int)metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DISC_NUMBER);
+        startTime.setText(DateUtils.formatElapsedTime(duration/1000));
+        duration=(int)metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
         endTime.setText(DateUtils.formatElapsedTime(duration/1000));
-        startTime.setText("0");
         progress.setMax(duration);
         String text=Long.toString(metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER))
                 +" of "+Long.toString(metadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS));
