@@ -61,6 +61,8 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
     public int onStartCommand(Intent startIntent, int flags, int startId) {
         if (startIntent != null) {
             String action = startIntent.getAction();
+            //otherwise it gives null pointer exception on certain devices
+            playbackManager.setServiceCallback(this);
             if(action!=null) {
                 if (action.equals(MediaTasks.ACTION_STOP)) {
                     stopSelf();

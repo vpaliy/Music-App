@@ -175,13 +175,14 @@ public class TrackNotification {
                 .setMediaSession(token)
                 .setShowActionsInCompactView(1))
                 .setColor(Color.WHITE)
+                .setPriority(Notification.PRIORITY_MAX)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setUsesChronometer(true)
                 .setDeleteIntent(dismissedNotification(service))
                 .setSmallIcon(R.drawable.ic_music_note)
                 .setContentIntent(contentIntent(service))
                 .setContentTitle(mediaMetadata.getString(MediaMetadataCompat.METADATA_KEY_ARTIST))
-                .setContentText(mediaMetadata.getString(MediaMetadataCompat.METADATA_KEY_TITLE))
+                .setContentText(mediaMetadata.getString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE))
                 .addAction(prev(service));
         if(playbackState.getState()==PlaybackStateCompat.STATE_PLAYING){
             builder.addAction(pause(service));

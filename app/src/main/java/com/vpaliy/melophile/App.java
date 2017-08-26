@@ -48,14 +48,17 @@ public class App extends Application {
     }
 
     private void initializeAppComponent(Token token){
-        applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .dataModule(new DataModule())
-                .networkModule(new NetworkModule(token))
-                .mapperModule(new MapperModule())
-                .interactorModule(new InteractorModule())
-                .build();
-        initializePlayerComponent();
+        //just in case if the app works in the background with the playback service
+        if(applicationComponent==null) {
+            applicationComponent = DaggerApplicationComponent.builder()
+                    .applicationModule(new ApplicationModule(this))
+                    .dataModule(new DataModule())
+                    .networkModule(new NetworkModule(token))
+                    .mapperModule(new MapperModule())
+                    .interactorModule(new InteractorModule())
+                    .build();
+            initializePlayerComponent();
+        }
     }
 
     @NonNull

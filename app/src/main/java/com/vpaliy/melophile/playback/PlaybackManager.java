@@ -125,9 +125,9 @@ public class PlaybackManager implements Playback.Callback {
 
     public void handlePrevRequest(){
         if(queueManager!=null){
-            long position=playback.getPosition();
+            long position=TimeUnit.MILLISECONDS.toSeconds(playback.getPosition());
             playback.invalidateCurrent();
-            if(TimeUnit.MILLISECONDS.toSeconds(position)>5) {
+            if(position>5 || position<=2) {
                 handlePlayRequest(queueManager.previous());
             }else{
                 handlePlayRequest(queueManager.current());
@@ -173,7 +173,6 @@ public class PlaybackManager implements Playback.Callback {
         @Override
         public void onPlay() {
             super.onPlay();
-            Log.d(TAG,"onPlay");
             handlePlayRequest(queueManager.current());
         }
 
@@ -192,7 +191,6 @@ public class PlaybackManager implements Playback.Callback {
         @Override
         public void onPause() {
             super.onPause();
-            Log.d(TAG,"onPlay");
             handlePauseRequest();
         }
 

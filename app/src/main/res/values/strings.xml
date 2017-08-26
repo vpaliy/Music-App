@@ -38,8 +38,8 @@
 
     <plurals name="likes">
         <item quantity="zero">No liked tracks</item>
-        <item quantity="one">%s\n like</item>
-        <item quantity="other">%s\n likes</item>
+        <item quantity="one">%s like</item>
+        <item quantity="other">%s likes</item>
     </plurals>
 
     <plurals name="hours">
