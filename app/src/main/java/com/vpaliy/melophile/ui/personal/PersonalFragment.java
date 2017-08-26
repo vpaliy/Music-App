@@ -62,10 +62,6 @@ public class PersonalFragment extends BaseFragment
     }
 
     @Override
-    public void showLovedTracks(@NonNull List<Track> tracks) {
-    }
-
-    @Override
     public void showPlaylistHistory(@NonNull List<Playlist> playlists) {
         PlaylistsAdapter playlistsAdapter=new PlaylistsAdapter(getContext(),rxBus);
         playlistsAdapter.setData(playlists);

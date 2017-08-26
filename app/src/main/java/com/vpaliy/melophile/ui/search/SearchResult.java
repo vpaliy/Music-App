@@ -37,6 +37,8 @@ public class SearchResult<T> extends BaseFragment{
                 }
             });
         }
+        //if the user pulls down, cancel
+        refreshLayout.setOnRefreshListener(()->refreshLayout.setRefreshing(false));
     }
 
     @Override

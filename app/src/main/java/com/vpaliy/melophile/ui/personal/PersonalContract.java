@@ -13,7 +13,6 @@ public interface PersonalContract {
         void attachPresenter(@NonNull Presenter presenter);
         void showTrackHistory(@NonNull List<Track> tracks);
         void showPlaylistHistory(@NonNull List<Playlist> playlists);
-        void showLovedTracks(@NonNull List<Track> tracks);
         void showMyself(User user);
     }
 
