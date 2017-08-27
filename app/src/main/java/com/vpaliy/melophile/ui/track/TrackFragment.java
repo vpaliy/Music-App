@@ -1,10 +1,9 @@
 package com.vpaliy.melophile.ui.track;
 
 import android.content.ComponentName;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.icu.text.NumberFormat;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -150,6 +149,7 @@ public class TrackFragment extends BaseFragment {
     @Override
     public void onStop() {
         super.onStop();
+        lastArtUrl=null;
         if(browserCompat!=null){
             browserCompat.disconnect();
         }
