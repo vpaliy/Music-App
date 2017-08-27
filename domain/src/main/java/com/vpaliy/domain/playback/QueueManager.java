@@ -1,6 +1,8 @@
 package com.vpaliy.domain.playback;
 
 import com.vpaliy.domain.model.Track;
+
+import java.util.Collections;
 import java.util.List;
 
 public class QueueManager {
@@ -52,6 +54,12 @@ public class QueueManager {
     private void invalidateIndexIfNeeded(){
         if(isEmpty()||tracks.size()<=index) {
             index=0;
+        }
+    }
+
+    public void shuffle(){
+        if(!isEmpty()){
+            Collections.shuffle(tracks);
         }
     }
 

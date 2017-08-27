@@ -21,7 +21,7 @@
     <color name="blue_grey_900">#37474F</color>
     <color name="red_color">#ff5722</color>
     <color name="white_50">#fafafa</color>
-
+    <color name="enabled_action">#ff5722</color>
     <color name="color_playlist_details">@color/blue_grey_700</color>
 
     <!-- common colours -->

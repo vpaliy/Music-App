@@ -3,11 +3,13 @@ package com.vpaliy.melophile.ui.track;
 import android.content.ComponentName;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.icu.text.NumberFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.SystemClock;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -25,6 +27,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.google.gson.reflect.TypeToken;
 import com.ohoussein.playpause.PlayPauseView;
+import com.vpaliy.domain.playback.Playback;
 import com.vpaliy.domain.playback.QueueManager;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
@@ -33,6 +36,7 @@ import com.vpaliy.melophile.playback.PlaybackManager;
 import com.vpaliy.melophile.ui.base.BaseFragment;
 import com.vpaliy.melophile.ui.utils.BundleUtils;
 import com.vpaliy.melophile.ui.utils.Constants;
+import com.vpaliy.melophile.ui.utils.PresentationUtils;
 
 import java.util.Locale;
 import java.util.concurrent.Executors;
@@ -77,6 +81,12 @@ public class TrackFragment extends BaseFragment {
 
     @BindView(R.id.pages)
     protected TextView pages;
+
+    @BindView(R.id.shuffle)
+    protected ImageView shuffle;
+
+    @BindView(R.id.repeat)
+    protected ImageView repeat;
 
     private boolean isInjected;
 
@@ -195,6 +205,11 @@ public class TrackFragment extends BaseFragment {
     public void updatePlaybackState(PlaybackStateCompat stateCompat){
         if(stateCompat==null) return;
         lastState=stateCompat;
+        updateRepeatMode(isActionApplied(stateCompat.getActions(),
+                PlaybackStateCompat.ACTION_SET_REPEAT_MODE));
+        updateShuffleMode(isActionApplied(stateCompat.getActions(),
+                PlaybackStateCompat.ACTION_SET_SHUFFLE_MODE_ENABLED));
+        //check the state
         switch (stateCompat.getState()){
             case PlaybackStateCompat.STATE_PLAYING:
                 playPause.setVisibility(VISIBLE);
@@ -229,6 +244,10 @@ public class TrackFragment extends BaseFragment {
         }
     }
 
+    private boolean isActionApplied(long actions, long action){
+        return (actions & action) !=0;
+    }
+
     @Inject
     public void updateQueue(PlaybackManager manager){
         QueueManager queueManager=BundleUtils.fetchHeavyObject(new TypeToken<QueueManager>() {}.getType(),
@@ -241,18 +260,17 @@ public class TrackFragment extends BaseFragment {
 
     @OnClick(R.id.next)
     public void playNext(){
-        MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(getActivity());
-        MediaControllerCompat.TransportControls controls=
-                controllerCompat.getTransportControls();
-        controls.skipToNext();
+        transportControls().skipToNext();
     }
 
     @OnClick(R.id.prev)
     public void playPrev(){
+        transportControls().skipToPrevious();
+    }
+
+    private MediaControllerCompat.TransportControls transportControls(){
         MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(getActivity());
-        MediaControllerCompat.TransportControls controls=
-                controllerCompat.getTransportControls();
-        controls.skipToPrevious();
+        return controllerCompat.getTransportControls();
     }
 
     private void updateProgress() {
@@ -348,6 +366,28 @@ public class TrackFragment extends BaseFragment {
                         }
                     });
         }
+    }
+
+    private void updateShuffleMode(boolean isShuffled){
+        int color=isShuffled ? ContextCompat.getColor(getContext(),R.color.enabled_action) :
+                ContextCompat.getColor(getContext(),R.color.white_50);
+        PresentationUtils.setDrawableColor(shuffle,color);
+    }
+
+    private void updateRepeatMode(boolean isRepeat){
+        int color=isRepeat ? ContextCompat.getColor(getContext(),R.color.enabled_action) :
+                ContextCompat.getColor(getContext(),R.color.white_50);
+        PresentationUtils.setDrawableColor(repeat,color);
+    }
+
+    @OnClick(R.id.repeat)
+    public void setRepeat(){
+        transportControls().setRepeatMode(0);
+    }
+
+    @OnClick(R.id.shuffle)
+    public void shuffle(){
+        transportControls().setShuffleModeEnabled(true);
     }
 
     private void updateDuration(MediaMetadataCompat metadataCompat){

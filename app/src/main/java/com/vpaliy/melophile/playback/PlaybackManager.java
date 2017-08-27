@@ -28,6 +28,8 @@ public class PlaybackManager implements Playback.Callback {
     private Playback playback;
     private SaveInteractor saveInteractor;
     private boolean isRepeat;
+    private boolean isShuffle;
+    private int lastState;
 
     @Inject
     public PlaybackManager(Playback playback, Mapper<MediaMetadataCompat,Track> mapper, SaveInteractor saveInteractor){
@@ -78,6 +80,10 @@ public class PlaybackManager implements Playback.Callback {
         if(isRepeat){
             actions|=PlaybackStateCompat.ACTION_SET_REPEAT_MODE;
         }
+        //
+        if(isShuffle){
+            actions|=PlaybackStateCompat.ACTION_SET_SHUFFLE_MODE_ENABLED;
+        }
         return actions;
     }
 
@@ -111,6 +117,9 @@ public class PlaybackManager implements Playback.Callback {
     @Override
     public void onCompletetion() {
         Track track=isRepeat?queueManager.current():queueManager.next();
+        if(isRepeat) {
+            playback.invalidateCurrent();
+        }
         handlePlayRequest(track);
     }
 
@@ -141,6 +150,15 @@ public class PlaybackManager implements Playback.Callback {
 
     private void handleRepeatMode(){
         isRepeat=!isRepeat;
+        updatePlaybackState(lastState);
+    }
+
+    private void handleShuffleMode(){
+        isShuffle=!isShuffle;
+        if(queueManager!=null){
+            queueManager.shuffle();
+        }
+        updatePlaybackState(lastState);
     }
 
     @Override
@@ -151,6 +169,7 @@ public class PlaybackManager implements Playback.Callback {
 
     public void updatePlaybackState(int state){
         long position = playback.getPosition();
+        this.lastState=state;
         if (state == PlaybackStateCompat.STATE_PLAYING ||
                 state == PlaybackStateCompat.STATE_PAUSED) {
             serviceCallback.onNotificationRequired();
@@ -210,6 +229,7 @@ public class PlaybackManager implements Playback.Callback {
         @Override
         public void onSetShuffleModeEnabled(boolean enabled) {
             super.onSetShuffleModeEnabled(enabled);
+            handleShuffleMode();
         }
 
         @Override
