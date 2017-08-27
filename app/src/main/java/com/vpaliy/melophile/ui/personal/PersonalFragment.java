@@ -20,6 +20,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.NonNull;
 import javax.inject.Inject;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class PersonalFragment extends BaseFragment
         implements PersonalContract.View{

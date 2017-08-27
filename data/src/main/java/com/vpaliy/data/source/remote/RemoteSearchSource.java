@@ -22,8 +22,6 @@ import javax.inject.Singleton;
 @Singleton
 public class RemoteSearchSource implements SearchSource {
 
-    private static final String TAG=RemoteSearchSource.class.getSimpleName();
-
     private SoundCloudService service;
     private Filter filter;
     private Map<Type,Page<?>> queryMap;
@@ -110,7 +108,6 @@ public class RemoteSearchSource implements SearchSource {
                     .map(result->{
                         if(result!=null){
                             queryMap.put(Type.TRACK,result);
-                            Log.d(TAG,"Collection:"+Integer.toString(result.collection.size()));
                             return result.collection;
                         }
                         return null;

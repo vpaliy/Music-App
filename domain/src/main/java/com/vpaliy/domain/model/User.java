@@ -12,6 +12,7 @@ public class User {
     private int playlistsCount;
     private int tracksCount;
     private int likedTracksCount;
+    private boolean isFollowed;
 
     public String getDescription() {
         return description;
@@ -47,6 +48,14 @@ public class User {
 
     public void setLikedTracksCount(int likedTracksCount) {
         this.likedTracksCount = likedTracksCount;
+    }
+
+    public boolean isFollowed() {
+        return isFollowed;
+    }
+
+    public void setFollowed(boolean followed) {
+        isFollowed = followed;
     }
 
     public int getLikedTracksCount() {

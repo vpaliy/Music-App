@@ -4,6 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.vpaliy.data.cache.CacheStore;
 import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.data.model.UserDetailsEntity;
+import com.vpaliy.data.source.PersonalInfo;
 import com.vpaliy.data.source.Source;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
@@ -35,17 +36,20 @@ public class MusicRepository implements Repository {
     private CacheStore<String,Track> trackCacheStore;
     private CacheStore<String,User> userCacheStore;
 
+    private PersonalInfo personalInfo;
+
     @Inject
     public MusicRepository(Mapper<Playlist,PlaylistEntity> playlistMapper,
                            Mapper<Track,TrackEntity> trackMapper,
                            Mapper<User,UserEntity> userMapper,
                            Mapper<UserDetails,UserDetailsEntity> detailsMapper,
-                           Source remoteSource){
+                           Source remoteSource, PersonalInfo personalInfo){
         this.playlistMapper=playlistMapper;
         this.trackMapper=trackMapper;
         this.userMapper=userMapper;
         this.detailsMapper=detailsMapper;
         this.remoteSource=remoteSource;
+        this.personalInfo=personalInfo;
         //initialize cache
         playlistCacheStore=new CacheStore<>(CacheBuilder.newBuilder()
                 .maximumSize(DEFAULT_CACHE_SIZE)
@@ -70,13 +74,15 @@ public class MusicRepository implements Repository {
     @Override
     public Single<List<Track>> getTracksBy(List<String> categories) {
         return remoteSource.getTracksBy(categories)
-                .map(trackMapper::map);
+                .map(trackMapper::map)
+                .map(personalInfo::didLike);
     }
 
     @Override
     public Single<List<User>> getUsersBy(List<String> categories) {
         return remoteSource.getUsersBy(categories)
-                .map(userMapper::map);
+                .map(userMapper::map)
+                .map(personalInfo::amFollowing);
     }
 
     @Override
@@ -91,27 +97,37 @@ public class MusicRepository implements Repository {
     @Override
     public Single<Track> getTrackBy(String id) {
         if(trackCacheStore.isInCache(id)){
-            return trackCacheStore.getStream(id);
+            return trackCacheStore.getStream(id)
+                    .map(personalInfo::didLike);
         }
         return remoteSource.getTrackBy(id)
-                .map(trackMapper::map);
+                .map(trackMapper::map)
+                .map(personalInfo::didLike);
     }
 
     @Override
     public Single<List<Track>> getUserFavorites(String id) {
         return remoteSource.getUserFavorites(id)
-                .map(trackMapper::map);
+                .map(trackMapper::map)
+                .map(personalInfo::didLike);
     }
 
     @Override
     public Single<UserDetails> getUserBy(String id) {
         return remoteSource.getUserBy(id)
-                .map(detailsMapper::map);
+                .map(detailsMapper::map)
+                .map(details -> {
+                    if(details!=null){
+                        personalInfo.amFollowing(details.getUser());
+                    }
+                    return details;
+                });
     }
 
     @Override
     public Single<List<User>> getUserFollowers(String id) {
         return remoteSource.getUserFollowers(id)
-                .map(userMapper::map);
+                .map(userMapper::map)
+                .map(personalInfo::amFollowing);
     }
 }

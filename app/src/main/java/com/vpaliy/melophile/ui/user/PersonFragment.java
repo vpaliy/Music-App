@@ -202,6 +202,11 @@ public class PersonFragment extends BaseFragment
                 .start();
     }
 
+    @OnClick(R.id.follow)
+    public void follow(){
+        presenter.follow();
+    }
+
     @Override
     public void hideLoading() {
         progress.animate()

@@ -14,6 +14,7 @@ public class Track {
     private String releaseDate;
     private String title;
     private String artist;
+    private boolean isLiked;
 
     public String getId() {
         return id;
@@ -49,6 +50,14 @@ public class Track {
 
     public User getUser() {
         return user;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 
     public void setReleaseDate(String releaseDate) {

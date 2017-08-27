@@ -3,6 +3,7 @@ package com.vpaliy.melophile.di.module;
 import com.vpaliy.data.repository.MusicPersonalRepository;
 import com.vpaliy.data.repository.MusicRepository;
 import com.vpaliy.data.repository.MusicSearchRepository;
+import com.vpaliy.data.source.PersonalInfo;
 import com.vpaliy.data.source.SearchSource;
 import com.vpaliy.data.source.Source;
 import com.vpaliy.data.source.remote.Filter;
@@ -46,4 +47,5 @@ public class DataModule {
     PersonalRepository personalRepository(MusicPersonalRepository repository){
         return repository;
     }
+
 }

@@ -65,7 +65,6 @@ public class AuthActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_CODE){
             if(resultCode==RESULT_OK){
-                Log.d(AuthActivity.class.getSimpleName(),"request");
                 String string=data.getDataString();
                 String code= Uri.parse(string).getQueryParameter("code");
                 SoundCloudAuth.create(Config.CLIENT_ID,Config.CLIENT_SECRET_ID)

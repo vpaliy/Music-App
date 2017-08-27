@@ -8,8 +8,11 @@ import com.vpaliy.soundcloud.model.PlaylistEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
 import com.vpaliy.soundcloud.model.UserEntity;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

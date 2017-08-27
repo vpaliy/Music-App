@@ -122,8 +122,6 @@ public class TrackFragment extends BaseFragment {
 
     };
 
-
-
     private MediaControllerCompat.Callback controllerCallback=new MediaControllerCompat.Callback() {
         @Override
         public void onPlaybackStateChanged(PlaybackStateCompat state) {

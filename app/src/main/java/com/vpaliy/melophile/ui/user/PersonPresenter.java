@@ -1,5 +1,6 @@
 package com.vpaliy.melophile.ui.user;
 
+import com.vpaliy.domain.interactor.FollowUser;
 import com.vpaliy.domain.interactor.GetUserDetails;
 import com.vpaliy.domain.interactor.GetUserFollowers;
 import com.vpaliy.domain.model.User;
@@ -17,13 +18,13 @@ public class PersonPresenter implements PersonContract.Presenter{
 
     private View view;
     private GetUserDetails userDetailsUseCase;
-    private GetUserFollowers userFollowersUseCase;
+    private FollowUser followUserUseCase;
 
     @Inject
     public PersonPresenter(GetUserDetails userDetailsUseCase,
-                           GetUserFollowers userFollowersUseCase){
+                           FollowUser followUserUseCase){
         this.userDetailsUseCase=userDetailsUseCase;
-        this.userFollowersUseCase=userFollowersUseCase;
+        this.followUserUseCase=followUserUseCase;
     }
 
     @Override
@@ -71,6 +72,11 @@ public class PersonPresenter implements PersonContract.Presenter{
         ex.printStackTrace();
         view.showErrorMessage();
 
+    }
+
+    @Override
+    public void follow() {
+        followUserUseCase.execute(null,this::catchError,null);
     }
 
     @Override

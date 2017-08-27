@@ -3,11 +3,9 @@ package com.vpaliy.domain.interactor;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.repository.PersonalRepository;
-
+import io.reactivex.Completable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import io.reactivex.Completable;
 
 @Singleton
 public class FollowUser extends CompletableUseCase<User> {

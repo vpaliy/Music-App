@@ -1,5 +1,6 @@
 package com.vpaliy.melophile.di.module;
 
+import com.vpaliy.domain.interactor.FollowUser;
 import com.vpaliy.domain.interactor.GetMe;
 import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
@@ -52,8 +53,8 @@ public class PresenterModule {
     }
 
     @ViewScope @Provides
-    PersonContract.Presenter person(GetUserDetails getUserDetails, GetUserFollowers getUserFollowers){
-        return new PersonPresenter(getUserDetails,getUserFollowers);
+    PersonContract.Presenter person(GetUserDetails getUserDetails, FollowUser followUser){
+        return new PersonPresenter(getUserDetails,followUser);
     }
 
     @ViewScope @Provides

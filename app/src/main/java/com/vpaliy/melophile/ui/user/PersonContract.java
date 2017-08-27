@@ -32,5 +32,6 @@ public interface PersonContract {
         void attachView(@NonNull View view);
         void stop();
         void start(String id);
+        void follow();
     }
 }
