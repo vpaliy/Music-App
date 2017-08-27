@@ -2,7 +2,6 @@ package com.vpaliy.melophile.ui.user;
 
 import com.vpaliy.domain.interactor.FollowUser;
 import com.vpaliy.domain.interactor.GetUserDetails;
-import com.vpaliy.domain.interactor.GetUserFollowers;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.model.UserDetails;
 import java.util.List;
@@ -12,17 +11,16 @@ import com.vpaliy.melophile.di.scope.ViewScope;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
 
-
 @ViewScope
 public class PersonPresenter implements PersonContract.Presenter{
 
     private View view;
     private GetUserDetails userDetailsUseCase;
     private FollowUser followUserUseCase;
+    private User user;
 
     @Inject
-    public PersonPresenter(GetUserDetails userDetailsUseCase,
-                           FollowUser followUserUseCase){
+    public PersonPresenter(GetUserDetails userDetailsUseCase, FollowUser followUserUseCase){
         this.userDetailsUseCase=userDetailsUseCase;
         this.followUserUseCase=followUserUseCase;
     }
@@ -51,12 +49,13 @@ public class PersonPresenter implements PersonContract.Presenter{
             }else if(isEmpty){
                 view.showEmptyMediaMessage();
             }
-            User user=details.getUser();
+            user=details.getUser();
             if(user!=null){
                 view.showFollowersCount(user.getFollowersCount());
                 view.showTitle(user.getNickName());
                 view.showDescription(user.getDescription());
                 view.showLikedCount(user.getLikedTracksCount());
+                manageFollowing();
             }
         }else{
             view.showEmptyMessage();
@@ -71,12 +70,32 @@ public class PersonPresenter implements PersonContract.Presenter{
         view.hideLoading();
         ex.printStackTrace();
         view.showErrorMessage();
+    }
 
+    private void manageFollowing(){
+        if(user.isFollowed()){
+            view.disableFollow();
+        }else{
+            view.enableFollow();
+        }
     }
 
     @Override
     public void follow() {
-        followUserUseCase.execute(null,this::catchError,null);
+        if(user!=null) {
+            if(!user.isFollowed()) {
+                followUserUseCase.execute(this::catchFollowRequest,
+                        this::catchError, user);
+            }else{
+                followUserUseCase.execute2(this::catchFollowRequest,
+                        this::catchError,user);
+            }
+        }
+    }
+
+    private void catchFollowRequest(){
+        user.setFollowed(!user.isFollowed());
+        manageFollowing();
     }
 
     @Override

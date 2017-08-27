@@ -22,6 +22,7 @@
     <string name="search_hint">Search for songs, artists</string>
     <string name="login_label">Log In</string>
     <string name="welcome_to_app">Welcome\n To Melophile</string>
+    <string name="following_label">Following</string>
 
     <string name="share_action">Share</string>
     <string name="background_trans_name" translatable="false">background_trans</string>

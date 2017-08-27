@@ -24,6 +24,8 @@ public interface PersonContract {
         void showEmptyMediaMessage();
         void showEmptyMessage();
         void showErrorMessage();
+        void enableFollow();
+        void disableFollow();
         void showLoading();
         void hideLoading();
     }

@@ -1,6 +1,7 @@
 package com.vpaliy.data.repository;
 
 import com.vpaliy.data.mapper.Mapper;
+import com.vpaliy.data.source.PersonalInfo;
 import com.vpaliy.data.source.remote.Filter;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
@@ -13,7 +14,6 @@ import com.vpaliy.soundcloud.model.UserEntity;
 import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Single;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import android.support.annotation.NonNull;
@@ -26,37 +26,44 @@ public class MusicPersonalRepository implements PersonalRepository {
     private Mapper<Playlist,PlaylistEntity> playlistMapper;
     private Mapper<Track,TrackEntity> trackMapper;
     private Filter filter;
+    private PersonalInfo personalInfo;
 
     @Inject
     public MusicPersonalRepository(SoundCloudService service,
                                    Mapper<User,UserEntity> userMapper,
                                    Mapper<Playlist,PlaylistEntity> playlistMapper,
                                    Mapper<Track,TrackEntity> trackMapper,
+                                   PersonalInfo personalInfo,
                                    Filter filter){
         this.service=service;
         this.userMapper=userMapper;
         this.playlistMapper=playlistMapper;
         this.trackMapper=trackMapper;
         this.filter=filter;
+        this.personalInfo=personalInfo;
     }
 
     @Override
     public Completable likeTrack(@NonNull Track track) {
+        personalInfo.like(track.getId());
         return service.loveTrack(track.getId());
     }
 
     @Override
     public Completable unfollow(@NonNull User user) {
+        personalInfo.removeFollower(user.getId());
         return service.unfollowUser(user.getId());
     }
 
     @Override
     public Completable follow(@NonNull User user) {
+        personalInfo.follow(user.getId());
         return service.followUser(user.getId());
     }
 
     @Override
     public Completable unlikeTrack(@NonNull Track track) {
+        personalInfo.removeLiked(track.getId());
         return service.unloveTrack(track.getId());
     }
 

@@ -47,5 +47,4 @@ public class DataModule {
     PersonalRepository personalRepository(MusicPersonalRepository repository){
         return repository;
     }
-
 }

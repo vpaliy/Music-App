@@ -8,7 +8,6 @@ import com.vpaliy.soundcloud.model.UserEntity;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,7 +29,7 @@ public class PersonalInfo {
     private void fetchFollowings(SoundCloudService service){
         service.fetchMyFollowings()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.computation())
                 .subscribe(page->{
                     if(page!=null){
                         fetchFollowings(page.collection);
@@ -51,7 +50,7 @@ public class PersonalInfo {
     private void fetchTracks(SoundCloudService service){
         service.fetchMyFavoriteTracks()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.computation())
                 .subscribe(list->{
                     if(list!=null){
                         if(!list.isEmpty()){

@@ -25,4 +25,11 @@ public class FollowUser extends CompletableUseCase<User> {
         }
         return Completable.error(new IllegalArgumentException("User is null!"));
     }
+
+    public Completable buildCompletable2(User user){
+        if(user!=null){
+            return repository.unfollow(user);
+        }
+        return Completable.error(new IllegalArgumentException("User is null!"));
+    }
 }

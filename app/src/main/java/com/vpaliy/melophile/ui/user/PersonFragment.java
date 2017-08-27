@@ -2,6 +2,8 @@ package com.vpaliy.melophile.ui.user;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ import com.vpaliy.melophile.ui.user.info.InfoEvent;
 import com.vpaliy.melophile.ui.utils.Constants;
 import java.util.List;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,6 +51,9 @@ public class PersonFragment extends BaseFragment
 
     @BindView(R.id.followers)
     protected TextView followers;
+
+    @BindView(R.id.follow)
+    protected TextView follow;
 
     @BindView(R.id.likes)
     protected TextView likes;
@@ -205,6 +211,31 @@ public class PersonFragment extends BaseFragment
     @OnClick(R.id.follow)
     public void follow(){
         presenter.follow();
+    }
+
+    @Override
+    public void enableFollow() {
+        follow.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_person_add,0,0,0);
+        follow.setText(R.string.follow_label);
+        animateFollow();
+    }
+
+    @Override
+    public void disableFollow() {
+        follow.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check,0,0,0);
+        follow.setText(R.string.following_label);
+        animateFollow();
+    }
+
+    private void animateFollow(){
+        follow.setVisibility(View.VISIBLE);
+        AnimatorSet scaleSet=new AnimatorSet();
+        scaleSet.playTogether(ObjectAnimator.ofFloat(follow,View.SCALE_X,0,1),
+                ObjectAnimator.ofFloat(follow,View.SCALE_Y,0,1));
+        scaleSet.setDuration(300);
+        scaleSet.setStartDelay(100);
+        scaleSet.setInterpolator(new OvershootInterpolator());
+        scaleSet.start();
     }
 
     @Override

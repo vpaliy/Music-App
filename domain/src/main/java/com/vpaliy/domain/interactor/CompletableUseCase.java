@@ -18,10 +18,20 @@ public abstract class CompletableUseCase<Params> {
                         @NonNull Consumer<? super Throwable> onError,
                         Params params){
         buildCompletable(params)
-                .subscribeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(onComplete,onError);
+    }
+
+    public void execute2(@NonNull Action onComplete,
+                         @NonNull Consumer<? super Throwable> onError,
+                         Params params){
+        buildCompletable(params)
+                .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(onComplete,onError);
     }
 
     public abstract Completable buildCompletable(Params params);
+    public abstract Completable buildCompletable2(Params params);
 }
