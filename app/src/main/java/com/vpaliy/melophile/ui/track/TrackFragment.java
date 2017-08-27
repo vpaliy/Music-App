@@ -253,6 +253,7 @@ public class TrackFragment extends BaseFragment {
         if(queueManager!=null) {
             manager.setQueueManager(queueManager);
             manager.handleResumeRequest();
+            playPause.change(false);
         }
     }
 
