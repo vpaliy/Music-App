@@ -33,14 +33,21 @@
 
     <plurals name="followers">
         <item quantity="zero">No Followers</item>
-        <item quantity="one">%s follower</item>
-        <item quantity="other">%s followers</item>
+        <item quantity="one">%s\n follower</item>
+        <item quantity="other">%s\n followers</item>
     </plurals>
+
+    <plurals name="tracks">
+        <item quantity="zero">No Tracks</item>
+        <item quantity="one">%s\n track</item>
+        <item quantity="other">%s\n tracks</item>
+    </plurals>
+
 
     <plurals name="likes">
         <item quantity="zero">No liked tracks</item>
-        <item quantity="one">%s like</item>
-        <item quantity="other">%s likes</item>
+        <item quantity="one">%s\n like</item>
+        <item quantity="other">%s\n likes</item>
     </plurals>
 
     <plurals name="hours">

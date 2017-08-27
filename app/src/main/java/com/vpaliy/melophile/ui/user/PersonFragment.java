@@ -25,6 +25,8 @@ import com.vpaliy.melophile.ui.user.info.InfoEvent;
 import com.vpaliy.melophile.ui.utils.Constants;
 import java.util.List;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -143,11 +145,23 @@ public class PersonFragment extends BaseFragment
     @Override
     public void showFollowersCount(int count) {
         followers.setText(getResources().getQuantityString(R.plurals.followers,count,count));
+        scaleAnimation(followers);
+    }
+
+    private void scaleAnimation(View view){
+        view.setScaleY(0);
+        view.setScaleX(0);
+        view.animate().setDuration(300)
+                .scaleX(1)
+                .scaleY(1)
+                .setInterpolator(new OvershootInterpolator())
+                .start();
     }
 
     @Override
     public void showTitle(String title) {
         username.setText(title);
+        scaleAnimation(username);
     }
 
     @Override
@@ -157,7 +171,8 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showLikedCount(int count) {
-       likes.setText(getResources().getQuantityString(R.plurals.likes,count,count));
+        likes.setText(getResources().getQuantityString(R.plurals.likes,count,count));
+        scaleAnimation(likes);
     }
 
     @OnClick(R.id.likes)
@@ -185,7 +200,7 @@ public class PersonFragment extends BaseFragment
                                 View blank = adapter.getBlank();
                                 ViewGroup.LayoutParams params = blank.getLayoutParams();
                                 params.height = followers.getTop()+followers.getHeight()
-                                        +getResources().getDimensionPixelOffset(R.dimen.spacing_large);
+                                        +2*getResources().getDimensionPixelOffset(R.dimen.spacing_large);
                                 blank.setLayoutParams(params);
                             });
                             getActivity().supportStartPostponedEnterTransition();
@@ -211,6 +226,8 @@ public class PersonFragment extends BaseFragment
     @OnClick(R.id.follow)
     public void follow(){
         presenter.follow();
+        Animation animation= AnimationUtils.loadAnimation(getContext(),R.anim.pump);
+        follow.startAnimation(animation);
     }
 
     @Override
@@ -227,8 +244,16 @@ public class PersonFragment extends BaseFragment
         animateFollow();
     }
 
+    @Override
+    public void showTracksCount(int count) {
+        playlistCount.setText(getResources().getQuantityString(R.plurals.tracks,count,count));
+        scaleAnimation(playlistCount);
+    }
+
     private void animateFollow(){
-        follow.setVisibility(View.VISIBLE);
+        if(follow.getAnimation()!=null){
+            follow.getAnimation().cancel();
+        }
         AnimatorSet scaleSet=new AnimatorSet();
         scaleSet.playTogether(ObjectAnimator.ofFloat(follow,View.SCALE_X,0,1),
                 ObjectAnimator.ofFloat(follow,View.SCALE_Y,0,1));

@@ -24,5 +24,4 @@
             <target android:targetId="@android:id/statusBarBackground" />
         </targets>
     </fade>
-
 </transitionSet>

@@ -1,5 +1,7 @@
 package com.vpaliy.melophile.ui.playlist;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.SharedElementCallback;
@@ -13,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -39,6 +42,7 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
 import android.view.ViewTreeObserver;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.annotation.NonNull;
@@ -142,7 +146,6 @@ public class PlaylistFragment extends BaseFragment
             }));
             adapter=new PlaylistTrackAdapter(getContext(),rxBus);
             tracks.setAdapter(adapter);
-            tracks.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
             loadCover(savedInstanceState);
             presenter.start(id);
         }
@@ -176,7 +179,27 @@ public class PlaylistFragment extends BaseFragment
     @Override
     public void showTitle(String title) {
         playlistTitle.setText(title);
-        titleBackground.setVisibility(View.VISIBLE);
+        playlistTitle.setScaleX(0);playlistTitle.setScaleY(0);
+        titleBackground.post(()->{
+            int cx=titleBackground.getWidth()/2;
+            int cy=titleBackground.getHeight()/2;
+            Animator animator=ViewAnimationUtils.createCircularReveal(titleBackground,cx,cy,0,
+                    (int)Math.hypot(titleBackground.getWidth(),titleBackground.getHeight()));
+            animator.setDuration(400);
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    titleBackground.setVisibility(View.VISIBLE);
+                    playlistTitle.animate()
+                            .setDuration(400)
+                            .scaleX(1).scaleY(1)
+                            .setInterpolator(new OvershootInterpolator())
+                            .start();
+                }
+            });
+            animator.start();
+        });
     }
 
     @Override
@@ -220,7 +243,6 @@ public class PlaylistFragment extends BaseFragment
                         @Override
                         protected void setResource(Bitmap resource) {
                             final int imageHeight=playlistArt.getHeight();
-                            final int padding=getResources().getDimensionPixelOffset(R.dimen.spacing_large);
                             playlistArt.setImageBitmap(resource);
                             parent.setStaticOffset(imageHeight);
                             parent.setOffset(imageHeight);

@@ -21,6 +21,7 @@ public interface PersonContract {
         void showTitle(String title);
         void showFollowersCount(int count);
         void showLikedCount(int count);
+        void showTracksCount(int count);
         void showEmptyMediaMessage();
         void showEmptyMessage();
         void showErrorMessage();

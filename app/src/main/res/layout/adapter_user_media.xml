@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#fafafa"
     android:paddingBottom="@dimen/spacing_medium"
-    android:elevation="8dp"
+    android:elevation="@dimen/z_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <TextView
         android:id="@+id/title"
         tools:text="Title"
@@ -19,23 +18,8 @@
         android:layout_margin="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/more"
-        app:layout_constraintHorizontal_bias="0.05" />
-
-    <TextView
-        android:id="@+id/more"
-        android:text="@string/more_label"
-        android:textStyle="bold"
-        android:textSize="17sp"
-        style="@style/Widget.BigTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        android:layout_marginTop="@dimen/spacing_medium"
-        app:layout_constraintTop_toBottomOf="@+id/playlists" />
-
+        app:layout_constraintHorizontal_bias="0.5" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/playlists"
         android:layout_width="0dp"

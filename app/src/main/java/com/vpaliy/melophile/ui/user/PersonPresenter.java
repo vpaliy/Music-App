@@ -54,6 +54,7 @@ public class PersonPresenter implements PersonContract.Presenter{
                 view.showFollowersCount(user.getFollowersCount());
                 view.showTitle(user.getNickName());
                 view.showDescription(user.getDescription());
+                view.showTracksCount(user.getTracksCount());
                 view.showLikedCount(user.getLikedTracksCount());
                 manageFollowing();
             }

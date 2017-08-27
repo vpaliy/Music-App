@@ -1,8 +1,6 @@
 package com.vpaliy.melophile.ui.user;
 
 import android.content.Context;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,24 +33,15 @@ public class MediaAdapter extends BaseAdapter<MediaAdapter.CategoryWrapper>{
         public void onBindData(){}
     }
 
-    class TypeViewHolder extends GenericViewHolder
-            implements View.OnClickListener{
+    class TypeViewHolder extends GenericViewHolder {
 
         @BindView(R.id.playlists) RecyclerView list;
         @BindView(R.id.title) TextView title;
-        @BindView(R.id.more) TextView more;
 
         TypeViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this,itemView);
-            list.addItemDecoration(new DividerItemDecoration(itemView.getContext(), LinearLayoutManager.VERTICAL));
             list.setNestedScrollingEnabled(false);
-            title.setOnClickListener(this);
-            more.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
         }
 
         @Override
@@ -60,7 +49,6 @@ public class MediaAdapter extends BaseAdapter<MediaAdapter.CategoryWrapper>{
             CategoryWrapper wrapper=at(getAdapterPosition()-1);
             list.setAdapter(wrapper.adapter);
             title.setText(wrapper.text);
-          //  more.setTextColor(wrapper.color);
         }
     }
 
