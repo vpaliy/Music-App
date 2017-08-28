@@ -110,7 +110,7 @@ public final class DatabaseUtils {
         return values;
     }
 
-    public Playlist toPlaylist(Cursor cursor){
+    public static Playlist toPlaylist(Cursor cursor){
         if(cursor==null) return null;
         String id=cursor.getString(cursor.getColumnIndex(Playlists.PLAYLIST_ID));
         String art=cursor.getString(cursor.getColumnIndex(Playlists.PLAYLIST_ART_URL));
