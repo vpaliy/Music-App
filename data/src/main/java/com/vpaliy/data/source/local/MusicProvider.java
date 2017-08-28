@@ -6,6 +6,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import static com.vpaliy.data.source.local.MusicContract.Users;
+import static com.vpaliy.data.source.local.MusicContract.Playlists;
+import static com.vpaliy.data.source.local.MusicContract.Tracks;
+import static com.vpaliy.data.source.local.MusicDatabaseHelper.Tables;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -109,7 +113,59 @@ public class MusicProvider extends ContentProvider{
     }
 
     private SqlQueryBuilder buildQuery(Uri uri, MusicMatchEnum matchEnum){
-
-        return null;
+        SqlQueryBuilder builder=new SqlQueryBuilder();
+        String id;
+        switch (matchEnum){
+            case PLAYLISTS:
+                return builder.table(Tables.PLAYLISTS);
+            case TRACKS:
+                return builder.table(Tables.TRACKS);
+            case USERS:
+                return builder.table(Tables.USERS);
+            case HISTORY_TRACKS:
+                return builder.table(Tables.HISTORY_TRACK);
+            case HISTORY_PLAYLISTS:
+                return builder.table(Tables.HISTORY_PLAYLIST);
+            case ME:
+                return builder.table(Tables.ME);
+            case PLAYLIST:
+                id=Playlists.getPlaylistId(uri);
+                return builder.table(Tables.PLAYLISTS)
+                        .where(Playlists.PLAYLIST_ID+"=?",id);
+            case TRACK:
+                id=Tracks.getTrackId(uri);
+                return builder.table(Tables.TRACKS)
+                        .where(Tracks.TRACK_ID+"=?",id);
+            case USER:
+                id=Users.getUserId(uri);
+                return builder.table(Tables.USERS)
+                        .where(Users.USER_ID+"=?",id);
+            case PLAYLIST_TRACKS:
+                id=Playlists.getPlaylistId(uri);
+                return builder.table(Tables.PLAYLIST_JOIN_TRACKS)
+                        .mapToTable(Playlists.PLAYLIST_ID,Tables.PLAYLISTS)
+                        .mapToTable(Tracks.TRACK_ID,Tables.TRACKS)
+                        .where(Playlists.PLAYLIST_ID+"=?",id);
+            case USER_LIKED_TRACKS:
+                id=Users.getUserId(uri);
+                return builder.table(Tables.USER_JOIN_LIKED_TRACKS)
+                        .mapToTable(Users.USER_ID,Tables.USERS)
+                        .mapToTable(Tracks.TRACK_ID,Tables.TRACKS)
+                        .where(Users.USER_ID+"=?",id);
+            case USER_TRACKS:
+                id=Users.getUserId(uri);
+                return builder.table(Tables.USER_JOIN_TRACKS)
+                        .mapToTable(Users.USER_ID,Tables.USERS)
+                        .mapToTable(Tracks.TRACK_ID,Tables.TRACKS)
+                        .where(Users.USER_ID+"=?",id);
+            case USER_PLAYLISTS:
+                id=Users.getUserId(uri);
+                return builder.table(Tables.USER_JOIN_PLAYLISTS)
+                        .mapToTable(Users.USER_ID,Tables.USERS)
+                        .mapToTable(Playlists.PLAYLIST_ID,Tables.PLAYLISTS)
+                        .where(Users.USER_ID+"=?",id);
+            default:
+                throw new IllegalArgumentException("Wrong matcher!");
+        }
     }
 }
