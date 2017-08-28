@@ -1,6 +1,7 @@
 package com.vpaliy.data.source.local.handler;
 
 import android.content.ContentProvider;
+import android.content.ContentValues;
 import android.database.Cursor;
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
 import com.vpaliy.domain.model.Playlist;
@@ -53,5 +54,12 @@ public class PlaylistHandler {
         Playlist playlist=DatabaseUtils.toPlaylist(cursor);
         if(cursor!=null) cursor.close();
         return playlist;
+    }
+
+    public void insert(Playlist playlist){
+        if(playlist!=null){
+            ContentValues values=DatabaseUtils.toValues(playlist);
+            provider.insert(Playlists.CONTENT_URI,values);
+        }
     }
 }

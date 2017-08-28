@@ -85,6 +85,11 @@ public final class MusicContract {
         String HISTORY_ITEM_ID="history_item_id";
     }
 
+    interface TagsColumns {
+        String TAG_ID="tag_item_id";
+        String TAGGED_ITEM_ID="tagged_item_id";
+    }
+
 
     public static final String CONTENT_AUTHORITY="com.vpaliy.melophile";
 

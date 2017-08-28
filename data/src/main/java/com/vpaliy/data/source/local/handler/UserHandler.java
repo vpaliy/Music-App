@@ -1,7 +1,9 @@
 package com.vpaliy.data.source.local.handler;
 
 import android.content.ContentProvider;
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.text.TextUtils;
 
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
 import com.vpaliy.domain.model.User;
@@ -28,6 +30,19 @@ public class UserHandler {
         return queryAll();
     }
 
+    public User query(String id){
+        if(!TextUtils.isEmpty(id)){
+            Cursor cursor=provider.query(Users.buildUserUri(id),null,null,null,null);
+            if(cursor!=null){
+                User user=DatabaseUtils.toUser(cursor);
+                if(!cursor.isClosed()) cursor.close();
+                return user;
+            }
+            return null;
+        }
+        throw new IllegalArgumentException("Id is null");
+    }
+
     private List<User> queryAll(){
         Cursor cursor=provider.query(Users.CONTENT_URI,null,null,null,null);
         return queryAll(cursor);
@@ -44,5 +59,12 @@ public class UserHandler {
             return users;
         }
         return null;
+    }
+
+    public void insert(User user){
+        if (user != null) {
+            ContentValues values=DatabaseUtils.toValues(user);
+            provider.insert(Users.CONTENT_URI,values);
+        }
     }
 }
