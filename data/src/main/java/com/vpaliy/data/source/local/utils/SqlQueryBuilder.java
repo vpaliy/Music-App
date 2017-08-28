@@ -1,4 +1,4 @@
-package com.vpaliy.data.source.local;
+package com.vpaliy.data.source.local.utils;
 
 import android.content.ContentValues;
 import android.database.Cursor;

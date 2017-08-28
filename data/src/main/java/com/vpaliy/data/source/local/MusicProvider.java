@@ -13,6 +13,8 @@ import static com.vpaliy.data.source.local.MusicDatabaseHelper.Tables;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.vpaliy.data.source.local.utils.SqlQueryBuilder;
+
 public class MusicProvider extends ContentProvider{
 
     private MusicUriMatcher matcher;
@@ -142,13 +144,19 @@ public class MusicProvider extends ContentProvider{
                         .where(Users.USER_ID+"=?",id);
             case PLAYLIST_TRACKS:
                 id=Playlists.getPlaylistId(uri);
-                return builder.table(Tables.PLAYLIST_JOIN_TRACKS)
+                return builder.table(Tables.TRACKS_PLAYLISTS)
                         .mapToTable(Playlists.PLAYLIST_ID,Tables.PLAYLISTS)
                         .mapToTable(Tracks.TRACK_ID,Tables.TRACKS)
                         .where(Playlists.PLAYLIST_ID+"=?",id);
+            case TRACKS_PLAYLISTS:
+                id=Tracks.getTrackId(uri);
+                return builder.table(Tables.TRACKS_PLAYLISTS)
+                        .mapToTable(Playlists.PLAYLIST_ID,Tables.PLAYLISTS)
+                        .mapToTable(Tracks.TRACK_ID,Tables.TRACKS)
+                        .where(Tracks.TRACK_ID+"=?",id);
             case USER_LIKED_TRACKS:
                 id=Users.getUserId(uri);
-                return builder.table(Tables.USER_JOIN_LIKED_TRACKS)
+                return builder.table(Tables.LIKED_TRACKS)
                         .mapToTable(Users.USER_ID,Tables.USERS)
                         .mapToTable(Tracks.TRACK_ID,Tables.TRACKS)
                         .where(Users.USER_ID+"=?",id);

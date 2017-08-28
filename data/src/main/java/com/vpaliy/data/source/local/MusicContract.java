@@ -207,6 +207,5 @@ public final class MusicContract {
         public static Uri buildPlaylistsHistoryUri(){
             return CONTENT_URI.buildUpon().appendPath(PATH_PLAYLIST).build();
         }
-
     }
 }

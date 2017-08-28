@@ -23,15 +23,13 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
         String USERS = "users";
         String ME="me";
         String USER_FOLLOWERS="user_followers";
+        String TRACKS_PLAYLISTS="tracks_playlists";
         String HISTORY_TRACK="history_tracks";
         String HISTORY_PLAYLIST="history_playlist";
+        String LIKED_TRACKS="liked_tracks";
 
-        String PLAYLIST_JOIN_TRACKS = "playlists " +
-                "INNER JOIN tracks ON playlists.playlist_id=tracks.ref_track_playlist_id";
         String USER_JOIN_TRACKS="users "+
                 "INNER JOIN tracks ON users.user_id=tracks.ref_track_user_id";
-        String USER_JOIN_LIKED_TRACKS="users "+
-                "INNER JOIN tracks on users.user_id=tracks.ref_track_user_liked_id";
         String USER_JOIN_PLAYLISTS="users "+
                 "INNER JOIN tracks on users.user_id=playlists.ref_playlist_user_id";
         String ME_JOIN_TRACKS="me "+
@@ -44,9 +42,19 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
         String PLAYLIST="REFERENCES "+Tables.PLAYLISTS+"("+Playlists.PLAYLIST_ID+")";
     }
 
-    interface UserFollowers {
+    public interface UserFollowers {
         String USER_ID="ref_user_id";
         String FOLLOWER_ID="ref_follower_id";
+    }
+
+    public interface TracksPlaylists {
+        String TRACK_ID="ref_track_id";
+        String PLAYLIST_ID="ref_playlist_id";
+    }
+
+    public interface LikedTracks{
+        String TRACK_ID="ref_track_id";
+        String USER_ID="ref_user_id";
     }
 
     public MusicDatabaseHelper(@NonNull Context context){
@@ -112,19 +120,33 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE "+Tables.USER_FOLLOWERS+" ("+
                 BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                UserFollowers.USER_ID+" INTEGER NOT NULL "+References.USER+","+
-                UserFollowers.FOLLOWER_ID+" INTEGER NOT NULL "+References.USER+","+
+                UserFollowers.USER_ID+" TEXT NOT NULL "+References.USER+","+
+                UserFollowers.FOLLOWER_ID+" TEXT NOT NULL "+References.USER+","+
                 " UNIQUE (" + UserFollowers.USER_ID + "," + UserFollowers.FOLLOWER_ID + ") ON CONFLICT REPLACE)");
 
         db.execSQL("CREATE TABLE "+Tables.HISTORY_TRACK+" ("+
                 BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                History.HISTORY_ITEM_ID+" INTEGER NOT NULL "+References.TRACK+","+
+                History.HISTORY_ITEM_ID+" TEXT NOT NULL "+References.TRACK+","+
                 " UNIQUE (" + History.HISTORY_ITEM_ID + ") ON CONFLICT REPLACE)");
 
         db.execSQL("CREATE TABLE "+Tables.HISTORY_PLAYLIST+" ("+
                 BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                History.HISTORY_ITEM_ID+" INTEGER NOT NULL "+References.PLAYLIST+","+
+                History.HISTORY_ITEM_ID+" TEXT NOT NULL "+References.PLAYLIST+","+
                 " UNIQUE (" + History.HISTORY_ITEM_ID + ") ON CONFLICT REPLACE)");
+
+        db.execSQL("CREATE TABLE "+Tables.LIKED_TRACKS+" ("+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                LikedTracks.TRACK_ID+" TEXT NOT NULL "+References.TRACK+","+
+                LikedTracks.USER_ID+" TEXT NOT NULL "+References.USER+","+
+                " UNIQUE (" + LikedTracks.TRACK_ID + "," + LikedTracks.USER_ID + ") ON CONFLICT REPLACE)");
+
+
+        db.execSQL("CREATE TABLE "+Tables.TRACKS_PLAYLISTS+" ("+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                TracksPlaylists.TRACK_ID+" TEXT NOT NULL "+References.TRACK+","+
+                TracksPlaylists.PLAYLIST_ID+" TEXT NOT NULL "+References.PLAYLIST+","+
+                " UNIQUE (" + TracksPlaylists.TRACK_ID + "," + TracksPlaylists.PLAYLIST_ID + ") ON CONFLICT REPLACE)");
+
     }
 
     @Override
@@ -133,6 +155,8 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Tables.TRACKS);
         db.execSQL("DROP TABLE IF EXISTS "+Tables.USERS);
         db.execSQL("DROP TABLE IF EXISTS "+Tables.USER_FOLLOWERS);
+        db.execSQL("DROP TABLE IF EXISTS "+Tables.TRACKS_PLAYLISTS);
+        db.execSQL("DROP TABLE IF EXISTS "+Tables.LIKED_TRACKS);
         db.execSQL("DROP TABLE IF EXISTS "+Tables.HISTORY_PLAYLIST);
         db.execSQL("DROP TABLE IF EXISTS "+Tables.HISTORY_TRACK);
         onCreate(db);
