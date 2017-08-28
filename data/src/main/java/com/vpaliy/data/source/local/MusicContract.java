@@ -171,6 +171,14 @@ public final class MusicContract {
             return CONTENT_URI.buildUpon().appendPath(id).build();
         }
 
+        public static Uri buildUserFollowersUri(String id){
+            return CONTENT_URI.buildUpon().appendPath(id).appendPath(PATH_USER).build();
+        }
+
+        public static Uri buildFavoritesUri(String id){
+            return CONTENT_URI.buildUpon().appendPath(id).appendPath(PATH_TRACK).build();
+        }
+
         public static String getUserId(Uri uri){
             return uri.getPathSegments().get(0);
         }

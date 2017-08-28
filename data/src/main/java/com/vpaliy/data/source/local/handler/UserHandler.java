@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
+import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 
 import java.util.ArrayList;
@@ -59,6 +60,40 @@ public class UserHandler {
             return users;
         }
         return null;
+    }
+
+    public List<User> queryFollowers(String id){
+        if(!TextUtils.isEmpty(id)){
+            Cursor cursor=provider.query(Users.buildUserFollowersUri(id),null,null,null,null);
+            if(cursor!=null){
+                List<User> users=new ArrayList<>(cursor.getCount());
+                while(cursor.moveToNext()){
+                    User user=DatabaseUtils.toUser(cursor);
+                    users.add(user);
+                }
+                if(!cursor.isClosed()) cursor.close();
+                return users;
+            }
+            return null;
+        }
+        throw new IllegalArgumentException("Id is null");
+    }
+
+    public List<Track> queryFavorites(String id){
+        if(!TextUtils.isEmpty(id)){
+            Cursor cursor=provider.query(Users.buildFavoritesUri(id),null,null,null,null);
+            if(cursor!=null){
+                List<Track> tracks=new ArrayList<>(cursor.getCount());
+                while(cursor.moveToNext()){
+                    Track track=DatabaseUtils.toTrack(cursor);
+                    tracks.add(track);
+                }
+                if(!cursor.isClosed()) cursor.close();
+                return tracks;
+            }
+            return null;
+        }
+        throw new IllegalArgumentException("Id is null");
     }
 
     public void insert(User user){

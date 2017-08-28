@@ -56,14 +56,19 @@ public class LocalMusicSource implements LocalSource {
 
     @Override
     public Single<List<Track>> getUserFavorites(String id) {
-        return null;
+        if(!TextUtils.isEmpty(id)){
+            return Single.fromCallable(()->userHandler.queryFavorites(id));
+        }
+        return Single.error(new IllegalArgumentException("Id is empty"));
     }
 
     @Override
     public Single<List<User>> getUserFollowers(String id) {
-        return null;
+        if(!TextUtils.isEmpty(id)){
+            return Single.fromCallable(()->userHandler.queryFollowers(id));
+        }
+        return Single.error(new IllegalArgumentException("Id is empty"));
     }
-
 
     @Override
     public Single<Playlist> getPlaylistBy(String id) {
@@ -100,5 +105,4 @@ public class LocalMusicSource implements LocalSource {
     public void insert(User user) {
         userHandler.insert(user);
     }
-
 }
