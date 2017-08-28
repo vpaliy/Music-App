@@ -17,12 +17,14 @@ public final class MusicContract {
         String TRACK_ARTIST="track_artist";
         String TRACK_IS_LIKED="track_is_liked";
         String TRACK_USER_ID="ref_track_user_id";
+        String TRACK_USER_LIKED_ID="ref_track_user_liked_id";
         String TRACK_PLAYLIST_ID="ref_track_playlist_id";
 
         String[] COLUMNS={TRACK_ID,TRACK_STREAM_URL,
                 TRACK_ART_URL,TRACK_DURATION,TRACK_TAGS,
                 TRACK_RELEASE_DATE,TRACK_TITLE,TRACK_ARTIST,
-                TRACK_IS_LIKED, TRACK_USER_ID,TRACK_PLAYLIST_ID};
+                TRACK_IS_LIKED, TRACK_USER_ID,TRACK_PLAYLIST_ID,
+                TRACK_USER_LIKED_ID};
     }
 
     interface PlaylistColumns {
@@ -41,6 +43,22 @@ public final class MusicContract {
                 PLAYLIST_DURATION,PLAYLIST_RELEASE_DATE,PLAYLIST_TITLE,
                 PLAYLIST_DESCRIPTION,PLAYLIST_TRACK_COUNT,PLAYLIST_GENRES,
                 PLAYLIST_TAGS,PLAYLIST_USER_ID};
+    }
+
+    interface MeColumns {
+        String ME_ART_URL="me_art_url";
+        String ME_NICKNAME="me_nickname";
+        String ME_FULLNAME="me_fullname";
+        String ME_DESCRIPTION="me_description";
+        String ME_FOLLOWINGS_COUNT="me_followings_count";
+        String ME_TRACKS_COUNT="me_tracks_count";
+        String ME_PLAYLISTS_COUNT="me_playlists_count";
+        String ME_FOLLOWER_COUNT="me_follower_count";
+        String ME_LIKED_TRACKS_COUNT="me_liked_tracks_count";
+
+        String[] COLUMNS={ME_ART_URL,ME_NICKNAME,ME_FULLNAME,ME_DESCRIPTION,
+            ME_DESCRIPTION,ME_FOLLOWER_COUNT,ME_TRACKS_COUNT,
+            ME_PLAYLISTS_COUNT,ME_FOLLOWER_COUNT,ME_LIKED_TRACKS_COUNT};
     }
 
     interface UserColumns {
@@ -70,6 +88,7 @@ public final class MusicContract {
     public static final String PATH_TRACK="tracks";
     public static final String PATH_PLAYLIST="playlists";
     public static final String PATH_USER="users";
+    public static final String PATH_ME="me";
 
     private MusicContract(){
         throw new IllegalArgumentException();
@@ -140,6 +159,25 @@ public final class MusicContract {
         }
 
         public static String getUserId(Uri uri){
+            return uri.getPathSegments().get(0);
+        }
+    }
+
+    public static class Me implements MeColumns {
+
+        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(PATH_ME).build();
+
+        public static final String CONTENT_DIR_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_ME;
+
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" +PATH_ME;
+
+        public static Uri buildMeUri(){
+            return CONTENT_URI.buildUpon().build();
+        }
+
+        public static String getMeId(Uri uri){
             return uri.getPathSegments().get(0);
         }
     }

@@ -13,16 +13,24 @@ import static com.vpaliy.data.source.local.MusicContract.Tracks;
 public class MusicDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME="music.db";
-    private static final int DATABASE_VERSION=8;
+    private static final int DATABASE_VERSION=1;
 
     public interface Tables {
         String TRACKS = "tracks";
         String PLAYLISTS = "playlists";
         String USERS = "users";
-        String RECIPES_INGREDIENTS = "recipes_ingredients";
-        String PLAYLIST_JOIN_TRACKS = "playlists " +
-                "INNER JOIN tracks ON playlists.id=tracks.ref_track_playlist_id";
+        String ME="me";
 
+        String PLAYLIST_JOIN_TRACKS = "playlists " +
+                "INNER JOIN tracks ON playlists.playlist_id=tracks.ref_track_playlist_id";
+        String USER_JOIN_TRACKS="users "+
+                "INNER JOIN tracks ON users.user_id=tracks.ref_track_user_id";
+        String USER_JOIN_LIKED_TRACKS="users "+
+                "INNER JOIN tracks on users.user_id=tracks.ref_track_user_liked_id";
+        String USER_JOIN_PLAYLISTS="users "+
+                "INNER JOIN tracks on users.user_id=playlists.ref_playlist_user_id";
+        String ME_JOIN_TRACKS="me "+
+                "INNER JOIN tracks ON tracks.track_id=";
     }
 
     interface References {
@@ -30,7 +38,6 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
         String TRACK="REFERENCES "+Tables.TRACKS+"("+Tracks.TRACK_ID+")";
         String PLAYLIST="REFERENCES "+Tables.PLAYLISTS+"("+Playlists.PLAYLIST_ID+")";
     }
-
 
     public MusicDatabaseHelper(@NonNull Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -49,6 +56,7 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
                 Tracks.TRACK_ARTIST+" TEXT,"+
                 Tracks.TRACK_IS_LIKED+" INTEGER NOT NULL,"+
                 Tracks.TRACK_USER_ID+" TEXT "+References.USER+","+
+                Tracks.TRACK_USER_LIKED_ID+" TEXT "+References.USER+","+
                 Tracks.TRACK_PLAYLIST_ID+" TEXT "+References.PLAYLIST+","+
                 " UNIQUE (" + Tracks.TRACK_ID + ") ON CONFLICT REPLACE)");
 
@@ -85,7 +93,6 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Tables.PLAYLISTS);
         db.execSQL("DROP TABLE IF EXISTS "+Tables.TRACKS);
         db.execSQL("DROP TABLE IF EXISTS "+Tables.USERS);
-        db.execSQL("DROP TABLE IF EXISTS "+Tables.RECIPES_INGREDIENTS);
         onCreate(db);
     }
 
