@@ -46,6 +46,7 @@ public final class MusicContract {
     }
 
     interface MeColumns {
+        String ME_ID="me_id";
         String ME_ART_URL="me_art_url";
         String ME_NICKNAME="me_nickname";
         String ME_FULLNAME="me_fullname";
@@ -80,6 +81,10 @@ public final class MusicContract {
             USER_FOLLOWER_COUNT,USER_IS_FOLLOWED,USER_LIKED_TRACKS_COUNT};
     }
 
+    interface HistoryColumns {
+        String HISTORY_ITEM_ID="history_item_id";
+    }
+
 
     public static final String CONTENT_AUTHORITY="com.vpaliy.melophile";
 
@@ -89,6 +94,7 @@ public final class MusicContract {
     public static final String PATH_PLAYLIST="playlists";
     public static final String PATH_USER="users";
     public static final String PATH_ME="me";
+    public static final String PATH_HISTORY="me/history";
 
     private MusicContract(){
         throw new IllegalArgumentException();
@@ -180,5 +186,25 @@ public final class MusicContract {
         public static String getMeId(Uri uri){
             return uri.getPathSegments().get(0);
         }
+    }
+
+    public static class History implements HistoryColumns {
+
+        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(PATH_HISTORY).build();
+
+        public static final String CONTENT_DIR_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_HISTORY;
+
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" +PATH_HISTORY;
+
+        public static Uri buildTracksHistoryUri(){
+            return CONTENT_URI.buildUpon().appendPath(PATH_TRACK).build();
+        }
+
+        public static Uri buildPlaylistsHistoryUri(){
+            return CONTENT_URI.buildUpon().appendPath(PATH_PLAYLIST).build();
+        }
+
     }
 }

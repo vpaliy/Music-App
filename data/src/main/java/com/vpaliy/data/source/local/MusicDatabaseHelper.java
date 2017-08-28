@@ -3,11 +3,13 @@ package com.vpaliy.data.source.local;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.NonNull;
-
+import android.provider.BaseColumns;
 import static com.vpaliy.data.source.local.MusicContract.Users;
 import static com.vpaliy.data.source.local.MusicContract.Playlists;
 import static com.vpaliy.data.source.local.MusicContract.Tracks;
+import static com.vpaliy.data.source.local.MusicContract.History;
+import static com.vpaliy.data.source.local.MusicContract.Me;
+import android.support.annotation.NonNull;
 
 @SuppressWarnings({"unused","WeakerAccess"})
 public class MusicDatabaseHelper extends SQLiteOpenHelper {
@@ -20,6 +22,9 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
         String PLAYLISTS = "playlists";
         String USERS = "users";
         String ME="me";
+        String USER_FOLLOWERS="user_followers";
+        String HISTORY_TRACK="history_tracks";
+        String HISTORY_PLAYLIST="history_playlist";
 
         String PLAYLIST_JOIN_TRACKS = "playlists " +
                 "INNER JOIN tracks ON playlists.playlist_id=tracks.ref_track_playlist_id";
@@ -37,6 +42,11 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
         String USER="REFERENCES "+Tables.USERS+"("+Users.USER_ID+")";
         String TRACK="REFERENCES "+Tables.TRACKS+"("+Tracks.TRACK_ID+")";
         String PLAYLIST="REFERENCES "+Tables.PLAYLISTS+"("+Playlists.PLAYLIST_ID+")";
+    }
+
+    interface UserFollowers {
+        String USER_ID="ref_user_id";
+        String FOLLOWER_ID="ref_follower_id";
     }
 
     public MusicDatabaseHelper(@NonNull Context context){
@@ -86,6 +96,35 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
                 Users.USER_PLAYLISTS_COUNT+" INTEGER,"+
                 Users.USER_IS_FOLLOWED+" INTEGER,"+
                 " UNIQUE (" + Users.USER_ID + ") ON CONFLICT REPLACE)");
+
+        db.execSQL("CREATE TABLE "+Tables.ME+" ("+
+                Me.ME_ID+" TEXT PRIMARY KEY NOT NULL,"+
+                Me.ME_ART_URL+" TEXT NOT NULL,"+
+                Me.ME_NICKNAME+" TEXT NOT NULL,"+
+                Me.ME_FULLNAME+" TEXT,"+
+                Me.ME_DESCRIPTION+" TEXT,"+
+                Me.ME_FOLLOWINGS_COUNT+" INTEGER,"+
+                Me.ME_FOLLOWER_COUNT+" INTEGER,"+
+                Me.ME_TRACKS_COUNT+" INTEGER,"+
+                Me.ME_LIKED_TRACKS_COUNT+" INTEGER,"+
+                Me.ME_PLAYLISTS_COUNT+" INTEGER,"+
+                " UNIQUE (" + Users.USER_ID + ") ON CONFLICT REPLACE)");
+
+        db.execSQL("CREATE TABLE "+Tables.USER_FOLLOWERS+" ("+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                UserFollowers.USER_ID+" INTEGER NOT NULL "+References.USER+","+
+                UserFollowers.FOLLOWER_ID+" INTEGER NOT NULL "+References.USER+","+
+                " UNIQUE (" + UserFollowers.USER_ID + "," + UserFollowers.FOLLOWER_ID + ") ON CONFLICT REPLACE)");
+
+        db.execSQL("CREATE TABLE "+Tables.HISTORY_TRACK+" ("+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                History.HISTORY_ITEM_ID+" INTEGER NOT NULL "+References.TRACK+","+
+                " UNIQUE (" + History.HISTORY_ITEM_ID + ") ON CONFLICT REPLACE)");
+
+        db.execSQL("CREATE TABLE "+Tables.HISTORY_PLAYLIST+" ("+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                History.HISTORY_ITEM_ID+" INTEGER NOT NULL "+References.PLAYLIST+","+
+                " UNIQUE (" + History.HISTORY_ITEM_ID + ") ON CONFLICT REPLACE)");
     }
 
     @Override
@@ -93,6 +132,9 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Tables.PLAYLISTS);
         db.execSQL("DROP TABLE IF EXISTS "+Tables.TRACKS);
         db.execSQL("DROP TABLE IF EXISTS "+Tables.USERS);
+        db.execSQL("DROP TABLE IF EXISTS "+Tables.USER_FOLLOWERS);
+        db.execSQL("DROP TABLE IF EXISTS "+Tables.HISTORY_PLAYLIST);
+        db.execSQL("DROP TABLE IF EXISTS "+Tables.HISTORY_TRACK);
         onCreate(db);
     }
 
