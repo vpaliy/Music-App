@@ -10,12 +10,13 @@
     <string name="tracks_label">Tracks</string>
     <string name="albums_label">Albums</string>
     <string name="playlist_label">Playlists</string>
-    <string name="track_history_label">Recently Played Tracks</string>
+    <string name="track_history_label">Recent Tracks</string>
     <string name="playlist_history_label">Recent Playlists</string>
     <string name="no_followers_message">No Followers</string>
     <string name="no_loved_message">No Favorite Tracks</string>
     <string name="loved_title">Favorite Tracks</string>
     <string name="followers_title">Followers</string>
+    <string name="all_listening_label">See All Listening History</string>
 
     <string name="user_empty_media">This user has no media items</string>
     <string name="item_search">Search</string>

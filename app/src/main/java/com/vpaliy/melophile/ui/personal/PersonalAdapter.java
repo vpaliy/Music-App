@@ -71,12 +71,12 @@ public class PersonalAdapter extends BaseAdapter<PersonalAdapter.CategoryWrapper
             super(itemView);
             ButterKnife.bind(this,itemView);
             list.setNestedScrollingEnabled(false);
-            title.setOnClickListener(this);
             more.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
+           // rxBus.sendWithLock();
         }
 
         @Override

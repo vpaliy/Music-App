@@ -22,14 +22,16 @@
 
     <TextView
         android:id="@+id/more"
-        android:text="@string/more_label"
+        android:text="@string/all_listening_label"
+        android:drawableEnd="@drawable/ic_keyboard_arrow"
         android:textStyle="bold"
+        android:gravity="center"
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.5"
         android:layout_marginTop="@dimen/spacing_medium"
         app:layout_constraintTop_toBottomOf="@+id/playlists" />
 

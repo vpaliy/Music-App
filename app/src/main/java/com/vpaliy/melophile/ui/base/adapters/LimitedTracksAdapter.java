@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 public class LimitedTracksAdapter extends TracksAdapter {
 
-    public int limit=5;
+    public int limit=10;
 
     public LimitedTracksAdapter(@NonNull Context context, @NonNull RxBus rxBus){
         super(context,rxBus);

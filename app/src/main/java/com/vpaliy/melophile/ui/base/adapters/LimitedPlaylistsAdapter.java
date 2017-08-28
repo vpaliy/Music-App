@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 public class LimitedPlaylistsAdapter extends PlaylistsAdapter {
 
-    private int limit;
+    private int limit=10;
 
     public LimitedPlaylistsAdapter(@NonNull Context context, @NonNull RxBus rxBus){
         super(context,rxBus);
@@ -19,6 +19,6 @@ public class LimitedPlaylistsAdapter extends PlaylistsAdapter {
     @Override
     public int getItemCount() {
         int size=super.getItemCount();
-        return size>5?limit:size;
+        return size>limit?limit:size;
     }
 }

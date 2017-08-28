@@ -101,7 +101,6 @@ public class HomeActivity extends BaseActivity {
         if(event instanceof ExposeEvent){
             navigator.navigate(this,(ExposeEvent)(event));
         }else if(event instanceof InfoEvent){
-            Log.d(HomeActivity.class.getSimpleName(),"Got It");
             showFavorites((InfoEvent)(event));
         }
     }
@@ -132,7 +131,6 @@ public class HomeActivity extends BaseActivity {
         actionBar.setPadding(0,statusBarHeight,0,0);
         setSupportActionBar(actionBar);
     }
-
 
     @Override
     public void inject() {

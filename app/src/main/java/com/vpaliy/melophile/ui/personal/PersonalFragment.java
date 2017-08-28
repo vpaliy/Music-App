@@ -8,6 +8,8 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
+import com.vpaliy.melophile.ui.base.adapters.LimitedPlaylistsAdapter;
+import com.vpaliy.melophile.ui.base.adapters.LimitedTracksAdapter;
 import com.vpaliy.melophile.ui.base.adapters.PlaylistsAdapter;
 import com.vpaliy.melophile.ui.base.adapters.TracksAdapter;
 import java.util.List;
@@ -64,16 +66,16 @@ public class PersonalFragment extends BaseFragment
 
     @Override
     public void showPlaylistHistory(@NonNull List<Playlist> playlists) {
-        PlaylistsAdapter playlistsAdapter=new PlaylistsAdapter(getContext(),rxBus);
+        LimitedPlaylistsAdapter playlistsAdapter=new LimitedPlaylistsAdapter(getContext(),rxBus);
         playlistsAdapter.setData(playlists);
-        adapter.addItem(PersonalAdapter.CategoryWrapper.wrap("Recently Played", playlistsAdapter));
+        adapter.addItem(PersonalAdapter.CategoryWrapper.wrap(getString(R.string.playlist_history_label), playlistsAdapter));
     }
 
     @Override
     public void showTrackHistory(@NonNull List<Track> tracks) {
-        TracksAdapter tracksAdapter = new TracksAdapter(getContext(), rxBus);
+        LimitedTracksAdapter tracksAdapter = new LimitedTracksAdapter(getContext(), rxBus);
         tracksAdapter.setData(tracks);
-        adapter.addItem(PersonalAdapter.CategoryWrapper.wrap("Recently Played", tracksAdapter));
+        adapter.addItem(PersonalAdapter.CategoryWrapper.wrap(getString(R.string.track_history_label), tracksAdapter));
     }
 
     @Override
