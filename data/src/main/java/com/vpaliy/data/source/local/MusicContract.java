@@ -95,6 +95,8 @@ public final class MusicContract {
     public static final String PATH_USER="users";
     public static final String PATH_ME="me";
     public static final String PATH_HISTORY="me/history";
+    public static final String PATH_HISTORY_TRACKS="me/history/tracks";
+    public static final String PATH_HISTORY_PLAYLISTS="me/history/playlists";
 
     private MusicContract(){
         throw new IllegalArgumentException();
