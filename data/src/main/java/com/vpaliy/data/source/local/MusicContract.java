@@ -3,6 +3,7 @@ package com.vpaliy.data.source.local;
 import android.content.ContentResolver;
 import android.net.Uri;
 
+@SuppressWarnings({"unused","WeakerAccess"})
 public final class MusicContract {
 
     interface TrackColumns {
@@ -92,7 +93,7 @@ public final class MusicContract {
             return CONTENT_URI.buildUpon().appendPath(id).appendPath(PATH_USER).build();
         }
 
-        public String getTrackId(Uri uri){
+        public static String getTrackId(Uri uri){
             return uri.getPathSegments().get(0);
         }
     }
@@ -119,7 +120,26 @@ public final class MusicContract {
             return CONTENT_URI.buildUpon().appendPath(id).appendPath(PATH_USER).build();
         }
 
-        public String getPlaylistId(Uri uri){
+        public static String getPlaylistId(Uri uri){
+            return uri.getPathSegments().get(0);
+        }
+    }
+
+    public static class Users implements UserColumns {
+
+        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
+
+        public static final String CONTENT_DIR_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_USER;
+
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" +PATH_USER;
+
+        public static Uri buildUserUri(String id){
+            return CONTENT_URI.buildUpon().appendPath(id).build();
+        }
+
+        public static String getUserId(Uri uri){
             return uri.getPathSegments().get(0);
         }
     }
