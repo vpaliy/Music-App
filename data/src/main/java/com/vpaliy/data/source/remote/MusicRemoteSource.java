@@ -17,16 +17,16 @@ import javax.inject.Singleton;
 import io.reactivex.Single;
 
 @Singleton
-public class MusicRemoteRemoteSource implements RemoteSource {
+public class MusicRemoteSource implements RemoteSource {
 
     private SoundCloudService service;
     private BaseSchedulerProvider schedulerProvider;
     private Filter filter;
 
     @Inject
-    public MusicRemoteRemoteSource(SoundCloudService service,
-                                   BaseSchedulerProvider schedulerProvider,
-                                   Filter filter){
+    public MusicRemoteSource(SoundCloudService service,
+                             BaseSchedulerProvider schedulerProvider,
+                             Filter filter){
         this.service=service;
         this.schedulerProvider=schedulerProvider;
         this.filter=filter;
@@ -71,27 +71,6 @@ public class MusicRemoteRemoteSource implements RemoteSource {
                 });
             }
             return start.map(filter::filterTracks);
-        }
-        return Single.error(new IllegalArgumentException("categories are null"));
-    }
-
-    @Override
-    public Single<List<UserEntity>> getUsersBy(List<String> categories) {
-        if(categories!=null) {
-            Single<List<UserEntity>> start = Single.just(new LinkedList<>());
-            for(String category:categories){
-                start=Single.zip(start,service.searchUsers(UserEntity
-                        .Filter.start()
-                        .byName(category)
-                        .createOptions())
-                        .onErrorResumeNext(Single.just(new ArrayList<>())),(first,second)->{
-                    if(second!=null){
-                        first.addAll(second);
-                    }
-                    return first;
-                });
-            }
-            return start;
         }
         return Single.error(new IllegalArgumentException("categories are null"));
     }

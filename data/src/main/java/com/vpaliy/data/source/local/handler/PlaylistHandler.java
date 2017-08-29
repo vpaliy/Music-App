@@ -1,7 +1,9 @@
 package com.vpaliy.data.source.local.handler;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
 import com.vpaliy.domain.model.MelophileTheme;
@@ -13,13 +15,18 @@ import static com.vpaliy.data.source.local.MusicContract.Playlists;
 import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 import android.support.annotation.NonNull;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 @SuppressWarnings({"unused","WeakerAccess"})
+@Singleton
 public class PlaylistHandler {
 
-    private ContentProvider provider;
+    private ContentResolver provider;
 
-    public PlaylistHandler(@NonNull ContentProvider provider){
-        this.provider=provider;
+    @Inject
+    public PlaylistHandler(@NonNull Context context){
+        this.provider=context.getContentResolver();
     }
 
     public List<Playlist>  queryAll(Query query){

@@ -73,6 +73,11 @@
                     android:pathPrefix="/redirect"/>
             </intent-filter>
         </activity>
+
+        <provider
+            android:exported="false"
+            android:authorities="com.vpaliy.melophile"
+            android:name="com.vpaliy.data.source.local.MusicProvider"/>
     </application>
 
 </manifest>

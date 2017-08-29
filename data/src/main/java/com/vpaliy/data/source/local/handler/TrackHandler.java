@@ -1,24 +1,33 @@
 package com.vpaliy.data.source.local.handler;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
 import com.vpaliy.domain.model.MelophileTheme;
 import com.vpaliy.domain.model.Track;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import static com.vpaliy.data.source.local.MusicContract.Tracks;
 import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 
 @SuppressWarnings({"unused","WeakerAccess"})
+@Singleton
 public class TrackHandler {
 
-    private ContentProvider provider;
+    private ContentResolver provider;
 
-    public TrackHandler(ContentProvider provider){
-        this.provider=provider;
+    @Inject
+    public TrackHandler(@NonNull Context context){
+        this.provider=context.getContentResolver();
     }
 
     public List<Track> queryAll(Query query){

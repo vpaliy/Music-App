@@ -1,7 +1,8 @@
 package com.vpaliy.data.source.local.handler;
 
-import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
@@ -9,16 +10,21 @@ import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.vpaliy.data.source.local.MusicContract.Users;
+import android.support.annotation.NonNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @SuppressWarnings({"unused","WeakerAccess"})
+@Singleton
 public class UserHandler {
 
-    private ContentProvider provider;
+    private ContentResolver provider;
 
-    public UserHandler(ContentProvider provider){
-        this.provider=provider;
+    @Inject
+    public UserHandler(@NonNull Context context){
+        this.provider=context.getContentResolver();
     }
 
     public List<User> queryAll(Query query){
