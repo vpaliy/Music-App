@@ -14,14 +14,14 @@ import android.text.TextUtils;
 import static com.vpaliy.data.source.local.MusicContract.Playlists;
 import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @SuppressWarnings({"unused","WeakerAccess"})
 @Singleton
 public class PlaylistHandler {
+
+    private static final String TAG=PlaylistHandler.class.getSimpleName();
 
     private ContentResolver provider;
 
@@ -48,7 +48,9 @@ public class PlaylistHandler {
             List<Playlist> playlists=new ArrayList<>(cursor.getCount());
             while(cursor.moveToNext()){
                 Playlist playlist= DatabaseUtils.toPlaylist(cursor);
-                playlists.add(playlist);
+                if(playlist!=null) {
+                    playlists.add(playlist);
+                }
             }
             if(!cursor.isClosed()) cursor.close();
             return playlists;
@@ -63,8 +65,11 @@ public class PlaylistHandler {
                 List<Playlist> playlists=new ArrayList<>(cursor.getCount());
                 String tag=PlaylistHandler.class.getSimpleName();
                 while(cursor.moveToNext()){
-                     String id=cursor.getString(cursor.getColumnIndex(MelophileThemes.MELOPHILE_ITEM_ID));
-                     playlists.add(query(id));
+                    String id=cursor.getString(cursor.getColumnIndex(MelophileThemes.MELOPHILE_ITEM_ID));
+                    Playlist playlist=query(id);
+                    if(playlist!=null){
+                        playlists.add(playlist);
+                    }
                 }
                 if(!cursor.isClosed()) cursor.close();
                 return playlists;
@@ -82,6 +87,7 @@ public class PlaylistHandler {
         if(cursor!=null && cursor.moveToFirst()) {
             Playlist playlist=DatabaseUtils.toPlaylist(cursor);
             cursor.close();
+            return playlist;
         }
         return null;
     }
@@ -96,7 +102,7 @@ public class PlaylistHandler {
     public void insert(MelophileTheme theme, Playlist playlist){
         ContentValues values=DatabaseUtils.toValues(theme,playlist);
         if(values!=null){
-            provider.insert(MelophileThemes.CONTENT_URI,values);
+            provider.insert(MelophileThemes.buildPlaylistsTheme(),values);
         }
     }
 }

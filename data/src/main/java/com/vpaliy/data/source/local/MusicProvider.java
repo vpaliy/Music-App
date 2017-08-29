@@ -17,7 +17,6 @@ import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 import com.vpaliy.data.source.local.utils.SqlQueryBuilder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 public class MusicProvider extends ContentProvider{
 

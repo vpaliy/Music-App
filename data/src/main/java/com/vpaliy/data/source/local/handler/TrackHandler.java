@@ -1,21 +1,18 @@
 package com.vpaliy.data.source.local.handler;
 
-import android.content.ContentProvider;
+
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
 import com.vpaliy.domain.model.MelophileTheme;
 import com.vpaliy.domain.model.Track;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
+import android.support.annotation.NonNull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -46,7 +43,9 @@ public class TrackHandler {
             List<Track> tracks=new ArrayList<>();
             while(cursor.moveToNext()){
                 Track track= DatabaseUtils.toTrack(cursor);
-                tracks.add(track);
+                if(track!=null){
+                    tracks.add(track);
+                }
             }
             if(!cursor.isClosed()) cursor.close();
             return tracks;
@@ -60,8 +59,10 @@ public class TrackHandler {
             if(cursor!=null && cursor.moveToFirst()){
                 Track track=DatabaseUtils.toTrack(cursor);
                 if(!cursor.isClosed()) cursor.close();
+                Log.d(TrackHandler.class.getSimpleName(),"Returning not null");
                 return track;
             }
+            Log.d(TrackHandler.class.getSimpleName(),"Returning null");
             return null;
         }
         throw new IllegalArgumentException("Id is null");
@@ -77,8 +78,12 @@ public class TrackHandler {
             Cursor cursor=provider.query(MelophileThemes.buildTracksTheme(theme.getTheme()),null,null,null,null);
             if(cursor!=null){
                 List<Track> tracks=new ArrayList<>(cursor.getCount());
+                Log.d(TrackHandler.class.getSimpleName(),Integer.toString(cursor.getCount()));
                 while(cursor.moveToNext()){
-                    tracks.add(query(cursor.getString(cursor.getColumnIndex(MelophileThemes.MELOPHILE_ITEM_ID))));
+                    Track track=query(cursor.getString(cursor.getColumnIndex(MelophileThemes.MELOPHILE_ITEM_ID)));
+                    if(track!=null) {
+                        tracks.add(track);
+                    }
                 }
                 if(!cursor.isClosed()) cursor.close();
                 return tracks;
@@ -98,7 +103,7 @@ public class TrackHandler {
     public void insert(MelophileTheme theme, Track track){
         ContentValues values=DatabaseUtils.toValues(theme,track);
         if(values!=null){
-            provider.insert(MelophileThemes.CONTENT_URI,values);
+            provider.insert(MelophileThemes.buildTracksTheme(),values);
         }
     }
 }

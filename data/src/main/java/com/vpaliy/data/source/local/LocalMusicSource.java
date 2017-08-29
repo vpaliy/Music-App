@@ -12,7 +12,6 @@ import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.model.UserDetails;
 import java.util.List;
 import io.reactivex.Single;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

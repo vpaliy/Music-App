@@ -3,7 +3,7 @@ package com.vpaliy.data.repository;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
+import android.util.Log;
 import com.google.common.cache.CacheBuilder;
 import com.vpaliy.data.cache.CacheStore;
 import com.vpaliy.data.mapper.Mapper;
@@ -11,6 +11,7 @@ import com.vpaliy.data.model.UserDetailsEntity;
 import com.vpaliy.data.source.LocalSource;
 import com.vpaliy.data.source.PersonalInfo;
 import com.vpaliy.data.source.RemoteSource;
+import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.model.MelophileTheme;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
@@ -22,11 +23,13 @@ import com.vpaliy.soundcloud.model.TrackEntity;
 import com.vpaliy.soundcloud.model.UserEntity;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
+@SuppressWarnings("WeakerAccess")
 public class MusicRepository implements Repository {
 
     private static final int DEFAULT_CACHE_SIZE=150; //max 150 items
@@ -46,15 +49,16 @@ public class MusicRepository implements Repository {
 
     private PersonalInfo personalInfo;
     private Context context;
+    private BaseSchedulerProvider schedulerProvider;
 
     @Inject
-    public MusicRepository(Context context,
-                           Mapper<Playlist,PlaylistEntity> playlistMapper,
+    public MusicRepository(Mapper<Playlist,PlaylistEntity> playlistMapper,
                            Mapper<Track,TrackEntity> trackMapper,
                            Mapper<User,UserEntity> userMapper,
                            Mapper<UserDetails,UserDetailsEntity> detailsMapper,
                            RemoteSource remoteSource, LocalSource localSource,
-                           PersonalInfo personalInfo){
+                           PersonalInfo personalInfo, Context context,
+                           BaseSchedulerProvider schedulerProvider){
         this.playlistMapper=playlistMapper;
         this.trackMapper=trackMapper;
         this.userMapper=userMapper;
@@ -62,6 +66,7 @@ public class MusicRepository implements Repository {
         this.remoteSource=remoteSource;
         this.localSource=localSource;
         this.personalInfo=personalInfo;
+        this.schedulerProvider=schedulerProvider;
         this.context=context;
         //initialize cache
         playlistCacheStore=new CacheStore<>(CacheBuilder.newBuilder()
@@ -83,7 +88,7 @@ public class MusicRepository implements Repository {
         if(isNetworkConnection()) {
             return remoteSource.getPlaylistsBy(theme.getTags())
                     .map(playlistMapper::map)
-                    .map(list -> savePlaylists(theme, list));
+                    .doOnSuccess(list -> savePlaylists(theme, list));
         }
         return localSource.getPlaylistsBy(theme);
     }
@@ -94,7 +99,7 @@ public class MusicRepository implements Repository {
             return remoteSource.getTracksBy(theme.getTags())
                     .map(trackMapper::map)
                     .map(personalInfo::didLike)
-                    .map(list -> saveTracks(theme, list));
+                    .doOnSuccess(list -> saveTracks(theme, list));
         }
         return localSource.getTracksBy(theme)
                 .map(personalInfo::didLike);
@@ -166,24 +171,29 @@ public class MusicRepository implements Repository {
                 .map(personalInfo::amFollowing);
     }
 
-    private List<Playlist> savePlaylists(MelophileTheme theme, List<Playlist> list){
-        if(list!=null){
-            for(Playlist playlist:list){
-                localSource.insert(playlist);
-                localSource.insert(theme,playlist);
+    private void savePlaylists(MelophileTheme theme, List<Playlist> list){
+        Completable.fromCallable(()->{
+            if(list!=null){
+                for(Playlist playlist:list){
+                    localSource.insert(playlist);
+                    localSource.insert(theme,playlist);
+                }
             }
-        }
-        return list;
+            return true;
+        }).subscribeOn(schedulerProvider.multi()).subscribe();
     }
 
-    private List<Track> saveTracks(MelophileTheme theme, List<Track> list){
-        if(list!=null){
-            for(Track track:list){
-                localSource.insert(track);
-                localSource.insert(theme,track);
+    private void saveTracks(MelophileTheme theme, List<Track> list){
+        Completable.fromCallable(()->{
+            if(list!=null){
+                for(Track track:list){
+                    localSource.insert(track);
+                    localSource.insert(theme,track);
+                }
             }
-        }
-        return list;
+            return true;
+        }).subscribeOn(schedulerProvider.multi()).subscribe();
+
     }
 
     private Playlist cache(Playlist playlist){
