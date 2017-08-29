@@ -4,11 +4,9 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
-
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 

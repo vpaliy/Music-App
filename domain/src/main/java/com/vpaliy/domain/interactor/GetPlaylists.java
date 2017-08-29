@@ -24,7 +24,7 @@ public class GetPlaylists extends SingleUseCase<PlaylistSet,MelophileTheme>{
     @Override
     public Single<PlaylistSet> buildUseCase(MelophileTheme theme) {
         if(theme!=null){
-            return repository.getPlaylistsBy(theme.getTags())
+            return repository.getPlaylistsBy(theme)
                     .map(list -> new PlaylistSet(theme, list));
         }
         return Single.error(new IllegalArgumentException("Melophile theme is null!"));

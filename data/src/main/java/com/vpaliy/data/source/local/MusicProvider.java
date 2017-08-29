@@ -14,11 +14,9 @@ import static com.vpaliy.data.source.local.MusicDatabaseHelper.LikedTracks;
 import static com.vpaliy.data.source.local.MusicDatabaseHelper.UserFollowers;
 import static com.vpaliy.data.source.local.MusicDatabaseHelper.TracksPlaylists;
 import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
+import com.vpaliy.data.source.local.utils.SqlQueryBuilder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import com.vpaliy.data.source.local.utils.SqlQueryBuilder;
-import com.vpaliy.domain.model.MelophileTheme;
 
 public class MusicProvider extends ContentProvider{
 

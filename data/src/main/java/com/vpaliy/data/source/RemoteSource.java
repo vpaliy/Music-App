@@ -11,7 +11,6 @@ import io.reactivex.Single;
 public interface RemoteSource {
     Single<List<TrackEntity>> getTracksBy(List<String> categories);
     Single<List<PlaylistEntity>> getPlaylistsBy(List<String> categories);
-    Single<List<UserEntity>> getUsersBy(List<String> categories);
     Single<UserDetailsEntity> getUserBy(String id);
     Single<TrackEntity> getTrackBy(String id);
     Single<PlaylistEntity> getPlaylistBy(String id);

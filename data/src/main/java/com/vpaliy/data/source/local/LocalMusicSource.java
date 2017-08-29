@@ -5,14 +5,16 @@ import com.vpaliy.data.source.LocalSource;
 import com.vpaliy.data.source.local.handler.PlaylistHandler;
 import com.vpaliy.data.source.local.handler.TrackHandler;
 import com.vpaliy.data.source.local.handler.UserHandler;
+import com.vpaliy.domain.model.MelophileTheme;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.model.UserDetails;
 import java.util.List;
 import io.reactivex.Single;
+import javax.inject.Singleton;
 
-//@Singleton
+@Singleton
 public class LocalMusicSource implements LocalSource {
 
     private PlaylistHandler playlistHandler;
@@ -29,19 +31,19 @@ public class LocalMusicSource implements LocalSource {
     }
 
     @Override
-    public Single<List<Playlist>> getPlaylistsBy(List<String> categories) {
-        return null;
+    public Single<List<Playlist>> getPlaylistsBy(MelophileTheme theme) {
+        if(theme!=null){
+            return Single.fromCallable(()->playlistHandler.queryByTheme(theme));
+        }
+        return Single.error(new IllegalArgumentException("Theme is null"));
     }
 
     @Override
-    public Single<List<Track>> getTracksBy(List<String> categories) {
-        return null;
-    }
-
-
-    @Override
-    public Single<List<User>> getUsersBy(List<String> categories) {
-        return null;
+    public Single<List<Track>> getTracksBy(MelophileTheme theme) {
+        if(theme!=null){
+            return Single.fromCallable(()->trackHandler.queryByTheme(theme));
+        }
+        return Single.error(new IllegalArgumentException("Theme is null"));
     }
 
     @Override
@@ -94,5 +96,15 @@ public class LocalMusicSource implements LocalSource {
     @Override
     public void insert(User user) {
         userHandler.insert(user);
+    }
+
+    @Override
+    public void insert(MelophileTheme theme, Playlist playlist) {
+        playlistHandler.insert(theme,playlist);
+    }
+
+    @Override
+    public void insert(MelophileTheme theme, Track track) {
+        trackHandler.insert(theme,track);
     }
 }

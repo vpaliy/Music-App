@@ -4,10 +4,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 import com.vpaliy.data.mapper.MapperUtils;
+import com.vpaliy.domain.model.MelophileTheme;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
-
 import java.util.List;
 
 import static com.vpaliy.data.source.local.MusicContract.Tracks;
@@ -16,6 +16,7 @@ import static com.vpaliy.data.source.local.MusicContract.Users;
 import static com.vpaliy.data.source.local.MusicDatabaseHelper.TracksPlaylists;
 import static com.vpaliy.data.source.local.MusicDatabaseHelper.LikedTracks;
 import static com.vpaliy.data.source.local.MusicDatabaseHelper.UserFollowers;
+import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 
 public final class DatabaseUtils {
 
@@ -180,5 +181,21 @@ public final class DatabaseUtils {
         track.setLiked(isLiked);
         //TODO fetch the user
         return track;
+    }
+
+    public static ContentValues toValues(MelophileTheme theme, Track track){
+        if(theme==null||track==null) return null;
+        ContentValues values=new ContentValues();
+        values.put(MelophileThemes.MELOPHILE_THEME_ID,theme.getTheme());
+        values.put(MelophileThemes.MELOPHILE_ITEM_ID,track.getId());
+        return values;
+    }
+
+    public static ContentValues toValues(MelophileTheme theme, Playlist playlist){
+        if(theme==null||playlist==null) return null;
+        ContentValues values=new ContentValues();
+        values.put(MelophileThemes.MELOPHILE_THEME_ID,theme.getTheme());
+        values.put(MelophileThemes.MELOPHILE_ITEM_ID,playlist.getId());
+        return values;
     }
 }

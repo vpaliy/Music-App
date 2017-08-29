@@ -30,7 +30,7 @@ public class GetTracks extends SingleUseCase<TrackSet,MelophileTheme>{
     @Override
     public Single<TrackSet> buildUseCase(MelophileTheme theme) {
         if(theme!=null){
-            return repository.getTracksBy(theme.getTags())
+            return repository.getTracksBy(theme)
                     .map(list -> new TrackSet(theme, list));
         }
         return Single.error(new IllegalArgumentException("Melophile theme is null!"));
