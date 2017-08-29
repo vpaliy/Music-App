@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import static com.vpaliy.data.source.local.MusicContract.Playlists;
 import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -60,8 +61,12 @@ public class PlaylistHandler {
             Cursor cursor=provider.query(MelophileThemes.buildPlaylistsTheme(theme.getTheme()),null,null,null,null);
             if(cursor!=null){
                 List<Playlist> playlists=new ArrayList<>(cursor.getCount());
+                String tag=PlaylistHandler.class.getSimpleName();
                 while(cursor.moveToNext()){
-                    playlists.add(query(cursor.getString(cursor.getColumnIndex(MelophileThemes.MELOPHILE_ITEM_ID))));
+                    String id=cursor.getString(cursor.getColumnIndex(MelophileThemes.MELOPHILE_ITEM_ID));
+                    Log.d(tag,"About to load:"+id);
+                    playlists.add(query(id));
+                    Log.d(tag,"Loaded:"+id);
                 }
                 if(!cursor.isClosed()) cursor.close();
                 return playlists;

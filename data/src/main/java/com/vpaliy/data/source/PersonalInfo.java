@@ -22,8 +22,8 @@ public class PersonalInfo {
     public PersonalInfo(SoundCloudService service){
         likedIds=new HashSet<>();
         followedIds=new HashSet<>();
-        fetchFollowings(service);
-        fetchTracks(service);
+      //  fetchFollowings(service);
+      //  fetchTracks(service);
     }
 
     private void fetchFollowings(SoundCloudService service){

@@ -169,6 +169,7 @@ public class MusicRepository implements Repository {
     private List<Playlist> savePlaylists(MelophileTheme theme, List<Playlist> list){
         if(list!=null){
             for(Playlist playlist:list){
+                localSource.insert(playlist);
                 localSource.insert(theme,playlist);
             }
         }
@@ -178,6 +179,7 @@ public class MusicRepository implements Repository {
     private List<Track> saveTracks(MelophileTheme theme, List<Track> list){
         if(list!=null){
             for(Track track:list){
+                localSource.insert(track);
                 localSource.insert(theme,track);
             }
         }

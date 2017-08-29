@@ -17,6 +17,7 @@ import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 import com.vpaliy.data.source.local.utils.SqlQueryBuilder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class MusicProvider extends ContentProvider{
 
@@ -135,6 +136,7 @@ public class MusicProvider extends ContentProvider{
                 return builder.table(Tables.ME);
             case PLAYLIST:
                 id=Playlists.getPlaylistId(uri);
+                Log.d(MusicProvider.class.getSimpleName(),id);
                 return builder.table(Tables.PLAYLISTS)
                         .where(Playlists.PLAYLIST_ID+"=?",id);
             case TRACK:
@@ -181,14 +183,18 @@ public class MusicProvider extends ContentProvider{
                         .mapToTable(Users.USER_ID,Tables.USERS)
                         .mapToTable(Playlists.PLAYLIST_ID,Tables.PLAYLISTS)
                         .where(Users.USER_ID+"=?",id);
-            case MELOPHILE_PLAYLISTS:
+            case MELOPHILE_PLAYLISTS_THEME:
                 id= MelophileThemes.getId(uri);
                 return builder.table(Tables.MELOPHILE_PLAYLISTS)
                         .where(MelophileThemes.MELOPHILE_THEME_ID+"=?",id);
-            case MELOPHILE_TRACKS:
+            case MELOPHILE_TRACKS_THEME:
                 id=MelophileThemes.getId(uri);
                 return builder.table(Tables.MELOPHILE_TRACKS)
                         .where(MelophileThemes.MELOPHILE_THEME_ID+"=?",id);
+            case MELOPHILE_TRACKS:
+                return builder.table(Tables.MELOPHILE_TRACKS);
+            case MELOPHILE_PLAYLISTS:
+                return builder.table(Tables.MELOPHILE_PLAYLISTS);
             default:
                 throw new IllegalArgumentException("Wrong matcher!");
         }

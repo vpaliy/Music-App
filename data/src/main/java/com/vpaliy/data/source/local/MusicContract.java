@@ -129,7 +129,7 @@ public final class MusicContract {
         }
 
         public static String getTrackId(Uri uri){
-            return uri.getPathSegments().get(0);
+            return uri.getPathSegments().get(1);
         }
     }
 
@@ -156,7 +156,7 @@ public final class MusicContract {
         }
 
         public static String getPlaylistId(Uri uri){
-            return uri.getPathSegments().get(0);
+            return uri.getPathSegments().get(1);
         }
     }
 
@@ -183,7 +183,7 @@ public final class MusicContract {
         }
 
         public static String getUserId(Uri uri){
-            return uri.getPathSegments().get(0);
+            return uri.getPathSegments().get(1);
         }
     }
 
@@ -202,7 +202,7 @@ public final class MusicContract {
         }
 
         public static String getMeId(Uri uri){
-            return uri.getPathSegments().get(0);
+            return uri.getPathSegments().get(1);
         }
     }
 
@@ -235,10 +235,6 @@ public final class MusicContract {
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" +PATH_MELOPHILE_THEMES;
 
-        public static Uri buildTracksThemes(String id){
-            return BASE_CONTENT_URI.buildUpon().appendPath(PATH_MELOPHILE_TRACKS).build();
-        }
-
         public static Uri buildPlaylistsTheme(String id){
             return CONTENT_URI.buildUpon().appendPath(id).appendPath(PATH_PLAYLIST).build();
         }
@@ -247,8 +243,16 @@ public final class MusicContract {
             return CONTENT_URI.buildUpon().appendPath(id).appendPath(PATH_TRACK).build();
         }
 
+        public static Uri buildPlaylistsTheme(){
+            return CONTENT_URI.buildUpon().appendPath(PATH_PLAYLIST).build();
+        }
+
+        public static Uri buildTracksTheme(){
+            return CONTENT_URI.buildUpon().appendPath(PATH_TRACK).build();
+        }
+
         public static String getId(Uri uri){
-            return uri.getPathSegments().get(0);
+            return uri.getPathSegments().get(1);
         }
     }
 }

@@ -119,7 +119,7 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
                 Me.ME_TRACKS_COUNT+" INTEGER,"+
                 Me.ME_LIKED_TRACKS_COUNT+" INTEGER,"+
                 Me.ME_PLAYLISTS_COUNT+" INTEGER,"+
-                " UNIQUE (" + Users.USER_ID + ") ON CONFLICT REPLACE)");
+                " UNIQUE (" + Me.ME_ID + ") ON CONFLICT REPLACE)");
 
         db.execSQL("CREATE TABLE "+Tables.USER_FOLLOWERS+" ("+
                 BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+

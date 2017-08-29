@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SqlQueryBuilder {
+
+    private static final String TAG = SqlQueryBuilder.class.getSimpleName();
 
     private String mTable = null;
     private Map<String, String> mProjectionMap = new HashMap<>();
@@ -98,7 +101,7 @@ public class SqlQueryBuilder {
         }
     }
 
-    public SqlQueryBuilder mapToTable(String column, String table) {
+    public  SqlQueryBuilder mapToTable(String column, String table) {
         mProjectionMap.put(column, table + "." + column);
         return this;
     }
@@ -156,6 +159,8 @@ public class SqlQueryBuilder {
                         String limit) {
         assertTable();
         if (columns != null) mapColumns(columns);
+        Log.d(TAG, "query(columns=" + Arrays.toString(columns)
+                + ", distinct=" + distinct + ") " + this);
         return db.query(distinct, mTable, columns, getSelection(), getSelectionArgs(), mGroupBy,
                 mHaving, orderBy, limit);
     }
@@ -165,6 +170,7 @@ public class SqlQueryBuilder {
      */
     public int update(SQLiteDatabase db, ContentValues values) {
         assertTable();
+        Log.d(TAG, "update() " + this);
         return db.update(mTable, values, getSelection(), getSelectionArgs());
     }
 
@@ -173,6 +179,7 @@ public class SqlQueryBuilder {
      */
     public int delete(SQLiteDatabase db) {
         assertTable();
+        Log.d(TAG, "delete() " + this);
         return db.delete(mTable, getSelection(), getSelectionArgs());
     }
 }
