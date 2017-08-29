@@ -85,11 +85,11 @@ public final class MusicContract {
         String HISTORY_ITEM_ID="history_item_id";
     }
 
-    interface TagsColumns {
-        String TAG_ID="tag_item_id";
-        String TAGGED_ITEM_ID="tagged_item_id";
-    }
 
+    interface MelophileThemeColumns{
+        String MELOPHILE_THEME_ID="melophile_theme_id";
+        String MELOPHILE_ITEM_ID="melophile_item_id";
+    }
 
     public static final String CONTENT_AUTHORITY="com.vpaliy.melophile";
 
@@ -102,6 +102,9 @@ public final class MusicContract {
     public static final String PATH_HISTORY="me/history";
     public static final String PATH_HISTORY_TRACKS="me/history/tracks";
     public static final String PATH_HISTORY_PLAYLISTS="me/history/playlists";
+    public static final String PATH_MELOPHILE_THEMES="melophile";
+    public static final String PATH_MELOPHILE_TRACKS="melophile/tracks";
+    public static final String PATH_MELOPHILE_PLAYLISTS="melophile/playlists";
 
     private MusicContract(){
         throw new IllegalArgumentException();
@@ -219,6 +222,25 @@ public final class MusicContract {
 
         public static Uri buildPlaylistsHistoryUri(){
             return CONTENT_URI.buildUpon().appendPath(PATH_PLAYLIST).build();
+        }
+    }
+
+    public static class MelophileThemes implements MelophileThemeColumns {
+
+        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(PATH_MELOPHILE_THEMES).build();
+
+        public static final String CONTENT_DIR_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MELOPHILE_THEMES;
+
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" +PATH_MELOPHILE_THEMES;
+
+        public static Uri buildTracksThemes(){
+            return BASE_CONTENT_URI.buildUpon().appendPath(PATH_MELOPHILE_TRACKS).build();
+        }
+
+        public static Uri buildPlaylistsTheme(){
+            return BASE_CONTENT_URI.buildUpon().appendPath(PATH_MELOPHILE_PLAYLISTS).build();
         }
     }
 }

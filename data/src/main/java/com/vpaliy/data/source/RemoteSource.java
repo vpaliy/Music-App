@@ -8,7 +8,7 @@ import com.vpaliy.soundcloud.model.UserEntity;
 import java.util.List;
 import io.reactivex.Single;
 
-public interface Source {
+public interface RemoteSource {
     Single<List<TrackEntity>> getTracksBy(List<String> categories);
     Single<List<PlaylistEntity>> getPlaylistsBy(List<String> categories);
     Single<List<UserEntity>> getUsersBy(List<String> categories);

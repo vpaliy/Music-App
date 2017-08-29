@@ -1,17 +1,15 @@
 package com.vpaliy.data.source.remote;
 
 import com.vpaliy.data.model.UserDetailsEntity;
-import com.vpaliy.data.source.Source;
+import com.vpaliy.data.source.RemoteSource;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.soundcloud.SoundCloudService;
 import com.vpaliy.soundcloud.model.PlaylistEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
 import com.vpaliy.soundcloud.model.UserEntity;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,16 +17,16 @@ import javax.inject.Singleton;
 import io.reactivex.Single;
 
 @Singleton
-public class RemoteSource implements Source{
+public class MusicRemoteRemoteSource implements RemoteSource {
 
     private SoundCloudService service;
     private BaseSchedulerProvider schedulerProvider;
     private Filter filter;
 
     @Inject
-    public RemoteSource(SoundCloudService service,
-                        BaseSchedulerProvider schedulerProvider,
-                        Filter filter){
+    public MusicRemoteRemoteSource(SoundCloudService service,
+                                   BaseSchedulerProvider schedulerProvider,
+                                   Filter filter){
         this.service=service;
         this.schedulerProvider=schedulerProvider;
         this.filter=filter;

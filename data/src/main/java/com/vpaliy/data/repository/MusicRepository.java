@@ -5,7 +5,7 @@ import com.vpaliy.data.cache.CacheStore;
 import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.data.model.UserDetailsEntity;
 import com.vpaliy.data.source.PersonalInfo;
-import com.vpaliy.data.source.Source;
+import com.vpaliy.data.source.RemoteSource;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
@@ -30,7 +30,7 @@ public class MusicRepository implements Repository {
     private Mapper<Track,TrackEntity> trackMapper;
     private Mapper<User,UserEntity> userMapper;
     private Mapper<UserDetails,UserDetailsEntity> detailsMapper;
-    private Source remoteSource;
+    private RemoteSource remoteRemoteSource;
 
     private CacheStore<String,Playlist> playlistCacheStore;
     private CacheStore<String,Track> trackCacheStore;
@@ -43,12 +43,12 @@ public class MusicRepository implements Repository {
                            Mapper<Track,TrackEntity> trackMapper,
                            Mapper<User,UserEntity> userMapper,
                            Mapper<UserDetails,UserDetailsEntity> detailsMapper,
-                           Source remoteSource, PersonalInfo personalInfo){
+                           RemoteSource remoteRemoteSource, PersonalInfo personalInfo){
         this.playlistMapper=playlistMapper;
         this.trackMapper=trackMapper;
         this.userMapper=userMapper;
         this.detailsMapper=detailsMapper;
-        this.remoteSource=remoteSource;
+        this.remoteRemoteSource = remoteRemoteSource;
         this.personalInfo=personalInfo;
         //initialize cache
         playlistCacheStore=new CacheStore<>(CacheBuilder.newBuilder()
@@ -67,20 +67,20 @@ public class MusicRepository implements Repository {
 
     @Override
     public Single<List<Playlist>> getPlaylistsBy(List<String> categories) {
-        return remoteSource.getPlaylistsBy(categories)
+        return remoteRemoteSource.getPlaylistsBy(categories)
                 .map(playlistMapper::map);
     }
 
     @Override
     public Single<List<Track>> getTracksBy(List<String> categories) {
-        return remoteSource.getTracksBy(categories)
+        return remoteRemoteSource.getTracksBy(categories)
                 .map(trackMapper::map)
                 .map(personalInfo::didLike);
     }
 
     @Override
     public Single<List<User>> getUsersBy(List<String> categories) {
-        return remoteSource.getUsersBy(categories)
+        return remoteRemoteSource.getUsersBy(categories)
                 .map(userMapper::map)
                 .map(personalInfo::amFollowing);
     }
@@ -90,7 +90,7 @@ public class MusicRepository implements Repository {
         if(playlistCacheStore.isInCache(id)){
             return playlistCacheStore.getStream(id);
         }
-        return remoteSource.getPlaylistBy(id)
+        return remoteRemoteSource.getPlaylistBy(id)
                 .map(playlistMapper::map);
     }
 
@@ -100,21 +100,21 @@ public class MusicRepository implements Repository {
             return trackCacheStore.getStream(id)
                     .map(personalInfo::didLike);
         }
-        return remoteSource.getTrackBy(id)
+        return remoteRemoteSource.getTrackBy(id)
                 .map(trackMapper::map)
                 .map(personalInfo::didLike);
     }
 
     @Override
     public Single<List<Track>> getUserFavorites(String id) {
-        return remoteSource.getUserFavorites(id)
+        return remoteRemoteSource.getUserFavorites(id)
                 .map(trackMapper::map)
                 .map(personalInfo::didLike);
     }
 
     @Override
     public Single<UserDetails> getUserBy(String id) {
-        return remoteSource.getUserBy(id)
+        return remoteRemoteSource.getUserBy(id)
                 .map(detailsMapper::map)
                 .map(details -> {
                     if(details!=null){
@@ -126,7 +126,7 @@ public class MusicRepository implements Repository {
 
     @Override
     public Single<List<User>> getUserFollowers(String id) {
-        return remoteSource.getUserFollowers(id)
+        return remoteRemoteSource.getUserFollowers(id)
                 .map(userMapper::map)
                 .map(personalInfo::amFollowing);
     }

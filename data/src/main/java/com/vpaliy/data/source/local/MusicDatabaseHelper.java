@@ -9,6 +9,7 @@ import static com.vpaliy.data.source.local.MusicContract.Playlists;
 import static com.vpaliy.data.source.local.MusicContract.Tracks;
 import static com.vpaliy.data.source.local.MusicContract.History;
 import static com.vpaliy.data.source.local.MusicContract.Me;
+import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 import android.support.annotation.NonNull;
 
 @SuppressWarnings({"unused","WeakerAccess"})
@@ -22,6 +23,8 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
         String PLAYLISTS = "playlists";
         String USERS = "users";
         String ME="me";
+        String MELOPHILE_TRACKS="melophile_tracks";
+        String MELOPHILE_PLAYLISTS="melophile_playlists";
         String USER_FOLLOWERS="user_followers";
         String TRACKS_PLAYLISTS="tracks_playlists";
         String HISTORY_TRACK="history_tracks";
@@ -140,13 +143,23 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
                 LikedTracks.USER_ID+" TEXT NOT NULL "+References.USER+","+
                 " UNIQUE (" + LikedTracks.TRACK_ID + "," + LikedTracks.USER_ID + ") ON CONFLICT REPLACE)");
 
-
         db.execSQL("CREATE TABLE "+Tables.TRACKS_PLAYLISTS+" ("+
                 BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 TracksPlaylists.TRACK_ID+" TEXT NOT NULL "+References.TRACK+","+
                 TracksPlaylists.PLAYLIST_ID+" TEXT NOT NULL "+References.PLAYLIST+","+
                 " UNIQUE (" + TracksPlaylists.TRACK_ID + "," + TracksPlaylists.PLAYLIST_ID + ") ON CONFLICT REPLACE)");
 
+        db.execSQL("CREATE TABLE "+Tables.MELOPHILE_PLAYLISTS+" ("+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                MelophileThemes.MELOPHILE_THEME_ID+" TEXT NOT NULL,"+
+                MelophileThemes.MELOPHILE_ITEM_ID+" TEXT NOT NULL "+References.PLAYLIST+","+
+                " UNIQUE (" + MelophileThemes.MELOPHILE_THEME_ID + "," + MelophileThemes.MELOPHILE_ITEM_ID + ") ON CONFLICT REPLACE)");
+
+        db.execSQL("CREATE TABLE "+Tables.MELOPHILE_TRACKS+" ("+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                MelophileThemes.MELOPHILE_THEME_ID+" TEXT NOT NULL,"+
+                MelophileThemes.MELOPHILE_ITEM_ID+" TEXT NOT NULL "+References.TRACK+","+
+                " UNIQUE (" + MelophileThemes.MELOPHILE_THEME_ID + "," + MelophileThemes.MELOPHILE_ITEM_ID + ") ON CONFLICT REPLACE)");
     }
 
     @Override
@@ -159,6 +172,8 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Tables.LIKED_TRACKS);
         db.execSQL("DROP TABLE IF EXISTS "+Tables.HISTORY_PLAYLIST);
         db.execSQL("DROP TABLE IF EXISTS "+Tables.HISTORY_TRACK);
+        db.execSQL("DROP TABLE IF EXISTS "+Tables.MELOPHILE_TRACKS);
+        db.execSQL("DROP TABLE IF EXISTS "+Tables.MELOPHILE_PLAYLISTS);
         onCreate(db);
     }
 

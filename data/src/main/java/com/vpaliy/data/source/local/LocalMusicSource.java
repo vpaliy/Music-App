@@ -1,10 +1,8 @@
 package com.vpaliy.data.source.local;
 
 import android.text.TextUtils;
-
 import com.vpaliy.data.source.LocalSource;
 import com.vpaliy.data.source.local.handler.PlaylistHandler;
-import com.vpaliy.data.source.local.handler.Query;
 import com.vpaliy.data.source.local.handler.TrackHandler;
 import com.vpaliy.data.source.local.handler.UserHandler;
 import com.vpaliy.domain.model.Playlist;
@@ -12,24 +10,16 @@ import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.model.UserDetails;
 import java.util.List;
-import java.util.concurrent.Callable;
-
 import io.reactivex.Single;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
-import static com.vpaliy.data.source.local.MusicContract.Playlists;
-import static com.vpaliy.data.source.local.MusicContract.Tracks;
-import static com.vpaliy.data.source.local.MusicContract.Users;
-
-@Singleton
+//@Singleton
 public class LocalMusicSource implements LocalSource {
 
     private PlaylistHandler playlistHandler;
     private TrackHandler trackHandler;
     private UserHandler userHandler;
 
-    @Inject
+    //@Inject
     public LocalMusicSource(PlaylistHandler playlistHandler,
                             TrackHandler trackHandler,
                             UserHandler userHandler){

@@ -3,7 +3,7 @@ package com.vpaliy.melophile.di.component;
 import android.content.Context;
 import android.support.v4.media.MediaMetadataCompat;
 import com.vpaliy.data.mapper.Mapper;
-import com.vpaliy.data.source.Source;
+import com.vpaliy.data.source.RemoteSource;
 import com.vpaliy.data.source.remote.Filter;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.interactor.FollowUser;
@@ -49,7 +49,7 @@ public interface ApplicationComponent {
     void inject(BaseActivity activity);
     void inject(BaseFragment fragment);
     Context context();
-    Source remote();
+    RemoteSource remote();
     Filter filter();
     Repository repository();
     SearchRepository searchRepository();

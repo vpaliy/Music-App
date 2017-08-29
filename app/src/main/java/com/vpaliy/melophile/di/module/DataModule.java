@@ -3,12 +3,11 @@ package com.vpaliy.melophile.di.module;
 import com.vpaliy.data.repository.MusicPersonalRepository;
 import com.vpaliy.data.repository.MusicRepository;
 import com.vpaliy.data.repository.MusicSearchRepository;
-import com.vpaliy.data.source.PersonalInfo;
+import com.vpaliy.data.source.RemoteSource;
 import com.vpaliy.data.source.SearchSource;
-import com.vpaliy.data.source.Source;
 import com.vpaliy.data.source.remote.Filter;
+import com.vpaliy.data.source.remote.MusicRemoteRemoteSource;
 import com.vpaliy.data.source.remote.RemoteSearchSource;
-import com.vpaliy.data.source.remote.RemoteSource;
 import com.vpaliy.domain.repository.PersonalRepository;
 import com.vpaliy.domain.repository.Repository;
 import com.vpaliy.domain.repository.SearchRepository;
@@ -24,7 +23,7 @@ public class DataModule {
     }
 
     @Singleton @Provides
-    Source remoteSource(RemoteSource remote){
+    RemoteSource remoteSource(MusicRemoteRemoteSource remote){
         return remote;
     }
 
