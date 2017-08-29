@@ -13,6 +13,7 @@ import com.vpaliy.data.source.local.utils.DatabaseUtils;
 import com.vpaliy.domain.model.MelophileTheme;
 import com.vpaliy.domain.model.Track;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -55,8 +56,8 @@ public class TrackHandler {
 
     public Track query(String id){
         if(!TextUtils.isEmpty(id)){
-            Cursor cursor=provider.query(Tracks.buildTrackUri(id),null,null,null,null);
-            if(cursor!=null){
+            Cursor cursor=provider.query(Tracks.buildTrackUri(id),Tracks.COLUMNS,null,null,null);
+            if(cursor!=null && cursor.moveToFirst()){
                 Track track=DatabaseUtils.toTrack(cursor);
                 if(!cursor.isClosed()) cursor.close();
                 return track;

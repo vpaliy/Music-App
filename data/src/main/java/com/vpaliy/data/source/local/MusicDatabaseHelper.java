@@ -15,8 +15,8 @@ import android.support.annotation.NonNull;
 @SuppressWarnings({"unused","WeakerAccess"})
 public class MusicDatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME="music.db";
-    private static final int DATABASE_VERSION=1;
+    public static final String DATABASE_NAME="music_.db";
+    private static final int DATABASE_VERSION=3;
 
     public interface Tables {
         String TRACKS = "tracks";
@@ -67,7 +67,8 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE "+Tables.TRACKS+" ("+
-                Tracks.TRACK_ID+" TEXT PRIMARY KEY NOT NULL,"+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                Tracks.TRACK_ID+" TEXT NOT NULL,"+
                 Tracks.TRACK_TITLE+" TEXT NOT NULL,"+
                 Tracks.TRACK_ART_URL+" TEXT NOT NULL,"+
                 Tracks.TRACK_STREAM_URL+" TEXT NOT NULL,"+
@@ -82,7 +83,8 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
                 " UNIQUE (" + Tracks.TRACK_ID + ") ON CONFLICT REPLACE)");
 
         db.execSQL("CREATE TABLE "+Tables.PLAYLISTS+" ("+
-                Playlists.PLAYLIST_ID+" TEXT PRIMARY KEY NOT NULL,"+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                Playlists.PLAYLIST_ID+" TEXT NOT NULL,"+
                 Playlists.PLAYLIST_ART_URL+" TEXT NOT NULL,"+
                 Playlists.PLAYLIST_DURATION+" TEXT, "+
                 Playlists.PLAYLIST_RELEASE_DATE+" TEXT,"+
@@ -95,7 +97,8 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
                 " UNIQUE (" + Playlists.PLAYLIST_ID + ") ON CONFLICT REPLACE)");
 
         db.execSQL("CREATE TABLE "+Tables.USERS+" ("+
-                Users.USER_ID+" TEXT PRIMARY KEY NOT NULL,"+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                Users.USER_ID+" TEXT NOT NULL,"+
                 Users.USER_ART_URL+" TEXT NOT NULL,"+
                 Users.USER_NICKNAME+" TEXT NOT NULL,"+
                 Users.USER_FULLNAME+" TEXT,"+
@@ -109,7 +112,8 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
                 " UNIQUE (" + Users.USER_ID + ") ON CONFLICT REPLACE)");
 
         db.execSQL("CREATE TABLE "+Tables.ME+" ("+
-                Me.ME_ID+" TEXT PRIMARY KEY NOT NULL,"+
+                BaseColumns._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                Me.ME_ID+" TEXT NOT NULL,"+
                 Me.ME_ART_URL+" TEXT NOT NULL,"+
                 Me.ME_NICKNAME+" TEXT NOT NULL,"+
                 Me.ME_FULLNAME+" TEXT,"+

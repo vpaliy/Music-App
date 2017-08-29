@@ -136,7 +136,6 @@ public class MusicProvider extends ContentProvider{
                 return builder.table(Tables.ME);
             case PLAYLIST:
                 id=Playlists.getPlaylistId(uri);
-                Log.d(MusicProvider.class.getSimpleName(),id);
                 return builder.table(Tables.PLAYLISTS)
                         .where(Playlists.PLAYLIST_ID+"=?",id);
             case TRACK:

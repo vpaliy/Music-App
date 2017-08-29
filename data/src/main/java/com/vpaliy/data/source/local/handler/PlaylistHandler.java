@@ -63,10 +63,8 @@ public class PlaylistHandler {
                 List<Playlist> playlists=new ArrayList<>(cursor.getCount());
                 String tag=PlaylistHandler.class.getSimpleName();
                 while(cursor.moveToNext()){
-                    String id=cursor.getString(cursor.getColumnIndex(MelophileThemes.MELOPHILE_ITEM_ID));
-                    Log.d(tag,"About to load:"+id);
-                    playlists.add(query(id));
-                    Log.d(tag,"Loaded:"+id);
+                     String id=cursor.getString(cursor.getColumnIndex(MelophileThemes.MELOPHILE_ITEM_ID));
+                     playlists.add(query(id));
                 }
                 if(!cursor.isClosed()) cursor.close();
                 return playlists;
@@ -80,10 +78,12 @@ public class PlaylistHandler {
         if(TextUtils.isEmpty(id)){
             throw new IllegalArgumentException("Id is null");
         }
-        Cursor cursor=provider.query(Playlists.buildPlaylistUri(id),null,null,null,null);
-        Playlist playlist=DatabaseUtils.toPlaylist(cursor);
-        if(cursor!=null) cursor.close();
-        return playlist;
+        Cursor cursor=provider.query(Playlists.buildPlaylistUri(id),Playlists.COLUMNS,null,null,null);
+        if(cursor!=null && cursor.moveToFirst()) {
+            Playlist playlist=DatabaseUtils.toPlaylist(cursor);
+            cursor.close();
+        }
+        return null;
     }
 
     public void insert(Playlist playlist){

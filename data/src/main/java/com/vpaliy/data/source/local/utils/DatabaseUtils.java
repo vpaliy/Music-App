@@ -3,6 +3,8 @@ package com.vpaliy.data.source.local.utils;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Log;
+
 import com.vpaliy.data.mapper.MapperUtils;
 import com.vpaliy.domain.model.MelophileTheme;
 import com.vpaliy.domain.model.Playlist;
@@ -122,6 +124,7 @@ public final class DatabaseUtils {
         List<String> genres=MapperUtils.splitString(cursor.getString(cursor.getColumnIndex(Playlists.PLAYLIST_GENRES)));
         List<String> tags=MapperUtils.splitString(cursor.getString(cursor.getColumnIndex(Playlists.PLAYLIST_TAGS)));
         int tracks=cursor.getInt(cursor.getColumnIndex(Playlists.PLAYLIST_TRACK_COUNT));
+
 
         Playlist playlist=new Playlist();
         playlist.setId(id);
