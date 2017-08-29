@@ -13,10 +13,12 @@ import static com.vpaliy.data.source.local.MusicDatabaseHelper.Tables;
 import static com.vpaliy.data.source.local.MusicDatabaseHelper.LikedTracks;
 import static com.vpaliy.data.source.local.MusicDatabaseHelper.UserFollowers;
 import static com.vpaliy.data.source.local.MusicDatabaseHelper.TracksPlaylists;
+import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.vpaliy.data.source.local.utils.SqlQueryBuilder;
+import com.vpaliy.domain.model.MelophileTheme;
 
 public class MusicProvider extends ContentProvider{
 
@@ -181,6 +183,14 @@ public class MusicProvider extends ContentProvider{
                         .mapToTable(Users.USER_ID,Tables.USERS)
                         .mapToTable(Playlists.PLAYLIST_ID,Tables.PLAYLISTS)
                         .where(Users.USER_ID+"=?",id);
+            case MELOPHILE_PLAYLISTS:
+                id= MelophileThemes.getId(uri);
+                return builder.table(Tables.MELOPHILE_PLAYLISTS)
+                        .where(MelophileThemes.MELOPHILE_THEME_ID+"=?",id);
+            case MELOPHILE_TRACKS:
+                id=MelophileThemes.getId(uri);
+                return builder.table(Tables.MELOPHILE_TRACKS)
+                        .where(MelophileThemes.MELOPHILE_THEME_ID+"=?",id);
             default:
                 throw new IllegalArgumentException("Wrong matcher!");
         }

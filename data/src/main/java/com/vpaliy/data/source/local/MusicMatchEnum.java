@@ -5,6 +5,7 @@ import static com.vpaliy.data.source.local.MusicContract.Playlists;
 import static com.vpaliy.data.source.local.MusicContract.Tracks;
 import static com.vpaliy.data.source.local.MusicContract.History;
 import static com.vpaliy.data.source.local.MusicContract.Me;
+import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 import static com.vpaliy.data.source.local.MusicDatabaseHelper.Tables;
 
 public enum MusicMatchEnum {
@@ -24,6 +25,8 @@ public enum MusicMatchEnum {
     USER_LIKED_TRACKS(303,Tracks.CONTENT_ITEM_TYPE,Tables.LIKED_TRACKS,MusicContract.PATH_USER+"/#/"+MusicContract.PATH_TRACK),
     USER_FOLLOWERS(304,Users.CONTENT_ITEM_TYPE,Tables.USER_FOLLOWERS,MusicContract.PATH_USER+"/#/"+MusicContract.PATH_USER),
 
+    MELOPHILE_TRACKS(701,MelophileThemes.CONTENT_DIR_TYPE,Tables.MELOPHILE_TRACKS,MusicContract.PATH_MELOPHILE_TRACKS),
+    MELOPHILE_PLAYLISTS(702,MelophileThemes.CONTENT_DIR_TYPE,Tables.MELOPHILE_PLAYLISTS,MusicContract.PATH_MELOPHILE_PLAYLISTS),
 
     PLAYLIST_TRACKS(101,Tracks.CONTENT_ITEM_TYPE,Tables.TRACKS_PLAYLISTS,MusicContract.PATH_PLAYLIST+"/#/"+MusicContract.PATH_TRACK),
     TRACKS_PLAYLISTS(201,Playlists.CONTENT_ITEM_TYPE,Tables.TRACKS_PLAYLISTS,MusicContract.PATH_TRACK+"/#/"+MusicContract.PATH_PLAYLIST),
