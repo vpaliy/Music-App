@@ -1,7 +1,9 @@
 package com.vpaliy.melophile.ui.user.info;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.util.Pair;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
@@ -22,14 +25,22 @@ import butterknife.BindView;
 @SuppressWarnings("WeakerAccess")
 public class UserAdapter extends BaseAdapter<User> {
 
+    private boolean white=true;
+
     public UserAdapter(@NonNull Context context, @NonNull RxBus rxBus){
         super(context,rxBus);
+    }
+
+    public UserAdapter(@NonNull Context context, @NonNull RxBus rxBus, boolean white){
+        super(context,rxBus);
+        this.white=white;
     }
 
     public class UserViewHolder extends GenericViewHolder{
 
         @BindView(R.id.user_art) ImageView art;
         @BindView(R.id.user_name) TextView username;
+        @BindView(R.id.followers_count) TextView followers;
 
         public UserViewHolder(View itemView){
             super(itemView);
@@ -47,11 +58,15 @@ public class UserAdapter extends BaseAdapter<User> {
 
         @Override
         public void onBindData() {
+            Resources resources= itemView.getResources();
             User user=at(getAdapterPosition());
             Glide.with(itemView.getContext())
                     .load(user.getAvatarUrl())
+                    .priority(Priority.IMMEDIATE)
                     .into(art);
+            final int count=user.getFollowersCount();
             username.setText(user.getNickName());
+            followers.setText(resources.getQuantityString(R.plurals.followers_horizontal,count,count));
         }
     }
 
@@ -62,6 +77,7 @@ public class UserAdapter extends BaseAdapter<User> {
 
     @Override
     public GenericViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new UserViewHolder(inflate(R.layout.adapter_follower,parent));
+        @LayoutRes int resource=white?R.layout.adapter_white_follower:R.layout.adapter_follower;
+        return new UserViewHolder(inflate(resource,parent));
     }
 }

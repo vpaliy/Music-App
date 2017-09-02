@@ -10,11 +10,14 @@ import com.vpaliy.melophile.ui.user.info.InfoEvent;
 import com.vpaliy.melophile.ui.user.info.FavoriteFragment;
 import com.vpaliy.melophile.ui.utils.Constants;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public class PersonActivity extends BaseActivity{
+
+    private Bundle data;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,9 +27,9 @@ public class PersonActivity extends BaseActivity{
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         if(savedInstanceState==null){
-            savedInstanceState=getIntent().getExtras().getBundle(Constants.EXTRA_DATA);
+            data=getIntent().getExtras().getBundle(Constants.EXTRA_DATA);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.frame, PersonFragment.newInstance(savedInstanceState))
+                    .add(R.id.frame, PersonFragment.newInstance(data))
                     .commit();
         }
     }
@@ -34,6 +37,12 @@ public class PersonActivity extends BaseActivity{
     @Override
     public void inject() {
         App.appInstance().appComponent().inject(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle(Constants.EXTRA_DATA,data);
     }
 
     @Override
@@ -51,7 +60,7 @@ public class PersonActivity extends BaseActivity{
         switch (event.code) {
             case InfoEvent.FAVORITE:
                 FavoriteFragment.newInstance(event.toBundle())
-                    .show(transaction, null);
+                        .show(transaction, null);
                 break;
             case InfoEvent.FOLLOWERS:
                 FollowersFragment.newInstance(event.toBundle())

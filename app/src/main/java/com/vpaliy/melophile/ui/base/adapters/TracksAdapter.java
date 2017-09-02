@@ -20,27 +20,31 @@ import com.vpaliy.melophile.ui.base.bus.RxBus;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.utils.BundleUtils;
 import com.vpaliy.melophile.ui.utils.Constants;
+import butterknife.ButterKnife;
+import android.support.annotation.LayoutRes;
 import butterknife.BindView;
 import android.support.annotation.NonNull;
-import butterknife.ButterKnife;
 
 /* Common adapter that is used across different packages  */
 public class TracksAdapter  extends BaseAdapter<Track> {
+
+    private boolean white;
 
     public TracksAdapter(@NonNull Context context, @NonNull RxBus rxBus){
         super(context,rxBus);
     }
 
+    public TracksAdapter(@NonNull Context context, @NonNull RxBus rxBus, boolean white){
+        this(context,rxBus);
+        this.white=white;
+    }
+
     public class TrackViewHolder extends BaseAdapter<Track>.GenericViewHolder {
 
-        @BindView(R.id.track_art)
-        ImageView trackArt;
-
-        @BindView(R.id.artist)
-        TextView artist;
-
-        @BindView(R.id.track_title)
-        TextView trackTitle;
+        @BindView(R.id.track_art) ImageView trackArt;
+        @BindView(R.id.artist) TextView artist;
+        @BindView(R.id.track_title) TextView trackTitle;
+        @BindView(R.id.duration) TextView duration;
 
         public TrackViewHolder(View itemView){
             super(itemView);
@@ -67,7 +71,7 @@ public class TracksAdapter  extends BaseAdapter<Track> {
             Track track=at(getAdapterPosition());
             artist.setText(track.getArtist());
             trackTitle.setText(track.getTitle());
-
+            duration.setText(track.getFormatedDuration());
             Glide.with(itemView.getContext())
                     .load(track.getArtworkUrl())
                     .priority(Priority.IMMEDIATE)
@@ -78,7 +82,8 @@ public class TracksAdapter  extends BaseAdapter<Track> {
 
     @Override
     public GenericViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return  new TrackViewHolder(inflater.inflate(R.layout.adapter_playlist_track,parent,false));
+        @LayoutRes int resource=white?R.layout.adapter_white_track:R.layout.adapter_playlist_track;
+        return  new TrackViewHolder(inflater.inflate(resource,parent,false));
     }
 
     @Override

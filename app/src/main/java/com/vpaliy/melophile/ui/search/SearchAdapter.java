@@ -1,11 +1,13 @@
 package com.vpaliy.melophile.ui.search;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.util.ArrayMap;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
+import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import java.util.List;
 
@@ -21,11 +23,13 @@ public class SearchAdapter extends FragmentStatePagerAdapter {
     private SearchResult<Track> trackResult;
     private SearchResult<Playlist> playlistResult;
     private SearchResult<User> userResult;
+    private Context context;
 
     private ArrayMap<SearchResult<?>,Integer> resultMap;
 
-    public SearchAdapter(FragmentManager manager){
+    public SearchAdapter(Context context, FragmentManager manager){
         super(manager);
+        this.context=context;
         resultMap=new ArrayMap<>();
     }
 
@@ -94,11 +98,11 @@ public class SearchAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position){
             case 0:
-                return "Tracks";
+                return context.getString(R.string.tracks_label);
             case 1:
-                return "Playlists";
+                return context.getString(R.string.playlist_label);
             default:
-                return "Profiles";
+                return context.getString(R.string.profiles_label);
         }
     }
 }

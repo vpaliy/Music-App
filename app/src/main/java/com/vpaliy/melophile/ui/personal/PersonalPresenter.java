@@ -39,7 +39,6 @@ public class PersonalPresenter implements PersonalContract.Presenter{
     public void start() {
         fetchMeUseCase.execute(this::catchMyself,this::catchError,null);
         trackHistoryUseCase.execute(this::catchTrackHistory,this::catchError,null);
-        playlistHistoryUseCase.execute(this::catchPlaylistHistory,this::catchError,null);
     }
 
     @Override
@@ -48,17 +47,9 @@ public class PersonalPresenter implements PersonalContract.Presenter{
         trackHistoryUseCase.dispose();
     }
 
-    private void catchPlaylistHistory(List<Playlist> playlistList){
-        if(playlistList==null||playlistList.isEmpty()){
-            //show empty view
-            return;
-        }
-        view.showPlaylistHistory(playlistList);
-    }
-
     private void catchTrackHistory(List<Track> tracks){
         if(tracks==null||tracks.isEmpty()){
-            //TODO show empty
+            view.showEmptyHistoryMessage();
             return;
         }
         view.showTrackHistory(tracks);
@@ -70,8 +61,13 @@ public class PersonalPresenter implements PersonalContract.Presenter{
         }
     }
 
+    @Override
+    public void clearTracks() {
+        trackHistoryUseCase.clearHistory();
+    }
+
     private void catchError(Throwable ex){
-        //TODO view show an error message
+        view.showErrorMessage();
         ex.printStackTrace();
     }
 }

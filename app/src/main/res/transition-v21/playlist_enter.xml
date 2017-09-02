@@ -8,7 +8,7 @@
             <target android:excludeId="@android:id/statusBarBackground" />
             <target android:excludeId="@id/playlist_art" />
             <target android:excludeId="@id/back_wrapper" />
-            <target android:excludeId="@id/love" />
+            <target android:excludeId="@id/play" />
         </targets>
         <slide
             android:duration="350"
@@ -23,7 +23,7 @@
 
     <transitionSet>
     <targets>
-        <target android:targetId="@id/love" />
+        <target android:targetId="@id/play" />
     </targets>
     <transition
         class="com.vpaliy.melophile.ui.transition.Pop"

@@ -1,6 +1,5 @@
 package com.vpaliy.melophile.ui.personal;
 
-import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.App;
@@ -8,10 +7,7 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
-import com.vpaliy.melophile.ui.base.adapters.LimitedPlaylistsAdapter;
 import com.vpaliy.melophile.ui.base.adapters.LimitedTracksAdapter;
-import com.vpaliy.melophile.ui.base.adapters.PlaylistsAdapter;
-import com.vpaliy.melophile.ui.base.adapters.TracksAdapter;
 import java.util.List;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +18,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.NonNull;
 import javax.inject.Inject;
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class PersonalFragment extends BaseFragment
         implements PersonalContract.View{
@@ -65,10 +60,13 @@ public class PersonalFragment extends BaseFragment
     }
 
     @Override
-    public void showPlaylistHistory(@NonNull List<Playlist> playlists) {
-        LimitedPlaylistsAdapter playlistsAdapter=new LimitedPlaylistsAdapter(getContext(),rxBus);
-        playlistsAdapter.setData(playlists);
-        adapter.addItem(PersonalAdapter.CategoryWrapper.wrap(getString(R.string.playlist_history_label), playlistsAdapter));
+    public void showEmptyHistoryMessage() {
+        adapter.addItem(PersonalAdapter.CategoryWrapper.wrap(getString(R.string.no_played_history_label),null));
+    }
+
+    @Override
+    public void showErrorMessage() {
+
     }
 
     @Override

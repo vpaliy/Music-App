@@ -22,10 +22,12 @@ public class PlaylistActivity extends BaseActivity {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        if(savedInstanceState==null) savedInstanceState=getIntent().getExtras();
+        if(savedInstanceState==null) {
+            savedInstanceState=getIntent().getExtras();
+        }
         data=savedInstanceState.getBundle(Constants.EXTRA_DATA);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frame, PlaylistFragment.newInstance(data))
+                .replace(R.id.frame, PlaylistFragment.newInstance(data))
                 .commit();
     }
 

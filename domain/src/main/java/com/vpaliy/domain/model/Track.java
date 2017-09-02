@@ -1,6 +1,9 @@
 package com.vpaliy.domain.model;
 
 
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+
 import java.util.List;
 
 public class Track {
@@ -95,4 +98,13 @@ public class Track {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getFormatedDuration(){
+        if(!TextUtils.isEmpty(duration)){
+            long time=Long.parseLong(duration);
+            return DateUtils.formatElapsedTime(time/1000);
+        }
+        return null;
+    }
+
 }

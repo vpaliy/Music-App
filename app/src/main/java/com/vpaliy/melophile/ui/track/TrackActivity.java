@@ -36,6 +36,5 @@ public class TrackActivity extends BaseActivity {
 
     @Override
     public void handleEvent(@NonNull Object event) {
-
     }
 }

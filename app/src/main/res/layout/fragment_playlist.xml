@@ -8,7 +8,7 @@
     <View
         android:id="@+id/background"
         android:transitionName="@string/background_trans_name"
-        android:background="@color/white_50"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <FrameLayout
@@ -56,7 +56,7 @@
         app:parallaxFactor="-0.5" />
     <include layout="@layout/layout_playlist"/>
     <com.vpaliy.melophile.ui.view.FabToggle
-        android:id="@+id/love"
+        android:id="@+id/play"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_play"
         android:layout_width="wrap_content"

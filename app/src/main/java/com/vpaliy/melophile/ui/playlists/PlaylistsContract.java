@@ -10,6 +10,8 @@ public interface PlaylistsContract {
     interface View extends BaseView<Presenter> {
         void attachPresenter(@NonNull Presenter presenter);
         void showPlaylists(@NonNull PlaylistSet playlistSet);
+        void showLoading();
+        void hideLoading();
         void showErrorMessage();
         void showEmptyMessage();
     }

@@ -41,7 +41,8 @@
         <activity
             android:name=".ui.search.SearchActivity"
             android:launchMode="singleTop"
-            android:theme="@style/MelophileTheme.Search">
+            android:theme="@style/MelophileTheme.Search"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -57,7 +58,6 @@
         <activity
             android:name=".ui.auth.AuthActivity"
             android:theme="@style/MelophileTheme.Auth"
-            android:noHistory="true"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -79,5 +79,4 @@
             android:authorities="com.vpaliy.melophile"
             android:name="com.vpaliy.data.source.local.MusicProvider"/>
     </application>
-
 </manifest>

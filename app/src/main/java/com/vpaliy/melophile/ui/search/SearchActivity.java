@@ -16,7 +16,9 @@ import com.vpaliy.melophile.ui.base.adapters.PlaylistsAdapter;
 import com.vpaliy.melophile.ui.base.adapters.TracksAdapter;
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.user.info.UserAdapter;
+import com.vpaliy.melophile.ui.view.TransitionAdapterListener;
 import java.util.List;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
@@ -40,9 +42,7 @@ import butterknife.OnClick;
 import android.support.annotation.TransitionRes;
 
 public class SearchActivity extends BaseActivity
-            implements SearchContract.View{
-
-    private static final String TAG=SearchActivity.class.getSimpleName();
+        implements SearchContract.View{
 
     private Presenter presenter;
     private SearchAdapter searchAdapter;
@@ -90,13 +90,17 @@ public class SearchActivity extends BaseActivity
 
     @OnClick(R.id.back)
     public void close(){
-        back.setBackground(null);
-        finishAfterTransition();
+        clear(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        clear(true);
     }
 
     private void setupPager(){
-        searchAdapter=new SearchAdapter(getSupportFragmentManager());
-        pager.setOffscreenPageLimit(3);
+        searchAdapter=new SearchAdapter(this,getSupportFragmentManager());
+        pager.setOffscreenPageLimit(4);
         pager.setAdapter(searchAdapter);
         tabs.setupWithViewPager(pager);
     }
@@ -121,7 +125,7 @@ public class SearchActivity extends BaseActivity
             @Override
             public boolean onQueryTextChange(String query) {
                 if (TextUtils.isEmpty(query)) {
-                    clear();
+                    clear(false);
                 }
                 return true;
             }
@@ -167,10 +171,22 @@ public class SearchActivity extends BaseActivity
         }
     }
 
-    private void clear(){
-        TransitionManager.beginDelayedTransition(root,getTransition(R.transition.search_hide_result));
-        pager.setVisibility(View.GONE);
-        tabs.setVisibility(View.GONE);
+    private void clear(boolean finish){
+        if(pager.getVisibility()!=View.GONE) {
+            Transition transition=getTransition(R.transition.search_hide_result);
+            transition.addListener(new TransitionAdapterListener(){
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    super.onTransitionEnd(transition);
+                    if(finish) {
+                        finishAfterTransition();
+                    }
+                }
+            });
+            TransitionManager.beginDelayedTransition(root, transition);
+            pager.setVisibility(View.GONE);
+            tabs.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -221,7 +237,7 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showUsers(@NonNull List<User> users) {
         gotResult();
-        UserAdapter adapter=new UserAdapter(this,eventBus);
+        UserAdapter adapter=new UserAdapter(this,eventBus,false);
         adapter.setData(users);
         searchAdapter.setUsers(adapter);
     }
@@ -246,11 +262,13 @@ public class SearchActivity extends BaseActivity
 
     @Override
     public void showEmptyMessage() {
-        //TODO add empty message
+        Snackbar.make(root,R.string.empty_message,
+                getResources().getInteger(R.integer.message_duration));
     }
 
     @Override
     public void showErrorMessage() {
-        //TODO add error message
+        Snackbar.make(root,R.string.error_message,
+                getResources().getInteger(R.integer.message_duration));
     }
 }

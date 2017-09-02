@@ -1,26 +1,23 @@
 package com.vpaliy.melophile.ui.playlists;
 
-import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.PlaylistSet;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.component.DaggerViewComponent;
 import com.vpaliy.melophile.di.module.PresenterModule;
 import com.vpaliy.melophile.ui.base.BaseFragment;
-import com.vpaliy.melophile.ui.base.bus.event.OnClick;
-
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import static com.vpaliy.melophile.ui.playlists.PlaylistsContract.Presenter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import butterknife.BindView;
-import io.reactivex.disposables.CompositeDisposable;
+import android.widget.ProgressBar;
 
+import butterknife.BindView;
 import javax.inject.Inject;
-import static com.vpaliy.melophile.ui.playlists.PlaylistsContract.Presenter;
 
 public class PlaylistsFragment extends BaseFragment
         implements PlaylistsContract.View{
@@ -30,6 +27,9 @@ public class PlaylistsFragment extends BaseFragment
 
     @BindView(R.id.categories)
     protected RecyclerView categories;
+
+    @BindView(R.id.progress_bar)
+    protected ProgressBar progressBar;
 
     @Override
     protected int layoutId() {
@@ -42,18 +42,37 @@ public class PlaylistsFragment extends BaseFragment
         if(view!=null){
             adapter=new CategoryAdapter(getContext(),rxBus);
             categories.setAdapter(adapter);
-            presenter.start();
         }
     }
 
     @Override
     public void showEmptyMessage() {
-        //TODO show empty message
+        showMessage(R.string.empty_message);
     }
 
     @Override
     public void showErrorMessage() {
-        //TODO show error message
+        showMessage(R.string.error_message);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(presenter!=null){
+            if(adapter.getItemCount()==0){
+                presenter.start();
+            }
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -75,5 +94,13 @@ public class PlaylistsFragment extends BaseFragment
                 .applicationComponent(App.appInstance().appComponent())
                 .presenterModule(new PresenterModule())
                 .build().inject(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(presenter!=null){
+            presenter.stop();
+        }
     }
 }

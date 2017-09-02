@@ -7,4 +7,11 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_search"
         android:title="@string/item_search"/>
+
+    <item
+        android:id="@+id/invite"
+        android:title="@string/invite_options_item"/>
+    <item
+        android:id="@+id/log_out"
+        android:title="@string/log_out_label"/>
 </menu>

@@ -58,7 +58,9 @@ public class PlaylistsAdapter extends BaseAdapter<Playlist> {
         public void onBindData() {
             Playlist playlist= at(getAdapterPosition());
             trackTitle.setText(playlist.getTitle());
-            artist.setText(playlist.getUser().getNickName());
+            if(playlist.getUser()!=null) {
+                artist.setText(playlist.getUser().getNickName());
+            }
             Glide.with(itemView.getContext())
                     .load(playlist.getArtUrl())
                     .priority(Priority.IMMEDIATE)

@@ -2,9 +2,13 @@ package com.vpaliy.melophile.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -45,6 +49,12 @@ public abstract class BaseFragment extends Fragment {
         View view=inflater.inflate(layoutId(),container,false);
         bind(view);
         return view;
+    }
+
+    protected void showMessage(@StringRes int res){
+        if(getView()!=null){
+            Snackbar.make(getView(),res,getResources().getInteger(R.integer.message_duration));
+        }
     }
 
     @LayoutRes protected int layoutId(){

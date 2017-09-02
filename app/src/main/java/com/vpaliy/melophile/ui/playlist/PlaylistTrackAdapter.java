@@ -53,14 +53,10 @@ public class PlaylistTrackAdapter extends BaseAdapter<Track> {
 
     public class TrackViewHolder extends GenericViewHolder{
 
-        @BindView(R.id.track_art)
-        ImageView trackArt;
-
-        @BindView(R.id.artist)
-        TextView artist;
-
-        @BindView(R.id.track_title)
-        TextView trackTitle;
+        @BindView(R.id.track_art) ImageView trackArt;
+        @BindView(R.id.artist) TextView artist;
+        @BindView(R.id.track_title) TextView trackTitle;
+        @BindView(R.id.duration) TextView duration;
 
         public TrackViewHolder(View itemView){
             super(itemView);
@@ -91,7 +87,7 @@ public class PlaylistTrackAdapter extends BaseAdapter<Track> {
             Track track=at(current());
             artist.setText(track.getArtist());
             trackTitle.setText(track.getTitle());
-
+            duration.setText(track.getFormatedDuration());
             Glide.with(itemView.getContext())
                     .load(track.getArtworkUrl())
                     .priority(Priority.IMMEDIATE)

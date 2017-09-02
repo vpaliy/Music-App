@@ -4,10 +4,12 @@
 
     <transitionSet android:duration="400">
         <targets>
-            <target android:targetId="@id/pager" />
+            <target android:targetId="@id/background" />
+            <target android:targetId="@id/search_background" />
         </targets>
         <transition
             class="com.vpaliy.melophile.ui.transition.CircularReveal"
+            app:centerOn="@id/end"
             android:interpolator="@android:interpolator/linear_out_slow_in" />
     </transitionSet>
 

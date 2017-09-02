@@ -11,6 +11,8 @@ public interface TracksContract {
         void showTrackSet(@NonNull TrackSet trackSet);
         void showErrorMessage();
         void showEmptyMessage();
+        void showLoading();
+        void hideLoading();
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -60,29 +60,23 @@ public class PersonalAdapter extends BaseAdapter<PersonalAdapter.CategoryWrapper
         }
     }
 
-    class TypeViewHolder extends GenericViewHolder
-            implements View.OnClickListener{
+    class TypeViewHolder extends GenericViewHolder {
 
         @BindView(R.id.playlists) RecyclerView list;
         @BindView(R.id.title) TextView title;
-        @BindView(R.id.more) TextView more;
 
         TypeViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this,itemView);
             list.setNestedScrollingEnabled(false);
-            more.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v) {
-           // rxBus.sendWithLock();
-        }
-
-        @Override
-        public void onBindData(){
-            CategoryWrapper wrapper=at(getAdapterPosition()-1);
-            list.setAdapter(wrapper.adapter);
+        public void onBindData() {
+            CategoryWrapper wrapper = at(getAdapterPosition() - 1);
+            if (wrapper.adapter != null) {
+                list.setAdapter(wrapper.adapter);
+            }
             title.setText(wrapper.text);
         }
     }
@@ -122,12 +116,12 @@ public class PersonalAdapter extends BaseAdapter<PersonalAdapter.CategoryWrapper
         private final String text;
         private final RecyclerView.Adapter<?> adapter;
 
-        private CategoryWrapper(@NonNull String text, @NonNull RecyclerView.Adapter<?> adapter){
+        private CategoryWrapper(@NonNull String text, RecyclerView.Adapter<?> adapter){
             this.text=text;
             this.adapter=adapter;
         }
 
-        public static CategoryWrapper wrap(@NonNull String text, @NonNull RecyclerView.Adapter<?> adapter){
+        public static CategoryWrapper wrap(@NonNull String text, RecyclerView.Adapter<?> adapter){
             return new CategoryWrapper(text,adapter);
         }
     }

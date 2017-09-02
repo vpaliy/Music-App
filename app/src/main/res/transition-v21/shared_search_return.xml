@@ -1,12 +1,8 @@
 <transitionSet
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="650"
-    android:transitionOrdering="together">
-    <targets>
-        <target android:targetId="@id/back" />
-    </targets>
-    <changeBounds android:interpolator="@android:interpolator/fast_out_slow_in" />
-    <transition
-        class="com.vpaliy.melophile.ui.view.StartAnimatable"
-        android:src="@drawable/avd_back_to_search" />
+    android:duration="400">
+    <targets android:targetId="@id/back"/>
+    <transition class="com.vpaliy.melophile.ui.transition.Pop"
+        android:interpolator="@android:interpolator/linear_out_slow_in">
+    </transition>
 </transitionSet>

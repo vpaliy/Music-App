@@ -6,8 +6,10 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -44,6 +46,7 @@ public class PersonFragment extends BaseFragment
 
     private Presenter presenter;
     private String id;
+    private String avatarUrl;
 
     @BindView(R.id.user_avatar)
     protected ImageView avatar;
@@ -99,7 +102,7 @@ public class PersonFragment extends BaseFragment
         return R.layout.fragment_c_playlist;
     }
 
-    private void extractId(Bundle bundle){
+    private void extractExtra(Bundle bundle){
         if(bundle==null) bundle=getArguments();
         this.id=bundle.getString(Constants.EXTRA_ID);
         showAvatar(bundle.getString(Constants.EXTRA_DATA));
@@ -109,7 +112,7 @@ public class PersonFragment extends BaseFragment
     @Override
     public void attachPresenter(@NonNull Presenter presenter) {
         this.presenter=presenter;
-        presenter.attachView(this);
+        this.presenter.attachView(this);
     }
 
     @Override
@@ -121,7 +124,7 @@ public class PersonFragment extends BaseFragment
             adapter = new MediaAdapter(getContext(), rxBus);
             media.setLayoutManager(layoutManager);
             media.setAdapter(adapter);
-            extractId(savedInstanceState);
+            extractExtra(savedInstanceState);
             media.setOnTouchListener((v,event)->{
                 final int firstVisible = layoutManager.findFirstVisibleItemPosition();
                 if (firstVisible > 0) return false;
@@ -166,7 +169,7 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showErrorMessage() {
-        //TODO add an error message
+        showMessage(R.string.error_message);
     }
 
     @Override
@@ -187,6 +190,7 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showAvatar(String avatarUrl) {
+        this.avatarUrl=avatarUrl;
         Glide.with(getContext())
                 .load(avatarUrl)
                 .asBitmap()
@@ -203,6 +207,7 @@ public class PersonFragment extends BaseFragment
                                         +2*getResources().getDimensionPixelOffset(R.dimen.spacing_large);
                                 blank.setLayoutParams(params);
                             });
+                            media.setVisibility(View.INVISIBLE);
                             getActivity().supportStartPostponedEnterTransition();
                             presenter.start(id);
                         });
@@ -288,11 +293,12 @@ public class PersonFragment extends BaseFragment
 
     @Override
     public void showEmptyMessage() {
-        //TODO add empty message
+        showMessage(R.string.empty_message);
     }
 
     @Override
     public void showPlaylists(List<Playlist> playlists) {
+        media.setVisibility(View.VISIBLE);
         PlaylistsAdapter playlistsAdapter=new PlaylistsAdapter(getContext(),rxBus);
         playlistsAdapter.setData(playlists);
         adapter.addItem(MediaAdapter.CategoryWrapper.wrap(getString(R.string.playlist_label),playlistsAdapter));
@@ -306,7 +312,15 @@ public class PersonFragment extends BaseFragment
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(Constants.EXTRA_ID,id);
+        outState.putString(Constants.EXTRA_DATA,avatarUrl);
+    }
+
+    @Override
     public void showTracks(List<Track> tracks) {
+        media.setVisibility(View.VISIBLE);
         TracksAdapter tracksAdapter=new TracksAdapter(getContext(),rxBus);
         tracksAdapter.setData(tracks);
         adapter.addItem(MediaAdapter.CategoryWrapper.wrap(getString(R.string.tracks_label),tracksAdapter));
@@ -314,8 +328,17 @@ public class PersonFragment extends BaseFragment
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if(presenter!=null){
+            presenter.stop();
+        }
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
+        Log.d(PersonFragment.class.getSimpleName(),"onStop");
         if(presenter!=null){
             presenter.stop();
         }
