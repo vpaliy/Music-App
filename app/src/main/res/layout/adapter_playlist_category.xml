@@ -2,30 +2,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#fafafa"
+    android:background="@color/colorPrimary"
     android:paddingBottom="@dimen/spacing_large"
     android:layout_marginBottom="@dimen/spacing_large"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <TextView
         android:id="@+id/title"
         tools:text="Title"
-        android:textColor="@color/text_secondary_dark"
         style="@style/Widget.BigTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/spacing_large"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.5" />
-
     <TextView
         android:id="@+id/more"
         android:text="@string/more_label"
         android:textStyle="bold"
-        android:textSize="17sp"
+        android:textSize="@dimen/more_label"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +32,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/title"
         app:layout_constraintBottom_toBottomOf="@+id/title" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/playlists"
         android:layout_width="0dp"

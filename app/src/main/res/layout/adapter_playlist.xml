@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-
     <ImageView
         android:id="@+id/playlist_art"
         android:layout_width="@dimen/album_height"
@@ -15,24 +14,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="@dimen/spacing_large"
         tools:ignore="ContentDescription"/>
-
     <TextView
         android:id="@+id/playlist_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="@dimen/under_media_text"
         android:textAlignment="center"
-        android:textColor="@color/blue_grey_400"
         style="@style/Widget.Title"
         tools:text="Evolve"
         android:ellipsize="end"
         android:lines="2"
         android:layout_marginTop="@dimen/spacing_medium"
         android:maxLines="2"
-        android:maxWidth="140dp"
+        android:maxWidth="@dimen/album_width"
         app:layout_constraintTop_toBottomOf="@+id/playlist_art"
         app:layout_constraintLeft_toLeftOf="@+id/playlist_art"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="@+id/playlist_art" />
 </android.support.constraint.ConstraintLayout>

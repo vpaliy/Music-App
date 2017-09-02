@@ -2,45 +2,46 @@ package com.vpaliy.data.repository;
 
 import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.data.source.PersonalInfo;
+import com.vpaliy.data.source.local.handler.PlaylistHandler;
+import com.vpaliy.data.source.local.handler.TrackHandler;
 import com.vpaliy.data.source.remote.Filter;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.repository.PersonalRepository;
 import com.vpaliy.soundcloud.SoundCloudService;
-import com.vpaliy.soundcloud.model.PlaylistEntity;
-import com.vpaliy.soundcloud.model.TrackEntity;
 import com.vpaliy.soundcloud.model.UserEntity;
 import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Single;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import android.support.annotation.NonNull;
 
 @Singleton
-public class MusicPersonalRepository implements PersonalRepository {
+public class MusicPersonalRepository
+        implements PersonalRepository {
 
     private SoundCloudService service;
     private Mapper<User,UserEntity> userMapper;
-    private Mapper<Playlist,PlaylistEntity> playlistMapper;
-    private Mapper<Track,TrackEntity> trackMapper;
-    private Filter filter;
     private PersonalInfo personalInfo;
+    private PlaylistHandler playlistHandler;
+    private TrackHandler trackHandler;
+    private Filter filter;
 
     @Inject
     public MusicPersonalRepository(SoundCloudService service,
                                    Mapper<User,UserEntity> userMapper,
-                                   Mapper<Playlist,PlaylistEntity> playlistMapper,
-                                   Mapper<Track,TrackEntity> trackMapper,
-                                   PersonalInfo personalInfo,
-                                   Filter filter){
+                                   PlaylistHandler playlistHandler,
+                                   TrackHandler trackHandler,Filter filter,
+                                   PersonalInfo personalInfo){
         this.service=service;
         this.userMapper=userMapper;
-        this.playlistMapper=playlistMapper;
-        this.trackMapper=trackMapper;
-        this.filter=filter;
         this.personalInfo=personalInfo;
+        this.trackHandler=trackHandler;
+        this.playlistHandler=playlistHandler;
+        this.filter=filter;
     }
 
     @Override
@@ -67,46 +68,40 @@ public class MusicPersonalRepository implements PersonalRepository {
         return service.unloveTrack(track.getId());
     }
 
-    //database stuff
     @Override
     public Single<List<Playlist>> fetchPlaylistHistory() {
-        return service.searchPlaylists(PlaylistEntity.Filter.start()
-                .byName("Imagine").limit(100).createOptions())
-                .map(filter::filterPlaylists)
-                .map(playlistMapper::map);
+        return Single.fromCallable(()->playlistHandler.querySaved());
     }
 
     @Override
     public Single<List<Track>> fetchTrackHistory() {
-        return service.searchTracks(TrackEntity.Filter.start()
-                .byName("Imagine Dragons").limit(100).createOptions())
-                .map(filter::filterTracks)
-                .map(trackMapper::map);
+        return Single.fromCallable(()->trackHandler.queryHistory());
     }
 
     @Override
     public Single<User> fetchMe() {
         return service.me()
+                .map(filter::filter)
                 .map(userMapper::map);
     }
 
     @Override
     public void savePlaylist(@NonNull Playlist playlist) {
-
+        playlistHandler.save(playlist);
     }
 
     @Override
     public void saveTrack(@NonNull Track track) {
-
+        trackHandler.save(track);
     }
 
     @Override
     public void clearPlaylists() {
-
+        trackHandler.clearHistory();
     }
 
     @Override
     public void clearTracks() {
-
+        playlistHandler.clearHistory();
     }
 }

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/spacing_medium"
+    android:background="#ffff"
     xmlns:tools="http://schemas.android.com/tools">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_art"
@@ -22,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/Widget.Title"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/spacing_large"
         app:layout_constraintLeft_toRightOf="@+id/user_art"
@@ -29,10 +31,11 @@
         app:layout_constraintRight_toRightOf="parent" />
     <TextView
         android:id="@+id/followers_count"
-        android:drawableStart="@drawable/ic_followers"
+        android:drawableStart="@drawable/ic_user_follower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="200"
+        android:textColor="@color/colorPrimary"
         android:drawablePadding="@dimen/spacing_medium"
         android:layout_marginTop="@dimen/spacing_medium"
         app:layout_constraintTop_toBottomOf="@id/user_name"

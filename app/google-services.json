@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "777744301871",
-    "firebase_url": "https://melophile-82795.firebaseio.com",
-    "project_id": "melophile-82795",
-    "storage_bucket": "melophile-82795.appspot.com"
+    "project_number": "459231337651",
+    "firebase_url": "https://melophile-app.firebaseio.com",
+    "project_id": "melophile-app",
+    "storage_bucket": "melophile-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:777744301871:android:e19f7e0391964c96",
+        "mobilesdk_app_id": "1:459231337651:android:e19f7e0391964c96",
         "android_client_info": {
           "package_name": "com.vpaliy.melophile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "777744301871-bvc5qjudcm2btl79af8cc26gvd9eo2k2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.vpaliy.melophile",
-            "certificate_hash": "da7190543cad8316daa67735721fb39f695a1373"
-          }
-        },
-        {
-          "client_id": "777744301871-m3l8tg5bos2r81dn6qdumdfmrv4mhnuu.apps.googleusercontent.com",
+          "client_id": "459231337651-gm52b6sk762p9dt5bmt860seckmffkj1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCct-___tJg1ilWlv7Fi8A4cOxu1bOkvm0"
+          "current_key": "AIzaSyDdT0Ol5JiHGkz0iV7DSZpglXEc73oPkGA"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "777744301871-m3l8tg5bos2r81dn6qdumdfmrv4mhnuu.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

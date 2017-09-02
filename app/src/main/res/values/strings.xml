@@ -6,6 +6,7 @@
     <string name="text_layout_manager" translatable="false">LinearLayoutManager</string>
     <string name="home_layout_manager" translatable="false">LinearLayoutManager</string>
 
+    <string name="profiles_label">Profiles</string>
     <string name="follow_label">Follow</string>
     <string name="tracks_label">Tracks</string>
     <string name="albums_label">Albums</string>
@@ -17,13 +18,19 @@
     <string name="loved_title">Favorite Tracks</string>
     <string name="followers_title">Followers</string>
     <string name="all_listening_label">See All Listening History</string>
+    <string name="log_out_label">Log Out</string>
 
+    <string name="of_label"> of </string>
+    <string name="chooseToWhomToSend">Send to</string>
     <string name="user_empty_media">This user has no media items</string>
     <string name="item_search">Search</string>
     <string name="search_hint">Search for songs, artists</string>
-    <string name="login_label">Log In</string>
+    <string name="login_label">Get In</string>
+    <string name="invitation_label">Invite Friends?</string>
     <string name="welcome_to_app">Welcome\n To Melophile</string>
     <string name="following_label">Following</string>
+    <string name="no_played_history_label">You have no track history so far</string>
+    <string name="tap_to_continue_message">Tap To Play Your History</string>
 
     <string name="share_action">Share</string>
     <string name="background_trans_name" translatable="false">background_trans</string>
@@ -31,20 +38,29 @@
     <string name="playlist_title_trans_name" translatable="false">playlist_title_trans</string>
     <string name="user_trans_name" translatable="false">user_trans</string>
     <string name="search_trans" translatable="false">search_trans</string>
+    <string name="invite_options_item">Invite Friends</string>
+
+    <string name="invite_message">Hi There! I invite you to try this app:)</string>
+    <string name="invitation_title">Melophile Invitation</string>
+    <string name="empty_message">No Data</string>
+    <string name="error_message">Error has occurred, please check your network connection</string>
+
 
     <plurals name="followers">
         <item quantity="zero">No Followers</item>
         <item quantity="one">%s\n follower</item>
         <item quantity="other">%s\n followers</item>
     </plurals>
-
+    <plurals name="followers_horizontal">
+        <item quantity="zero">No Followers</item>
+        <item quantity="one">%s follower</item>
+        <item quantity="other">%s followers</item>
+    </plurals>
     <plurals name="tracks">
         <item quantity="zero">No Tracks</item>
         <item quantity="one">%s\n track</item>
         <item quantity="other">%s\n tracks</item>
     </plurals>
-
-
     <plurals name="likes">
         <item quantity="zero">No liked tracks</item>
         <item quantity="one">%s\n like</item>
@@ -61,80 +77,4 @@
         <item quantity="zero"> </item>
         <item quantity="other">%s min</item>
     </plurals>
-
-
-    <array name="temp">
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-        <item>Six</item>
-    </array>
 </resources>

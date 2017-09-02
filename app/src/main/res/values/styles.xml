@@ -2,16 +2,16 @@
 <resources>
 
     <!-- Themes -->
-
     <style name="MelophileTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:textColorSecondary">@color/white</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">false</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -123,6 +123,7 @@
     <!-- Widget Styles -->
 
     <style name="Widget">
+        <item name="android:textColor">@color/white</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
@@ -135,7 +136,7 @@
         <item name="android:letterSpacing">0.02</item>
     </style>
 
-    <style name="Widget.BigTitle">
+    <style name="Widget.BigTitle" parent="Widget">
         <item name="android:textSize">22sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -144,7 +145,7 @@
         <item name="android:letterSpacing">0.2</item>
     </style>
 
-    <style name="Widget.Title">
+    <style name="Widget.Title" parent="Widget">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">18sp</item>
@@ -158,7 +159,7 @@
         <item name="android:background">@drawable/ring</item>
     </style>
 
-    <style name="Widget.AppTitle">
+    <style name="Widget.AppTitle" parent="Widget">
         <item name="android:textSize">40sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -167,7 +168,7 @@
         <item name="android:letterSpacing">0.2</item>
     </style>
 
-    <style name="Widget.Label">
+    <style name="Widget.Label" parent="Widget">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15sp</item>
@@ -175,7 +176,7 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="Widget.ToolbarText">
+    <style name="Widget.ToolbarText" parent="Widget">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFeatureSettings">smcp</item>
         <item name="android:letterSpacing">0.2</item>

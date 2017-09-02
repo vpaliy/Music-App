@@ -6,11 +6,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:background="#000"
+        tools:background="@color/colorPrimary"
         tools:src="@drawable/evolve"
         android:id="@+id/background"
         android:transitionName="@string/background_trans_name"
@@ -20,7 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="ContentDescription"/>
-
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -32,7 +30,6 @@
         tools:ignore="ContentDescription"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintVertical_bias="1.0" />
-
     <TextView
         android:id="@+id/pages"
         tools:text="1 of 3"
@@ -50,7 +47,6 @@
         app:layout_constraintBottom_toTopOf="@+id/circle"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
-
     <TextView
         android:id="@+id/end_time"
         tools:text="4.50"
@@ -64,7 +60,6 @@
         app:layout_constraintLeft_toRightOf="@+id/progressView"
         app:layout_constraintTop_toTopOf="@+id/progressView"
         app:layout_constraintBottom_toBottomOf="@+id/progressView" />
-
     <TextView
         android:id="@+id/start_time"
         tools:text="2.0"
@@ -78,7 +73,6 @@
         app:layout_constraintRight_toLeftOf="@+id/progressView"
         app:layout_constraintTop_toTopOf="@+id/progressView"
         app:layout_constraintBottom_toBottomOf="@+id/progressView" />
-
     <TextView
         android:id="@+id/artist"
         tools:text="Imagine Dragons"
@@ -97,7 +91,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
-
     <TextView
         android:id="@+id/track_name"
         tools:text="Whatever it takes"
@@ -113,7 +106,6 @@
         app:layout_constraintTop_toBottomOf="@+id/artist"
         app:layout_constraintLeft_toLeftOf="@+id/artist"
         app:layout_constraintRight_toRightOf="@+id/artist" />
-
     <com.vpaliy.melophile.ui.view.RoundedImageView
         android:layout_width="250dp"
         android:layout_height="250dp"
@@ -127,7 +119,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.256"
         android:id="@+id/circle" />
-
     <ImageView
         android:id="@+id/prev"
         app:srcCompat="@drawable/ic_prev"
@@ -139,19 +130,18 @@
         app:layout_constraintTop_toTopOf="@+id/play_pause"
         tools:ignore="ContentDescription"
         app:layout_constraintHorizontal_chainStyle="packed" />
-
     <SeekBar
         android:id="@+id/progressView"
         android:layout_width="0dp"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
+        android:thumbTint="@color/white"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toLeftOf="@+id/end_time"
         app:layout_constraintLeft_toRightOf="@+id/start_time"
         app:layout_constraintTop_toBottomOf="@+id/track_name"
         app:layout_constraintVertical_bias="0.55"
         app:layout_constraintBottom_toTopOf="@+id/play_pause" />
-
     <ImageView
         android:id="@+id/next"
         app:srcCompat="@drawable/ic_next"
@@ -162,11 +152,10 @@
         app:layout_constraintBottom_toBottomOf="@+id/play_pause"
         app:layout_constraintLeft_toRightOf="@+id/play_pause"
         tools:ignore="ContentDescription"/>
-
     <com.ohoussein.playpause.PlayPauseView
         android:id="@+id/play_pause"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="@dimen/play_pause_size"
+        android:layout_height="@dimen/play_pause_size"
         android:clickable="true"
         app:fill_color="#fafafa"
         app:pause_bg="@android:color/transparent"
@@ -177,23 +166,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9" />
-
     <ImageView
         android:id="@+id/shuffle"
         android:src="@drawable/ic_shuffle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@+id/prev"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/spacing_medium"
         app:layout_constraintBottom_toBottomOf="@+id/prev"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/spacing_medium"
         app:layout_constraintRight_toLeftOf="@+id/prev"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginRight="@dimen/spacing_medium"
+        android:layout_marginLeft="@dimen/spacing_medium"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
-
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        tools:ignore="ContentDescription"/>
     <ImageView
         android:id="@+id/repeat"
         android:src="@drawable/ic_repeat"
@@ -201,10 +189,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@+id/next"
         app:layout_constraintBottom_toBottomOf="@+id/next"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/next"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        tools:ignore="ContentDescription"/>
 </android.support.constraint.ConstraintLayout>

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
-
     <ImageView
         android:src="@drawable/pink"
         android:scaleType="centerCrop"
@@ -17,13 +16,13 @@
         android:id="@+id/cover"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="ContentDescription"/>
-
     <TextView
         android:id="@+id/log_in"
         android:scaleY="0"
         android:scaleX="0"
         tools:scaleX="1"
         tools:scaleY="1"
+        android:textColor="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="@string/login_label"
@@ -37,4 +36,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.8" />
+    <TextView
+        android:id="@+id/invite"
+        style="@style/Widget.BigTitle"
+        android:text="@string/invitation_label"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/log_in"
+        app:layout_constraintRight_toRightOf="@+id/log_in"
+        android:layout_marginTop="@dimen/spacing_huge"
+        app:layout_constraintTop_toBottomOf="@+id/log_in" />
 </android.support.constraint.ConstraintLayout>

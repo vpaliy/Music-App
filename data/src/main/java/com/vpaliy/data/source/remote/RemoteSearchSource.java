@@ -132,7 +132,7 @@ public class RemoteSearchSource implements SearchSource {
                             return result.collection;
                         }
                         return null;
-                    });//.map(filter::filterTracks);
+                    }).map(filter::filterUsers);
         }
         return Single.error(new IllegalArgumentException("You haven't made a query!"));
     }

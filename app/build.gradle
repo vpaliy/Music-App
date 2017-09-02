@@ -7,9 +7,9 @@ def testLibs=rootProject.ext.testDependencies;
 
 
 android {
+
     compileSdkVersion config.compileSdkVersion
     buildToolsVersion config.buildToolsVersion
-
     defaultConfig {
         applicationId config.applicationId
         minSdkVersion config.minSdkVersion
@@ -20,31 +20,28 @@ android {
         vectorDrawables.useSupportLibrary true
         multiDexEnabled true
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
 }
 
-//TODO remove unused dependencies from here
 
 dependencies {
-    compile project (":domain")
-    compile project (":data")
-
-    compile 'com.google.android.exoplayer:exoplayer:r2.4.1'
-    compile 'com.github.ohoussein.playpauseview:playpauseview:1.0.1'
-    compile 'com.aurelhubert:ahbottomnavigation:2.0.6'
-    compile 'jp.wasabeef:blurry:2.1.1'
-    compile 'com.roughike:bottom-bar:2.3.1'
-    compile ('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
-        transitive = true;
-    }
+    compile project(':domain')
+    compile project(':data')
+    
+    compile libs.exoplayer
+    compile libs.playPause
+    compile libs.bottomNavigation
+    compile libs.blurry
+    compile libs.bottomBar
+    compile libs.firebaseInvites
+    compile libs.firebaseCore
+    compile libs.firebaseCrash
     compile libs.chipsLover
     compile libs.constraintLayout
     compile libs.preferenceCompat7
@@ -71,3 +68,4 @@ dependencies {
     testCompile testLibs.espresso
     testCompile testLibs.jUnit
 }
+apply plugin: 'com.google.gms.google-services'

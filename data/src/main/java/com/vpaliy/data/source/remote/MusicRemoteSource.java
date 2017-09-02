@@ -1,5 +1,7 @@
 package com.vpaliy.data.source.remote;
 
+import android.text.TextUtils;
+
 import com.vpaliy.data.model.UserDetailsEntity;
 import com.vpaliy.data.source.RemoteSource;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
@@ -77,7 +79,7 @@ public class MusicRemoteSource implements RemoteSource {
 
     @Override
     public Single<PlaylistEntity> getPlaylistBy(String id) {
-        if(id!=null){
+        if(!TextUtils.isEmpty(id)){
             return service.fetchPlaylist(id)
                     .map(filter::filter);
         }
@@ -86,7 +88,11 @@ public class MusicRemoteSource implements RemoteSource {
 
     @Override
     public Single<TrackEntity> getTrackBy(String id) {
-        return null;
+        if(!TextUtils.isEmpty(id)) {
+            return service.fetchTrack(id)
+                    .map(filter::filter);
+        }
+        return Single.error(new IllegalArgumentException("id is null"));
     }
 
     @Override
@@ -115,17 +121,19 @@ public class MusicRemoteSource implements RemoteSource {
 
     @Override
     public Single<List<UserEntity>> getUserFollowers(String id) {
-        if(id!=null){
+        if(!TextUtils.isEmpty(id)){
             return service.fetchUserFollowers(id)
-                    .map(page->page.collection);
+                    .map(page->page.collection)
+                    .map(filter::filterUsers);
         }
         return Single.error(new IllegalArgumentException("id is null"));
     }
 
     @Override
     public Single<List<TrackEntity>> getUserFavorites(String id) {
-        if(id!=null){
-            return service.fetchUserFavoriteTracks(id);
+        if(!TextUtils.isEmpty(id)){
+            return service.fetchUserFavoriteTracks(id)
+                    .map(filter::filterTracks);
         }
         return Single.error(new IllegalArgumentException("id is null"));
     }

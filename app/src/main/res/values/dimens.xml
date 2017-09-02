@@ -18,18 +18,29 @@
     <dimen name="details_action_padding">16dp</dimen>
 
     <!-- Image -->
+    <dimen name="media_height">250dp</dimen>
+    <dimen name="media_width">250dp</dimen>
     <dimen name="album_height">140dp</dimen>
     <dimen name="album_width">140dp</dimen>
-    <dimen name="related_media_height">180dp</dimen>
-    <dimen name="related_media_width">130dp</dimen>
     <dimen name="actor_photo_height">150dp</dimen>
     <dimen name="actor_photo_width">150dp</dimen>
-    <dimen name="details_poster_width">120dp</dimen>
-    <dimen name="details_poster_height">180dp</dimen>
-    <dimen name="details_backdrop_height">300dp</dimen>
+    <dimen name="user_size">150dp</dimen>
+    <dimen name="follower_size">100dp</dimen>
+    <dimen name="small_media_size">75dp</dimen>
+    <dimen name="small_user_size">50dp</dimen>
+
+    <!-- Text -->
+    <dimen name="media_title">25sp</dimen>
+    <dimen name="more_label">17sp</dimen>
+    <dimen name="under_media_text">17sp</dimen>
+    <dimen name="second_media_text">15sp</dimen>
+    <dimen name="max_track_length">150dp</dimen>
+    <dimen name="big_name_size">30sp</dimen>
+
 
     <!-- Player -->
     <dimen name="button_size">32dp</dimen>
+    <dimen name="play_pause_size">75dp</dimen>
 
     <!-- Z-axis elevations -->
     <dimen name="z_app_bar">4dp</dimen>

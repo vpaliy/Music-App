@@ -2,19 +2,19 @@
     <tab
         id="@+id/playlists"
         icon="@drawable/ic_music_lib"
-        barColorWhenSelected="#ff6f00"
+        barColorWhenSelected="#212121"
         badgeHidesWhenActive="true"
         title="Playlists" />
     <tab
         id="@+id/tracks"
         icon="@drawable/ic_album"
-        barColorWhenSelected="#4db6f1"
+        barColorWhenSelected="#212121"
         badgeHidesWhenActive="true"
         title="Tracks" />
     <tab
         id="@+id/personal"
         icon="@drawable/ic_time"
-        barColorWhenSelected="#00695c"
+        barColorWhenSelected="#212121"
         badgeHidesWhenActive="true"
         title="Personal" />
 </tabs>

@@ -1,7 +1,11 @@
 package com.vpaliy.data.source.remote;
 
+import com.vpaliy.soundcloud.model.MiniUserEntity;
 import com.vpaliy.soundcloud.model.PlaylistEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
+import com.vpaliy.soundcloud.model.UserEntity;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
@@ -39,6 +43,20 @@ public class Filter {
         return null;
     }
 
+    public List<UserEntity> filterUsers(List<UserEntity> users){
+        if(users!=null){
+            List<UserEntity> result=new ArrayList<>(users.size());
+            for(UserEntity entity:users){
+                entity=filter(entity);
+                if(entity!=null){
+                    result.add(entity);
+                }
+            }
+            return result.isEmpty()?null:result;
+        }
+        return null;
+    }
+
     public TrackEntity filter(TrackEntity trackEntity){
         if(trackEntity!=null){
             if(trackEntity.artwork_url!=null && trackEntity.is_streamable){
@@ -54,10 +72,30 @@ public class Filter {
             if(playlistEntity.artwork_url!=null){
                 playlistEntity.artwork_url=playlistEntity.artwork_url.replace("large","t500x500");
                 playlistEntity.tracks=filterTracks(playlistEntity.tracks);
+                playlistEntity.user=filter(playlistEntity.user);
                 return playlistEntity;
             }
         }
         return null;
     }
 
+    public UserEntity filter(UserEntity user){
+        if(user!=null){
+            if(user.avatar_url!=null){
+                user.avatar_url=user.avatar_url.replace("large","t500x500");
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public MiniUserEntity filter(MiniUserEntity user){
+        if(user!=null){
+            if(user.avatar_url!=null){
+                user.avatar_url=user.avatar_url.replace("large","t500x500");
+                return user;
+            }
+        }
+        return null;
+    }
 }
