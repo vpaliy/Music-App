@@ -5,15 +5,21 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+
+import com.vpaliy.data.source.local.MusicContract;
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
 import com.vpaliy.domain.model.MelophileTheme;
 import com.vpaliy.domain.model.Playlist;
+import com.vpaliy.domain.model.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import android.text.TextUtils;
 import static com.vpaliy.data.source.local.MusicContract.Playlists;
 import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -48,6 +54,11 @@ public class PlaylistHandler {
             List<Playlist> playlists=new ArrayList<>(cursor.getCount());
             while(cursor.moveToNext()){
                 Playlist playlist= DatabaseUtils.toPlaylist(cursor);
+                String userId=cursor.getString(cursor.getColumnIndex(Playlists.PLAYLIST_USER_ID));
+                if(!TextUtils.isEmpty(userId)){
+                    User user=UserHandler.build(provider).query(userId);
+                    playlist.setUser(user);
+                }
                 if(playlist!=null) {
                     playlists.add(playlist);
                 }
@@ -86,6 +97,11 @@ public class PlaylistHandler {
         Cursor cursor=provider.query(Playlists.buildPlaylistUri(id),Playlists.COLUMNS,null,null,null);
         if(cursor!=null && cursor.moveToFirst()) {
             Playlist playlist=DatabaseUtils.toPlaylist(cursor);
+            String userId=cursor.getString(cursor.getColumnIndex(Playlists.PLAYLIST_USER_ID));
+            if(!TextUtils.isEmpty(userId)){
+                User user=UserHandler.build(provider).query(userId);
+                playlist.setUser(user);
+            }
             cursor.close();
             return playlist;
         }
@@ -104,5 +120,23 @@ public class PlaylistHandler {
         if(values!=null){
             provider.insert(MelophileThemes.buildPlaylistsTheme(),values);
         }
+    }
+
+    public void save(Playlist playlist){
+        if (playlist != null) {
+            insert(playlist);
+            ContentValues values=new ContentValues();
+            values.put(MusicContract.History.HISTORY_ITEM_ID,playlist.getId());
+            provider.insert(MusicContract.History.buildPlaylistsHistoryUri(),values);
+        }
+    }
+
+    public List<Playlist> querySaved(){
+        Cursor cursor=provider.query(MusicContract.History.buildPlaylistGetUri(),null,null,null,null);
+        return queryAll(cursor);
+    }
+
+    public void clearHistory(){
+        provider.delete(MusicContract.History.buildPlaylistsHistoryUri(),null,null);
     }
 }

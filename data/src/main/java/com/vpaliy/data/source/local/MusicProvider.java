@@ -17,6 +17,7 @@ import static com.vpaliy.data.source.local.MusicContract.MelophileThemes;
 import com.vpaliy.data.source.local.utils.SqlQueryBuilder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class MusicProvider extends ContentProvider{
 
@@ -127,6 +128,10 @@ public class MusicProvider extends ContentProvider{
                 return builder.table(Tables.TRACKS);
             case USERS:
                 return builder.table(Tables.USERS);
+            case HISTORY_TRACKS_GET:
+                return builder.table(Tables.HISTORY_JOIN_TRACKS);
+            case HISTORY_PLAYLISTS_GET:
+                return builder.table(Tables.HISTORY_JOIN_PLAYLISTS);
             case HISTORY_TRACKS:
                 return builder.table(Tables.HISTORY_TRACK);
             case HISTORY_PLAYLISTS:
@@ -145,6 +150,12 @@ public class MusicProvider extends ContentProvider{
                 id=Users.getUserId(uri);
                 return builder.table(Tables.USERS)
                         .where(Users.USER_ID+"=?",id);
+            case ME_FOLLOWINGS:
+                return builder.table(Tables.USERS)
+                        .where(Users.USER_IS_FOLLOWED+"=?","1");
+            case ME_TRACKS:
+                return builder.table(Tables.TRACKS)
+                        .where(Tracks.TRACK_IS_LIKED+"=?","1");
             case PLAYLIST_TRACKS:
                 id=Playlists.getPlaylistId(uri);
                 return builder.table(Tables.TRACKS_PLAYLISTS)

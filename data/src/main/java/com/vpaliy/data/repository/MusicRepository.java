@@ -3,7 +3,6 @@ package com.vpaliy.data.repository;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import com.google.common.cache.CacheBuilder;
 import com.vpaliy.data.cache.CacheStore;
 import com.vpaliy.data.mapper.Mapper;

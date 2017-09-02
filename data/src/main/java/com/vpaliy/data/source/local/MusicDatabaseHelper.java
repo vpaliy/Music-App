@@ -35,8 +35,12 @@ public class MusicDatabaseHelper extends SQLiteOpenHelper {
                 "INNER JOIN tracks ON users.user_id=tracks.ref_track_user_id";
         String USER_JOIN_PLAYLISTS="users "+
                 "INNER JOIN tracks on users.user_id=playlists.ref_playlist_user_id";
-        String ME_JOIN_TRACKS="me "+
-                "INNER JOIN tracks ON tracks.track_id=";
+
+        String HISTORY_JOIN_TRACKS="history_tracks "+
+                "INNER JOIN tracks ON history_tracks.history_item_id=tracks.track_id";
+
+        String HISTORY_JOIN_PLAYLISTS="history_playlist "+
+                "INNER JOIN playlists ON history_playlist.history_item_id=playlists.playlist_id";
     }
 
     interface References {

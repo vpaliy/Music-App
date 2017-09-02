@@ -18,6 +18,8 @@ import javax.inject.Singleton;
 @Singleton
 public class LocalMusicSource implements LocalSource {
 
+    private static final String TAG=LocalMusicSource.class.getSimpleName();
+
     private PlaylistHandler playlistHandler;
     private TrackHandler trackHandler;
     private UserHandler userHandler;

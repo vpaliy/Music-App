@@ -39,6 +39,7 @@ dependencies {
     compile libs.gson
     compile libs.RxAndroid
     compile libs.Dagger2
+    compile 'com.google.firebase:firebase-database:9.4.0'
     annotationProcessor libs.Dagger2Compiler
     provided libs.javaxAnnotation
 
@@ -47,3 +48,5 @@ dependencies {
     testCompile testLibs.robolectric
     testCompile testLibs.jUnit
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -5,6 +5,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
+
+import com.vpaliy.data.source.local.MusicContract;
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
@@ -27,6 +29,10 @@ public class UserHandler {
         this.provider=context.getContentResolver();
     }
 
+    public UserHandler(@NonNull ContentResolver resolver){
+        this.provider=resolver;
+    }
+
     public List<User> queryAll(Query query){
         if(query!=null){
             Cursor cursor=provider.query(Users.CONTENT_URI,null,query.selection(),query.args(),null);
@@ -38,7 +44,7 @@ public class UserHandler {
     public User query(String id){
         if(!TextUtils.isEmpty(id)){
             Cursor cursor=provider.query(Users.buildUserUri(id),null,null,null,null);
-            if(cursor!=null){
+            if(cursor!=null && cursor.moveToFirst()){
                 User user=DatabaseUtils.toUser(cursor);
                 if(!cursor.isClosed()) cursor.close();
                 return user;
@@ -100,10 +106,19 @@ public class UserHandler {
         throw new IllegalArgumentException("Id is null");
     }
 
+    public List<User> queryFollowings(){
+        Cursor cursor=provider.query(MusicContract.Me.buildMyFollowingsUri(),null,null,null,null);
+        return queryAll(cursor);
+    }
+
     public void insert(User user){
         if (user != null) {
             ContentValues values=DatabaseUtils.toValues(user);
             provider.insert(Users.CONTENT_URI,values);
         }
+    }
+
+    public static UserHandler build(ContentResolver resolver){
+        return new UserHandler(resolver);
     }
 }

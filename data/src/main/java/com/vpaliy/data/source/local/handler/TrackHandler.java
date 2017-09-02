@@ -6,10 +6,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
-import android.util.Log;
+import com.vpaliy.data.source.local.MusicContract;
 import com.vpaliy.data.source.local.utils.DatabaseUtils;
 import com.vpaliy.domain.model.MelophileTheme;
 import com.vpaliy.domain.model.Track;
+import com.vpaliy.domain.model.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import android.support.annotation.NonNull;
@@ -43,6 +45,11 @@ public class TrackHandler {
             List<Track> tracks=new ArrayList<>();
             while(cursor.moveToNext()){
                 Track track= DatabaseUtils.toTrack(cursor);
+                String userId=cursor.getString(cursor.getColumnIndex(Tracks.TRACK_USER_ID));
+                if(!TextUtils.isEmpty(userId)){
+                    User user=UserHandler.build(provider).query(userId);
+                    track.setUser(user);
+                }
                 if(track!=null){
                     tracks.add(track);
                 }
@@ -58,11 +65,14 @@ public class TrackHandler {
             Cursor cursor=provider.query(Tracks.buildTrackUri(id),Tracks.COLUMNS,null,null,null);
             if(cursor!=null && cursor.moveToFirst()){
                 Track track=DatabaseUtils.toTrack(cursor);
+                String userId=cursor.getString(cursor.getColumnIndex(Tracks.TRACK_USER_ID));
+                if(!TextUtils.isEmpty(userId)){
+                    User user=UserHandler.build(provider).query(userId);
+                    track.setUser(user);
+                }
                 if(!cursor.isClosed()) cursor.close();
-                Log.d(TrackHandler.class.getSimpleName(),"Returning not null");
                 return track;
             }
-            Log.d(TrackHandler.class.getSimpleName(),"Returning null");
             return null;
         }
         throw new IllegalArgumentException("Id is null");
@@ -78,7 +88,6 @@ public class TrackHandler {
             Cursor cursor=provider.query(MelophileThemes.buildTracksTheme(theme.getTheme()),null,null,null,null);
             if(cursor!=null){
                 List<Track> tracks=new ArrayList<>(cursor.getCount());
-                Log.d(TrackHandler.class.getSimpleName(),Integer.toString(cursor.getCount()));
                 while(cursor.moveToNext()){
                     Track track=query(cursor.getString(cursor.getColumnIndex(MelophileThemes.MELOPHILE_ITEM_ID)));
                     if(track!=null) {
@@ -95,6 +104,10 @@ public class TrackHandler {
 
     public void insert(Track track){
         if(track!=null){
+            User user=track.getUser();
+            if(user!=null){
+                provider.insert(MusicContract.Users.CONTENT_URI,DatabaseUtils.toValues(user));
+            }
             ContentValues values= DatabaseUtils.toValues(track);
             provider.insert(Tracks.CONTENT_URI,values);
         }
@@ -105,5 +118,28 @@ public class TrackHandler {
         if(values!=null){
             provider.insert(MelophileThemes.buildTracksTheme(),values);
         }
+    }
+
+    public void save(Track track){
+        if(track!=null){
+            insert(track);
+            ContentValues values=new ContentValues();
+            values.put(MusicContract.History.HISTORY_ITEM_ID,track.getId());
+            provider.insert(MusicContract.History.buildTracksHistoryUri(),values);
+        }
+    }
+
+    public List<Track> queryLiked(){
+        Cursor cursor=provider.query(MusicContract.Me.buildMyLikedUri(),null,null,null,null);
+        return queryAll(cursor);
+    }
+
+    public List<Track> queryHistory(){
+        Cursor cursor=provider.query(MusicContract.History.buildTrackGetUri(),null,null,null,null);
+        return queryAll(cursor);
+    }
+
+    public void clearHistory(){
+        provider.delete(MusicContract.History.buildTracksHistoryUri(),null,null);
     }
 }

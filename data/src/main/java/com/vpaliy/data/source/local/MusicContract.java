@@ -58,8 +58,8 @@ public final class MusicContract {
         String ME_LIKED_TRACKS_COUNT="me_liked_tracks_count";
 
         String[] COLUMNS={ME_ART_URL,ME_NICKNAME,ME_FULLNAME,ME_DESCRIPTION,
-            ME_DESCRIPTION,ME_FOLLOWER_COUNT,ME_TRACKS_COUNT,
-            ME_PLAYLISTS_COUNT,ME_FOLLOWER_COUNT,ME_LIKED_TRACKS_COUNT};
+                ME_DESCRIPTION,ME_FOLLOWER_COUNT,ME_TRACKS_COUNT,
+                ME_PLAYLISTS_COUNT,ME_FOLLOWER_COUNT,ME_LIKED_TRACKS_COUNT};
     }
 
     interface UserColumns {
@@ -76,9 +76,9 @@ public final class MusicContract {
         String USER_LIKED_TRACKS_COUNT="user_liked_tracks_count";
 
         String[] COLUMNS={USER_ID,USER_ART_URL,USER_NICKNAME,
-            USER_FULLNAME,USER_NICKNAME,USER_DESCRIPTION,
-            USER_FOLLOWINGS_COUNT,USER_TRACKS_COUNT,USER_PLAYLISTS_COUNT,
-            USER_FOLLOWER_COUNT,USER_IS_FOLLOWED,USER_LIKED_TRACKS_COUNT};
+                USER_FULLNAME,USER_NICKNAME,USER_DESCRIPTION,
+                USER_FOLLOWINGS_COUNT,USER_TRACKS_COUNT,USER_PLAYLISTS_COUNT,
+                USER_FOLLOWER_COUNT,USER_IS_FOLLOWED,USER_LIKED_TRACKS_COUNT};
     }
 
     interface HistoryColumns {
@@ -99,9 +99,9 @@ public final class MusicContract {
     public static final String PATH_PLAYLIST="playlists";
     public static final String PATH_USER="users";
     public static final String PATH_ME="me";
-    public static final String PATH_HISTORY="me/history";
-    public static final String PATH_HISTORY_TRACKS="me/history/tracks";
-    public static final String PATH_HISTORY_PLAYLISTS="me/history/playlists";
+    public static final String PATH_HISTORY="history";
+    public static final String PATH_HISTORY_TRACKS="history/tracks";
+    public static final String PATH_HISTORY_PLAYLISTS="history/playlists";
     public static final String PATH_MELOPHILE_THEMES="melophile";
     public static final String PATH_MELOPHILE_TRACKS="melophile/tracks";
     public static final String PATH_MELOPHILE_PLAYLISTS="melophile/playlists";
@@ -204,6 +204,14 @@ public final class MusicContract {
         public static String getMeId(Uri uri){
             return uri.getPathSegments().get(1);
         }
+
+        public static Uri buildMyLikedUri(){
+            return CONTENT_URI.buildUpon().appendPath(PATH_TRACK).build();
+        }
+
+        public static Uri buildMyFollowingsUri(){
+            return CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
+        }
     }
 
     public static class History implements HistoryColumns {
@@ -222,6 +230,14 @@ public final class MusicContract {
 
         public static Uri buildPlaylistsHistoryUri(){
             return CONTENT_URI.buildUpon().appendPath(PATH_PLAYLIST).build();
+        }
+
+        public static Uri buildPlaylistGetUri(){
+            return CONTENT_URI.buildUpon().appendPath(PATH_PLAYLIST).appendPath(PATH_HISTORY).build();
+        }
+
+        public static Uri buildTrackGetUri(){
+            return CONTENT_URI.buildUpon().appendPath(PATH_TRACK).appendPath(PATH_HISTORY).build();
         }
     }
 
