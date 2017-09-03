@@ -9,7 +9,7 @@ It allows you listen to the right music, wherever you are.
 - follow/unfollow users
 - search tracks, users, playlists
 - view playlists, users, tracks 
-- invite friends (thanks`Firebase Invites`)
+- invite friends (thanks to `Firebase Invites`)
 - browse your listening history
 
 
