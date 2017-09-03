@@ -19,17 +19,19 @@ It allows you listen to the right music, wherever you are.
 
 # Check it out #
 
-![](https://github.com/vpaliyX/CasptoneProject/blob/master/art/playlist.gif)
-![](https://github.com/vpaliyX/CasptoneProject/blob/master/art/user.gif)
-![](https://github.com/vpaliyX/CasptoneProject/blob/master/art/fourth.png)
+![](https://github.com/vpaliyX/Melophile/blob/master/art/playlist.gif)
+![](https://github.com/vpaliyX/Melophile/blob/master/art/user.gif)
+![](https://github.com/vpaliyX/Melophile/blob/master/art/fourth.png)
 
-![](https://github.com/vpaliyX/CasptoneProject/blob/master/art/second_2.png)
+![](https://github.com/vpaliyX/Melophile/blob/master/art/player.png)
 
-![](https://github.com/vpaliyX/CasptoneProject/blob/master/art/first_1.png)
+![](https://github.com/vpaliyX/Melophile/blob/master/art/second_2.png)
 
-![](https://github.com/vpaliyX/CasptoneProject/blob/master/art/third.png)
+![](https://github.com/vpaliyX/Melophile/blob/master/art/first_1.png)
 
-![](https://github.com/vpaliyX/CasptoneProject/blob/master/art/sixth.png)
+![](https://github.com/vpaliyX/Melophile/blob/master/art/third.png)
+
+![](https://github.com/vpaliyX/Melophile/blob/master/art/sixth.png)
 
 ## License ##
 
