@@ -1,6 +1,7 @@
 package com.vpaliy.data.cache;
-import com.google.common.cache.Cache;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+
 import io.reactivex.Single;
 
 /**
@@ -9,14 +10,13 @@ import io.reactivex.Single;
 
 public class CacheStore<K, V> {
 
-    private final Cache<K, V> cache;
+    private final ConcurrentMap<K, V> cache;
 
-    public CacheStore(Cache<K, V> cache) {
+    public CacheStore(ConcurrentMap<K, V> cache) {
         this.cache = cache;
     }
 
-    public void invalidate(K key) {
-        cache.invalidate(key);
+    public void invalidate(K key) {cache.remove(key);
     }
 
     public void put(K key, V value) {
@@ -28,7 +28,7 @@ public class CacheStore<K, V> {
     }
 
     public Single<V> getStream(K key) {
-        V value=cache.getIfPresent(key);
+        V value=cache.get(key);
         if(value!=null){
             return Single.just(value);
         }
@@ -36,7 +36,7 @@ public class CacheStore<K, V> {
     }
 
     public  boolean isInCache(K key) {
-        return key!=null && cache.getIfPresent(key) != null;
+        return key!=null && cache.get(key) != null;
     }
 
     public long size(){

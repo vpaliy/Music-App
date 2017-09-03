@@ -16,6 +16,7 @@ ext {
     daggerVersion = '2.9'
     chipsLoverVersion='v1.3'
     calligraphyVersion='2.2.0'
+    expiringMapVersion='0.5.8'
     butterKnifeVersion = "8.5.1"
     supportVersion = "25.1.0"
     rxJavaVersion = '2.0.2'
@@ -37,7 +38,6 @@ ext {
     retrofitConverterVersion="2.1.0"
     retrofitAdapterVersion="2.1.0"
     picassoVersion="2.5.2"
-    guavaVersion="14.0"
     materialIconLibVersion="1.1.3"
     multiDexVersion="1.0.1"
     constraintLayoutVersion="1.0.2"
@@ -84,7 +84,6 @@ ext {
             retrofitConverter  : "com.squareup.retrofit2:converter-gson:${retrofitConverterVersion}",
             retrofitAdapter    : "com.squareup.retrofit2:adapter-rxjava:${retrofitAdapterVersion}",
             picasso            : "com.squareup.picasso:picasso:${picassoVersion}",
-            guava              : "com.google.guava:guava:${guavaVersion}",
             leakCanary         :"com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
             expandableTextView : "at.blogc:expandabletextview:1.0.3",
             rxRelay            : "com.jakewharton.rxrelay2:rxrelay:${rxRelayVersion}",
@@ -94,6 +93,7 @@ ext {
             multiDex           : "com.android.support:multidex:${multiDexVersion}",
             constraintLayout   : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
             calligraphy        : "uk.co.chrisjenx:calligraphy:${calligraphyVersion}",
+            expiringMap        : "net.jodah:expiringmap:${expiringMapVersion}",
             exoplayer          : 'com.google.android.exoplayer:exoplayer:r2.4.1',
             playPause          : 'com.github.ohoussein.playpauseview:playpauseview:1.0.1',
             bottomNavigation   : 'com.aurelhubert:ahbottomnavigation:2.0.6',
