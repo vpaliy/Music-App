@@ -7,7 +7,7 @@ Want to discover new music? Choose a ready-made playlist that suits your mood or
 Also you can follow/unfollow others, like/unlike a song and browse your own listening history.
 
 # How to use? #
-- clone repository using `git clone https://github.com/vpaliy/Capstone-Project.git`
+- clone repository using `git clone https://github.com/vpaliy/Melophile.git`
 - obtain a `client_id`, `client_secret` key by registering [here](https://developers.soundcloud.com/docs/api/reference).
 
 # Check it out #
