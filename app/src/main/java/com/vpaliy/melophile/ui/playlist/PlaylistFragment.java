@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.target.ImageViewTarget;
-import com.google.common.reflect.TypeToken;
+import com.google.gson.reflect.TypeToken;
 import com.vpaliy.chips_lover.ChipsLayout;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;

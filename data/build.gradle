@@ -31,7 +31,7 @@ dependencies {
     compile libs.supportAppCompat
     compile libs.soundcloud
     compile libs.RxJava
-    compile libs.guava
+    compile libs.expiringMap
     compile libs.retrofit
     compile libs.retrofitAdapter
     compile libs.retrofitConverter

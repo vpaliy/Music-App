@@ -59,6 +59,7 @@ dependencies {
     compile libs.RxAndroid
     compile libs.palette
     compile libs.rxRelay
+    compile libs.gson
     annotationProcessor libs.Dagger2Compiler
     annotationProcessor libs.butterKnifeCompiler
     provided libs.javaxAnnotation

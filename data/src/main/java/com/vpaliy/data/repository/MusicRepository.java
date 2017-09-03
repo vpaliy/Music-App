@@ -3,7 +3,6 @@ package com.vpaliy.data.repository;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import com.google.common.cache.CacheBuilder;
 import com.vpaliy.data.cache.CacheStore;
 import com.vpaliy.data.mapper.Mapper;
 import com.vpaliy.data.model.UserDetailsEntity;
@@ -20,6 +19,9 @@ import com.vpaliy.domain.repository.Repository;
 import com.vpaliy.soundcloud.model.PlaylistEntity;
 import com.vpaliy.soundcloud.model.TrackEntity;
 import com.vpaliy.soundcloud.model.UserEntity;
+
+import net.jodah.expiringmap.ExpiringMap;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Completable;
@@ -68,17 +70,18 @@ public class MusicRepository implements Repository {
         this.schedulerProvider=schedulerProvider;
         this.context=context;
         //initialize cache
-        playlistCacheStore=new CacheStore<>(CacheBuilder.newBuilder()
-                .maximumSize(DEFAULT_CACHE_SIZE)
-                .expireAfterAccess(DEFAULT_CACHE_DURATION, TimeUnit.MINUTES)
+        playlistCacheStore = new CacheStore<>(ExpiringMap.builder()
+                .maxSize(DEFAULT_CACHE_SIZE)
+                .expiration(DEFAULT_CACHE_DURATION, TimeUnit.MINUTES)
                 .build());
-        trackCacheStore=new CacheStore<>(CacheBuilder.newBuilder()
-                .maximumSize(DEFAULT_CACHE_SIZE)
-                .expireAfterAccess(DEFAULT_CACHE_DURATION, TimeUnit.MINUTES)
+
+        trackCacheStore=new CacheStore<>(ExpiringMap.builder()
+                .maxSize(DEFAULT_CACHE_SIZE)
+                .expiration(DEFAULT_CACHE_DURATION, TimeUnit.MINUTES)
                 .build());
-        userCacheStore=new CacheStore<>(CacheBuilder.newBuilder()
-                .maximumSize(DEFAULT_CACHE_SIZE)
-                .expireAfterAccess(DEFAULT_CACHE_DURATION, TimeUnit.MINUTES)
+        userCacheStore=new CacheStore<>(ExpiringMap.builder()
+                .maxSize(DEFAULT_CACHE_SIZE)
+                .expiration(DEFAULT_CACHE_DURATION, TimeUnit.MINUTES)
                 .build());
     }
 
