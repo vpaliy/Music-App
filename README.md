@@ -2,9 +2,16 @@
 
 `Melophile` is a simple music app which uses [SoundCloud API](https://soundcloud.com/stream).
 It allows you listen to the right music, wherever you are. 
-With `Melophile`, you have access to a world of music.
-Want to discover new music? Choose a ready-made playlist that suits your mood or search for it.
-Also you can follow/unfollow others, like/unlike a song and browse your own listening history.
+
+# What can I do with it? #
+- stream music
+- like/unlike a song
+- follow/unfollow users
+- search tracks, users, playlists
+- view playlists, users, tracks 
+- invite friends (thanks`Firebase Invites`)
+- browse your listening history
+
 
 # How to use? #
 - clone repository using `git clone https://github.com/vpaliy/Melophile.git`
