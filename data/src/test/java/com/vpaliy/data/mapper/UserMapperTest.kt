@@ -3,21 +3,29 @@ package com.vpaliy.data.mapper
 import com.vpaliy.data.FakeDataProvider
 import com.vpaliy.domain.model.User
 import com.vpaliy.soundcloud.model.UserEntity
-import org.mockito.junit.MockitoJUnitRunner
 import junit.framework.Assert.assertEquals
+import org.powermock.api.mockito.PowerMockito
+import org.powermock.modules.junit4.PowerMockRunner
+import org.mockito.Matchers.anyString
+import org.mockito.Mockito.times
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.powermock.core.classloader.annotations.PrepareForTest
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(PowerMockRunner::class)
+@PrepareForTest(MapperUtils::class)
 class UserMapperTest {
 
     private val mapper = UserMapper()
 
     @Test
     fun mapsFakeToReal() {
+        PowerMockito.mockStatic(MapperUtils::class.java)
         val userEntity=FakeDataProvider.buildUserEntity()
         val userReal=mapper.map(userEntity)
         compare(userReal,userEntity)
+        PowerMockito.verifyStatic(times(4))
+        MapperUtils.convertToInt(anyString())
     }
 
     private fun compare(real: User?, fake:UserEntity?){
