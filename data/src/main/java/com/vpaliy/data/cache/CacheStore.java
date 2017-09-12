@@ -16,8 +16,7 @@ public class CacheStore<K, V> {
         this.cache = cache;
     }
 
-    public void invalidate(K key) {cache.remove(key);
-    }
+    public void invalidate(K key) {cache.remove(key);}
 
     public void put(K key, V value) {
         cache.put(key, value);
