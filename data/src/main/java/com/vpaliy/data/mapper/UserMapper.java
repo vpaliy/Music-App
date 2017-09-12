@@ -1,7 +1,5 @@
 package com.vpaliy.data.mapper;
 
-import android.util.Log;
-
 import com.vpaliy.domain.model.User;
 import com.vpaliy.soundcloud.model.UserEntity;
 import javax.inject.Inject;
@@ -20,7 +18,7 @@ public class UserMapper extends Mapper<User,UserEntity> {
         user.setId(userEntity.id);
         user.setNickName(userEntity.username);
         user.setFullName(userEntity.full_name);
-        user.setDescription(userEntity.city);
+        user.setDescription(userEntity.description);
         user.setAvatarUrl(userEntity.avatar_url);
         user.setFollowersCount(MapperUtils.convertToInt(userEntity.followers_count));
         user.setFollowingCount(MapperUtils.convertToInt(userEntity.followings_count));

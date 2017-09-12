@@ -45,13 +45,18 @@ dependencies {
     compile libs.Dagger2
     annotationProcessor libs.Dagger2Compiler
     provided libs.javaxAnnotation
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     /* Testing Libraries */
     testCompile testLibs.mockito
     testCompile testLibs.robolectric
     testCompile testLibs.jUnit
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    testCompile "org.powermock:powermock-module-junit4:1.6.4"
+    testCompile "org.powermock:powermock-module-junit4-rule:1.6.4"
+    testCompile "org.powermock:powermock-api-mockito2:1.7.0"
+    testCompile "org.powermock:powermock-classloading-xstream:1.7.0"
 }
+
 repositories {
     mavenCentral()
 }
