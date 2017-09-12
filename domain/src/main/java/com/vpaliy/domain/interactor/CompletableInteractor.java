@@ -6,11 +6,11 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import android.support.annotation.NonNull;
 
-public abstract class CompletableUseCase<Params> {
+public abstract class CompletableInteractor<Params> {
 
     private BaseSchedulerProvider schedulerProvider;
 
-    public CompletableUseCase(@NonNull BaseSchedulerProvider schedulerProvider){
+    public CompletableInteractor(@NonNull BaseSchedulerProvider schedulerProvider){
         this.schedulerProvider=schedulerProvider;
     }
 
@@ -26,7 +26,7 @@ public abstract class CompletableUseCase<Params> {
     public void execute2(@NonNull Action onComplete,
                          @NonNull Consumer<? super Throwable> onError,
                          Params params){
-        buildCompletable(params)
+        buildCompletable2(params)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(onComplete,onError);

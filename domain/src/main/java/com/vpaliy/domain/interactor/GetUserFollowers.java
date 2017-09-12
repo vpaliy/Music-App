@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 import io.reactivex.Single;
 
 @Singleton
-public class GetUserFollowers extends SingleUseCase<List<User>,String>{
+public class GetUserFollowers extends SingleInteractor<List<User>,String> {
 
     private Repository repository;
 

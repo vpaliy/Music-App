@@ -24,7 +24,7 @@
             android:layout_height="?android:actionBarSize"
             android:background="@android:color/transparent"
             app:srcCompat="@drawable/ic_back"
-            tools:ignore="ContentDescription"/>
+            android:contentDescription="@string/back_button"/>
     </FrameLayout>
     <View
         android:layout_width="0dp"
@@ -39,7 +39,8 @@
         android:scrollbars="vertical"
         android:scrollbarStyle="insideOverlay"
         tools:listitem="@layout/layout_blank"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:contentDescription="@string/list_of_songs"/>
     <com.vpaliy.melophile.ui.view.ParallaxRatioImageView
         android:id="@+id/playlist_art"
         android:scaleType="centerCrop"
@@ -53,7 +54,8 @@
         app:scrimColor="@color/scrim"
         app:scrimAlpha="0"
         app:maxScrimAlpha="0.4"
-        app:parallaxFactor="-0.5" />
+        app:parallaxFactor="-0.5"
+        android:contentDescription="@string/playlist_cover"/>
     <include layout="@layout/layout_playlist"/>
     <com.vpaliy.melophile.ui.view.FabToggle
         android:id="@+id/play"
@@ -63,5 +65,6 @@
         android:layout_height="wrap_content"
         android:alpha="0"
         android:layout_gravity="end"
-        android:layout_marginEnd="@dimen/spacing_medium" />
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:contentDescription="@string/play_playlist"/>
 </FrameLayout>

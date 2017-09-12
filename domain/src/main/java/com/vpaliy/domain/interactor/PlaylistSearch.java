@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class PlaylistSearch extends SingleUseCase<List<Playlist>,String>{
+public class PlaylistSearch extends SingleInteractor<List<Playlist>,String> {
 
     private SearchRepository repository;
 

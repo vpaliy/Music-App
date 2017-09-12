@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/cover"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/apps_background"/>
     <TextView
         android:id="@+id/log_in"
         android:scaleY="0"
@@ -35,7 +35,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintVertical_bias="0.8"
+        android:contentDescription="@string/get_in_button"/>
     <TextView
         android:id="@+id/invite"
         style="@style/Widget.BigTitle"
@@ -46,5 +47,6 @@
         app:layout_constraintLeft_toLeftOf="@+id/log_in"
         app:layout_constraintRight_toRightOf="@+id/log_in"
         android:layout_marginTop="@dimen/spacing_huge"
-        app:layout_constraintTop_toBottomOf="@+id/log_in" />
+        app:layout_constraintTop_toBottomOf="@+id/log_in"
+        android:contentDescription="@string/invite_button"/>
 </android.support.constraint.ConstraintLayout>

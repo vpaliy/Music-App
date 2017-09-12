@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class GetMe extends SingleUseCase<User,Void>{
+public class GetMe extends SingleInteractor<User,Void> {
 
     private PersonalRepository repository;
 

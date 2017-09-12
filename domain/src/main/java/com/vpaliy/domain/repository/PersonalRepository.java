@@ -21,3 +21,4 @@ public interface PersonalRepository {
     void clearTracks();
     void clearPlaylists();
 }
+

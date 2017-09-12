@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="@dimen/spacing_large"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/song_cover"/>
     <TextView
         android:id="@+id/track_title"
         android:layout_width="wrap_content"
@@ -29,5 +29,6 @@
         android:maxWidth="@dimen/album_width"
         app:layout_constraintTop_toBottomOf="@+id/track_art"
         app:layout_constraintLeft_toLeftOf="@+id/track_art"
-        app:layout_constraintRight_toRightOf="@+id/track_art" />
+        app:layout_constraintRight_toRightOf="@+id/track_art"
+        android:contentDescription="@string/track_name"/>
 </android.support.constraint.ConstraintLayout>

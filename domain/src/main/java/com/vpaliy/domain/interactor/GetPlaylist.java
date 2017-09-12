@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 import io.reactivex.Single;
 
 @Singleton
-public class GetPlaylist extends SingleUseCase<Playlist,String> {
+public class GetPlaylist extends SingleInteractor<Playlist,String> {
 
     private Repository repository;
 

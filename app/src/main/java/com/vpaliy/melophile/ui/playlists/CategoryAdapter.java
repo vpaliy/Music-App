@@ -2,7 +2,6 @@ package com.vpaliy.melophile.ui.playlists;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -20,23 +19,15 @@ public class CategoryAdapter extends BaseAdapter<CategoryAdapter.CategoryWrapper
         super(context,rxBus);
     }
 
-    class TypeViewHolder extends GenericViewHolder
-            implements View.OnClickListener{
+    class TypeViewHolder extends GenericViewHolder {
 
         @BindView(R.id.playlists) RecyclerView list;
         @BindView(R.id.title) TextView title;
-        @BindView(R.id.more) TextView more;
 
         TypeViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this,itemView);
             list.setNestedScrollingEnabled(false);
-            title.setOnClickListener(this);
-            more.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
         }
 
         @Override
@@ -44,7 +35,6 @@ public class CategoryAdapter extends BaseAdapter<CategoryAdapter.CategoryWrapper
             CategoryWrapper wrapper=at(getAdapterPosition());
             list.setAdapter(wrapper.adapter);
             title.setText(wrapper.text);
-            more.setTextColor(wrapper.color);
         }
     }
 

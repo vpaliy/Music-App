@@ -73,8 +73,6 @@ public class TracksAdapter extends BaseAdapter<Track> {
                     .load(track.getArtworkUrl())
                     .priority(Priority.IMMEDIATE)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    //.placeholder(R.drawable.placeholder)
-                    // .animate(R.anim.fade_in)
                     .into(artImage);
         }
     }

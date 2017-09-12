@@ -18,7 +18,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/song_cover"/>
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -118,6 +118,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.256"
+        android:contentDescription="@string/song_cover"
         android:id="@+id/circle" />
     <ImageView
         android:id="@+id/prev"
@@ -128,7 +129,7 @@
         app:layout_constraintLeft_toRightOf="@+id/shuffle"
         app:layout_constraintBottom_toBottomOf="@+id/play_pause"
         app:layout_constraintTop_toTopOf="@+id/play_pause"
-        tools:ignore="ContentDescription"
+        android:contentDescription="@string/prev"
         app:layout_constraintHorizontal_chainStyle="packed" />
     <SeekBar
         android:id="@+id/progressView"
@@ -137,6 +138,7 @@
         android:layout_marginEnd="@dimen/spacing_medium"
         android:thumbTint="@color/white"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/song_progress_bar"
         app:layout_constraintRight_toLeftOf="@+id/end_time"
         app:layout_constraintLeft_toRightOf="@+id/start_time"
         app:layout_constraintTop_toBottomOf="@+id/track_name"
@@ -151,7 +153,7 @@
         app:layout_constraintTop_toTopOf="@+id/play_pause"
         app:layout_constraintBottom_toBottomOf="@+id/play_pause"
         app:layout_constraintLeft_toRightOf="@+id/play_pause"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/next"/>
     <com.ohoussein.playpause.PlayPauseView
         android:id="@+id/play_pause"
         android:layout_width="@dimen/play_pause_size"
@@ -165,7 +167,8 @@
         app:layout_constraintLeft_toRightOf="@+id/prev"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintVertical_bias="0.9"
+        android:contentDescription="@string/play_pause"/>
     <ImageView
         android:id="@+id/shuffle"
         android:src="@drawable/ic_shuffle"
@@ -181,7 +184,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/shuffle"/>
     <ImageView
         android:id="@+id/repeat"
         android:src="@drawable/ic_repeat"
@@ -193,5 +196,5 @@
         app:layout_constraintLeft_toRightOf="@+id/next"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/repeat"/>
 </android.support.constraint.ConstraintLayout>

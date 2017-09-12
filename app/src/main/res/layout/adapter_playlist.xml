@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="@dimen/spacing_large"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/playlist_cover"/>
     <TextView
         android:id="@+id/playlist_title"
         android:layout_width="wrap_content"
@@ -29,5 +29,6 @@
         android:maxWidth="@dimen/album_width"
         app:layout_constraintTop_toBottomOf="@+id/playlist_art"
         app:layout_constraintLeft_toLeftOf="@+id/playlist_art"
-        app:layout_constraintRight_toRightOf="@+id/playlist_art" />
+        app:layout_constraintRight_toRightOf="@+id/playlist_art"
+        android:contentDescription="@string/playlist_title"/>
 </android.support.constraint.ConstraintLayout>

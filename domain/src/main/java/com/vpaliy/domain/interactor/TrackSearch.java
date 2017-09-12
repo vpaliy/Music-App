@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 
 
 @Singleton
-public class TrackSearch extends SingleUseCase<List<Track>,String>{
+public class TrackSearch extends SingleInteractor<List<Track>,String> {
 
     private SearchRepository repository;
 

@@ -64,8 +64,6 @@ public class PlaylistAdapter extends BaseAdapter<Playlist>{
                     .load(playlist.getArtUrl())
                     .priority(Priority.IMMEDIATE)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    //.placeholder(R.drawable.placeholder)
-                    // .animate(R.anim.fade_in)
                     .into(artImage);
         }
     }

@@ -77,4 +77,45 @@
         <item quantity="zero"> </item>
         <item quantity="other">%s min</item>
     </plurals>
+
+    <!-- Content Description -->
+    <string name="play_pause">Play or pause music if playing</string>
+    <string name="next">Play next song</string>
+    <string name="get_in_button">Get in by clicking this button</string>
+    <string name="apps_background">App background image</string>
+    <string name="invite_button">Invite friends by clicking this button</string>
+    <string name="list_of_songs">List of songs</string>
+    <string name="list_of_playlists">List of playlists</string>
+    <string name="list_of_followers">List of followers</string>
+    <string name="press_search">Press for search</string>
+    <string name="press_search_tabs">Move left/right to filter the search</string>
+    <string name="search_content">Search result</string>
+    <string name="wait_for_result">Wait for result to appear</string>
+    <string name="recently_played">Recently played</string>
+    <string name="user_description">User description</string>
+    <string name="prev">Play previous song</string>
+    <string name="repeat">Repeat the song when it ends</string>
+    <string name="shuffle">Shuffle songs</string>
+    <string name="song_cover">Song image</string>
+    <string name="play_playlist">Play playlist</string>
+    <string name="share">Share with the playlist</string>
+    <string name="follow_user">Follow selected user</string>
+    <string name="playlist_tags">Playlist tags</string>
+    <string name="playlist_tracks_number">Number of tracks in playlist</string>
+    <string name="playlist_cover">Playlist image</string>
+    <string name="track_name">Track name</string>
+    <string name="user_name">User name</string>
+    <string name="songs_count">Number of songs</string>
+    <string name="track_artist">Track artist</string>
+    <string name="user_photo">User photo</string>
+    <string name="playlist_duration">Playlist duration</string>
+    <string name="playlist_likes">Playlist likes</string>
+    <string name="track_duration">Song duration</string>
+    <string name="song_progress_bar">Song progress bar, you can set current position</string>
+    <string name="song_start_time">Song start time</string>
+    <string name="song_end_time">Song end time</string>
+    <string name="playlist_title">Playlist title</string>
+    <string name="back_button">Back button</string>
+    <string name="user_liked_tracks">User liked tracks</string>
+    <string name="user_followers">User followers</string>
 </resources>

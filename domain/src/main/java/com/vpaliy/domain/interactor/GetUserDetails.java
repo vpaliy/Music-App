@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 import io.reactivex.Single;
 
 @Singleton
-public class GetUserDetails extends SingleUseCase<UserDetails,String> {
+public class GetUserDetails extends SingleInteractor<UserDetails,String> {
 
     private Repository repository;
 

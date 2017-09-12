@@ -2,7 +2,6 @@ package com.vpaliy.domain.interactor;
 
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.model.MelophileTheme;
-import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.PlaylistSet;
 import com.vpaliy.domain.repository.Repository;
 import io.reactivex.Single;
@@ -10,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class GetPlaylists extends SingleUseCase<PlaylistSet,MelophileTheme>{
+public class GetPlaylists extends SingleInteractor<PlaylistSet,MelophileTheme> {
 
     private Repository repository;
 

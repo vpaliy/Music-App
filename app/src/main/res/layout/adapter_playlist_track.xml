@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/spacing_medium"
         android:id="@+id/track_art"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/song_cover"/>
     <TextView
         android:id="@+id/artist"
         tools:text="Artist"
@@ -29,7 +29,8 @@
         app:layout_constraintTop_toTopOf="@+id/track_art"
         android:layout_marginTop="@dimen/spacing_medium"
         app:layout_constraintLeft_toRightOf="@+id/track_art"
-        android:layout_marginStart="@dimen/spacing_medium" />
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:contentDescription="@string/track_artist"/>
     <TextView
         android:id="@+id/track_title"
         tools:text="Whatever It Takes"
@@ -42,7 +43,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@+id/artist"
         android:layout_marginTop="@dimen/spacing_small"
-        app:layout_constraintTop_toBottomOf="@+id/artist" />
+        app:layout_constraintTop_toBottomOf="@+id/artist"
+        android:contentDescription="@string/tracks_label"/>
     <TextView
         android:id="@+id/duration"
         tools:text="2 hrs"
@@ -54,5 +56,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/track_duration"/>
 </android.support.constraint.ConstraintLayout>

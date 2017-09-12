@@ -3,5 +3,6 @@
     android:layout_width="250dp"
     android:layout_height="250dp"
     android:scaleType="centerCrop"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:contentDescription="@string/playlist_cover">
 </com.vpaliy.melophile.ui.view.RoundedImageView>

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 def config=rootProject.ext.configuration;
 def libs=rootProject.ext.dependencies;
@@ -7,7 +6,6 @@ def testLibs=rootProject.ext.testDependencies;
 
 
 android {
-
     compileSdkVersion config.compileSdkVersion
     buildToolsVersion config.buildToolsVersion
     defaultConfig {
@@ -33,7 +31,6 @@ android {
 dependencies {
     compile project(':domain')
     compile project(':data')
-    
     compile libs.exoplayer
     compile libs.playPause
     compile libs.bottomNavigation

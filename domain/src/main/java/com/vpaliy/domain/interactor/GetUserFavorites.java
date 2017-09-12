@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class GetUserFavorites extends SingleUseCase<List<Track>,String>{
+public class GetUserFavorites extends SingleInteractor<List<Track>,String> {
 
     private Repository repository;
 

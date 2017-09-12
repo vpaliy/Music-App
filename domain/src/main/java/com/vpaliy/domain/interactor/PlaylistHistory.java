@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class PlaylistHistory extends SingleUseCase<List<Playlist>,Void> {
+public class PlaylistHistory extends SingleInteractor<List<Playlist>,Void> {
 
     private PersonalRepository repository;
 

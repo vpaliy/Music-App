@@ -20,7 +20,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/song_cover"/>
 
     <View
         android:layout_width="0dp"
@@ -30,7 +30,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="ContentDescription"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -50,7 +49,8 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/circle"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/songs_count"/>
 
     <TextView
         android:id="@+id/end_time"
@@ -61,6 +61,7 @@
         android:textColor="@color/colorGray"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_large"
+        android:contentDescription="@string/song_end_time"
         app:layout_constraintLeft_toRightOf="@+id/progressView"
         app:layout_constraintTop_toTopOf="@+id/progressView"
         app:layout_constraintBottom_toBottomOf="@+id/progressView"
@@ -75,6 +76,7 @@
         android:layout_height="wrap_content"
         style="@style/Widget.NumberText"
         android:layout_marginStart="@dimen/spacing_large"
+        android:contentDescription="@string/song_start_time"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/progressView"
         app:layout_constraintTop_toTopOf="@+id/progressView"
@@ -96,6 +98,7 @@
         app:layout_constraintRight_toLeftOf="@+id/circle"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:contentDescription="@string/track_artist"
         app:layout_constraintTop_toTopOf="@+id/circle"
         android:layout_marginTop="8dp" />
 
@@ -111,6 +114,7 @@
         style="@style/Widget.Title"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:contentDescription="@string/track_name"
         app:layout_constraintTop_toBottomOf="@+id/artist"
         app:layout_constraintLeft_toLeftOf="@+id/artist"
         app:layout_constraintRight_toRightOf="@+id/artist" />
@@ -127,6 +131,7 @@
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.5"
+        android:contentDescription="@string/song_cover"
         android:id="@+id/circle" />
 
     <ImageView
@@ -138,7 +143,7 @@
         app:layout_constraintLeft_toRightOf="@+id/shuffle"
         app:layout_constraintBottom_toBottomOf="@+id/play_pause"
         app:layout_constraintTop_toTopOf="@+id/play_pause"
-        tools:ignore="ContentDescription"
+        android:contentDescription="@string/prev"
         app:layout_constraintHorizontal_chainStyle="packed" />
 
     <SeekBar
@@ -151,6 +156,7 @@
         app:layout_constraintLeft_toRightOf="@+id/start_time"
         app:layout_constraintTop_toBottomOf="@+id/track_name"
         app:layout_constraintVertical_bias="0.55"
+        android:contentDescription="@string/song_progress_bar"
         app:layout_constraintBottom_toTopOf="@+id/play_pause" />
 
     <ImageView
@@ -162,7 +168,7 @@
         app:layout_constraintTop_toTopOf="@+id/play_pause"
         app:layout_constraintBottom_toBottomOf="@+id/play_pause"
         app:layout_constraintLeft_toRightOf="@+id/play_pause"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/next"/>
 
     <com.ohoussein.playpause.PlayPauseView
         android:id="@+id/play_pause"
@@ -173,6 +179,7 @@
         app:pause_bg="@android:color/transparent"
         app:play_bg="@android:color/transparent"
         android:background="@drawable/play_ring"
+        android:contentDescription="@string/play_pause"
         app:layout_constraintRight_toLeftOf="@+id/next"
         app:layout_constraintLeft_toRightOf="@+id/prev"
         app:layout_constraintBottom_toBottomOf="@+id/circle"
@@ -193,6 +200,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:contentDescription="@string/shuffle"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
@@ -204,6 +212,7 @@
         app:layout_constraintTop_toTopOf="@+id/next"
         app:layout_constraintBottom_toBottomOf="@+id/next"
         android:layout_marginRight="8dp"
+        android:contentDescription="@string/repeat"
         app:layout_constraintRight_toLeftOf="@+id/circle"
         app:layout_constraintLeft_toRightOf="@+id/next"
         android:layout_marginLeft="8dp"

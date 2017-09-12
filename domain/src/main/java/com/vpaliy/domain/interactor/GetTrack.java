@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Single;
 @Singleton
-public class GetTrack extends SingleUseCase<Track,String> {
+public class GetTrack extends SingleInteractor<Track,String> {
 
     private Repository repository;
 

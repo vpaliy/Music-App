@@ -15,7 +15,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:contentDescription="@string/song_cover"/>
     <TextView
         android:id="@+id/user_name"
         tools:text="Imagine Dragons"
@@ -26,7 +27,8 @@
         android:layout_marginTop="@dimen/spacing_large"
         app:layout_constraintLeft_toRightOf="@+id/user_art"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:contentDescription="@string/track_name"/>
     <TextView
         android:id="@+id/followers_count"
         android:drawableStart="@drawable/ic_followers"
@@ -40,5 +42,6 @@
         app:layout_constraintHorizontal_bias="0"
         style="@style/Widget.NumberText"
         android:gravity="center"
-        app:layout_constraintLeft_toLeftOf="@+id/user_name" />
+        app:layout_constraintLeft_toLeftOf="@+id/user_name"
+        android:contentDescription="@string/user_followers"/>
 </android.support.constraint.ConstraintLayout>

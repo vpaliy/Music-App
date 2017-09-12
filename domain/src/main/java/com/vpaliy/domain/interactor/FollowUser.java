@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class FollowUser extends CompletableUseCase<User> {
+public class FollowUser extends CompletableInteractor<User> {
 
     private PersonalRepository repository;
 

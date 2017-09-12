@@ -15,7 +15,7 @@
             android:background="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:layout_height="?attr/actionBarSize"/>
+            android:layout_height="?attr/actionBarSize" />
     </android.support.design.widget.AppBarLayout>
     <com.vpaliy.melophile.ui.view.HomePager
         android:id="@+id/pager"

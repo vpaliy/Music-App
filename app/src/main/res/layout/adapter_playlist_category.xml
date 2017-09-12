@@ -17,21 +17,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.5" />
-    <TextView
-        android:id="@+id/more"
-        android:text="@string/more_label"
-        android:textStyle="bold"
-        android:textSize="@dimen/more_label"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_big"
-        android:layout_marginBottom="@dimen/spacing_big"
-        android:layout_marginEnd="@dimen/view_all_margin"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/title"
-        app:layout_constraintBottom_toBottomOf="@+id/title" />
+        app:layout_constraintHorizontal_bias="0.5"
+        android:contentDescription="@string/playlist_title"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/playlists"
         android:layout_width="0dp"
@@ -42,5 +29,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        android:contentDescription="@string/list_of_playlists"/>
 </android.support.constraint.ConstraintLayout>

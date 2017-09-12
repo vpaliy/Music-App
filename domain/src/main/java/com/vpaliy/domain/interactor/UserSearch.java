@@ -13,7 +13,7 @@ import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
 
 @Singleton
-public class UserSearch extends SingleUseCase<List<User>,String>{
+public class UserSearch extends SingleInteractor<List<User>,String> {
 
     private SearchRepository repository;
 
