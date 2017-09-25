@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 
 public interface PersonalRepository {
     Completable likeTrack(@NonNull Track track);
-    Completable unlikeTrack(@NonNull Track track);
+    Completable dislikeTrack(@NonNull Track track);
     Completable follow(@NonNull User user);
     Completable unfollow(@NonNull User user);
     Single<List<Track>> fetchTrackHistory();

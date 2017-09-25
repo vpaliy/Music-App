@@ -29,7 +29,7 @@ public class LoveTrack extends CompletableInteractor<Track> {
     @Override
     public Completable buildCompletable2(Track track) {
         if(track!=null){
-            return repository.unlikeTrack(track);
+            return repository.dislikeTrack(track);
         }
         return Completable.error(new IllegalArgumentException("Track is null!"));
     }

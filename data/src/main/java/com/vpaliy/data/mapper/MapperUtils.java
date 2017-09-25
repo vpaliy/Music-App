@@ -43,7 +43,7 @@ public class MapperUtils {
 
     public static String convertFromStream(String streamUrl){
         if(streamUrl==null || !streamUrl.contains("?client_id=")) return streamUrl;
-        return streamUrl.substring(0,streamUrl.indexOf("?client_id="));
+        return streamUrl.substring(0,streamUrl.indexOf("?client_id=")-1);
     }
 
     public static String convertDuration(Context context, long millis){

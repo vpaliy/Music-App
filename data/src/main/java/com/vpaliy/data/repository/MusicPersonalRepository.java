@@ -63,7 +63,7 @@ public class MusicPersonalRepository
     }
 
     @Override
-    public Completable unlikeTrack(@NonNull Track track) {
+    public Completable dislikeTrack(@NonNull Track track) {
         personalInfo.removeLiked(track.getId());
         return service.unloveTrack(track.getId());
     }
