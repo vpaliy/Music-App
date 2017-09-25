@@ -26,7 +26,7 @@ object FakeDataProvider {
     val FAKE_BOOLEAN = true
 
     private fun fakeGenres(): List<String> {
-        return Arrays.asList("Rock", "Indie", "Pop", "Pop Rock", "Alternative", "Rap", "Others")
+        return Arrays.asList("Rock", "Indie", "Pop", "Alternative", "Rap", "Others")
     }
 
     fun buildPlaylist(): Playlist {

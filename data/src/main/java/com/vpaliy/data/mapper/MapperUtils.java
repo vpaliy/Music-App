@@ -41,6 +41,11 @@ public class MapperUtils {
         return streamUrl+"?client_id="+ Config.CLIENT_ID;
     }
 
+    public static String convertFromStream(String streamUrl){
+        if(streamUrl==null || !streamUrl.contains("?client_id=")) return streamUrl;
+        return streamUrl.substring(0,streamUrl.indexOf("?client_id="));
+    }
+
     public static String convertDuration(Context context, long millis){
         long time=TimeUnit.MILLISECONDS.toHours(millis);
         String result="";

@@ -4,7 +4,6 @@ def config=rootProject.ext.configuration;
 def libs=rootProject.ext.dependencies;
 def testLibs=rootProject.ext.testDependencies;
 
-
 android {
     compileSdkVersion config.compileSdkVersion
     buildToolsVersion config.buildToolsVersion
