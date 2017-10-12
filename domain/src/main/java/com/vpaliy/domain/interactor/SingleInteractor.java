@@ -1,6 +1,7 @@
 package com.vpaliy.domain.interactor;
 
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
+
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;

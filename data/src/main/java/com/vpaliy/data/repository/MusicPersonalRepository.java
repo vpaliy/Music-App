@@ -14,7 +14,6 @@ import com.vpaliy.soundcloud.model.UserEntity;
 import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Single;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import android.support.annotation.NonNull;
@@ -63,12 +62,6 @@ public class MusicPersonalRepository
     }
 
     @Override
-    public Completable dislikeTrack(@NonNull Track track) {
-        personalInfo.removeLiked(track.getId());
-        return service.unloveTrack(track.getId());
-    }
-
-    @Override
     public Single<List<Playlist>> fetchPlaylistHistory() {
         return Single.fromCallable(()->playlistHandler.querySaved());
     }
@@ -79,29 +72,84 @@ public class MusicPersonalRepository
     }
 
     @Override
-    public Single<User> fetchMe() {
+    public Single<User> fetchMyself() {
         return service.me()
                 .map(filter::filter)
                 .map(userMapper::map);
     }
 
     @Override
-    public void savePlaylist(@NonNull Playlist playlist) {
-        playlistHandler.save(playlist);
+    public Completable clearFavoritePlaylists() {
+        return null;
     }
 
     @Override
-    public void saveTrack(@NonNull Track track) {
-        trackHandler.save(track);
+    public Completable clearFavoriteTracks() {
+        return null;
     }
 
     @Override
-    public void clearPlaylists() {
-        trackHandler.clearHistory();
+    public Completable likePlaylist(Playlist playlist) {
+        return null;
     }
 
     @Override
-    public void clearTracks() {
-        playlistHandler.clearHistory();
+    public Completable unfollowAll() {
+        return null;
+    }
+
+    @Override
+    public Completable unlikePlaylist(Playlist playlist) {
+        return null;
+    }
+
+    @Override
+    public Completable unlikeTrack(Track track) {
+        return null;
+    }
+
+    @Override
+    public Completable removePlaylist(Playlist playlist) {
+        return null;
+    }
+
+    @Override
+    public Completable removeTrack(Track track) {
+        return null;
+    }
+
+    @Override
+    public Single<List<Playlist>> fetchFavoritePlaylist() {
+        return null;
+    }
+
+    @Override
+    public Single<List<Track>> fetchFavoriteTracks() {
+        return null;
+    }
+
+    @Override
+    public Completable savePlaylist(@NonNull Playlist playlist) {
+        return null;
+    }
+
+    @Override
+    public Completable saveTrack(@NonNull Track track) {
+        return null;
+    }
+
+    @Override
+    public Completable clearPlaylists() {
+        return null;
+    }
+
+    @Override
+    public Completable clearTracks() {
+        return null;
+    }
+
+    @Override
+    public Single<List<User>> fetchFollowers() {
+        return null;
     }
 }

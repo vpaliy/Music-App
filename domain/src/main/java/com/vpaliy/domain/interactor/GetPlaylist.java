@@ -16,7 +16,7 @@ public class GetPlaylist extends SingleInteractor<Playlist,String> {
 
     @Inject
     public GetPlaylist(BaseSchedulerProvider schedulerProvider,
-                        Repository repository){
+                       Repository repository){
         super(schedulerProvider);
         this.repository=repository;
     }

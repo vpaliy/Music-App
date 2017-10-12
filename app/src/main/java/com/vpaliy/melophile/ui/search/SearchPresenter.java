@@ -1,14 +1,12 @@
 package com.vpaliy.melophile.ui.search;
 
-import com.vpaliy.domain.interactor.PlaylistSearch;
-import com.vpaliy.domain.interactor.TrackSearch;
-import com.vpaliy.domain.interactor.UserSearch;
-import static com.vpaliy.melophile.ui.search.SearchContract.View;
-import static dagger.internal.Preconditions.checkNotNull;
+import com.vpaliy.domain.interactor.SearchInteractor;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import java.util.List;
+import static com.vpaliy.melophile.ui.search.SearchContract.View;
+import static dagger.internal.Preconditions.checkNotNull;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import android.support.annotation.NonNull;
 import javax.inject.Inject;
@@ -16,15 +14,15 @@ import javax.inject.Inject;
 @ViewScope
 public class SearchPresenter implements SearchContract.Presenter {
 
-    private TrackSearch trackSearchUseCase;
-    private PlaylistSearch playlistSearchUseCase;
-    private UserSearch userSearchUseCase;
+    private SearchInteractor<List<Track>> trackSearchUseCase;
+    private SearchInteractor<List<Playlist>> playlistSearchUseCase;
+    private SearchInteractor<List<User>> userSearchUseCase;
     private View view;
 
     @Inject
-    public SearchPresenter(TrackSearch trackSearchUseCase,
-                           PlaylistSearch playlistSearchUseCase,
-                           UserSearch userSearchUseCase){
+    public SearchPresenter(SearchInteractor<List<Track>>  trackSearchUseCase,
+                           SearchInteractor<List<Playlist>>  playlistSearchUseCase,
+                           SearchInteractor<List<User>>  userSearchUseCase){
         this.trackSearchUseCase=trackSearchUseCase;
         this.playlistSearchUseCase=playlistSearchUseCase;
         this.userSearchUseCase=userSearchUseCase;
@@ -37,9 +35,9 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     @Override
     public void query(String query) {
-        trackSearchUseCase.execute(this::catchTracks,this::catchError,query);
-        playlistSearchUseCase.execute(this::catchPlaylists,this::catchError,query);
-        userSearchUseCase.execute(this::catchUsers,this::catchError,query);
+        trackSearchUseCase.search(query,this::catchTracks,this::catchError);
+        playlistSearchUseCase.search(query,this::catchPlaylists,this::catchError);
+        userSearchUseCase.search(query,this::catchUsers,this::catchError);
     }
 
     private void catchTracks(List<Track> result){
@@ -67,17 +65,17 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     @Override
     public void morePlaylists() {
-        playlistSearchUseCase.more(this::appendPlaylists,this::catchError);
+        playlistSearchUseCase.nextPage(this::appendPlaylists,this::catchError);
     }
 
     @Override
     public void moreTracks() {
-        trackSearchUseCase.more(this::appendTracks,this::catchError);
+        trackSearchUseCase.nextPage(this::appendTracks,this::catchError);
     }
 
     @Override
     public void moreUsers() {
-        userSearchUseCase.more(this::appendUsers,this::catchError);
+        userSearchUseCase.nextPage(this::appendUsers,this::catchError);
     }
 
     private void appendTracks(List<Track> tracks){
@@ -97,9 +95,9 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     @Override
     public void stop() {
-        trackSearchUseCase.dispose();
+       /* trackSearchUseCase.dispose();
         playlistSearchUseCase.dispose();
-        userSearchUseCase.dispose();
+        userSearchUseCase.dispose();    */
         view=null;
     }
 }

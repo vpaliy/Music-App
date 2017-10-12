@@ -3,13 +3,28 @@ package com.vpaliy.melophile.ui.user.info;
 import java.util.List;
 import static com.vpaliy.melophile.ui.user.info.UserInfoContract.View;
 import static dagger.internal.Preconditions.checkNotNull;
+import com.vpaliy.domain.interactor.SingleInteractor;
 import android.support.annotation.NonNull;
 
 @SuppressWarnings("WeakerAccess")
-public abstract class UserInfoPresenter<T>
-        implements UserInfoContract.Presenter<T> {
+public abstract class UserInfoPresenter<T> implements UserInfoContract.Presenter<T> {
 
     private View<T> view;
+    private SingleInteractor<List<T>,String> userInfo;
+
+    public UserInfoPresenter(SingleInteractor<List<T>,String> userInfo){
+        this.userInfo=userInfo;
+    }
+
+    @Override
+    public void start(String id) {
+        userInfo.execute(this::catchData,this::catchError,id);
+    }
+
+    @Override
+    public void stop() {
+        userInfo.dispose();
+    }
 
     @Override
     public void attachView(@NonNull View<T> view) {

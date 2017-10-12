@@ -4,9 +4,11 @@ import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.model.MelophileTheme;
 import com.vpaliy.domain.model.PlaylistSet;
 import com.vpaliy.domain.repository.Repository;
-import io.reactivex.Single;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import io.reactivex.Single;
 
 @Singleton
 public class GetPlaylists extends SingleInteractor<PlaylistSet,MelophileTheme> {

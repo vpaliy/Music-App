@@ -1,7 +1,6 @@
 package com.vpaliy.melophile.ui.user;
 
-import com.vpaliy.domain.interactor.FollowUser;
-import com.vpaliy.domain.interactor.GetUserDetails;
+import com.vpaliy.domain.interactor.ModifyInteractor;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.model.UserDetails;
 import java.util.List;
@@ -15,14 +14,12 @@ import android.support.annotation.NonNull;
 public class PersonPresenter implements PersonContract.Presenter{
 
     private View view;
-    private GetUserDetails userDetailsUseCase;
-    private FollowUser followUserUseCase;
     private User user;
+    private ModifyInteractor<User> modifyInteractor;
 
     @Inject
-    public PersonPresenter(GetUserDetails userDetailsUseCase, FollowUser followUserUseCase){
-        this.userDetailsUseCase=userDetailsUseCase;
-        this.followUserUseCase=followUserUseCase;
+    public PersonPresenter(ModifyInteractor<User> modifyInteractor){
+        this.modifyInteractor=modifyInteractor;
     }
 
     @Override
@@ -33,7 +30,7 @@ public class PersonPresenter implements PersonContract.Presenter{
     @Override
     public void start(String id) {
         view.showLoading();
-        userDetailsUseCase.execute(this::catchData,this::catchError,id);
+      //  userDetailsUseCase.execute(this::catchData,this::catchError,id);
     }
 
     private void catchData(UserDetails details){
@@ -83,15 +80,7 @@ public class PersonPresenter implements PersonContract.Presenter{
 
     @Override
     public void follow() {
-        if(user!=null) {
-            if(!user.isFollowed()) {
-                followUserUseCase.execute(this::catchFollowRequest,
-                        this::catchError, user);
-            }else{
-                followUserUseCase.execute2(this::catchFollowRequest,
-                        this::catchError,user);
-            }
-        }
+        //TODO implement
     }
 
     private void catchFollowRequest(){
@@ -101,6 +90,6 @@ public class PersonPresenter implements PersonContract.Presenter{
 
     @Override
     public void stop() {
-        userDetailsUseCase.dispose();
+        //userDetailsUseCase.dispose();
     }
 }

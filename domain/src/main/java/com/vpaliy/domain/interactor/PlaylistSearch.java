@@ -1,39 +1,40 @@
 package com.vpaliy.domain.interactor;
 
-import android.text.TextUtils;
 import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.repository.SearchRepository;
 import java.util.List;
-import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
-@Singleton
-public class PlaylistSearch extends SingleInteractor<List<Playlist>,String> {
+public class PlaylistSearch extends SearchInteractor<List<Playlist>>{
 
-    private SearchRepository repository;
-
-    @Inject
-    public PlaylistSearch(BaseSchedulerProvider schedulerProvider,
-                          SearchRepository searchRepository){
-        super(schedulerProvider);
-        this.repository=searchRepository;
+    public PlaylistSearch(SearchRepository searchRepository,
+                          BaseSchedulerProvider schedulerProvider){
+        super(searchRepository,schedulerProvider);
     }
 
     @Override
-    public Single<List<Playlist>> buildUseCase(String query) {
-        if(query==null || TextUtils.isEmpty(query)) {
-            return Single.error(new IllegalArgumentException("Query is null"));
+    public void search(@Nullable String query,
+                       Consumer<? super List<Playlist>> onSuccess,
+                       Consumer<? super Throwable> onError) {
+        if(!TextUtils.isEmpty(query)){
+            searchRepository.searchPlaylist(query)
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe(onSuccess,onError);
+            return;
         }
-        return repository.searchPlaylist(query);
+        throw new IllegalArgumentException("Query can't be null or empty");
     }
 
-    public void more(Consumer<? super List<Playlist>> onSuccess, Consumer<? super Throwable> onError){
-        Single<List<Playlist>> single=repository.morePlaylists()
+    @Override
+    public void nextPage(Consumer<? super List<Playlist>> onSuccess,
+                         Consumer<? super Throwable> onError) {
+        searchRepository.nextPlaylistPage()
                 .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui());
-        disposables.add(single.subscribe(onSuccess,onError));
+                .observeOn(schedulerProvider.ui())
+                .subscribe(onSuccess,onError);
     }
 }

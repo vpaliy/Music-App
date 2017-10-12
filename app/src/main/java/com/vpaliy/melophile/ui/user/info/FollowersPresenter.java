@@ -1,27 +1,16 @@
 package com.vpaliy.melophile.ui.user.info;
 
-import com.vpaliy.domain.interactor.GetUserFollowers;
+import com.vpaliy.domain.interactor.SingleInteractor;
 import com.vpaliy.domain.model.User;
-import com.vpaliy.melophile.di.scope.ViewScope;
+import java.util.List;
 import javax.inject.Inject;
+import com.vpaliy.melophile.di.scope.ViewScope;
 
 @ViewScope
 public class FollowersPresenter extends UserInfoPresenter<User> {
 
-    private GetUserFollowers userFollowersUseCase;
-
     @Inject
-    public FollowersPresenter(GetUserFollowers userFollowersUseCase){
-        this.userFollowersUseCase=userFollowersUseCase;
-    }
-
-    @Override
-    public void start(String id) {
-        userFollowersUseCase.execute(this::catchData,this::catchError,id);
-    }
-
-    @Override
-    public void stop() {
-        userFollowersUseCase.dispose();
+    public FollowersPresenter(SingleInteractor<List<User>,String> followersInteractor){
+        super(followersInteractor);
     }
 }

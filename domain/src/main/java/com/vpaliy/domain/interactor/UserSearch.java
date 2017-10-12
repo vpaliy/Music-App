@@ -5,37 +5,34 @@ import com.vpaliy.domain.executor.BaseSchedulerProvider;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.repository.SearchRepository;
 import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
+import android.support.annotation.Nullable;
 
-@Singleton
-public class UserSearch extends SingleInteractor<List<User>,String> {
+public class UserSearch extends SearchInteractor<List<User>>{
 
-    private SearchRepository repository;
-
-    @Inject
-    public UserSearch(BaseSchedulerProvider schedulerProvider,
-                          SearchRepository searchRepository){
-        super(schedulerProvider);
-        this.repository=searchRepository;
+    public UserSearch(SearchRepository searchRepository,
+                      BaseSchedulerProvider schedulerProvider){
+        super(searchRepository,schedulerProvider);
     }
 
     @Override
-    public Single<List<User>> buildUseCase(String query) {
-        if(query==null || TextUtils.isEmpty(query)) {
-            return Single.error(new IllegalArgumentException("Query is null"));
+    public void search(@Nullable String query,
+                       Consumer<? super List<User>> onSuccess,
+                       Consumer<? super Throwable> onError) {
+        if(!TextUtils.isEmpty(query)){
+            searchRepository.searchUser(query)
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe(onSuccess,onError);
         }
-        return repository.searchUser(query);
     }
 
-    public void more(Consumer<? super List<User>> onSuccess, Consumer<? super Throwable> onError){
-        Single<List<User>> single=repository.moreUsers()
+    @Override
+    public void nextPage(Consumer<? super List<User>> onSuccess,
+                         Consumer<? super Throwable> onError) {
+        searchRepository.nextUserPage()
                 .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui());
-        disposables.add(single.subscribe(onSuccess,onError));
+                .observeOn(schedulerProvider.ui())
+                .subscribe(onSuccess,onError);
     }
 }
