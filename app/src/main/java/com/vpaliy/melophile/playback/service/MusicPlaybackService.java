@@ -13,7 +13,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import com.vpaliy.melophile.App;
 import com.vpaliy.melophile.playback.PlaybackManager;
-import com.vpaliy.melophile.ui.track.TrackActivity;
+import com.vpaliy.melophile.ui.player.PlayerActivity;
 import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_EMPTY_ROOT;
 import static com.vpaliy.melophile.playback.MediaHelper.MEDIA_ID_ROOT;
 import android.support.annotation.NonNull;
@@ -47,7 +47,7 @@ public class MusicPlaybackService extends MediaBrowserServiceCompat
                 MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         setSessionToken(mediaSession.getSessionToken());
         Context context = getApplicationContext();
-        Intent intent = new Intent(context, TrackActivity.class);
+        Intent intent = new Intent(context, PlayerActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, 99,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mediaSession.setSessionActivity(pi);

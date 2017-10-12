@@ -39,7 +39,7 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
             view.showDuration(playlist.getDuration());
             view.showPlaylistArt(playlist.getArtUrl());
         }else{
-            view.showEmptyMessage();
+
         }
     }
 
@@ -56,12 +56,32 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
     }
     private void catchError(Throwable ex){
         ex.printStackTrace();
-        view.showErrorMessage();
+
     }
 
     @Override
     public void stop() {
         playlistInteractor.dispose();
+    }
+
+    @Override
+    public void like() {
+
+    }
+
+    @Override
+    public void unlike() {
+
+    }
+
+    @Override
+    public void save() {
+
+    }
+
+    @Override
+    public void remove() {
+
     }
 
     @Override

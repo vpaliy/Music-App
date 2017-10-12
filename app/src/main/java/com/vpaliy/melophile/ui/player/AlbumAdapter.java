@@ -1,4 +1,4 @@
-package com.vpaliy.melophile.ui.track;
+package com.vpaliy.melophile.ui.player;
 
 
 import android.content.Context;

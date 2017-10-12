@@ -9,8 +9,7 @@ import java.util.List;
 public interface UserInfoContract {
     interface View<T> extends BaseView<Presenter<T>> {
         void attachPresenter(@NonNull Presenter<T> presenter);
-        void showError();
-        void showEmpty();
+        void showMessage(String message);
         void showInfo(@NonNull List<T> tracks);
         void showTitle();
     }

@@ -18,13 +18,11 @@ public interface PersonContract {
         void showPlaylists(List<Playlist> playlists);
         void showAvatar(String avatarUrl);
         void showDescription(String description);
+        void showMessage(String message);
         void showTitle(String title);
         void showFollowersCount(int count);
         void showLikedCount(int count);
         void showTracksCount(int count);
-        void showEmptyMediaMessage();
-        void showEmptyMessage();
-        void showErrorMessage();
         void enableFollow();
         void disableFollow();
         void showLoading();

@@ -31,7 +31,7 @@
         <activity android:name=".ui.playlist.PlaylistActivity"
             android:theme="@style/MelophileTheme.Details"/>
 
-        <activity android:name=".ui.track.TrackActivity"
+        <activity android:name=".ui.player.PlayerActivity"
             android:launchMode="singleTop"
             android:theme="@style/MelophileTheme.Track"/>
 

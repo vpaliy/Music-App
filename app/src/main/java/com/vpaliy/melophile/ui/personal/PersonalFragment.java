@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import static com.vpaliy.melophile.ui.personal.PersonalContract.Presenter;
-
 import android.support.annotation.Nullable;
 import android.support.annotation.NonNull;
 import javax.inject.Inject;
@@ -59,15 +58,11 @@ public class PersonalFragment extends BaseFragment
         }
     }
 
-    @Override
+    /* @Override
     public void showEmptyHistoryMessage() {
         adapter.addItem(PersonalAdapter.CategoryWrapper.wrap(getString(R.string.no_played_history_label),null));
-    }
+    }   */
 
-    @Override
-    public void showErrorMessage() {
-
-    }
 
     @Override
     public void showTrackHistory(@NonNull List<Track> tracks) {

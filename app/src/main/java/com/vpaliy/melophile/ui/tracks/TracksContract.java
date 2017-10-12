@@ -9,8 +9,7 @@ public interface TracksContract {
     interface View extends BaseView<Presenter> {
         void attachPresenter(@NonNull Presenter presenter);
         void showTrackSet(@NonNull TrackSet trackSet);
-        void showErrorMessage();
-        void showEmptyMessage();
+        void showMessage(String message);
         void showLoading();
         void hideLoading();
     }

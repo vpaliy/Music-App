@@ -51,9 +51,15 @@ public abstract class BaseFragment extends Fragment {
         return view;
     }
 
-    protected void showMessage(@StringRes int res){
+    public void showMessage(@StringRes int res){
         if(getView()!=null){
             Snackbar.make(getView(),res,getResources().getInteger(R.integer.message_duration));
+        }
+    }
+
+    public void showMessage(String message){
+        if(getView()!=null){
+            Snackbar.make(getView(),message,getResources().getInteger(R.integer.message_duration));
         }
     }
 

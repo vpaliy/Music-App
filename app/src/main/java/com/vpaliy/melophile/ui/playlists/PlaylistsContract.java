@@ -12,8 +12,7 @@ public interface PlaylistsContract {
         void showPlaylists(@NonNull PlaylistSet playlistSet);
         void showLoading();
         void hideLoading();
-        void showErrorMessage();
-        void showEmptyMessage();
+        void showMessage(String message);
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -46,16 +46,6 @@ public class PlaylistsFragment extends BaseFragment
     }
 
     @Override
-    public void showEmptyMessage() {
-        showMessage(R.string.empty_message);
-    }
-
-    @Override
-    public void showErrorMessage() {
-        showMessage(R.string.error_message);
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         if(presenter!=null){

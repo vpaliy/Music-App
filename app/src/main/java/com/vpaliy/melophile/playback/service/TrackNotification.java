@@ -18,7 +18,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.vpaliy.melophile.R;
-import com.vpaliy.melophile.ui.track.TrackActivity;
+import com.vpaliy.melophile.ui.player.PlayerActivity;
 
 public class TrackNotification {
 
@@ -105,7 +105,7 @@ public class TrackNotification {
     }
 
     private PendingIntent contentIntent(Context context){
-        Intent startActivityIntent=new Intent(context, TrackActivity.class);
+        Intent startActivityIntent=new Intent(context, PlayerActivity.class);
         startActivityIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP |
                 Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return PendingIntent.getActivity(context,
