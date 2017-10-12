@@ -78,11 +78,6 @@ public abstract class BaseInfoFragment<T> extends BottomSheetDialogFragment
                 .beginTransaction().remove(this).commit();
     }
 
-    @Override
-    public void showError() {
-        //TODO add an error message
-    }
-
     private void extractId(Bundle bundle){
         if(bundle==null) bundle=getArguments();
         id=bundle.getString(Constants.EXTRA_ID);

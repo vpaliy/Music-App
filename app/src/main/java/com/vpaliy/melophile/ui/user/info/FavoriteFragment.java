@@ -35,9 +35,18 @@ public class FavoriteFragment extends BaseInfoFragment<Track>{
     }
 
     @Override
-    public void showEmpty() {
+    public void showEmptyState() {
         title.setText(R.string.no_loved_message);
-        handler.postDelayed(this::close,2000);
+    }
+
+    @Override
+    public void showMessage(int resource) {
+
+    }
+
+    @Override
+    public void finishWithDelay(long delay) {
+        handler.postDelayed(this::close,delay);
     }
 
     @Override

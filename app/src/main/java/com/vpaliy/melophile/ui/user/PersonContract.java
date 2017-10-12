@@ -1,6 +1,7 @@
 package com.vpaliy.melophile.ui.user;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.Track;
@@ -18,7 +19,7 @@ public interface PersonContract {
         void showPlaylists(List<Playlist> playlists);
         void showAvatar(String avatarUrl);
         void showDescription(String description);
-        void showMessage(String message);
+        void showMessage(@StringRes int resource);
         void showTitle(String title);
         void showFollowersCount(int count);
         void showLikedCount(int count);

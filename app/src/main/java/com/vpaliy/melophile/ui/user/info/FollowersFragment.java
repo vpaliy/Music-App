@@ -34,9 +34,18 @@ public class FollowersFragment extends BaseInfoFragment<User>{
     }
 
     @Override
-    public void showEmpty() {
+    public void finishWithDelay(long delay) {
+        handler.postDelayed(this::close,delay);
+    }
+
+    @Override
+    public void showEmptyState() {
         title.setText(R.string.no_followers_message);
-        handler.postDelayed(this::close,2000);
+    }
+
+    @Override
+    public void showMessage(int resource) {
+
     }
 
     @Override
