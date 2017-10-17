@@ -1,9 +1,11 @@
 package com.vpaliy.melophile.ui.playlist;
 
+import com.vpaliy.domain.interactor.ModifyInteractor;
 import com.vpaliy.domain.interactor.SingleInteractor;
 import com.vpaliy.domain.model.Playlist;
 import java.util.LinkedList;
 import java.util.List;
+import com.vpaliy.melophile.R;
 import static com.vpaliy.melophile.ui.playlist.PlaylistContract.View;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import javax.inject.Inject;
@@ -13,7 +15,9 @@ import android.support.annotation.NonNull;
 public class PlaylistPresenter implements PlaylistContract.Presenter {
 
     private SingleInteractor<Playlist,String> playlistInteractor;
+
     private View view;
+    private Playlist playlist;
 
     @Inject
     public PlaylistPresenter(SingleInteractor<Playlist,String> playlistUseCase){
@@ -27,6 +31,7 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
 
     private void catchData(Playlist playlist){
         if(playlist!=null){
+            this.playlist=playlist;
             List<String> tags=tags(playlist);
             if(!tags.isEmpty()) {
                 view.showTags(tags);
@@ -39,7 +44,7 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
             view.showDuration(playlist.getDuration());
             view.showPlaylistArt(playlist.getArtUrl());
         }else{
-
+            view.showMessage(R.string.empty_message);
         }
     }
 
@@ -66,7 +71,6 @@ public class PlaylistPresenter implements PlaylistContract.Presenter {
 
     @Override
     public void like() {
-
     }
 
     @Override

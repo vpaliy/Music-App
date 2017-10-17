@@ -19,37 +19,44 @@ import dagger.Provides;
 
 @Module
 public class DataModule {
-    @Singleton @Provides
+    @Singleton
+    @Provides
     Repository repository(MusicRepository repository){
         return repository;
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     RemoteSource remoteSource(MusicRemoteSource remote){
         return remote;
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     Filter filter(){
         return new Filter();
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     SearchRepository searchRepository(MusicSearchRepository repository){
         return repository;
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     SearchSource searchSource(RemoteSearchSource remote){
         return remote;
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     PersonalRepository personalRepository(MusicPersonalRepository repository){
         return repository;
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     LocalSource localSource(LocalMusicSource local){
         return local;
     }

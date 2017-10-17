@@ -14,12 +14,14 @@ import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.playback.QueueManager;
 import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseActivity;
+import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.utils.BundleUtils;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.view.Chips;
 import com.vpaliy.melophile.ui.view.FabToggle;
 import com.vpaliy.melophile.ui.view.ParallaxRatioImageView;
 import com.vpaliy.melophile.ui.view.TranslatableLayout;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
@@ -147,7 +149,7 @@ public class PlaylistActivity extends BaseActivity
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showMessage(int resource) {
 
     }
 
@@ -241,7 +243,7 @@ public class PlaylistActivity extends BaseActivity
             Bundle data=new Bundle();
             BundleUtils.packHeavyObject(data,Constants.EXTRA_QUEUE,queueManager,
                     new TypeToken<QueueManager>(){}.getType());
-            // rxBus.sendWithLock(ExposeEvent.exposeTrack(data,null));
+             rxBus.sendWithLock(ExposeEvent.exposeTrack(data,null));
         }
     }
 
@@ -326,8 +328,8 @@ public class PlaylistActivity extends BaseActivity
             data.putString(Constants.EXTRA_ID,userModel.getId());
             data.putString(Constants.EXTRA_DATA,userModel.getAvatarUrl());
             preserveParent();
-            //rxBus.send(ExposeEvent.exposeUser(data,
-            //      Pair.create(userAvatar,getString(R.string.user_trans_name))));
+            rxBus.send(ExposeEvent.exposeUser(data,
+                  Pair.create(userAvatar,getString(R.string.user_trans_name))));
         }
     }
 

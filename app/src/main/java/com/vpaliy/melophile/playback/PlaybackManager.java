@@ -6,7 +6,6 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import com.vpaliy.data.mapper.Mapper;
-import com.vpaliy.domain.interactor.SaveInteractor;
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.playback.Playback;
 import com.vpaliy.domain.playback.QueueManager;
@@ -26,18 +25,16 @@ public class PlaybackManager implements Playback.Callback {
     private MetadataUpdateListener updateListener;
     private QueueManager queueManager;
     private Playback playback;
-    private SaveInteractor saveInteractor;
     private boolean isRepeat;
     private boolean isShuffle;
     private int lastState;
 
     @Inject
-    public PlaybackManager(Playback playback, Mapper<MediaMetadataCompat,Track> mapper, SaveInteractor saveInteractor){
+    public PlaybackManager(Playback playback, Mapper<MediaMetadataCompat,Track> mapper){
         this.mediaSessionCallback=new MediaSessionCallback();
         this.playback=playback;
         this.playback.setCallback(this);
         this.mapper=mapper;
-        this.saveInteractor=saveInteractor;
     }
 
     public void setUpdateListener(MetadataUpdateListener updateListener) {
@@ -54,7 +51,7 @@ public class PlaybackManager implements Playback.Callback {
 
     public void handlePlayRequest(Track track){
         if(track!=null) {
-            saveInteractor.saveTrack(track);
+            //saveInteractor.saveTrack(track);
             playback.play(track.getStreamUrl());
             updateMetadata();
         }

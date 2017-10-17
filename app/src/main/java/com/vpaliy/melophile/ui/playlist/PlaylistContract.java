@@ -1,5 +1,7 @@
 package com.vpaliy.melophile.ui.playlist;
 
+import android.support.annotation.StringRes;
+
 import com.vpaliy.domain.model.Track;
 import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.ui.base.BasePresenter;
@@ -18,7 +20,7 @@ public interface PlaylistContract {
         void showButtons();
         void showTrackNumber(int trackNumber);
         void showUser(User user);
-        void showMessage(String message);
+        void showMessage(@StringRes  int resource);
     }
 
     interface Presenter extends BasePresenter<View> {

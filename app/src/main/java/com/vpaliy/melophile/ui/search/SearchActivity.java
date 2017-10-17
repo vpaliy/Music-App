@@ -223,7 +223,7 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showTracks(@NonNull List<Track> tracks) {
         gotResult();
-        TracksAdapter adapter=new TracksAdapter(this,eventBus);
+        TracksAdapter adapter=new TracksAdapter(this, rxBus);
         adapter.setData(tracks);
         searchAdapter.setTracks(adapter);
     }
@@ -231,7 +231,7 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showPlaylists(@NonNull List<Playlist> playlists) {
         gotResult();
-        PlaylistsAdapter adapter=new PlaylistsAdapter(this,eventBus);
+        PlaylistsAdapter adapter=new PlaylistsAdapter(this, rxBus);
         adapter.setData(playlists);
         searchAdapter.setPlaylists(adapter);
     }
@@ -239,7 +239,7 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showUsers(@NonNull List<User> users) {
         gotResult();
-        UserAdapter adapter=new UserAdapter(this,eventBus,false);
+        UserAdapter adapter=new UserAdapter(this, rxBus,false);
         adapter.setData(users);
         searchAdapter.setUsers(adapter);
     }

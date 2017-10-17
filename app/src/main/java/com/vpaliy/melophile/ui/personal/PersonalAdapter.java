@@ -13,7 +13,6 @@ import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.ui.base.BaseAdapter;
 import com.vpaliy.melophile.ui.base.bus.RxBus;
 import com.vpaliy.melophile.ui.user.info.InfoEvent;
-import java.util.Locale;
 import butterknife.ButterKnife;
 import butterknife.BindView;
 import android.support.annotation.NonNull;

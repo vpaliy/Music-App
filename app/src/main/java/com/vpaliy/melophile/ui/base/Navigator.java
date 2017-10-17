@@ -6,7 +6,6 @@ import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.view.View;
-
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.playlist.PlaylistActivity;
 import com.vpaliy.melophile.ui.search.SearchActivity;
