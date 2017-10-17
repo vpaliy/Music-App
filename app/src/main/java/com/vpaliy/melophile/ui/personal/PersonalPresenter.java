@@ -1,14 +1,12 @@
 package com.vpaliy.melophile.ui.personal;
 
-import com.vpaliy.domain.interactor.GetMe;
-import com.vpaliy.domain.interactor.PlaylistHistory;
-import com.vpaliy.domain.interactor.TrackHistory;
+import com.vpaliy.domain.interactor.SingleInteractor;
 import com.vpaliy.domain.model.Playlist;
+import com.vpaliy.domain.model.User;
 import com.vpaliy.domain.model.Track;
 import java.util.List;
 import static com.vpaliy.melophile.ui.personal.PersonalContract.View;
 import static dagger.internal.Preconditions.checkNotNull;
-import com.vpaliy.domain.model.User;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import android.support.annotation.NonNull;
 import javax.inject.Inject;
@@ -17,17 +15,15 @@ import javax.inject.Inject;
 public class PersonalPresenter implements PersonalContract.Presenter{
 
     private View view;
-    private PlaylistHistory playlistHistoryUseCase;
-    private TrackHistory trackHistoryUseCase;
-    private GetMe fetchMeUseCase;
+    private SingleInteractor<User,Void> myself;
+    private SingleInteractor<List<Track>,Void> trackHistory;
+    private SingleInteractor<List<Playlist>,Void>  playlistHistory;
 
     @Inject
-    public PersonalPresenter(TrackHistory trackHistoryUseCase,
-                             PlaylistHistory playlistHistoryUseCase,
-                             GetMe fetchMeUseCase){
-        this.trackHistoryUseCase=trackHistoryUseCase;
-        this.playlistHistoryUseCase=playlistHistoryUseCase;
-        this.fetchMeUseCase=fetchMeUseCase;
+    public PersonalPresenter(SingleInteractor<Track,Void> trackHistory,
+                             SingleInteractor<Playlist,Void> playlistHistory,
+                             SingleInteractor<User,Void>  myself){
+
     }
 
     @Override
@@ -37,14 +33,14 @@ public class PersonalPresenter implements PersonalContract.Presenter{
 
     @Override
     public void start() {
-        fetchMeUseCase.execute(this::catchMyself,this::catchError,null);
-        trackHistoryUseCase.execute(this::catchTrackHistory,this::catchError,null);
+        myself.execute(this::catchMyself,this::catchError,null);
+        trackHistory.execute(this::catchTrackHistory,this::catchError,null);
     }
 
     @Override
     public void stop() {
-        playlistHistoryUseCase.dispose();
-        trackHistoryUseCase.dispose();
+        playlistHistory.dispose();
+        trackHistory.dispose();
     }
 
     private void catchTrackHistory(List<Track> tracks){
@@ -63,7 +59,7 @@ public class PersonalPresenter implements PersonalContract.Presenter{
 
     @Override
     public void clearTracks() {
-        trackHistoryUseCase.clearHistory();
+        //trackHistoryUseCase.clearHistory();
     }
 
     private void catchError(Throwable ex){

@@ -56,19 +56,19 @@ public class MusicSearchRepository implements SearchRepository {
     }
 
     @Override
-    public Single<List<Playlist>> morePlaylists() {
+    public Single<List<Playlist>> nextPlaylistPage() {
         return searchSource.morePlaylists()
                 .map(playlistMapper::map);
     }
 
     @Override
-    public Single<List<Track>> moreTracks() {
+    public Single<List<Track>> nextTrackPage() {
         return searchSource.moreTracks()
                 .map(trackMapper::map);
     }
 
     @Override
-    public Single<List<User>> moreUsers() {
+    public Single<List<User>> nextUserPage() {
         return searchSource.moreUsers()
                 .map(userMapper::map);
     }

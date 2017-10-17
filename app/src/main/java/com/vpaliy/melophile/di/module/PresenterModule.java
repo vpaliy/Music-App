@@ -1,17 +1,12 @@
 package com.vpaliy.melophile.di.module;
 
-import com.vpaliy.domain.interactor.FollowUser;
-import com.vpaliy.domain.interactor.GetMe;
 import com.vpaliy.domain.interactor.GetPlaylist;
 import com.vpaliy.domain.interactor.GetPlaylists;
-import com.vpaliy.domain.interactor.PlaylistHistory;
-import com.vpaliy.domain.interactor.TrackHistory;
 import com.vpaliy.domain.interactor.GetTracks;
-import com.vpaliy.domain.interactor.GetUserDetails;
 import com.vpaliy.domain.interactor.GetUserFavorites;
 import com.vpaliy.domain.interactor.GetUserFollowers;
+import com.vpaliy.domain.interactor.PersonalUserInteractor;
 import com.vpaliy.domain.interactor.PlaylistSearch;
-import com.vpaliy.domain.interactor.SaveInteractor;
 import com.vpaliy.domain.interactor.TrackSearch;
 import com.vpaliy.domain.interactor.UserSearch;
 import com.vpaliy.domain.model.Track;
@@ -48,13 +43,13 @@ public class PresenterModule {
     }
 
     @ViewScope @Provides
-    PlaylistContract.Presenter playlist(GetPlaylist getPlaylist, SaveInteractor saveInteractor){
-        return new PlaylistPresenter(getPlaylist,saveInteractor);
+    PlaylistContract.Presenter playlist(GetPlaylist getPlaylist){
+        return new PlaylistPresenter(getPlaylist);
     }
 
     @ViewScope @Provides
-    PersonContract.Presenter person(GetUserDetails getUserDetails, FollowUser followUser){
-        return new PersonPresenter(getUserDetails,followUser);
+    PersonContract.Presenter person(PersonalUserInteractor userInteractor){
+        return new PersonPresenter(userInteractor);
     }
 
     @ViewScope @Provides
@@ -73,7 +68,7 @@ public class PresenterModule {
     }
 
     @ViewScope @Provides
-    PersonalContract.Presenter personal(PlaylistHistory playlistHistory, TrackHistory trackHistory, GetMe getMe){
-        return new PersonalPresenter(trackHistory, playlistHistory,getMe);
+    PersonalContract.Presenter personal(PersonalUserInteractor userInteractor){
+        return new PersonalPresenter(null,null,null);
     }
 }

@@ -1,38 +1,37 @@
 package com.vpaliy.melophile.ui.playlists;
 
-import com.vpaliy.domain.interactor.GetPlaylists;
+import com.vpaliy.domain.interactor.SingleInteractor;
 import com.vpaliy.domain.model.MelophileTheme;
-import com.vpaliy.domain.model.Playlist;
 import com.vpaliy.domain.model.PlaylistSet;
-import com.vpaliy.melophile.ui.base.bus.event.OnClick;
 import java.util.Arrays;
 import java.util.List;
+import static com.vpaliy.melophile.ui.playlists.PlaylistsContract.View;
+import static dagger.internal.Preconditions.checkNotNull;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
-import static com.vpaliy.melophile.ui.playlists.PlaylistsContract.View;
-import static dagger.internal.Preconditions.checkNotNull;
 
 @ViewScope
 public class PlaylistsPresenter implements PlaylistsContract.Presenter{
 
-    private GetPlaylists playlistsUseCase;
     private View view;
+    private SingleInteractor<PlaylistSet,MelophileTheme> playlistInteractor;
 
     @Inject
-    public PlaylistsPresenter(GetPlaylists playlistsUseCase){
-        this.playlistsUseCase = playlistsUseCase;
+    public PlaylistsPresenter(SingleInteractor<PlaylistSet,MelophileTheme> playlistsUseCase){
+        this.playlistInteractor = playlistsUseCase;
     }
 
     @Override
     public void start() {
-        List<MelophileTheme> themes= Arrays.asList(MelophileTheme.create("Good Morning","Good Morning", "2017","Morning","Coffee","Tea","Paris"),
+        List<MelophileTheme> themes= Arrays.asList(
+                MelophileTheme.create("Good Morning","Good Morning", "2017","Morning","Coffee","Tea","Paris"),
                 MelophileTheme.create("Sleeping","Dream","travel","road"),
                 MelophileTheme.create("Relaxing","relax","relaxing","chills"),
                 MelophileTheme.create("Chilling","chills","party","friends"),
                 MelophileTheme.create("Working out","working out","sweet","moment"));
         for(MelophileTheme theme:themes){
-            playlistsUseCase.execute(this::catchData,this::catchError,theme);
+            playlistInteractor.execute(this::catchData,this::catchError,theme);
         }
     }
 
@@ -49,10 +48,9 @@ public class PlaylistsPresenter implements PlaylistsContract.Presenter{
         view.showErrorMessage();
     }
 
-
     @Override
     public void stop() {
-        playlistsUseCase.dispose();
+        playlistInteractor.dispose();
     }
 
     @Override
