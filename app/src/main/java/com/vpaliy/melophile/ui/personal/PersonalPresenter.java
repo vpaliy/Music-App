@@ -18,6 +18,8 @@ public class PersonalPresenter implements PersonalContract.Presenter{
     private SingleInteractor<User,Void> myself;
     private SingleInteractor<List<Track>,Void> trackHistory;
     private SingleInteractor<List<Playlist>,Void>  playlistHistory;
+    private SingleInteractor<List<Playlist>,Void> favoritePlaylists;
+    private SingleInteractor<List<Track>,Void> favoriteTracks;
 
     @Inject
     public PersonalPresenter(SingleInteractor<Track,Void> trackHistory,
@@ -45,7 +47,7 @@ public class PersonalPresenter implements PersonalContract.Presenter{
 
     private void catchTrackHistory(List<Track> tracks){
         if(tracks==null||tracks.isEmpty()){
-            view.showEmptyHistoryMessage();
+          //  view.showEmptyHistoryMessage();
             return;
         }
         view.showTrackHistory(tracks);
@@ -63,7 +65,7 @@ public class PersonalPresenter implements PersonalContract.Presenter{
     }
 
     private void catchError(Throwable ex){
-        view.showErrorMessage();
+       // view.showErrorMessage();
         ex.printStackTrace();
     }
 }

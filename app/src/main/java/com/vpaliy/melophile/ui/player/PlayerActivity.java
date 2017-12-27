@@ -1,10 +1,23 @@
-package com.vpaliy.melophile.ui.track;
+package com.vpaliy.melophile.ui.player;
 
 import android.content.ComponentName;
-import android.content.res.Configuration;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.request.target.ImageViewTarget;
+import com.google.gson.reflect.TypeToken;
+import com.ohoussein.playpause.PlayPauseView;
+import com.vpaliy.domain.playback.QueueManager;
+import com.vpaliy.melophile.App;
+import com.vpaliy.melophile.R;
+import com.vpaliy.melophile.playback.PlaybackManager;
+import com.vpaliy.melophile.playback.service.MusicPlaybackService;
+import com.vpaliy.melophile.ui.base.BaseActivity;
+import com.vpaliy.melophile.ui.utils.BundleUtils;
+import com.vpaliy.melophile.ui.utils.Constants;
+import com.vpaliy.melophile.ui.utils.PresentationUtils;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -21,38 +34,24 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.request.target.ImageViewTarget;
-import com.google.gson.reflect.TypeToken;
-import com.ohoussein.playpause.PlayPauseView;
-import com.vpaliy.domain.playback.Playback;
-import com.vpaliy.domain.playback.QueueManager;
-import com.vpaliy.melophile.App;
-import com.vpaliy.melophile.R;
-import com.vpaliy.melophile.playback.service.MusicPlaybackService;
-import com.vpaliy.melophile.playback.PlaybackManager;
-import com.vpaliy.melophile.ui.base.BaseFragment;
-import com.vpaliy.melophile.ui.utils.BundleUtils;
-import com.vpaliy.melophile.ui.utils.Constants;
-import com.vpaliy.melophile.ui.utils.PresentationUtils;
-
-import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import jp.wasabeef.blurry.Blurry;
+
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-import butterknife.OnClick;
+
 import javax.inject.Inject;
-import android.support.annotation.Nullable;
 import butterknife.BindView;
+import butterknife.OnClick;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-public class TrackFragment extends BaseFragment {
+public class PlayerActivity extends BaseActivity {
 
-    private static final String TAG=TrackFragment.class.getSimpleName();
+    private static final String TAG=PlayerActivity.class.getSimpleName();
 
     @BindView(R.id.background)
     protected ImageView background;
@@ -109,10 +108,10 @@ public class TrackFragment extends BaseFragment {
             super.onConnected();
             MediaSessionCompat.Token token=browserCompat.getSessionToken();
             try {
-                MediaControllerCompat mediaController =new MediaControllerCompat(getActivity(), token);
+                MediaControllerCompat mediaController =new MediaControllerCompat(PlayerActivity.this, token);
                 // Save the controller
                 mediaController.registerCallback(controllerCallback);
-                MediaControllerCompat.setMediaController(getActivity(), mediaController);
+                MediaControllerCompat.setMediaController(PlayerActivity.this, mediaController);
                 //inject the passed query
                 inject();
             }catch (RemoteException ex){
@@ -137,6 +136,35 @@ public class TrackFragment extends BaseFragment {
     };
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_playlist);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        postponeEnterTransition();
+        loadArt();
+        browserCompat=new MediaBrowserCompat(this,
+                new ComponentName(this, MusicPlaybackService.class), connectionCallback,null);
+        progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                startTime.setText(DateUtils.formatElapsedTime(progress/1000));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                stopSeekBarUpdate();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                getControls().seekTo(seekBar.getProgress());
+                startSeekBarUpdate();
+            }
+        });
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         if(browserCompat!=null) {
@@ -151,14 +179,14 @@ public class TrackFragment extends BaseFragment {
         if(browserCompat!=null){
             browserCompat.disconnect();
         }
-        MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(getActivity());
+        MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(this);
         if(controllerCompat!=null){
             controllerCompat.unregisterCallback(controllerCallback);
         }
     }
 
     private void startSeekBarUpdate(){
-        scheduledFuture = executorService.scheduleAtFixedRate(()-> handler.post(TrackFragment.this::updateProgress),
+        scheduledFuture = executorService.scheduleAtFixedRate(()-> handler.post(PlayerActivity.this::updateProgress),
                 PROGRESS_UPDATE_INITIAL_INTERVAL, PROGRESS_UPDATE_INTERNAL, TimeUnit.MILLISECONDS);
     }
 
@@ -179,7 +207,7 @@ public class TrackFragment extends BaseFragment {
     @OnClick(R.id.play_pause)
     public void playPause(){
         lastState=null;
-        MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(getActivity());
+        MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(this);
         PlaybackStateCompat stateCompat=controllerCompat.getPlaybackState();
         if(stateCompat!=null){
             MediaControllerCompat.TransportControls controls=
@@ -248,12 +276,15 @@ public class TrackFragment extends BaseFragment {
 
     @Inject
     public void updateQueue(PlaybackManager manager){
-        QueueManager queueManager=BundleUtils.fetchHeavyObject(new TypeToken<QueueManager>() {}.getType(),
-                getArguments(),Constants.EXTRA_QUEUE);
-        if(queueManager!=null) {
-            manager.setQueueManager(queueManager);
-            manager.handleResumeRequest();
-            playPause.change(false);
+        final Intent intent=getIntent();
+        if(intent!=null) {
+            QueueManager queueManager = BundleUtils.fetchHeavyObject(new TypeToken<QueueManager>() {}.
+                    getType(), intent.getExtras(),Constants.EXTRA_QUEUE);
+            if (queueManager != null) {
+                manager.setQueueManager(queueManager);
+                manager.handleResumeRequest();
+                playPause.change(false);
+            }
         }
     }
 
@@ -268,7 +299,7 @@ public class TrackFragment extends BaseFragment {
     }
 
     private MediaControllerCompat.TransportControls transportControls(){
-        MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(getActivity());
+        MediaControllerCompat controllerCompat=MediaControllerCompat.getMediaController(this);
         return controllerCompat.getTransportControls();
     }
 
@@ -286,50 +317,17 @@ public class TrackFragment extends BaseFragment {
         }
     }
 
-    public static TrackFragment newInstance(Bundle args){
-        TrackFragment fragment=new TrackFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    private void inject(){
-        if(!isInjected) {
-            isInjected=true;
-            App.appInstance()
-                    .playerComponent()
-                    .inject(this);
-        }
+    @Override
+    public void inject() {
+        App.appInstance().appComponent().inject(this);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getActivity().supportPostponeEnterTransition();
-        loadArt();
-        browserCompat=new MediaBrowserCompat(getActivity(),
-                new ComponentName(getActivity(), MusicPlaybackService.class),
-                connectionCallback,null);
-        progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                startTime.setText(DateUtils.formatElapsedTime(progress/1000));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                stopSeekBarUpdate();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                getControls().seekTo(seekBar.getProgress());
-                startSeekBarUpdate();
-            }
-        });
+    public void handleEvent(@NonNull Object event) {
     }
 
     private void loadArt(){
-        Bundle bundle=getArguments();
+        Bundle bundle=getIntent().getExtras();
         if(bundle!=null){
             String art=bundle.getString(Constants.EXTRA_DATA,null);
             if(art!=null){
@@ -339,13 +337,13 @@ public class TrackFragment extends BaseFragment {
     }
 
     private MediaControllerCompat.TransportControls getControls(){
-        return MediaControllerCompat.getMediaController(getActivity()).getTransportControls();
+        return MediaControllerCompat.getMediaController(this).getTransportControls();
     }
 
     public void showArt(String artUrl){
         if(!TextUtils.equals(lastArtUrl,artUrl)) {
             lastArtUrl=artUrl;
-            Glide.with(getContext())
+            Glide.with(this)
                     .load(artUrl)
                     .asBitmap()
                     .priority(Priority.IMMEDIATE)
@@ -354,10 +352,10 @@ public class TrackFragment extends BaseFragment {
                         protected void setResource(Bitmap resource) {
                             smallImage.setImageBitmap(resource);
                             smallImage.post(()->{
-                                Blurry.with(getContext())
+                                Blurry.with(PlayerActivity.this)
                                         .async(bitmap->{
                                             background.setImageDrawable(bitmap);
-                                            getActivity().supportStartPostponedEnterTransition();
+                                            supportStartPostponedEnterTransition();
                                         })
                                         .from(resource)
                                         .into(background);
@@ -368,14 +366,14 @@ public class TrackFragment extends BaseFragment {
     }
 
     private void updateShuffleMode(boolean isShuffled){
-        int color=isShuffled ? ContextCompat.getColor(getContext(),R.color.enabled_action) :
-                ContextCompat.getColor(getContext(),R.color.white_50);
+        int color=isShuffled ? ContextCompat.getColor(this,R.color.enabled_action) :
+                ContextCompat.getColor(this,R.color.white_50);
         PresentationUtils.setDrawableColor(shuffle,color);
     }
 
     private void updateRepeatMode(boolean isRepeat){
-        int color=isRepeat ? ContextCompat.getColor(getContext(),R.color.enabled_action) :
-                ContextCompat.getColor(getContext(),R.color.white_50);
+        int color=isRepeat ? ContextCompat.getColor(this,R.color.enabled_action) :
+                ContextCompat.getColor(this,R.color.white_50);
         PresentationUtils.setDrawableColor(repeat,color);
     }
 
@@ -407,10 +405,5 @@ public class TrackFragment extends BaseFragment {
         pages.setText(text);
         String imageUrl=metadataCompat.getString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI);
         showArt(imageUrl);
-    }
-
-    @Override
-    protected int layoutId() {
-        return R.layout.fragment_player;
     }
 }

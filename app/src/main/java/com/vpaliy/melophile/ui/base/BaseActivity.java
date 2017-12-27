@@ -7,7 +7,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import javax.inject.Inject;
 
@@ -16,7 +15,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected CompositeDisposable disposables;
 
     @Inject
-    protected RxBus eventBus;
+    protected RxBus rxBus;
 
     @Inject
     protected Navigator navigator;
@@ -42,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        disposables.add(eventBus.asFlowable()
+        disposables.add(rxBus.asFlowable()
                 .subscribe(this::processEvent));
     }
 

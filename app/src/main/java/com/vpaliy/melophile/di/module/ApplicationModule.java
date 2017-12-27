@@ -18,21 +18,26 @@ public class ApplicationModule {
         this.context=context;
     }
 
-    @Singleton @Provides Context context(){
+    @Singleton
+    @Provides
+    Context context(){
         return context;
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     RxBus rxBus(){
         return new RxBus();
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     BaseSchedulerProvider schedulerProvider(){
         return new SchedulerProvider();
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     Navigator navigator(){
         return new Navigator();
     }

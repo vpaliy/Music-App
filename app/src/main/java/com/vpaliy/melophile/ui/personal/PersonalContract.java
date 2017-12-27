@@ -9,15 +9,14 @@ import android.support.annotation.NonNull;
 
 public interface PersonalContract {
     interface View extends BaseView<Presenter> {
-        void attachPresenter(@NonNull Presenter presenter);
-        void showTrackHistory(@NonNull List<Track> tracks);
+        void attachPresenter(Presenter presenter);
+        void showTrackHistory(List<Track> tracks);
         void showMyself(User user);
-        void showEmptyHistoryMessage();
-        void showErrorMessage();
+        void showMessage(String message);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void attachView(@NonNull View view);
+        void attachView(View view);
         void start();
         void stop();
         void clearTracks();

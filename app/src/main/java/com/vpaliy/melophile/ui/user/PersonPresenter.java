@@ -6,6 +6,8 @@ import com.vpaliy.domain.model.UserDetails;
 import java.util.List;
 import static com.vpaliy.melophile.ui.user.PersonContract.View;
 import static dagger.internal.Preconditions.checkNotNull;
+
+import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.scope.ViewScope;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
@@ -44,7 +46,7 @@ public class PersonPresenter implements PersonContract.Presenter{
             if(!isEmpty(details.getPlaylists())) {
                 view.showPlaylists(details.getPlaylists());
             }else if(isEmpty){
-                view.showEmptyMediaMessage();
+                //view.showEmptyMediaMessage();
             }
             user=details.getUser();
             if(user!=null){
@@ -56,7 +58,7 @@ public class PersonPresenter implements PersonContract.Presenter{
                 manageFollowing();
             }
         }else{
-            view.showEmptyMessage();
+            view.showMessage(R.string.empty_message);
         }
     }
 
@@ -67,7 +69,7 @@ public class PersonPresenter implements PersonContract.Presenter{
     private void catchError(Throwable ex){
         view.hideLoading();
         ex.printStackTrace();
-        view.showErrorMessage();
+        view.showMessage(R.string.error_message);
     }
 
     private void manageFollowing(){

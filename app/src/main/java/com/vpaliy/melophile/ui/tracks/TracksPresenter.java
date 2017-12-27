@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import android.support.annotation.NonNull;
+
+import com.vpaliy.melophile.R;
 import com.vpaliy.melophile.di.scope.ViewScope;
 
 import static com.vpaliy.melophile.ui.tracks.TracksContract.View;
@@ -40,12 +42,12 @@ public class TracksPresenter implements TracksContract.Presenter {
             view.showTrackSet(trackSet);
             return;
         }
-        view.showEmptyMessage();
+        view.showMessage(R.string.empty_message);
     }
 
     private void catchError(Throwable ex){
         ex.printStackTrace();
-        view.showErrorMessage();
+        view.showMessage(R.string.error_message);
     }
 
     @Override

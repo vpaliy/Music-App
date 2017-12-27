@@ -18,6 +18,8 @@ import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.user.info.UserAdapter;
 import com.vpaliy.melophile.ui.view.TransitionAdapterListener;
 import java.util.List;
+
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -152,13 +154,13 @@ public class SearchActivity extends BaseActivity
     private void handleRequest(MoreEvent event){
         switch (searchAdapter.getType(event.result)){
             case SearchAdapter.TYPE_TRACKS:
-                presenter.moreTracks();
+                presenter.nextTrackPage();
                 break;
             case SearchAdapter.TYPE_PLAYLISTS:
-                presenter.morePlaylists();
+                presenter.nextPlaylistPage();
                 break;
             case SearchAdapter.TYPE_USERS:
-                presenter.moreUsers();
+                presenter.nextUserPage();
                 break;
         }
     }
@@ -221,7 +223,7 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showTracks(@NonNull List<Track> tracks) {
         gotResult();
-        TracksAdapter adapter=new TracksAdapter(this,eventBus);
+        TracksAdapter adapter=new TracksAdapter(this, rxBus);
         adapter.setData(tracks);
         searchAdapter.setTracks(adapter);
     }
@@ -229,7 +231,7 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showPlaylists(@NonNull List<Playlist> playlists) {
         gotResult();
-        PlaylistsAdapter adapter=new PlaylistsAdapter(this,eventBus);
+        PlaylistsAdapter adapter=new PlaylistsAdapter(this, rxBus);
         adapter.setData(playlists);
         searchAdapter.setPlaylists(adapter);
     }
@@ -237,38 +239,32 @@ public class SearchActivity extends BaseActivity
     @Override
     public void showUsers(@NonNull List<User> users) {
         gotResult();
-        UserAdapter adapter=new UserAdapter(this,eventBus,false);
+        UserAdapter adapter=new UserAdapter(this, rxBus,false);
         adapter.setData(users);
         searchAdapter.setUsers(adapter);
     }
 
     @Override
-    public void appendPlaylists(@NonNull List<Playlist> playlists) {
+    public void updatePlaylistPage(@NonNull List<Playlist> playlists) {
         gotResult();
         searchAdapter.appendPlaylists(playlists);
     }
 
     @Override
-    public void appendTracks(@NonNull List<Track> tracks) {
+    public void updateTrackPage(@NonNull List<Track> tracks) {
         gotResult();
         searchAdapter.appendTracks(tracks);
     }
 
     @Override
-    public void appendUsers(@NonNull List<User> users) {
+    public void updateUserPage(@NonNull List<User> users) {
         gotResult();
         searchAdapter.appendUsers(users);
     }
 
     @Override
-    public void showEmptyMessage() {
-        Snackbar.make(root,R.string.empty_message,
-                getResources().getInteger(R.integer.message_duration));
-    }
-
-    @Override
-    public void showErrorMessage() {
-        Snackbar.make(root,R.string.error_message,
+    public void showMessage(@StringRes int resource) {
+        Snackbar.make(root,resource,
                 getResources().getInteger(R.integer.message_duration));
     }
 }

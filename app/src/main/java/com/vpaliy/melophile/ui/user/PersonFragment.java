@@ -168,11 +168,6 @@ public class PersonFragment extends BaseFragment
     }
 
     @Override
-    public void showErrorMessage() {
-        showMessage(R.string.error_message);
-    }
-
-    @Override
     public void showLikedCount(int count) {
         likes.setText(getResources().getQuantityString(R.plurals.likes,count,count));
         scaleAnimation(likes);
@@ -284,16 +279,6 @@ public class PersonFragment extends BaseFragment
                         }
                     }
                 }).start();
-    }
-
-    @Override
-    public void showEmptyMediaMessage() {
-        emptyMessage.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void showEmptyMessage() {
-        showMessage(R.string.empty_message);
     }
 
     @Override

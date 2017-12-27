@@ -6,11 +6,10 @@ import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.view.View;
-
 import com.vpaliy.melophile.ui.base.bus.event.ExposeEvent;
 import com.vpaliy.melophile.ui.playlist.PlaylistActivity;
 import com.vpaliy.melophile.ui.search.SearchActivity;
-import com.vpaliy.melophile.ui.track.TrackActivity;
+import com.vpaliy.melophile.ui.player.PlayerActivity;
 import com.vpaliy.melophile.ui.user.PersonActivity;
 import com.vpaliy.melophile.ui.utils.Constants;
 import com.vpaliy.melophile.ui.utils.Permission;
@@ -21,7 +20,7 @@ public class Navigator {
         Class<?> clazz=PlaylistActivity.class;
         switch (exposeEvent.code){
             case ExposeEvent.PLAYER:
-                clazz= TrackActivity.class;
+                clazz= PlayerActivity.class;
                 break;
             case ExposeEvent.USER:
                 clazz= PersonActivity.class;

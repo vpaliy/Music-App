@@ -142,7 +142,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setHomePager(){
-        homePager.setAdapter(new HomePagerAdapter(getSupportFragmentManager(),this));
+        homePager.setAdapter(new HomePagerAdapter(getSupportFragmentManager()));
         homePager.setOffscreenPageLimit(4);
     }
 

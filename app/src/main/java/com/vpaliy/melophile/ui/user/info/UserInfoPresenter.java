@@ -4,6 +4,8 @@ import java.util.List;
 import static com.vpaliy.melophile.ui.user.info.UserInfoContract.View;
 import static dagger.internal.Preconditions.checkNotNull;
 import com.vpaliy.domain.interactor.SingleInteractor;
+import com.vpaliy.melophile.R;
+
 import android.support.annotation.NonNull;
 
 @SuppressWarnings("WeakerAccess")
@@ -33,7 +35,8 @@ public abstract class UserInfoPresenter<T> implements UserInfoContract.Presenter
 
     protected void catchData(List<T> data){
         if(data==null||data.isEmpty()){
-            view.showEmpty();
+            view.showEmptyState();
+            view.finishWithDelay(2000);
         }else{
             view.showTitle();
             view.showInfo(data);
@@ -42,6 +45,6 @@ public abstract class UserInfoPresenter<T> implements UserInfoContract.Presenter
 
     protected void catchError(Throwable ex){
         ex.printStackTrace();
-        view.showError();
+        view.showMessage(R.string.error_message);
     }
 }

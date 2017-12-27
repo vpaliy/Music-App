@@ -59,16 +59,6 @@ public class TracksFragment extends BaseFragment
     }
 
     @Override
-    public void showErrorMessage() {
-        showMessage(R.string.error_message);
-    }
-
-    @Override
-    public void showEmptyMessage() {
-        showMessage(R.string.empty_message);
-    }
-
-    @Override
     public void showTrackSet(@NonNull TrackSet trackSet) {
         TracksAdapter tracksAdapter=new TracksAdapter(getContext(),rxBus);
         tracksAdapter.setData(trackSet.getTracks());
