@@ -8,21 +8,22 @@ import javax.inject.Singleton;
 
 //TODO implement this class
 @Singleton
-public class WebProfileMapper extends Mapper<WebProfile,WebProfileEntity> {
+public class WebProfileMapper extends Mapper<WebProfile, WebProfileEntity> {
 
-    @Inject
-    public WebProfileMapper(){}
+  @Inject
+  public WebProfileMapper() {
+  }
 
-    @Override
-    public WebProfile map(WebProfileEntity webProfileEntity) {
-        if(webProfileEntity==null) return null;
-        WebProfile profile=new WebProfile();
-        return profile;
-    }
+  @Override
+  public WebProfile map(WebProfileEntity webProfileEntity) {
+    if (webProfileEntity == null) return null;
+    WebProfile profile = new WebProfile();
+    return profile;
+  }
 
-    @Override
-    public WebProfileEntity reverse(WebProfile webProfile) {
-        if(webProfile==null) return null;
-        return new WebProfileEntity();
-    }
+  @Override
+  public WebProfileEntity reverse(WebProfile webProfile) {
+    if (webProfile == null) return null;
+    return new WebProfileEntity();
+  }
 }

@@ -8,18 +8,18 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-public class GetUsers extends SingleInteractor<List<User>,String> {
+public class GetUsers extends SingleInteractor<List<User>, String> {
 
-    private Repository repository;
+  private Repository repository;
 
-    public GetUsers(BaseSchedulerProvider schedulerProvider,
-                    Repository repository){
-        super(schedulerProvider);
-        this.repository=repository;
-    }
+  public GetUsers(BaseSchedulerProvider schedulerProvider,
+                  Repository repository) {
+    super(schedulerProvider);
+    this.repository = repository;
+  }
 
-    @Override
-    public Single<List<User>> buildUseCase(String tag) {
-        return null;
-    }
+  @Override
+  public Single<List<User>> buildUseCase(String tag) {
+    return null;
+  }
 }

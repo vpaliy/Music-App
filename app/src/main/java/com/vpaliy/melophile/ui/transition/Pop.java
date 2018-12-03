@@ -18,31 +18,31 @@ import android.view.ViewGroup;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Pop extends Visibility {
 
-    public Pop(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+  public Pop(Context context, AttributeSet attrs) {
+    super(context, attrs);
+  }
 
-    @Override
-    public Animator onAppear(ViewGroup sceneRoot, View view, TransitionValues startValues,
-                             TransitionValues endValues) {
-        view.setAlpha(0f);
-        view.setScaleX(0f);
-        view.setScaleY(0f);
-        return ObjectAnimator.ofPropertyValuesHolder(
-                view,
-                PropertyValuesHolder.ofFloat(View.ALPHA, 1f),
-                PropertyValuesHolder.ofFloat(View.SCALE_X, 1f),
-                PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f));
-    }
+  @Override
+  public Animator onAppear(ViewGroup sceneRoot, View view, TransitionValues startValues,
+                           TransitionValues endValues) {
+    view.setAlpha(0f);
+    view.setScaleX(0f);
+    view.setScaleY(0f);
+    return ObjectAnimator.ofPropertyValuesHolder(
+            view,
+            PropertyValuesHolder.ofFloat(View.ALPHA, 1f),
+            PropertyValuesHolder.ofFloat(View.SCALE_X, 1f),
+            PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f));
+  }
 
-    @Override
-    public Animator onDisappear(ViewGroup sceneRoot, View view, TransitionValues startValues,
-                                TransitionValues endValues) {
-        return ObjectAnimator.ofPropertyValuesHolder(
-                view,
-                PropertyValuesHolder.ofFloat(View.ALPHA, 0f),
-                PropertyValuesHolder.ofFloat(View.SCALE_X, 0f),
-                PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f));
-    }
+  @Override
+  public Animator onDisappear(ViewGroup sceneRoot, View view, TransitionValues startValues,
+                              TransitionValues endValues) {
+    return ObjectAnimator.ofPropertyValuesHolder(
+            view,
+            PropertyValuesHolder.ofFloat(View.ALPHA, 0f),
+            PropertyValuesHolder.ofFloat(View.SCALE_X, 0f),
+            PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f));
+  }
 
 }

@@ -10,25 +10,38 @@ import com.vpaliy.melophile.ui.base.BaseView;
 
 import java.util.List;
 
-public interface SearchContract  {
-    interface View extends BaseView<Presenter> {
-        void attachPresenter(@NonNull Presenter presenter);
-        void showTracks(@NonNull List<Track> tracks);
-        void showPlaylists(@NonNull List<Playlist> playlists);
-        void showUsers(@NonNull List<User> users);
-        void appendUsers(@NonNull List<User> users);
-        void appendPlaylists(@NonNull List<Playlist> playlists);
-        void appendTracks(@NonNull List<Track> tracks);
-        void showErrorMessage();
-        void showEmptyMessage();
-    }
+public interface SearchContract {
+  interface View extends BaseView<Presenter> {
+    void attachPresenter(@NonNull Presenter presenter);
 
-    interface Presenter extends BasePresenter<View> {
-        void attachView(@NonNull View view);
-        void query(String query);
-        void moreTracks();
-        void morePlaylists();
-        void moreUsers();
-        void stop();
-    }
+    void showTracks(@NonNull List<Track> tracks);
+
+    void showPlaylists(@NonNull List<Playlist> playlists);
+
+    void showUsers(@NonNull List<User> users);
+
+    void appendUsers(@NonNull List<User> users);
+
+    void appendPlaylists(@NonNull List<Playlist> playlists);
+
+    void appendTracks(@NonNull List<Track> tracks);
+
+    void showErrorMessage();
+
+    void showEmptyMessage();
+  }
+
+  interface Presenter extends BasePresenter<View> {
+    void attachView(@NonNull View view);
+
+    void query(String query);
+
+    void moreTracks();
+
+    void morePlaylists();
+
+    void moreUsers();
+
+    void stop();
+  }
 }

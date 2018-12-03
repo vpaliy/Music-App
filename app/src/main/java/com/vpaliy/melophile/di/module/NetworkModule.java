@@ -9,22 +9,24 @@ import com.vpaliy.soundcloud.SoundCloudService;
 import com.vpaliy.soundcloud.model.Token;
 
 import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class NetworkModule {
 
-    private Token token;
+  private Token token;
 
-    public NetworkModule(@NonNull Token token){
-        this.token=token;
-    }
+  public NetworkModule(@NonNull Token token) {
+    this.token = token;
+  }
 
-    @Singleton @Provides
-    SoundCloudService soundCloudService(Context context){
-        return SoundCloud.create(Config.CLIENT_ID)
-                .appendToken(token)
-                .createService(context);
-    }
+  @Singleton
+  @Provides
+  SoundCloudService soundCloudService(Context context) {
+    return SoundCloud.create(Config.CLIENT_ID)
+            .appendToken(token)
+            .createService(context);
+  }
 }

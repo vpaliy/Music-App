@@ -24,67 +24,71 @@ import com.vpaliy.melophile.ui.utils.PresentationUtils;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import butterknife.ButterKnife;
+
 import android.support.annotation.NonNull;
+
 import butterknife.BindView;
 
 @SuppressWarnings("WeakerAccess")
 public class TracksAdapter extends BaseAdapter<Track> {
 
 
-    public TracksAdapter(@NonNull Context context, @NonNull RxBus rxBus){
-        super(context,rxBus);
-    }
+  public TracksAdapter(@NonNull Context context, @NonNull RxBus rxBus) {
+    super(context, rxBus);
+  }
 
-    public class TrackViewHolder extends BaseAdapter<Track>.GenericViewHolder{
+  public class TrackViewHolder extends BaseAdapter<Track>.GenericViewHolder {
 
-        @BindView(R.id.track_art)
-        ImageView artImage;
+    @BindView(R.id.track_art)
+    ImageView artImage;
 
-        @BindView(R.id.track_title)
-        TextView trackTitle;
+    @BindView(R.id.track_title)
+    TextView trackTitle;
 
-        public TrackViewHolder(View itemView){
-            super(itemView);
-            ButterKnife.bind(this,itemView);
-            itemView.setOnClickListener(v->{
-                Track track = at(getAdapterPosition());
-                QueueManager queueManager=QueueManager.createQueue(data,getAdapterPosition());
-                Bundle data = new Bundle();
-                Context context = inflater.getContext();
-                ViewCompat.setTransitionName(artImage, context.getString(R.string.art_trans_name));
-                ViewCompat.setTransitionName(itemView, context.getString(R.string.background_trans_name));
-                data.putString(Constants.EXTRA_DATA, track.getArtworkUrl());
-                data.putString(Constants.EXTRA_ID, track.getId());
-                //pack the data
-                BundleUtils.packHeavyObject(data,Constants.EXTRA_QUEUE,queueManager,
-                        new TypeToken<QueueManager>(){}.getType());
-                rxBus.sendWithLock(ExposeEvent.exposeTrack(data,
-                        Pair.create(artImage, context.getString(R.string.art_trans_name)),
-                        Pair.create(artImage, context.getString(R.string.background_trans_name))));
-            });
-        }
-
-        @Override
-        public void onBindData() {
-            Track track=at(getAdapterPosition());
-            trackTitle.setText(track.getTitle());
-            Glide.with(itemView.getContext())
-                    .load(track.getArtworkUrl())
-                    .priority(Priority.IMMEDIATE)
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .into(artImage);
-        }
+    public TrackViewHolder(View itemView) {
+      super(itemView);
+      ButterKnife.bind(this, itemView);
+      itemView.setOnClickListener(v -> {
+        Track track = at(getAdapterPosition());
+        QueueManager queueManager = QueueManager.createQueue(data, getAdapterPosition());
+        Bundle data = new Bundle();
+        Context context = inflater.getContext();
+        ViewCompat.setTransitionName(artImage, context.getString(R.string.art_trans_name));
+        ViewCompat.setTransitionName(itemView, context.getString(R.string.background_trans_name));
+        data.putString(Constants.EXTRA_DATA, track.getArtworkUrl());
+        data.putString(Constants.EXTRA_ID, track.getId());
+        //pack the data
+        BundleUtils.packHeavyObject(data, Constants.EXTRA_QUEUE, queueManager,
+                new TypeToken<QueueManager>() {
+                }.getType());
+        rxBus.sendWithLock(ExposeEvent.exposeTrack(data,
+                Pair.create(artImage, context.getString(R.string.art_trans_name)),
+                Pair.create(artImage, context.getString(R.string.background_trans_name))));
+      });
     }
 
     @Override
-    public TrackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View root=inflater.inflate(R.layout.adapter_track,parent,false);
-        return new TrackViewHolder(root);
+    public void onBindData() {
+      Track track = at(getAdapterPosition());
+      trackTitle.setText(track.getTitle());
+      Glide.with(itemView.getContext())
+              .load(track.getArtworkUrl())
+              .priority(Priority.IMMEDIATE)
+              .diskCacheStrategy(DiskCacheStrategy.RESULT)
+              .into(artImage);
     }
+  }
 
-    @Override
-    public void onBindViewHolder(GenericViewHolder holder, int position) {
-        holder.onBindData();
-    }
+  @Override
+  public TrackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    View root = inflater.inflate(R.layout.adapter_track, parent, false);
+    return new TrackViewHolder(root);
+  }
+
+  @Override
+  public void onBindViewHolder(GenericViewHolder holder, int position) {
+    holder.onBindData();
+  }
 }

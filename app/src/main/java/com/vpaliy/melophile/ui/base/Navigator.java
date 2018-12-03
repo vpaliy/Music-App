@@ -17,37 +17,37 @@ import com.vpaliy.melophile.ui.utils.Permission;
 
 public class Navigator {
 
-    public void navigate(Activity activity, ExposeEvent exposeEvent){
-        Class<?> clazz=PlaylistActivity.class;
-        switch (exposeEvent.code){
-            case ExposeEvent.PLAYER:
-                clazz= TrackActivity.class;
-                break;
-            case ExposeEvent.USER:
-                clazz= PersonActivity.class;
-        }
-        Intent intent=new Intent(activity,clazz);
-        intent.putExtra(Constants.EXTRA_DATA,exposeEvent.data);
-        if(Permission.checkForVersion(Build.VERSION_CODES.LOLLIPOP)){
-            ActivityOptionsCompat optionsCompat= ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(activity,exposeEvent.pack);
-            activity.startActivity(intent,optionsCompat.toBundle());
-            return;
-        }
-        //in case if I wanted to switch to a lower API
-        activity.startActivity(intent);
+  public void navigate(Activity activity, ExposeEvent exposeEvent) {
+    Class<?> clazz = PlaylistActivity.class;
+    switch (exposeEvent.code) {
+      case ExposeEvent.PLAYER:
+        clazz = TrackActivity.class;
+        break;
+      case ExposeEvent.USER:
+        clazz = PersonActivity.class;
     }
+    Intent intent = new Intent(activity, clazz);
+    intent.putExtra(Constants.EXTRA_DATA, exposeEvent.data);
+    if (Permission.checkForVersion(Build.VERSION_CODES.LOLLIPOP)) {
+      ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+              .makeSceneTransitionAnimation(activity, exposeEvent.pack);
+      activity.startActivity(intent, optionsCompat.toBundle());
+      return;
+    }
+    //in case if I wanted to switch to a lower API
+    activity.startActivity(intent);
+  }
 
-    @SuppressWarnings("unchecked")
-    public void search(Activity activity,Pair<View,String> pair){
-        Intent intent=new Intent(activity,SearchActivity.class);
-        if(Permission.checkForVersion(Build.VERSION_CODES.LOLLIPOP)) {
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(activity, pair);
-            activity.startActivity(intent,optionsCompat.toBundle());
-            return;
-        }
-        //in case if I wanted to switch to a lower API
-        activity.startActivity(intent);
+  @SuppressWarnings("unchecked")
+  public void search(Activity activity, Pair<View, String> pair) {
+    Intent intent = new Intent(activity, SearchActivity.class);
+    if (Permission.checkForVersion(Build.VERSION_CODES.LOLLIPOP)) {
+      ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+              .makeSceneTransitionAnimation(activity, pair);
+      activity.startActivity(intent, optionsCompat.toBundle());
+      return;
     }
+    //in case if I wanted to switch to a lower API
+    activity.startActivity(intent);
+  }
 }

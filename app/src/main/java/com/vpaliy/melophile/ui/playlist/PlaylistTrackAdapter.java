@@ -34,98 +34,105 @@ import butterknife.ButterKnife;
 
 public class PlaylistTrackAdapter extends BaseAdapter<Track> {
 
-    private static final int BLANK_TYPE=0;
-    private static final int TRACK_TYPE=2;
+  private static final int BLANK_TYPE = 0;
+  private static final int TRACK_TYPE = 2;
 
-    private View blank;
+  private View blank;
 
-    public PlaylistTrackAdapter(@NonNull Context context, @NonNull RxBus rxBus){
-        super(context,rxBus);
-    }
+  public PlaylistTrackAdapter(@NonNull Context context, @NonNull RxBus rxBus) {
+    super(context, rxBus);
+  }
 
-    public class Blank extends GenericViewHolder{
-        public Blank(View itemView){
-            super(itemView);
-        }
-        @Override
-        public void onBindData() {}
-    }
-
-    public class TrackViewHolder extends GenericViewHolder{
-
-        @BindView(R.id.track_art) ImageView trackArt;
-        @BindView(R.id.artist) TextView artist;
-        @BindView(R.id.track_title) TextView trackTitle;
-        @BindView(R.id.duration) TextView duration;
-
-        public TrackViewHolder(View itemView){
-            super(itemView);
-            ButterKnife.bind(this,itemView);
-            itemView.setOnClickListener(v->{
-                Track track=at(getAdapterPosition()-1);
-                QueueManager queueManager=QueueManager.createQueue(data,getAdapterPosition()-1);
-                Bundle data=new Bundle();
-                Context context=inflater.getContext();
-                ViewCompat.setTransitionName(trackArt,context.getString(R.string.art_trans_name));
-                ViewCompat.setTransitionName(itemView,context.getString(R.string.background_trans_name));
-                data.putString(Constants.EXTRA_DATA,track.getArtworkUrl());
-                data.putString(Constants.EXTRA_ID,track.getId());
-                //pack the data
-                BundleUtils.packHeavyObject(data,Constants.EXTRA_QUEUE,queueManager,
-                        new TypeToken<QueueManager>(){}.getType());
-                rxBus.send(ExposeEvent.exposeTrack(data, Pair.create(trackArt,context.getString(R.string.art_trans_name)),
-                        Pair.create(trackArt,context.getString(R.string.background_trans_name))));
-            });
-        }
-
-        public int current(){
-            return getAdapterPosition()-1;
-        }
-
-        @Override
-        public void onBindData() {
-            Track track=at(current());
-            artist.setText(track.getArtist());
-            trackTitle.setText(track.getTitle());
-            duration.setText(track.getFormatedDuration());
-            Glide.with(itemView.getContext())
-                    .load(track.getArtworkUrl())
-                    .priority(Priority.IMMEDIATE)
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .into(trackArt);
-        }
-    }
-
-    public View getBlank() {
-        return blank;
-    }
-
-    public List<Track> getTracks(){
-        return data;
+  public class Blank extends GenericViewHolder {
+    public Blank(View itemView) {
+      super(itemView);
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return position==0?BLANK_TYPE:TRACK_TYPE;
+    public void onBindData() {
+    }
+  }
+
+  public class TrackViewHolder extends GenericViewHolder {
+
+    @BindView(R.id.track_art)
+    ImageView trackArt;
+    @BindView(R.id.artist)
+    TextView artist;
+    @BindView(R.id.track_title)
+    TextView trackTitle;
+    @BindView(R.id.duration)
+    TextView duration;
+
+    public TrackViewHolder(View itemView) {
+      super(itemView);
+      ButterKnife.bind(this, itemView);
+      itemView.setOnClickListener(v -> {
+        Track track = at(getAdapterPosition() - 1);
+        QueueManager queueManager = QueueManager.createQueue(data, getAdapterPosition() - 1);
+        Bundle data = new Bundle();
+        Context context = inflater.getContext();
+        ViewCompat.setTransitionName(trackArt, context.getString(R.string.art_trans_name));
+        ViewCompat.setTransitionName(itemView, context.getString(R.string.background_trans_name));
+        data.putString(Constants.EXTRA_DATA, track.getArtworkUrl());
+        data.putString(Constants.EXTRA_ID, track.getId());
+        //pack the data
+        BundleUtils.packHeavyObject(data, Constants.EXTRA_QUEUE, queueManager,
+                new TypeToken<QueueManager>() {
+                }.getType());
+        rxBus.send(ExposeEvent.exposeTrack(data, Pair.create(trackArt, context.getString(R.string.art_trans_name)),
+                Pair.create(trackArt, context.getString(R.string.background_trans_name))));
+      });
+    }
+
+    public int current() {
+      return getAdapterPosition() - 1;
     }
 
     @Override
-    public GenericViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType){
-            case BLANK_TYPE:
-                return new Blank(blank=inflate(R.layout.layout_blank,parent));
-            default:
-                return new TrackViewHolder(inflate(R.layout.adapter_playlist_track,parent));
-        }
+    public void onBindData() {
+      Track track = at(current());
+      artist.setText(track.getArtist());
+      trackTitle.setText(track.getTitle());
+      duration.setText(track.getFormatedDuration());
+      Glide.with(itemView.getContext())
+              .load(track.getArtworkUrl())
+              .priority(Priority.IMMEDIATE)
+              .diskCacheStrategy(DiskCacheStrategy.RESULT)
+              .into(trackArt);
     }
+  }
 
-    @Override
-    public int getItemCount() {
-        return super.getItemCount()+1;
-    }
+  public View getBlank() {
+    return blank;
+  }
 
-    @Override
-    public void onBindViewHolder(GenericViewHolder holder, int position) {
-        holder.onBindData();
+  public List<Track> getTracks() {
+    return data;
+  }
+
+  @Override
+  public int getItemViewType(int position) {
+    return position == 0 ? BLANK_TYPE : TRACK_TYPE;
+  }
+
+  @Override
+  public GenericViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    switch (viewType) {
+      case BLANK_TYPE:
+        return new Blank(blank = inflate(R.layout.layout_blank, parent));
+      default:
+        return new TrackViewHolder(inflate(R.layout.adapter_playlist_track, parent));
     }
+  }
+
+  @Override
+  public int getItemCount() {
+    return super.getItemCount() + 1;
+  }
+
+  @Override
+  public void onBindViewHolder(GenericViewHolder holder, int position) {
+    holder.onBindData();
+  }
 }

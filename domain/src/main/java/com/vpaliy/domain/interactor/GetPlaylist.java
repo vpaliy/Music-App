@@ -10,22 +10,22 @@ import javax.inject.Singleton;
 import io.reactivex.Single;
 
 @Singleton
-public class GetPlaylist extends SingleInteractor<Playlist,String> {
+public class GetPlaylist extends SingleInteractor<Playlist, String> {
 
-    private Repository repository;
+  private Repository repository;
 
-    @Inject
-    public GetPlaylist(BaseSchedulerProvider schedulerProvider,
-                       Repository repository){
-        super(schedulerProvider);
-        this.repository=repository;
+  @Inject
+  public GetPlaylist(BaseSchedulerProvider schedulerProvider,
+                     Repository repository) {
+    super(schedulerProvider);
+    this.repository = repository;
+  }
+
+  @Override
+  public Single<Playlist> buildUseCase(String id) {
+    if (id == null || id.isEmpty()) {
+      return Single.error(new IllegalArgumentException("Id is null"));
     }
-
-    @Override
-    public Single<Playlist> buildUseCase(String id) {
-        if(id==null||id.isEmpty()){
-            return Single.error(new IllegalArgumentException("Id is null"));
-        }
-        return repository.getPlaylistBy(id);
-    }
+    return repository.getPlaylistBy(id);
+  }
 }

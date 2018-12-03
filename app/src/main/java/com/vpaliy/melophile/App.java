@@ -18,59 +18,58 @@ import com.vpaliy.soundcloud.model.Token;
 
 public class App extends Application {
 
-    private ApplicationComponent applicationComponent;
-    private PlayerComponent playerComponent;
-    private static App INSTANCE;
+  private ApplicationComponent applicationComponent;
+  private PlayerComponent playerComponent;
+  private static App instance;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        INSTANCE = this;
-    }
+  @Override
+  public void onCreate() {
+    super.onCreate();
+    instance = this;
+  }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-    }
+  @Override
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
+  }
 
-    private void initializePlayerComponent() {
-        playerComponent= DaggerPlayerComponent.builder()
-                .applicationComponent(applicationComponent)
-                .playbackModule(new PlaybackModule()).build();
-    }
+  private void initializePlayerComponent() {
+    playerComponent = DaggerPlayerComponent.builder()
+            .applicationComponent(applicationComponent)
+            .playbackModule(new PlaybackModule()).build();
+  }
 
-    public void setApplicationComponent(ApplicationComponent applicationComponent) {
-        this.applicationComponent = applicationComponent;
-    }
+  public void setApplicationComponent(ApplicationComponent applicationComponent) {
+    this.applicationComponent = applicationComponent;
+  }
 
-    public void appendToken(Token token){
-        initializeAppComponent(token);
-    }
+  public void appendToken(Token token) {
+    initializeAppComponent(token);
+  }
 
-    private void initializeAppComponent(Token token){
-        //just in case if the app works in the background with the playback service
-        if(applicationComponent==null) {
-            applicationComponent = DaggerApplicationComponent.builder()
-                    .applicationModule(new ApplicationModule(this))
-                    .dataModule(new DataModule())
-                    .networkModule(new NetworkModule(token))
-                    .mapperModule(new MapperModule())
-                    .interactorModule(new InteractorModule())
-                    .build();
-            initializePlayerComponent();
-        }
+  private void initializeAppComponent(Token token) {
+    if (applicationComponent == null) {
+      applicationComponent = DaggerApplicationComponent.builder()
+              .applicationModule(new ApplicationModule(this))
+              .dataModule(new DataModule())
+              .networkModule(new NetworkModule(token))
+              .mapperModule(new MapperModule())
+              .interactorModule(new InteractorModule())
+              .build();
+      initializePlayerComponent();
     }
+  }
 
-    @NonNull
-    public static App appInstance() {
-        return INSTANCE;
-    }
+  @NonNull
+  public static App appInstance() {
+    return instance;
+  }
 
-    public ApplicationComponent appComponent() {
-        return applicationComponent;
-    }
+  public ApplicationComponent appComponent() {
+    return applicationComponent;
+  }
 
-    public PlayerComponent playerComponent(){
-        return playerComponent;
-    }
+  public PlayerComponent playerComponent() {
+    return playerComponent;
+  }
 }

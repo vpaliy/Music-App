@@ -27,48 +27,57 @@ import com.vpaliy.melophile.ui.user.info.FavoritePresenter;
 import com.vpaliy.melophile.ui.user.info.FollowersPresenter;
 import com.vpaliy.melophile.ui.user.info.UserInfoContract;
 import com.vpaliy.melophile.di.scope.ViewScope;
+
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class PresenterModule {
-    @ViewScope @Provides
-    PlaylistsContract.Presenter playlists(GetPlaylists getPlaylists){
-        return new PlaylistsPresenter(getPlaylists);
-    }
+  @ViewScope
+  @Provides
+  PlaylistsContract.Presenter playlists(GetPlaylists getPlaylists) {
+    return new PlaylistsPresenter(getPlaylists);
+  }
 
-    @ViewScope @Provides
-    TracksContract.Presenter tracks(GetTracks getTracks){
-        return new TracksPresenter(getTracks);
-    }
+  @ViewScope
+  @Provides
+  TracksContract.Presenter tracks(GetTracks getTracks) {
+    return new TracksPresenter(getTracks);
+  }
 
-    @ViewScope @Provides
-    PlaylistContract.Presenter playlist(GetPlaylist getPlaylist){
-        return new PlaylistPresenter(getPlaylist);
-    }
+  @ViewScope
+  @Provides
+  PlaylistContract.Presenter playlist(GetPlaylist getPlaylist) {
+    return new PlaylistPresenter(getPlaylist);
+  }
 
-    @ViewScope @Provides
-    PersonContract.Presenter person(PersonalUserInteractor userInteractor){
-        return new PersonPresenter(userInteractor);
-    }
+  @ViewScope
+  @Provides
+  PersonContract.Presenter person(PersonalUserInteractor userInteractor) {
+    return new PersonPresenter(userInteractor);
+  }
 
-    @ViewScope @Provides
-    UserInfoContract.Presenter<User> followers(GetUserFollowers getUserFollowers){
-        return new FollowersPresenter(getUserFollowers);
-    }
+  @ViewScope
+  @Provides
+  UserInfoContract.Presenter<User> followers(GetUserFollowers getUserFollowers) {
+    return new FollowersPresenter(getUserFollowers);
+  }
 
-    @ViewScope @Provides
-    UserInfoContract.Presenter<Track> favorites(GetUserFavorites getUserFavorites){
-        return new FavoritePresenter(getUserFavorites);
-    }
+  @ViewScope
+  @Provides
+  UserInfoContract.Presenter<Track> favorites(GetUserFavorites getUserFavorites) {
+    return new FavoritePresenter(getUserFavorites);
+  }
 
-    @ViewScope @Provides
-    SearchContract.Presenter search(TrackSearch trackSearch, UserSearch userSearch, PlaylistSearch playlistSearch){
-        return new SearchPresenter(trackSearch,playlistSearch,userSearch);
-    }
+  @ViewScope
+  @Provides
+  SearchContract.Presenter search(TrackSearch trackSearch, UserSearch userSearch, PlaylistSearch playlistSearch) {
+    return new SearchPresenter(trackSearch, playlistSearch, userSearch);
+  }
 
-    @ViewScope @Provides
-    PersonalContract.Presenter personal(PersonalUserInteractor userInteractor){
-        return new PersonalPresenter(null,null,null);
-    }
+  @ViewScope
+  @Provides
+  PersonalContract.Presenter personal(PersonalUserInteractor userInteractor) {
+    return new PersonalPresenter(null, null, null);
+  }
 }

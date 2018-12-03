@@ -12,21 +12,21 @@ import javax.inject.Singleton;
 import io.reactivex.Single;
 
 @Singleton
-public class GetUserFollowers extends SingleInteractor<List<User>,String> {
+public class GetUserFollowers extends SingleInteractor<List<User>, String> {
 
-    private Repository repository;
+  private Repository repository;
 
-    @Inject
-    public GetUserFollowers(Repository repository, BaseSchedulerProvider schedulerProvider){
-        super(schedulerProvider);
-        this.repository=repository;
+  @Inject
+  public GetUserFollowers(Repository repository, BaseSchedulerProvider schedulerProvider) {
+    super(schedulerProvider);
+    this.repository = repository;
+  }
+
+  @Override
+  public Single<List<User>> buildUseCase(String id) {
+    if (id == null || id.isEmpty()) {
+      return Single.error(new IllegalArgumentException("Id is null"));
     }
-
-    @Override
-    public Single<List<User>> buildUseCase(String id) {
-        if(id==null||id.isEmpty()){
-            return Single.error(new IllegalArgumentException("Id is null"));
-        }
-        return repository.getUserFollowers(id);
-    }
+    return repository.getUserFollowers(id);
+  }
 }

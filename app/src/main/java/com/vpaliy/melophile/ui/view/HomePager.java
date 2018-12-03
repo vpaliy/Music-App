@@ -8,36 +8,37 @@ import android.view.MotionEvent;
 
 public class HomePager extends ViewPager {
 
-    private boolean enabled;
+  private boolean enabled;
 
-    public HomePager(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.enabled = false;
+  public HomePager(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    this.enabled = false;
+  }
+
+  @Override
+  public boolean onTouchEvent(MotionEvent event) {
+    if (this.enabled) {
+      return super.onTouchEvent(event);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (this.enabled) {
-            return super.onTouchEvent(event);
-        }
+    return false;
+  }
 
-        return false;
+  @Override
+  public boolean onInterceptTouchEvent(MotionEvent event) {
+    if (this.enabled) {
+      return super.onInterceptTouchEvent(event);
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        if (this.enabled) {
-            return super.onInterceptTouchEvent(event);
-        }
+    return false;
+  }
 
-        return false;
-    }
-
-    /**
-     * Enable or disable the swipe navigation
-     * @param enabled
-     */
-    public void setPagingEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+  /**
+   * Enable or disable the swipe navigation
+   *
+   * @param enabled
+   */
+  public void setPagingEnabled(boolean enabled) {
+    this.enabled = enabled;
+  }
 }

@@ -11,23 +11,23 @@ import javax.inject.Singleton;
 import io.reactivex.Single;
 
 @Singleton
-public class GetPlaylists extends SingleInteractor<PlaylistSet,MelophileTheme> {
+public class GetPlaylists extends SingleInteractor<PlaylistSet, MelophileTheme> {
 
-    private Repository repository;
+  private Repository repository;
 
-    @Inject
-    public GetPlaylists(BaseSchedulerProvider schedulerProvider,
-                        Repository repository){
-        super(schedulerProvider);
-        this.repository=repository;
+  @Inject
+  public GetPlaylists(BaseSchedulerProvider schedulerProvider,
+                      Repository repository) {
+    super(schedulerProvider);
+    this.repository = repository;
+  }
+
+  @Override
+  public Single<PlaylistSet> buildUseCase(MelophileTheme theme) {
+    if (theme != null) {
+      return repository.getPlaylistsBy(theme)
+              .map(list -> new PlaylistSet(theme, list));
     }
-
-    @Override
-    public Single<PlaylistSet> buildUseCase(MelophileTheme theme) {
-        if(theme!=null){
-            return repository.getPlaylistsBy(theme)
-                    .map(list -> new PlaylistSet(theme, list));
-        }
-        return Single.error(new IllegalArgumentException("Melophile theme is null!"));
-    }
+    return Single.error(new IllegalArgumentException("Melophile theme is null!"));
+  }
 }

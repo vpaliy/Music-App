@@ -12,23 +12,23 @@ import javax.inject.Singleton;
 import io.reactivex.Single;
 
 @Singleton
-public class GetTracks extends SingleInteractor<TrackSet,MelophileTheme> {
+public class GetTracks extends SingleInteractor<TrackSet, MelophileTheme> {
 
-    private Repository repository;
+  private Repository repository;
 
-    @Inject
-    public GetTracks(BaseSchedulerProvider schedulerProvider,
-                     Repository repository){
-        super(schedulerProvider);
-        this.repository=repository;
+  @Inject
+  public GetTracks(BaseSchedulerProvider schedulerProvider,
+                   Repository repository) {
+    super(schedulerProvider);
+    this.repository = repository;
+  }
+
+  @Override
+  public Single<TrackSet> buildUseCase(MelophileTheme theme) {
+    if (theme != null) {
+      return repository.getTracksBy(theme)
+              .map(list -> new TrackSet(theme, list));
     }
-
-    @Override
-    public Single<TrackSet> buildUseCase(MelophileTheme theme) {
-        if(theme!=null){
-            return repository.getTracksBy(theme)
-                    .map(list -> new TrackSet(theme, list));
-        }
-        return Single.error(new IllegalArgumentException("Melophile theme is null!"));
-    }
+    return Single.error(new IllegalArgumentException("Melophile theme is null!"));
+  }
 }

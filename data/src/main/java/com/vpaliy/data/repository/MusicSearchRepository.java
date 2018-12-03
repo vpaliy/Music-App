@@ -13,6 +13,7 @@ import com.vpaliy.soundcloud.model.TrackEntity;
 import com.vpaliy.soundcloud.model.UserEntity;
 
 import java.util.List;
+
 import io.reactivex.Single;
 
 import javax.inject.Inject;
@@ -21,55 +22,55 @@ import javax.inject.Singleton;
 @Singleton
 public class MusicSearchRepository implements SearchRepository {
 
-    private SearchSource searchSource;
-    private Mapper<Track,TrackEntity> trackMapper;
-    private Mapper<Playlist,PlaylistEntity> playlistMapper;
-    private Mapper<User,UserEntity> userMapper;
+  private SearchSource searchSource;
+  private Mapper<Track, TrackEntity> trackMapper;
+  private Mapper<Playlist, PlaylistEntity> playlistMapper;
+  private Mapper<User, UserEntity> userMapper;
 
-    @Inject
-    public MusicSearchRepository(@NonNull SearchSource searchSource,
-                                 Mapper<Track,TrackEntity> trackMapper,
-                                 Mapper<Playlist,PlaylistEntity> playlistMapper,
-                                 Mapper<User,UserEntity> userMapper){
-        this.searchSource=searchSource;
-        this.trackMapper=trackMapper;
-        this.playlistMapper=playlistMapper;
-        this.userMapper=userMapper;
-    }
+  @Inject
+  public MusicSearchRepository(@NonNull SearchSource searchSource,
+                               Mapper<Track, TrackEntity> trackMapper,
+                               Mapper<Playlist, PlaylistEntity> playlistMapper,
+                               Mapper<User, UserEntity> userMapper) {
+    this.searchSource = searchSource;
+    this.trackMapper = trackMapper;
+    this.playlistMapper = playlistMapper;
+    this.userMapper = userMapper;
+  }
 
-    @Override
-    public Single<List<Playlist>> searchPlaylist(String query) {
-        return searchSource.searchPlaylists(query)
-                .map(playlistMapper::map);
-    }
+  @Override
+  public Single<List<Playlist>> searchPlaylist(String query) {
+    return searchSource.searchPlaylists(query)
+            .map(playlistMapper::map);
+  }
 
-    @Override
-    public Single<List<Track>> searchTrack(String query) {
-        return searchSource.searchTracks(query)
-                .map(trackMapper::map);
-    }
+  @Override
+  public Single<List<Track>> searchTrack(String query) {
+    return searchSource.searchTracks(query)
+            .map(trackMapper::map);
+  }
 
-    @Override
-    public Single<List<User>> searchUser(String query) {
-        return searchSource.searchUsers(query)
-                .map(userMapper::map);
-    }
+  @Override
+  public Single<List<User>> searchUser(String query) {
+    return searchSource.searchUsers(query)
+            .map(userMapper::map);
+  }
 
-    @Override
-    public Single<List<Playlist>> nextPlaylistPage() {
-        return searchSource.morePlaylists()
-                .map(playlistMapper::map);
-    }
+  @Override
+  public Single<List<Playlist>> nextPlaylistPage() {
+    return searchSource.morePlaylists()
+            .map(playlistMapper::map);
+  }
 
-    @Override
-    public Single<List<Track>> nextTrackPage() {
-        return searchSource.moreTracks()
-                .map(trackMapper::map);
-    }
+  @Override
+  public Single<List<Track>> nextTrackPage() {
+    return searchSource.moreTracks()
+            .map(trackMapper::map);
+  }
 
-    @Override
-    public Single<List<User>> nextUserPage() {
-        return searchSource.moreUsers()
-                .map(userMapper::map);
-    }
+  @Override
+  public Single<List<User>> nextUserPage() {
+    return searchSource.moreUsers()
+            .map(userMapper::map);
+  }
 }

@@ -12,18 +12,19 @@ import android.view.ViewGroup;
 
 public class BackgroundScale extends Visibility {
 
-    public BackgroundScale(){}
+  public BackgroundScale() {
+  }
 
-    public BackgroundScale(Context context, AttributeSet attrs){
-        super(context,attrs);
-    }
+  public BackgroundScale(Context context, AttributeSet attrs) {
+    super(context, attrs);
+  }
 
-    @Override
-    public Animator onAppear(ViewGroup sceneRoot, View view,
-                             TransitionValues startValues,
-                             TransitionValues endValues) {
-        view.setPivotX(view.getWidth());
-        view.setPivotY(view.getHeight()/2);
-        return ObjectAnimator.ofFloat(view,View.SCALE_X,0,1).setDuration(400);
-    }
+  @Override
+  public Animator onAppear(ViewGroup sceneRoot, View view,
+                           TransitionValues startValues,
+                           TransitionValues endValues) {
+    view.setPivotX(view.getWidth());
+    view.setPivotY(view.getHeight() / 2);
+    return ObjectAnimator.ofFloat(view, View.SCALE_X, 0, 1).setDuration(400);
+  }
 }

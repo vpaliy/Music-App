@@ -18,12 +18,19 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class,
         modules = PresenterModule.class)
 public interface ViewComponent {
-    void inject(PlaylistsFragment fragment);
-    void inject(TracksFragment fragment);
-    void inject(PersonalFragment fragment);
-    void inject(PlaylistFragment fragment);
-    void inject(PersonFragment fragment);
-    void inject(FavoriteFragment fragment);
-    void inject(FollowersFragment fragment);
-    void inject(SearchActivity activity);
+  void inject(PlaylistsFragment fragment);
+
+  void inject(TracksFragment fragment);
+
+  void inject(PersonalFragment fragment);
+
+  void inject(PlaylistFragment fragment);
+
+  void inject(PersonFragment fragment);
+
+  void inject(FavoriteFragment fragment);
+
+  void inject(FollowersFragment fragment);
+
+  void inject(SearchActivity activity);
 }
