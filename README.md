@@ -1,7 +1,8 @@
 # Melophile
 
 `Melophile` is a simple music app which uses [SoundCloud API](https://soundcloud.com/stream).
-It allows you listen to the right music, wherever you are. 
+It allows you listen to the right music, wherever you are.
+no need very good network connection and permanent wifi connection 
 
 # What can I do with it? #
 - stream music
@@ -11,11 +12,13 @@ It allows you listen to the right music, wherever you are.
 - view playlists, users, tracks 
 - invite friends (thanks to `Firebase Invites`)
 - browse your listening history
+- download music
 
 
 # How to use? #
 - clone repository using `git clone https://github.com/vpaliy/Melophile.git`
 - obtain a `client_id`, `client_secret` key by registering [here](https://developers.soundcloud.com/docs/api/reference).
+- if you can not understard please check video in our official website that is [here] [SoundCloud API](https://soundcloud.com/stream).
 
 # Check it out #
 
